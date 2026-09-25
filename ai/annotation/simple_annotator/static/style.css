@@ -1148,3 +1148,12 @@ kbd {
 .span-actions .button { min-height: 36px; }
 .span-instructions { margin: 0 0 14px; padding: 10px 12px; border-radius: 9px; color: #28495d; background: #eaf5fa; font-size: 12px; line-height: 1.5; }
 body.span-selecting .source-text:not(.annotation-disabled) { outline: 2px dashed #2c8fac; outline-offset: 4px; }
+
+.quick-guide { margin-bottom: 18px; padding: 15px 17px; border: 1px solid #cae6e7; border-radius: 12px; background: #f1faf9; color: #2b4655; }
+.quick-guide h2 { margin: 3px 0 9px; font-size: 17px; line-height: 1.25; }
+.quick-guide ol { margin: 0 0 9px; padding-left: 20px; }
+.quick-guide li { margin: 5px 0; font-size: 12px; line-height: 1.45; }
+.quick-guide p { margin: 8px 0; font-size: 12px; line-height: 1.45; }
+.quick-guide details { margin-top: 9px; padding-top: 8px; border-top: 1px solid #d3e8e8; }
+.quick-guide summary { cursor: pointer; font-size: 12px; font-weight: 700; }
+.quick-guide ul { margin: 8px 0 0; padding-left: 18px; }
