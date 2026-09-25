@@ -1143,3 +1143,8 @@ kbd {
 }
 
 .reviewer-name { margin: 0.15rem 0 0; font-size: 0.72rem; color: var(--muted, #617487); }
+
+.span-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.span-actions .button { min-height: 36px; }
+.span-instructions { margin: 0 0 14px; padding: 10px 12px; border-radius: 9px; color: #28495d; background: #eaf5fa; font-size: 12px; line-height: 1.5; }
+body.span-selecting .source-text:not(.annotation-disabled) { outline: 2px dashed #2c8fac; outline-offset: 4px; }

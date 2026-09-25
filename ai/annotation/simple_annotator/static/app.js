@@ -20,6 +20,9 @@
     labelCount: byId("label-count"),
     nonProjectHint: byId("non-project-hint"),
     spanList: byId("span-list"),
+    selectText: byId("select-text-button"),
+    useSelection: byId("use-selection-button"),
+    spanInstructions: byId("span-instructions"),
     spanEmpty: byId("span-empty"),
     spanCount: byId("span-count"),
     needsReview: byId("needs-review"),
@@ -315,6 +318,13 @@
     renderSpans();
     updateReviewControls();
     const disabled = state.needsReview;
+    ui.selectText.disabled = disabled;
+    ui.useSelection.disabled = disabled;
+    if (disabled) {
+      document.body.classList.remove("span-selecting");
+      ui.spanInstructions.hidden = true;
+      ui.useSelection.hidden = true;
+    }
     ui.subject.classList.toggle("annotation-disabled", disabled);
     ui.message.classList.toggle("annotation-disabled", disabled);
     if (disabled) closeSpanMenu();
@@ -340,6 +350,9 @@
     state.note = typeof response.note === "string" ? response.note : "";
     state.changeVersion = 0;
     state.savedVersion = 0;
+    document.body.classList.remove("span-selecting");
+    ui.spanInstructions.hidden = true;
+    ui.useSelection.hidden = true;
 
     ui.subject.textContent = state.subject;
     ui.subject.setAttribute("aria-label", state.subject ? "Email subject. Select a phrase to annotate." : "Email subject is empty.");
@@ -396,9 +409,13 @@
     state.changeVersion += 1;
     setStatus("Unsaved changes", "dirty");
     window.clearTimeout(state.saveTimer);
-    state.saveTimer = window.setTimeout(function () {
+    if (immediate) {
       saveCurrent().catch(function () {});
-    }, immediate ? 250 : 650);
+    } else {
+      state.saveTimer = window.setTimeout(function () {
+        saveCurrent().catch(function () {});
+      }, 650);
+    }
   }
 
   async function performSave(version) {
@@ -678,6 +695,24 @@
     }
     navigateTo(userNumber - 1);
   });
+  ui.selectText.addEventListener("click", function () {
+    if (!state.email || state.needsReview) return;
+    document.body.classList.add("span-selecting");
+    ui.spanInstructions.hidden = false;
+    ui.useSelection.hidden = false;
+    ui.message.scrollIntoView({ behavior: "auto", block: "center" });
+    ui.message.focus({ preventScroll: true });
+    showToast("Drag across words in the subject or current message, then release.");
+  });
+  ui.useSelection.addEventListener("pointerdown", function (event) { event.preventDefault(); });
+  ui.useSelection.addEventListener("click", function () {
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed) {
+      showToast("First drag across words in the subject or current message.");
+      return;
+    }
+    inspectSelection();
+  });
   ui.save.addEventListener("click", function () {
     flushSave().catch(function () {});
   });
@@ -696,6 +731,9 @@
     if (event.target === ui.spanMenu) closeSpanMenu();
   });
 
+  document.addEventListener("touchend", function () {
+    window.setTimeout(inspectSelection, 0);
+  });
   document.addEventListener("mouseup", function () {
     window.setTimeout(inspectSelection, 0);
   });

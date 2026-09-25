@@ -61,8 +61,12 @@
       <article class="message-block" aria-labelledby="message-heading">
         <div class="message-heading">
           <h3 id="message-heading">Current message</h3>
-          <span class="selection-hint">Select text to add an extraction</span>
+          <div class="span-actions">
+            <button id="select-text-button" class="button button-soft" type="button">Add text span</button>
+            <button id="use-selection-button" class="button button-quiet" type="button" hidden>Use highlighted text</button>
+          </div>
         </div>
+        <p id="span-instructions" class="span-instructions" hidden>Drag your mouse across words in the <strong>Subject</strong> or <strong>Current message</strong>, then release to choose a span label. You can also double-click a word. If the label menu does not appear, click <strong>Use highlighted text</strong>.</p>
         <div id="message-source" class="source-text message-text" data-field="current_message" tabindex="0" aria-label="Current email message"></div>
       </article>
 
@@ -106,7 +110,7 @@
           </div>
           <span id="span-count" class="count-badge">0 spans</span>
         </div>
-        <p class="section-help">Select an exact phrase in the subject or current message, then choose its label.</p>
+        <p class="section-help">Click <strong>Add text span</strong> beside the current message, then highlight the exact words in the subject or message.</p>
         <div id="span-list" class="span-list" aria-live="polite"></div>
         <p id="span-empty" class="empty-state">No text spans added yet.</p>
       </section>
