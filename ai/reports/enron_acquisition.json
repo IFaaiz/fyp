@@ -1,0 +1,20 @@
+{
+  "source_dataset": "CMU CALO Enron Email Dataset",
+  "release": "May 7, 2015",
+  "source_page_url": "https://www.cs.cmu.edu/~enron/",
+  "archive_url": "https://www.cs.cmu.edu/~enron/enron_mail_20150507.tar.gz",
+  "archive_path": "ai/data/raw/enron/enron_mail_20150507.tar.gz",
+  "archive_bytes": 443254787,
+  "archive_sha256": "b3da1b3fe0369ec3140bb4fbce94702c33b7da810ec15d718b3fadf5cd748ca7",
+  "checksum_method": "SHA-256 computed locally during extraction",
+  "publisher_checksum_comparison": "Not compared; no publisher checksum was recorded",
+  "extracted_path": "ai/data/raw/enron/full",
+  "maildir_path": "ai/data/raw/enron/full/maildir",
+  "archive_members": 520901,
+  "files_extracted": 517401,
+  "directories_extracted": 3500,
+  "uncompressed_file_bytes": 1421183736,
+  "extraction_status": "completed",
+  "extraction_errors": 0,
+  "extraction_error_note": "Extraction returned successfully and extraction_stats.json was written; unsafe links, unsupported member types, or a missing maildir would have raised an error."
+}

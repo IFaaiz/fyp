@@ -1,0 +1,407 @@
+{
+  "threads": 1500,
+  "messages": 3936,
+  "usable_messages": 3609,
+  "empty_messages": 327,
+  "non_event_messages": 772,
+  "source_event_count": 8392,
+  "non_event_marker_turns": 776,
+  "source_o_marker_turns": 776,
+  "source_o_only_turns": 772,
+  "source_o_with_event_turns": 4,
+  "malformed_bio_argument_spans": 184,
+  "bare_pronoun_participant_spans": 624,
+  "source_argument_spans": 18099,
+  "mapped_argument_spans": 2979,
+  "duplicate_canonical_spans_before": 57,
+  "duplicate_canonical_spans_after": 0,
+  "ambiguous_argument_spans": 13928,
+  "unmapped_argument_spans": 1192,
+  "mapped_event_count": 2125,
+  "unmapped_event_count": 6267,
+  "events_by_type": {
+    "Amend_Action_Data": 3,
+    "Amend_Data": 193,
+    "Amend_Meeting_Data": 55,
+    "Deliver_Action_Data": 3195,
+    "Deliver_Data": 1820,
+    "Deliver_Meeting_Data": 487,
+    "Request_Action": 1376,
+    "Request_Action_Data": 233,
+    "Request_Data": 721,
+    "Request_Meeting": 259,
+    "Request_Meeting_Data": 50
+  },
+  "events_by_mapping": {
+    "Amend_Action_Data": {
+      "total": 3,
+      "unmapped": 3
+    },
+    "Amend_Data": {
+      "total": 193,
+      "unmapped": 193
+    },
+    "Amend_Meeting_Data": {
+      "mapped": 50,
+      "total": 55,
+      "unmapped": 5
+    },
+    "Deliver_Action_Data": {
+      "total": 3195,
+      "unmapped": 3195
+    },
+    "Deliver_Data": {
+      "total": 1820,
+      "unmapped": 1820
+    },
+    "Deliver_Meeting_Data": {
+      "mapped": 436,
+      "total": 487,
+      "unmapped": 51
+    },
+    "Request_Action": {
+      "mapped": 1370,
+      "total": 1376,
+      "unmapped": 6
+    },
+    "Request_Action_Data": {
+      "total": 233,
+      "unmapped": 233
+    },
+    "Request_Data": {
+      "total": 721,
+      "unmapped": 721
+    },
+    "Request_Meeting": {
+      "mapped": 237,
+      "total": 259,
+      "unmapped": 22
+    },
+    "Request_Meeting_Data": {
+      "mapped": 32,
+      "total": 50,
+      "unmapped": 18
+    }
+  },
+  "source_argument_roles": {
+    "Action Date": 771,
+    "Action Description": 4895,
+    "Action Members": 4097,
+    "Action Time": 118,
+    "Amend Date": 17,
+    "Amend Members": 123,
+    "Amend Time": 5,
+    "Data Owner": 15,
+    "Data Type": 38,
+    "Data Value": 1562,
+    "Data idString": 2635,
+    "Deliver Date": 26,
+    "Deliver Members": 182,
+    "Deliver Time": 8,
+    "Deliver members": 447,
+    "Meeting Agenda": 372,
+    "Meeting Date": 391,
+    "Meeting Location": 182,
+    "Meeting Members": 1235,
+    "Meeting Name": 210,
+    "Meeting Time": 242,
+    "Request Date": 29,
+    "Request Members": 90,
+    "Request Time": 10,
+    "Request members": 399
+  },
+  "extraction_label_counts": {
+    "ACTION_ITEM": 1380,
+    "AGENDA": 367,
+    "MEETING_DATE": 389,
+    "MEETING_TIME": 240,
+    "PARTICIPANT": 603
+  },
+  "classification_policy": "No FYP classification labels are inferred from MailEx events.",
+  "annotation_status_counts": {
+    "unlabelled": 3936
+  },
+  "metadata_alignment": {
+    "raw_thread_files": 1506,
+    "threads_aligned": 1457,
+    "messages_with_verified_header_alignment": 3824,
+    "threads_missing_raw_file": 2,
+    "threads_with_turn_count_mismatch": 38,
+    "threads_with_low_body_alignment": 3,
+    "alignment_threshold": 0.75,
+    "field_value_counts": {
+      "recipients": 2904,
+      "sender": 3819,
+      "sent_at": 13,
+      "subject": 3723
+    }
+  },
+  "empty_examples": [
+    "bass-e_inbox195:turn_2",
+    "bass-e_inbox290:turn_1",
+    "bass-e_inbox39:turn_4",
+    "bass-e_inbox88:turn_1",
+    "bass-e_inbox89:turn_1",
+    "bass-e_inbox89:turn_2",
+    "beck-s_inbox232:turn_1",
+    "beck-s_inbox272:turn_2",
+    "beck-s_inbox5:turn_2",
+    "blair-l_inbox268:turn_1",
+    "blair-l_inbox_284:turn_3",
+    "blair-l_inbox_30:turn_0",
+    "blair-l_inbox_30:turn_1",
+    "buy-r_inbox1023:turn_2",
+    "buy-r_inbox1074:turn_1",
+    "buy-r_inbox1202:turn_1",
+    "buy-r_inbox265:turn_0",
+    "buy-r_inbox265:turn_2",
+    "buy-r_inbox598:turn_3",
+    "buy-r_inbox785:turn_1",
+    "buy-r_inbox891:turn_2",
+    "campbell-l_inbox1109:turn_1",
+    "campbell-l_inbox26:turn_1",
+    "campbell-l_inbox26:turn_2",
+    "campbell-l_inbox26:turn_3",
+    "campbell-l_inbox438:turn_1",
+    "campbell-l_inbox592:turn_1",
+    "campbell-l_inbox832:turn_1",
+    "campbell-l_inbox_146:turn_2",
+    "campbell-l_inbox_146:turn_3"
+  ],
+  "malformed_examples": [
+    {
+      "email_id": "mailex:bass-e_inbox290:turn_0",
+      "warning": "Request_Meeting[0]: I tag without matching preceding role at token 91"
+    },
+    {
+      "email_id": "mailex:bass-e_inbox290:turn_0",
+      "warning": "Request_Meeting[0]: I tag without matching preceding role at token 92"
+    },
+    {
+      "email_id": "mailex:beck-s_inbox36:turn_0",
+      "warning": "Request_Data[0]: I tag without matching preceding role at token 23"
+    },
+    {
+      "email_id": "mailex:beck-s_inbox36:turn_0",
+      "warning": "Request_Data[0]: I tag without matching preceding role at token 24"
+    },
+    {
+      "email_id": "mailex:blair-l_inbox143:turn_0",
+      "warning": "Request_Action[0]: I tag without matching preceding role at token 32"
+    },
+    {
+      "email_id": "mailex:blair-l_inbox164:turn_1",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 94"
+    },
+    {
+      "email_id": "mailex:blair-l_inbox164:turn_1",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 95"
+    },
+    {
+      "email_id": "mailex:blair-l_inbox204:turn_0",
+      "warning": "Request_Action[0]: I tag without matching preceding role at token 126"
+    },
+    {
+      "email_id": "mailex:blair-l_inbox278:turn_2",
+      "warning": "Deliver_Data[0]: I tag without matching preceding role at token 115"
+    },
+    {
+      "email_id": "mailex:blair-l_inbox278:turn_2",
+      "warning": "Deliver_Data[0]: I tag without matching preceding role at token 116"
+    },
+    {
+      "email_id": "mailex:blair-l_inbox287:turn_0",
+      "warning": "Deliver_Action_Data[3]: I tag without matching preceding role at token 3"
+    },
+    {
+      "email_id": "mailex:blair-l_inbox39:turn_0",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 75"
+    },
+    {
+      "email_id": "mailex:blair-l_inbox39:turn_0",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 76"
+    },
+    {
+      "email_id": "mailex:blair-l_inbox39:turn_0",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 77"
+    },
+    {
+      "email_id": "mailex:blair-l_inbox87:turn_1",
+      "warning": "Deliver_Data[0]: I tag without matching preceding role at token 32"
+    },
+    {
+      "email_id": "mailex:blair-l_inbox_279:turn_0",
+      "warning": "Deliver_Action_Data[7]: I tag without matching preceding role at token 211"
+    },
+    {
+      "email_id": "mailex:buy-r_inbox1083:turn_0",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 7"
+    },
+    {
+      "email_id": "mailex:buy-r_inbox1083:turn_0",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 8"
+    },
+    {
+      "email_id": "mailex:buy-r_inbox396:turn_0",
+      "warning": "Deliver_Data[0]: I tag without matching preceding role at token 69"
+    },
+    {
+      "email_id": "mailex:buy-r_inbox396:turn_0",
+      "warning": "Deliver_Data[0]: I tag without matching preceding role at token 70"
+    },
+    {
+      "email_id": "mailex:buy-r_inbox636:turn_0",
+      "warning": "Deliver_Meeting_Data[0]: I tag without matching preceding role at token 9"
+    },
+    {
+      "email_id": "mailex:buy-r_inbox90:turn_1",
+      "warning": "Request_Meeting[0]: I tag without matching preceding role at token 5"
+    },
+    {
+      "email_id": "mailex:buy-r_inbox925:turn_0",
+      "warning": "Deliver_Action_Data[1]: I tag without matching preceding role at token 17"
+    },
+    {
+      "email_id": "mailex:buy-r_inbox925:turn_0",
+      "warning": "Deliver_Action_Data[1]: I tag without matching preceding role at token 19"
+    },
+    {
+      "email_id": "mailex:campbell-l_inbox1277:turn_3",
+      "warning": "Deliver_Action_Data[3]: I tag without matching preceding role at token 64"
+    },
+    {
+      "email_id": "mailex:campbell-l_inbox1277:turn_3",
+      "warning": "Deliver_Action_Data[3]: I tag without matching preceding role at token 65"
+    },
+    {
+      "email_id": "mailex:campbell-l_inbox281:turn_0",
+      "warning": "Amend_Data[0]: I tag without matching preceding role at token 37"
+    },
+    {
+      "email_id": "mailex:campbell-l_inbox281:turn_0",
+      "warning": "Amend_Data[0]: I tag without matching preceding role at token 38"
+    },
+    {
+      "email_id": "mailex:cash-m_inbox305:turn_0",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 47"
+    },
+    {
+      "email_id": "mailex:corman-s_inbox_measurement1:turn_0",
+      "warning": "Deliver_Action_Data[4]: I tag without matching preceding role at token 1"
+    },
+    {
+      "email_id": "mailex:crandell-s_inbox64:turn_1",
+      "warning": "Deliver_Action_Data[2]: I tag without matching preceding role at token 84"
+    },
+    {
+      "email_id": "mailex:crandell-s_inbox_bankruptcy9:turn_0",
+      "warning": "Deliver_Meeting_Data[0]: I tag without matching preceding role at token 2"
+    },
+    {
+      "email_id": "mailex:dasovich-j_inbox372:turn_0",
+      "warning": "Amend_Data[1]: I tag without matching preceding role at token 76"
+    },
+    {
+      "email_id": "mailex:dasovich-j_inbox659:turn_0",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 25"
+    },
+    {
+      "email_id": "mailex:derrick-j_inbox150:turn_0",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 11"
+    },
+    {
+      "email_id": "mailex:derrick-j_inbox234:turn_1",
+      "warning": "Request_Action[1]: I tag without matching preceding role at token 168"
+    },
+    {
+      "email_id": "mailex:derrick-j_inbox32:turn_2",
+      "warning": "Deliver_Meeting_Data[0]: I tag without matching preceding role at token 27"
+    },
+    {
+      "email_id": "mailex:derrick-j_inbox99:turn_0",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 18"
+    },
+    {
+      "email_id": "mailex:derrick-j_inbox99:turn_0",
+      "warning": "Deliver_Action_Data[1]: I tag without matching preceding role at token 46"
+    },
+    {
+      "email_id": "mailex:derrick-j_inbox_18:turn_0",
+      "warning": "Deliver_Meeting_Data[1]: I tag without matching preceding role at token 33"
+    },
+    {
+      "email_id": "mailex:donoho-l_inbox221:turn_0",
+      "warning": "Deliver_Data[0]: I tag without matching preceding role at token 22"
+    },
+    {
+      "email_id": "mailex:donoho-l_inbox47:turn_0",
+      "warning": "Request_Meeting[0]: I tag without matching preceding role at token 24"
+    },
+    {
+      "email_id": "mailex:donoho-l_inbox57:turn_0",
+      "warning": "Request_Action[0]: I tag without matching preceding role at token 13"
+    },
+    {
+      "email_id": "mailex:donoho-l_inbox_junk_file331:turn_0",
+      "warning": "Deliver_Action_Data[1]: I tag without matching preceding role at token 10"
+    },
+    {
+      "email_id": "mailex:donoho-l_inbox_junk_file332:turn_1",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 0"
+    },
+    {
+      "email_id": "mailex:geaccone-t_inbox237:turn_0",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 4"
+    },
+    {
+      "email_id": "mailex:germany-c_inbox204:turn_0",
+      "warning": "Deliver_Meeting_Data[0]: I tag without matching preceding role at token 18"
+    },
+    {
+      "email_id": "mailex:germany-c_inbox258:turn_0",
+      "warning": "Deliver_Data[0]: I tag without matching preceding role at token 26"
+    },
+    {
+      "email_id": "mailex:germany-c_inbox258:turn_0",
+      "warning": "Deliver_Data[0]: I tag without matching preceding role at token 27"
+    },
+    {
+      "email_id": "mailex:germany-c_inbox262:turn_1",
+      "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 19"
+    }
+  ],
+  "source_file_errors": [],
+  "dataset": "MailEx",
+  "input_dir": "ai/data/raw/mailex/extracted/data/full_data",
+  "mapping_version": "1.1.0",
+  "duplicate_nonempty_message_copies": 242,
+  "duplicate_nonempty_message_groups": 159,
+  "paper_reported_non_event_messages": 776,
+  "manual_inspection_samples": [
+    "blair-l_inbox143:turn_1 (business meeting date and time)",
+    "beck-s_inbox5:turn_1 (integration testing actions)",
+    "bass-e_inbox100:turn_0 (social lunch example; illustrates project-scope review need)"
+  ],
+  "limitations": [
+    "Canonical message text is reconstructed by joining MailEx tokens with spaces; original RFC822 messages are not present in the annotation JSON.",
+    "Only aligned plain-text raw_threads headers can populate sender, recipients, cc, subject, or sent_at. Other metadata stays empty or null.",
+    "Canonical labels stay empty and annotation status stays unlabelled; MailEx events are not FYP email classification gold.",
+    "Direct spans are provisional, weak source argument proposals mapped to FYP extraction labels. They are not gold and require human review for FYP project scope; source role/event provenance remains attached.",
+    "Standalone pronouns and generic pronoun phrases in Meeting Members arguments are retained as source annotations and suppressed from canonical PARTICIPANT spans.",
+    "The paper/repository describe 10 event types, while the downloaded archive contains 11 observed non-O event keys including Amend_Action_Data.",
+    "The archive has 776 O markers; 4 co-occur with non-O event triggers, leaving 772 O-only turns. The parser reports both counts separately."
+  ],
+  "output_file": "ai/data/processed/mailex.jsonl",
+  "stats_file": "ai/reports/mailex_stats.json",
+  "canonical_label_count": 0,
+  "canonical_span_count": 2922,
+  "canonical_extraction_label_counts": {
+    "ACTION_ITEM": 1380,
+    "AGENDA": 356,
+    "MEETING_DATE": 367,
+    "MEETING_TIME": 226,
+    "PARTICIPANT": 593
+  },
+  "processed_record_count": 3936,
+  "source_file_count": 1500
+}

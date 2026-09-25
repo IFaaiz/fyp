@@ -1,0 +1,119 @@
+{
+  "source_files": 517401,
+  "source_file_bytes": 1421183736,
+  "duplicate_messages_removed": 0,
+  "parser_defects": 30,
+  "source_body_characters": 950698858,
+  "source_messages_with_nonempty_body": 517401,
+  "source_empty_body_messages": 0,
+  "source_messages_with_message_id": 517401,
+  "source_messages_with_subject": 498214,
+  "source_messages_with_sender": 517399,
+  "source_messages_with_sent_at": 517401,
+  "source_messages_with_references": 0,
+  "source_messages_with_in_reply_to": 0,
+  "source_messages_with_attachment_names": 0,
+  "source_messages_with_recipients": 502681,
+  "source_messages_with_cc": 128824,
+  "messages_written": 517401,
+  "threads": 517401,
+  "single_message_threads": 517401,
+  "multi_message_threads": 0,
+  "messages_in_multi_message_threads": 0,
+  "messages_in_multi_message_threads_with_explicit_links": 0,
+  "messages_in_multi_message_threads_without_explicit_links": 0,
+  "largest_thread_size": 1,
+  "thread_size_buckets": {
+    "1": 517401,
+    "2": 0,
+    "3-5": 0,
+    "6-10": 0,
+    "11-50": 0,
+    ">50": 0
+  },
+  "messages_with_explicit_links": 0,
+  "messages_with_resolvable_links": 0,
+  "messages_with_external_only_links": 0,
+  "reference_tokens": 0,
+  "reference_tokens_resolvable_in_corpus": 0,
+  "in_reply_to_tokens": 0,
+  "in_reply_to_tokens_resolvable_in_corpus": 0,
+  "unique_messages_with_resolved_reference": 0,
+  "unique_messages_with_resolved_in_reply_to": 0,
+  "unique_messages_with_references": 0,
+  "unique_messages_with_in_reply_to": 0,
+  "unique_messages_with_message_id": 517401,
+  "unique_messages_with_subject": 498214,
+  "unique_messages_with_sender": 517399,
+  "unique_messages_with_sent_at": 517401,
+  "unique_parser_defects": 30,
+  "unique_empty_body_messages": 0,
+  "unique_messages_with_recipients": 502681,
+  "unique_messages_with_cc": 128824,
+  "output_path": "ai/data/interim/enron_full.jsonl",
+  "output_bytes": 2918125901,
+  "max_messages_requested": null,
+  "context_limit_chars": 6000,
+  "runtime_seconds": 5776.93,
+  "peak_working_set_bytes": 923627520,
+  "python_version": "3.12.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "maildir_path": "ai/data/raw/enron/full/maildir",
+  "acquisition_report": "ai/reports/enron_acquisition.json",
+  "deduplication_note": {
+    "key": "normalized Message-ID plus SHA-256 digest of decoded body; no-Message-ID records use generated email_id based on sender, recipients, CC, subject, date, and body",
+    "semantic_deduplication": false,
+    "limitation": "duplicate_messages_removed is key-based; otherwise identical or near-duplicate records with distinct IDs or body digests may remain"
+  },
+  "record_content_checks": {
+    "records_checked": 517401,
+    "records_with_recipients": 502681,
+    "recipient_completeness_percent": 97.16,
+    "records_with_cc": 128824,
+    "cc_completeness_percent": 24.9,
+    "empty_raw_body_messages": 0,
+    "empty_current_message_messages": 10201,
+    "empty_current_message_percent": 1.97
+  },
+  "validation": {
+    "validator": "ai/scripts/validate_dataset.py",
+    "input_path": "ai/data/interim/enron_full.jsonl",
+    "records": 517401,
+    "records_by_source": {
+      "enron": 517401
+    },
+    "errors": 0
+  },
+  "sampled_boundary_records": [
+    {
+      "email_id": "enron-c26e6777709d38cf25d551f0",
+      "boundary_marker": "---------------------- Forwarded",
+      "raw_body_chars": 690,
+      "current_message_chars": 3
+    },
+    {
+      "email_id": "enron-e7db39bfc88d37d3dc638ae6",
+      "boundary_marker": "---------------------- Forwarded",
+      "raw_body_chars": 356,
+      "current_message_chars": 71
+    },
+    {
+      "email_id": "enron-0fdd61af52fb763283f3eeff",
+      "boundary_marker": "-----Original Message-----",
+      "raw_body_chars": 1135,
+      "current_message_chars": 115
+    },
+    {
+      "email_id": "enron-a44b69d2b114fc2e7516b871",
+      "boundary_marker": "-----Original Message-----",
+      "raw_body_chars": 878,
+      "current_message_chars": 15
+    },
+    {
+      "email_id": "enron-8500cffa6ee2c4af21426b6b",
+      "boundary_marker": "---------------------- Forwarded",
+      "raw_body_chars": 1658,
+      "current_message_chars": 149
+    }
+  ]
+}

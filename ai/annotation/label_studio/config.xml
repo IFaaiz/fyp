@@ -1,0 +1,67 @@
+<View>
+  <Style>
+    .source-panel { border: 1px solid #d9d9d9; padding: 12px; margin: 8px 0; white-space: pre-wrap; }
+    .htx-text { white-space: pre-wrap; }
+  </Style>
+  <View class="source-panel">
+    <Header value="Subject (span source)" />
+    <Text name="subject" value="$subject" />
+    <Labels name="subject_spans" toName="subject" choice="single">
+      <Label value="MEETING_DATE" background="#5B8FF9" />
+      <Label value="MEETING_TIME" background="#5B8FF9" />
+      <Label value="DEADLINE_DATE" background="#5B8FF9" />
+      <Label value="DEADLINE_TIME" background="#5B8FF9" />
+      <Label value="PARTICIPANT" background="#5B8FF9" />
+      <Label value="RESPONSIBLE_PARTY" background="#5B8FF9" />
+      <Label value="DEPARTMENT" background="#5B8FF9" />
+      <Label value="AGENDA" background="#5B8FF9" />
+      <Label value="ACTION_ITEM" background="#5B8FF9" />
+      <Label value="REQUESTED_DOCUMENT" background="#5B8FF9" />
+      <Label value="PROJECT" background="#5B8FF9" />
+    </Labels>
+  </View>
+  <View class="source-panel">
+    <Header value="Current message (primary span source)" />
+    <Text name="current_message" value="$current_message" />
+    <Labels name="message_spans" toName="current_message" choice="single">
+      <Label value="MEETING_DATE" background="#5B8FF9" />
+      <Label value="MEETING_TIME" background="#5B8FF9" />
+      <Label value="DEADLINE_DATE" background="#5B8FF9" />
+      <Label value="DEADLINE_TIME" background="#5B8FF9" />
+      <Label value="PARTICIPANT" background="#5B8FF9" />
+      <Label value="RESPONSIBLE_PARTY" background="#5B8FF9" />
+      <Label value="DEPARTMENT" background="#5B8FF9" />
+      <Label value="AGENDA" background="#5B8FF9" />
+      <Label value="ACTION_ITEM" background="#5B8FF9" />
+      <Label value="REQUESTED_DOCUMENT" background="#5B8FF9" />
+      <Label value="PROJECT" background="#5B8FF9" />
+    </Labels>
+  </View>
+
+  <Header value="Thread context (reference for interpretation only)" />
+  <Text name="thread_context" value="$thread_context" />
+  <Header value="Email metadata (context; do not annotate as text spans)" />
+  <View class="source-panel"><Text name="metadata_display" value="$metadata_display" /></View>
+
+  <Header value="Classification: select every supported label. NON_PROJECT must stand alone." />
+  <Choices name="review_decision" choice="single" required="true" showInline="true">
+    <Choice value="Reviewed" />
+    <Choice value="Needs review" />
+  </Choices>
+  <Choices name="classification" choice="multiple" showInline="true">
+    <Choice value="MEETING" />
+    <Choice value="DEADLINE" />
+    <Choice value="REPORT_REQUEST" />
+    <Choice value="DEPARTMENTAL_INPUT" />
+    <Choice value="ACTION_REQUEST" />
+    <Choice value="FOLLOW_UP" />
+    <Choice value="APPROVAL" />
+    <Choice value="GENERAL_UPDATE" />
+    <Choice value="NON_PROJECT" />
+  </Choices>
+  <TextArea name="review_note" toName="current_message" rows="3" editable="true" required="false"
+    placeholder="For Needs review, briefly explain what context or evidence is missing." />
+
+  <Header value="Extraction spans: select exact text above and assign one span label per selection." />
+  <Text name="span_help" value="Use current message by default. Thread context and metadata are never span sources." />
+</View>

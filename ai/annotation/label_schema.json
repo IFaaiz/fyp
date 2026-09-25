@@ -1,0 +1,173 @@
+{
+  "schema_version": "1.1.0",
+  "project": "Outlook Integrated Smart AI Project Management Dashboard",
+  "language": "English",
+  "storage_format": "JSONL",
+  "classification": {
+    "multi_label": true,
+    "labels": [
+      {
+        "name": "MEETING",
+        "definition": "The current message schedules, confirms, changes, cancels, or substantively discusses a specific project meeting. A meeting may be in person or remote."
+      },
+      {
+        "name": "DEADLINE",
+        "definition": "The current message states, sets, changes, confirms, or follows up on a date or time by which a project action or deliverable is due."
+      },
+      {
+        "name": "REPORT_REQUEST",
+        "definition": "The current message requests preparation, submission, provision, or delivery of a report or another formal project document, including minutes, presentations, plans, and similar deliverables."
+      },
+      {
+        "name": "DEPARTMENTAL_INPUT",
+        "definition": "The current message requests, tracks, or reports a project contribution, data, feedback, decision, or other input from a department or organizational unit."
+      },
+      {
+        "name": "ACTION_REQUEST",
+        "definition": "The current message requests, directs, or assigns a concrete project task beyond a bare formal-document submission, departmental-input request, or approval transaction. It can co-occur when a distinct operational action is requested."
+      },
+      {
+        "name": "FOLLOW_UP",
+        "definition": "The current message reminds, chases, checks, or escalates a previously expected or assigned project action, response, or deliverable. Thread context may establish that the action is a follow-up."
+      },
+      {
+        "name": "APPROVAL",
+        "definition": "The current message requests, grants, rejects, withholds, or conditions formal project approval, sign-off, or authorization."
+      },
+      {
+        "name": "GENERAL_UPDATE",
+        "definition": "The current message communicates a project status, progress, completion, blocker, decision, or change in work state. It may co-occur with any other project label."
+      },
+      {
+        "name": "NON_PROJECT",
+        "definition": "The current message is outside the project-management email scope: it has no project meeting, deadline, document request, departmental input, action request, follow-up, approval, or project status/progress content. It is an internal filtering label."
+      }
+    ],
+    "rules": [
+      "Assign every applicable project label independently; do not choose a single best class.",
+      "NON_PROJECT is exclusive: it cannot co-occur with any of the eight project labels.",
+      "An empty labels array means classification is unassigned or explicitly adjudicated outside the current inventory; it is never a negative training label. The unlabelled status requires labels=[] but may carry provisional source-mapped spans with annotation.annotation_source=\"dataset\".",
+      "Use NON_PROJECT for reviewed out-of-scope emails. Do not use an empty array to encode NON_PROJECT.",
+      "Do not infer a label from a keyword alone; annotate the communicative function in context.",
+      "ACTION_REQUEST covers standalone project tasks. Do not add it solely because a report submission, departmental-input request, or approval request is phrased as an imperative; add it when a distinct operational task is requested."
+    ]
+  },
+  "extraction": {
+    "span_labels": [
+      {
+        "name": "MEETING_DATE",
+        "definition": "The exact date or relative-date expression for a specific project meeting, as written (for example, '30 September' or 'next Friday'). Do not calculate or replace it with a normalized date."
+      },
+      {
+        "name": "MEETING_TIME",
+        "definition": "The exact time expression for a specific project meeting, as written (for example, '3 PM' or 'between 10 and 11'). Keep the date in a separate MEETING_DATE span."
+      },
+      {
+        "name": "DEADLINE_DATE",
+        "definition": "The exact date or relative-date expression that sets a project action or deliverable's due date (for example, 'Friday' or 'tomorrow'). Annotate a separate DEADLINE_TIME when a due time is also stated."
+      },
+      {
+        "name": "DEADLINE_TIME",
+        "definition": "The exact clock-time, time-range, or conventional end-of-day expression for a due project action, such as '5 PM', '3 PM', or 'COB'. A date and time in the same sentence receive separate DEADLINE_DATE and DEADLINE_TIME spans."
+      },
+      {
+        "name": "PARTICIPANT",
+        "definition": "A person or group explicitly named in the message as attending, invited to, or participating in a specific project meeting or project activity. Do not copy email recipients from metadata."
+      },
+      {
+        "name": "RESPONSIBLE_PARTY",
+        "definition": "A person, role, or group explicitly assigned or committed to perform a project action. Annotate the textual person/group mention; do not infer names from sender/recipient metadata or annotate bare first-person pronouns."
+      },
+      {
+        "name": "DEPARTMENT",
+        "definition": "The exact name of an organizational department or unit that supplies, owns, reviews, or is asked for a project input/action."
+      },
+      {
+        "name": "AGENDA",
+        "definition": "A concise topical phrase explicitly identified as a subject for discussion at a project meeting. Do not write an inferred or generated summary."
+      },
+      {
+        "name": "ACTION_ITEM",
+        "definition": "The shortest complete textual action phrase that is requested, assigned, committed to, or explicitly checked/followed up in the current message. Use thread context only to interpret the action; include its verb and necessary object, and exclude a separately expressed owner and deadline."
+      },
+      {
+        "name": "REQUESTED_DOCUMENT",
+        "definition": "The exact name or type of a project document/material that is requested, expected, or being followed up in the current message (for example, 'revised budget report' or 'meeting minutes')."
+      },
+      {
+        "name": "PROJECT",
+        "definition": "An explicit project name, identifier, or unambiguous project title. Do not annotate generic references such as 'the project' without a specific name."
+      }
+    ],
+    "span_record": {
+      "required_fields": [
+        "label",
+        "text",
+        "start",
+        "end"
+      ],
+      "optional_fields": [
+        "field"
+      ],
+      "default_field": "current_message",
+      "allowed_fields": [
+        "current_message",
+        "subject"
+      ],
+      "offset_unit": "Python Unicode string code points",
+      "end_offset": "exclusive",
+      "text_must_equal_source_slice": true,
+      "overlapping_spans_allowed": true
+    }
+  },
+  "canonical_record_fields": [
+    "email_id",
+    "source_dataset",
+    "thread_id",
+    "turn_index",
+    "subject",
+    "raw_body",
+    "current_message",
+    "clean_body",
+    "thread_context",
+    "sender",
+    "recipients",
+    "cc",
+    "sent_at",
+    "attachment_names",
+    "labels",
+    "spans",
+    "annotation"
+  ],
+  "annotation_statuses": [
+    "unlabelled",
+    "ai_prelabelled",
+    "human_reviewed",
+    "gold"
+  ],
+  "sources": [
+    "mailex",
+    "enron",
+    "manual",
+    "synthetic"
+  ],
+  "annotation_rules": {
+    "content_for_labels": "current_message, interpreted with subject, metadata, and thread_context where useful",
+    "content_for_spans": "current_message by default; subject only when span.field is 'subject'",
+    "quoted_text": "Do not assign labels or spans based only on quoted/forwarded earlier messages. Use thread_context to interpret the current message, not to copy prior actions into it.",
+    "raw_text": "Preserve raw_body. Annotation does not rewrite source fields.",
+    "metadata": "Use sender, recipients, cc, sent_at, thread_id, and attachment_names as supplied fields; do not create NLP spans for them.",
+    "synthetic": "Use source_dataset='synthetic'; synthetic records can never be gold and must not enter a gold test set.",
+    "unlabelled": "Classification labels must be empty. Provisional extraction spans mapped from source-dataset annotations are allowed only with annotation.annotation_source=\"dataset\"; they are not human-reviewed or gold.",
+    "dataset_mapped_spans": "Keep only documented mappings whose text and offsets are verified. Human review must verify, correct, or remove every mapped span before setting status=human_reviewed and annotation_source=human.",
+    "action_only": "A reviewed project action-only email receives ACTION_REQUEST, not NON_PROJECT, GENERAL_UPDATE, or an empty label list.",
+    "deadline_time": "Annotate explicit due times separately as DEADLINE_TIME; do not infer a clock time from a date-only deadline."
+  },
+  "annotation_sources": [
+    null,
+    "dataset",
+    "human",
+    "ai",
+    "synthetic"
+  ]
+}

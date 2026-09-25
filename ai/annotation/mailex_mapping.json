@@ -1,0 +1,271 @@
+{
+  "mapping_version": "1.1.0",
+  "source": {
+    "dataset_name": "MailEx",
+    "source_url": "https://drive.google.com/file/d/1a336g4-wlEwsVbXLPB9wPQnBDRE933mb/view",
+    "repository_url": "https://github.com/salokr/Email-Event-Extraction",
+    "paper_url": "https://aclanthology.org/2023.emnlp-main.801/",
+    "license": "CC BY-SA 4.0 (as stated in the official repository README)",
+    "download_date": "2026-09-24",
+    "archive_file": "ai/data/raw/mailex/data.zip",
+    "archive_sha256": "DDA3CE5DA5FFC3452DD9E5A58CD69E19E68BD655EAFE1DEEC48E87204F6C37B4"
+  },
+  "canonical_record_policy": {
+    "classification": "MailEx event types describe communicative acts and event domains, not the FYP email-level multi-label taxonomy. Keep canonical labels empty and annotation.status unlabelled. Do not treat source events as FYP classification gold.",
+    "text": "Build raw_body, current_message, and clean_body by joining the source sentence tokens with single spaces. This is a token-joined reconstruction, not the original RFC822 message body. Preserve source event and argument annotations under annotation.source_annotations.",
+    "metadata": "The archive also contains plain-text raw_threads. Only copy From/To/CC/Subject/Date header values when message order and normalized body text align to the annotated turns. The files are not RFC822 messages and do not consistently provide metadata. Never infer attachment_names from body text.",
+    "spans": "Direct mappings are provisional, weak extraction proposals rather than FYP gold. Every emitted span requires human review for project scope and retains source role/event provenance. Keep classification labels empty and annotation.status unlabelled. MailEx records carry annotation.needs_review=true for downstream project-scope review.",
+    "participant_suppression": "Standalone first-, second-, and third-person pronouns and generic pronoun phrases in Meeting Members arguments remain in source annotations but are not emitted as canonical PARTICIPANT spans."
+  },
+  "source_event_types": {
+    "Request_Meeting": {
+      "verb_act": "Request",
+      "noun_act": "Meeting",
+      "fyp_classification_mapping": "unmapped",
+      "reason": "A meeting proposal or request does not establish the FYP message category or project relevance."
+    },
+    "Request_Meeting_Data": {
+      "verb_act": "Request",
+      "noun_act": "Meeting Data",
+      "fyp_classification_mapping": "unmapped",
+      "reason": "A request for a meeting attribute may be a meeting-related email, but does not establish the FYP message category."
+    },
+    "Deliver_Meeting_Data": {
+      "verb_act": "Deliver",
+      "noun_act": "Meeting Data",
+      "fyp_classification_mapping": "unmapped",
+      "reason": "Providing meeting details is not enough to decide whether the entire email has the FYP MEETING label."
+    },
+    "Amend_Meeting_Data": {
+      "verb_act": "Amend",
+      "noun_act": "Meeting Data",
+      "fyp_classification_mapping": "unmapped",
+      "reason": "A meeting amendment may be a change, cancellation, or another update and does not provide the FYP message label."
+    },
+    "Request_Action": {
+      "verb_act": "Request",
+      "noun_act": "Action",
+      "fyp_classification_mapping": "unmapped",
+      "reason": "An action request can cover many FYP categories, including approvals and follow-ups, so the event type is insufficient."
+    },
+    "Request_Action_Data": {
+      "verb_act": "Request",
+      "noun_act": "Action Data",
+      "fyp_classification_mapping": "unmapped",
+      "reason": "A question about an action is not necessarily a new action request or a follow-up."
+    },
+    "Deliver_Action_Data": {
+      "verb_act": "Deliver",
+      "noun_act": "Action Data",
+      "fyp_classification_mapping": "unmapped",
+      "reason": "A delivered action description may report completed work or acknowledge participation."
+    },
+    "Request_Data": {
+      "verb_act": "Request",
+      "noun_act": "Data",
+      "fyp_classification_mapping": "unmapped",
+      "reason": "Requested data can be a file, a fact, or another value; it does not always mean a report request."
+    },
+    "Deliver_Data": {
+      "verb_act": "Deliver",
+      "noun_act": "Data",
+      "fyp_classification_mapping": "unmapped",
+      "reason": "Delivered data can be a file or a fact and does not establish an FYP category."
+    },
+    "Amend_Data": {
+      "verb_act": "Amend",
+      "noun_act": "Data",
+      "fyp_classification_mapping": "unmapped",
+      "reason": "Data amendments may describe many kinds of changes and do not establish a project status update."
+    },
+    "Amend_Action_Data": {
+      "verb_act": "Amend",
+      "noun_act": "Action Data",
+      "fyp_classification_mapping": "unmapped",
+      "reason": "Preserve this observed rare source event type. Its argument semantics do not establish an FYP class."
+    }
+  },
+  "argument_role_mappings": {
+    "meeting date": {
+      "default": {
+        "status": "direct",
+        "canonical_label": "MEETING_DATE",
+        "reason": "MailEx defines this as the date on which the meeting will or has happened."
+      }
+    },
+    "meeting time": {
+      "default": {
+        "status": "direct",
+        "canonical_label": "MEETING_TIME",
+        "reason": "MailEx defines this as the time at which the meeting will or has happened."
+      }
+    },
+    "meeting members": {
+      "default": {
+        "status": "direct",
+        "canonical_label": "PARTICIPANT",
+        "reason": "MailEx defines these as meeting attendees."
+      }
+    },
+    "meeting agenda": {
+      "default": {
+        "status": "direct",
+        "canonical_label": "AGENDA",
+        "reason": "MailEx defines this as the topic of discussion for the meeting."
+      }
+    },
+    "action description": {
+      "by_event_type": {
+        "Request_Action": {
+          "status": "direct",
+          "canonical_label": "ACTION_ITEM",
+          "reason": "A requested action description is an action item candidate."
+        },
+        "Request_Action_Data": {
+          "status": "ambiguous",
+          "candidate_label": "ACTION_ITEM",
+          "reason": "This event can ask for information about an existing action rather than request new work."
+        },
+        "Deliver_Action_Data": {
+          "status": "ambiguous",
+          "candidate_label": "ACTION_ITEM",
+          "reason": "This event can report a completed action or acknowledge participation."
+        },
+        "Amend_Action_Data": {
+          "status": "ambiguous",
+          "candidate_label": "ACTION_ITEM",
+          "reason": "This event describes an action amendment; the source does not identify pending-work status."
+        }
+      },
+      "default": {
+        "status": "unmapped",
+        "reason": "The source action description is not directly equivalent to an FYP action item in this event context."
+      }
+    },
+    "action members": {
+      "default": {
+        "status": "ambiguous",
+        "candidate_label": "RESPONSIBLE_PARTY",
+        "reason": "MailEx calls these activity attendees; that does not guarantee they are assigned owners."
+      }
+    },
+    "action date": {
+      "default": {
+        "status": "ambiguous",
+        "candidate_label": "DEADLINE_DATE",
+        "reason": "MailEx defines this as the activity date, which may be an event date rather than a due date."
+      }
+    },
+    "data idstring": {
+      "default": {
+        "status": "ambiguous",
+        "candidate_label": "REQUESTED_DOCUMENT",
+        "reason": "MailEx uses this for any data description or identity, including facts and non-document data."
+      }
+    },
+    "data value": {
+      "default": {
+        "status": "ambiguous",
+        "candidate_label": "REQUESTED_DOCUMENT",
+        "reason": "A data value may be a file, a fact, or another value; it is not always a requested document."
+      }
+    },
+    "data type": {
+      "default": {
+        "status": "ambiguous",
+        "candidate_label": "REQUESTED_DOCUMENT",
+        "reason": "MailEx data types include documents but also non-document facts."
+      }
+    },
+    "data owner": {
+      "default": {
+        "status": "ambiguous",
+        "candidate_label": "RESPONSIBLE_PARTY",
+        "reason": "Ownership of data does not establish responsibility for a project action."
+      }
+    },
+    "meeting name": {
+      "default": {
+        "status": "ambiguous",
+        "candidate_label": "PROJECT",
+        "reason": "A meeting reference name is not necessarily a project name."
+      }
+    },
+    "request members": {
+      "default": {
+        "status": "ambiguous",
+        "candidate_label": "RESPONSIBLE_PARTY",
+        "reason": "MailEx defines these as the recipient of the request event, not necessarily the task owner."
+      }
+    },
+    "deliver members": {
+      "default": {
+        "status": "ambiguous",
+        "candidate_label": "PARTICIPANT",
+        "reason": "MailEx defines these as recipients of the corresponding event; they are not necessarily meeting attendees."
+      }
+    },
+    "amend members": {
+      "default": {
+        "status": "ambiguous",
+        "candidate_label": "RESPONSIBLE_PARTY",
+        "reason": "MailEx defines these as the person overseeing an amendment, not necessarily the owner of project work."
+      }
+    },
+    "request date": {
+      "default": {
+        "status": "unmapped",
+        "reason": "This is timing of the request act and is not a project deadline."
+      }
+    },
+    "request time": {
+      "default": {
+        "status": "unmapped",
+        "reason": "This is timing of the request act and is not a meeting time."
+      }
+    },
+    "deliver date": {
+      "default": {
+        "status": "unmapped",
+        "reason": "This is timing of the delivery act and is not a project deadline."
+      }
+    },
+    "deliver time": {
+      "default": {
+        "status": "unmapped",
+        "reason": "This is timing of the delivery act and is not a meeting time."
+      }
+    },
+    "amend date": {
+      "default": {
+        "status": "unmapped",
+        "reason": "This is timing of the amendment act and is not necessarily a deadline."
+      }
+    },
+    "amend time": {
+      "default": {
+        "status": "unmapped",
+        "reason": "This is timing of the amendment act and is not a meeting time."
+      }
+    },
+    "action time": {
+      "default": {
+        "status": "unmapped",
+        "reason": "The FYP schema has no general activity-time role; it is not necessarily a meeting time."
+      }
+    },
+    "meeting location": {
+      "default": {
+        "status": "unmapped",
+        "reason": "The current FYP extraction schema has no meeting-location label."
+      }
+    }
+  },
+  "known_ontology_notes": [
+    "The paper and repository summarize MailEx as having 10 event types. The downloaded full_data archive contains 11 observed non-O event keys, including 3 Amend_Action_Data instances. Preserve this observed type and report the source-count discrepancy.",
+    "MailEx labels arguments per event instance using BIO tags. Context and Revision qualifiers in Amend events must be retained because they distinguish the previous value from the proposed change.",
+    "MailEx event annotations may be useful for extraction pretraining, but its Enron business email domain and event taxonomy do not provide FYP gold labels.",
+    "All mapped spans are weak proposals, not FYP gold; review each message for whether its event belongs to a university project. Generic participant pronouns such as I and You guys are retained as source annotations but suppressed from canonical spans.",
+    "The archive has 776 O markers. Four occur alongside non-O event triggers, so only 772 turns are O-only; report marker and message counts separately."
+  ]
+}
