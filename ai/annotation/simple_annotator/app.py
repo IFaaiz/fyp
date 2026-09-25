@@ -104,6 +104,10 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the local FYP email annotator.")
     parser.add_argument("--reviewer", required=True, help="reviewer identifier")
     parser.add_argument(
+        "--pilot", choices=("original", "project"), default="original",
+        help="original 250-email seed or separate screened 50-email project pilot",
+    )
+    parser.add_argument(
         "--limit",
         type=int,
         default=None,
@@ -137,11 +141,21 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> None:
     args = _parse_args(argv)
+    seed_path = args.seed_path
+    output_dir = args.output_dir
+    if args.pilot == "project":
+        if args.seed_path != DEFAULT_SEED_PATH:
+            raise SystemExit("--seed-path cannot be combined with --pilot project")
+        from ai.scripts.build_project_pilot import build_project_pilot_seed
+
+        seed_path = build_project_pilot_seed()
+        if args.output_dir == DEFAULT_OUTPUT_DIR:
+            output_dir = seed_path.parent / "reviewers"
     app = create_app(
         reviewer=args.reviewer,
         limit=args.limit,
-        seed_path=args.seed_path,
-        output_dir=args.output_dir,
+        seed_path=seed_path,
+        output_dir=output_dir,
     )
     url = f"http://127.0.0.1:{args.port}/"
     store: AnnotationStore = app.config["ANNOTATOR_STORE"]

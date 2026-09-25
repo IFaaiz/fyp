@@ -34,7 +34,6 @@ DEFAULT_OUTPUT_DIR = (
     PROJECT_ROOT / "ai" / "data" / "annotated" / "human" / "simple_annotator"
 )
 LABEL_SCHEMA_PATH = PROJECT_ROOT / "ai" / "annotation" / "label_schema.json"
-SEED_COUNT = 250
 SPAN_FIELDS = frozenset({"subject", "current_message"})
 REVIEWER_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
 FRIENDLY_NAMES = {
@@ -154,7 +153,6 @@ class AnnotationStore:
         self.seed_path = Path(seed_path).expanduser().resolve()
         self.output_dir = Path(output_dir).expanduser().resolve()
         self.manifest_path = self.seed_path.parent / "manifest.json"
-        self.active_limit = min(limit or SEED_COUNT, SEED_COUNT)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
         self.output_path = self.output_dir / f"{reviewer}.jsonl"
@@ -162,9 +160,11 @@ class AnnotationStore:
         self.lock_path = self.output_dir / f".{reviewer}.lock"
         self._thread_lock = threading.RLock()
         self._seed_records, self.seed_ids = self._load_seed()
+        self.seed_count = len(self.seed_ids)
+        self.active_limit = min(limit or self.seed_count, self.seed_count)
         self.classification_labels, self.span_labels = _labels_from_schema()
         self.records = [self._reviewer_baseline(row) for row in self._seed_records]
-        self.draft_spans: list[list[dict[str, Any]]] = [[] for _ in range(SEED_COUNT)]
+        self.draft_spans: list[list[dict[str, Any]]] = [[] for _ in range(self.seed_count)]
         self._reload_existing_output()
         self._reload_drafts()
 
@@ -180,13 +180,22 @@ class AnnotationStore:
         else:
             tasks = _read_json(self.seed_path)
             direct_canonical_records = False
-        if not isinstance(tasks, list) or len(tasks) != SEED_COUNT:
-            raise ValueError(f"seed tasks must contain exactly {SEED_COUNT} rows")
-        selected_ids = manifest.get("selected_email_ids") if isinstance(manifest, dict) else None
-        if (not isinstance(selected_ids, list) or len(selected_ids) != SEED_COUNT
+        if not isinstance(manifest, dict):
+            raise ValueError("seed manifest must be a JSON object")
+        self.batch_name = str(manifest.get("display_name") or "Email review batch")[:80]
+        expected_count = manifest.get("selected_email_count", manifest.get("requested_count"))
+        if type(expected_count) is not int or expected_count < 1:
+            raise ValueError("seed manifest must declare a positive selected_email_count")
+        if not isinstance(tasks, list) or len(tasks) != expected_count:
+            raise ValueError(f"seed must contain exactly {expected_count} rows")
+        selected_ids = manifest.get("selected_email_ids")
+        if (not isinstance(selected_ids, list) or len(selected_ids) != expected_count
                 or any(not isinstance(value, str) or not value for value in selected_ids)
-                or len(set(selected_ids)) != SEED_COUNT):
-            raise ValueError("seed manifest must list 250 unique selected_email_ids")
+                or len(set(selected_ids)) != expected_count):
+            raise ValueError(f"seed manifest must list {expected_count} unique selected_email_ids")
+        expected_source = manifest.get("source_dataset")
+        if expected_source not in {"enron", "manual"}:
+            raise ValueError("seed manifest source_dataset must be enron or manual")
 
         records: list[dict[str, Any]] = []
         task_ids: list[str] = []
@@ -212,8 +221,8 @@ class AnnotationStore:
             email_id = record.get("email_id")
             if not isinstance(email_id, str) or data.get("email_id") != email_id:
                 raise ValueError(f"seed task {number} email_id does not match its canonical record")
-            if record.get("source_dataset") != "enron":
-                raise ValueError(f"seed task {number} is not an Enron source record")
+            if record.get("source_dataset") != expected_source:
+                raise ValueError(f"seed task {number} source_dataset does not match manifest")
             if record.get("labels") != [] or record.get("spans") != []:
                 raise ValueError(f"seed task {number} must start with blank labels and spans")
             annotation = record.get("annotation")
@@ -259,8 +268,8 @@ class AnnotationStore:
                     rows.append(row)
         except (OSError, json.JSONDecodeError) as exc:
             raise ValueError(f"could not read existing reviewer output: {exc}") from exc
-        if len(rows) != SEED_COUNT:
-            raise ValueError(f"existing output must contain exactly {SEED_COUNT} rows")
+        if len(rows) != self.seed_count:
+            raise ValueError(f"existing output must contain exactly {self.seed_count} rows")
         ids = [row.get("email_id") for row in rows]
         if ids != self.seed_ids:
             raise ValueError("existing output ID order does not match the seed")
@@ -282,7 +291,7 @@ class AnnotationStore:
                 raise ValueError(
                     f"existing output row {index} does not belong to reviewer {self.reviewer}"
                 )
-            if row.get("source_dataset") != "enron" or annotation.get("status") == "gold":
+            if row.get("source_dataset") != baseline.get("source_dataset") or annotation.get("status") == "gold":
                 raise ValueError(f"existing output row {index} violates the seed source contract")
             errors = validate_record(row)
             if errors:
@@ -317,6 +326,7 @@ class AnnotationStore:
         progress = self._progress()
         return {
             "reviewer": self.reviewer,
+            "batch_name": self.batch_name,
             "total": self.active_limit,
             "completed": progress["completed"],
             "first_unfinished": progress["first_unfinished"],
@@ -493,7 +503,7 @@ class AnnotationStore:
         }
 
     def _reload_drafts(self) -> None:
-        self.draft_spans = [[] for _ in range(SEED_COUNT)]
+        self.draft_spans = [[] for _ in range(self.seed_count)]
         if not self.draft_path.exists():
             return
         draft_data = _read_json(self.draft_path)
@@ -504,8 +514,8 @@ class AnnotationStore:
         if draft_data.get("email_ids") != self.seed_ids:
             raise ValueError("reviewer draft IDs do not match the seed")
         rows = draft_data.get("spans")
-        if not isinstance(rows, list) or len(rows) != SEED_COUNT:
-            raise ValueError(f"reviewer draft file must contain {SEED_COUNT} span lists")
+        if not isinstance(rows, list) or len(rows) != self.seed_count:
+            raise ValueError(f"reviewer draft file must contain {self.seed_count} span lists")
         for index, spans in enumerate(rows):
             if not isinstance(spans, list):
                 raise ValueError(f"reviewer draft row {index} must contain a span list")

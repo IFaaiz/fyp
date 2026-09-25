@@ -5,6 +5,7 @@
   const ui = {
     progressCount: byId("progress-count"),
     reviewer: byId("reviewer-name"),
+    batch: byId("batch-name"),
     progress: byId("review-progress"),
     position: byId("record-position"),
     previous: byId("previous-button"),
@@ -659,6 +660,7 @@
       if (!response.ok) throw new Error("state");
       const data = await response.json();
       ui.reviewer.textContent = "Reviewer: " + (typeof data.reviewer === "string" ? data.reviewer : "unknown");
+      ui.batch.textContent = typeof data.batch_name === "string" ? data.batch_name : "Email review batch";
       state.labels = Array.isArray(data.labels) ? data.labels : [];
       state.spanLabels = Array.isArray(data.span_labels) ? data.span_labels : [];
       state.total = Number.isFinite(data.total) ? Math.max(0, data.total) : 0;

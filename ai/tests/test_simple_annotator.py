@@ -77,7 +77,7 @@ class SimpleAnnotatorTests(unittest.TestCase):
         path = self.temp_dir / "controlled-real-seed.jsonl"
         write_jsonl(path, records)
         (self.temp_dir / "manifest.json").write_text(
-            json.dumps({"selected_email_ids": self.manifest["selected_email_ids"]}),
+            json.dumps({"selected_email_ids": self.manifest["selected_email_ids"], "selected_email_count": 250, "source_dataset": "enron"}),
             encoding="utf-8",
         )
         return path
@@ -374,6 +374,34 @@ class SimpleAnnotatorTests(unittest.TestCase):
         self.assertEqual(row["spans"][0]["text"], "report")
         self.assertEqual(row["annotation"]["status"], "human_reviewed")
         self.assertEqual(client.get("/api/state").get_json()["completed"], 1)
+
+
+    def test_separate_fifty_record_seed_uses_manifest_count_and_preserves_order(self):
+        pilot_dir = self.temp_dir / "project-pilot"
+        pilot_dir.mkdir()
+        pilot_records = copy.deepcopy(self.seed_records[:50])
+        pilot_path = pilot_dir / "annotation_seed_50.jsonl"
+        write_jsonl(pilot_path, pilot_records)
+        (pilot_dir / "manifest.json").write_text(
+            json.dumps({
+                "source_dataset": "enron",
+                "selected_email_count": 50,
+                "selected_email_ids": [row["email_id"] for row in pilot_records],
+            }),
+            encoding="utf-8",
+        )
+        output_dir = self.temp_dir / "project-reviewers"
+        client = self._app("new_pilot_reviewer", seed_path=pilot_path, output_dir=output_dir).test_client()
+        state = client.get("/api/state").get_json()
+        self.assertEqual((state["total"], state["completed"], state["first_unfinished"]), (50, 0, 0))
+        self.assertEqual(client.get("/api/email/49").get_json()["email_id"], pilot_records[49]["email_id"])
+        self.assertEqual(client.get("/api/email/50").status_code, 404)
+        self.assertEqual(self._put(client, 0, labels=["MEETING"]).status_code, 200)
+        output_rows = list(read_jsonl(output_dir / "new_pilot_reviewer.jsonl"))
+        self.assertEqual(len(output_rows), 50)
+        self.assertEqual([row["email_id"] for row in output_rows], [row["email_id"] for row in pilot_records])
+        self.assertEqual(output_rows[0]["annotation"]["annotator"], "new_pilot_reviewer")
+
 
 
 if __name__ == "__main__":
