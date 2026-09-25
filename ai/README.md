@@ -15,14 +15,16 @@ Use Python 3.10+ from the repository root:
 ```powershell
 python -m unittest discover -s ai/tests -t ai -v
 python ai/scripts/prepare_mailex.py
-python ai/scripts/prepare_enron.py --maildir ai/data/raw/enron/maildir
-python ai/scripts/create_candidate_pool.py --input ai/data/interim/enron.jsonl
+python ai/scripts/prepare_enron.py --maildir ai/data/raw/enron/full/maildir --output ai/data/interim/enron_full.jsonl
+python ai/scripts/create_candidate_pool.py --input ai/data/interim/enron_full.jsonl --output ai/data/interim/enron_candidates.jsonl --secondary-thread-links --thread-mode whole
 python ai/scripts/validate_dataset.py ai/data/processed/mailex.jsonl
+# First independent human pilot (after installing Flask):
+python ai/annotation/simple_annotator/app.py --reviewer faaiz --limit 50
 # After human-reviewed records exist:
 python ai/scripts/create_splits.py ai/data/annotated/human/reviewed.jsonl
 ```
 
-MailEx defaults to the extracted official release under `ai/data/raw/mailex/extracted/data/full_data`. Enron defaults to the extracted CMU maildir under `ai/data/raw/enron/maildir`; the full archive has not yet been downloaded. Source provenance is in [MailEx source](reports/mailex_source.md) and [Enron source](data/raw/enron/README.md). Raw downloaded data and generated JSONL under `ai/data/` are ignored by Git. Keep original input files unchanged. Validate records before splitting. Splits group all messages from a source-qualified thread; synthetic records are restricted to training and never become gold.
+MailEx defaults to the extracted official release under `ai/data/raw/mailex/extracted/data/full_data`. The full CMU Enron archive has been downloaded and extracted under `ai/data/raw/enron/full/maildir`; the completed run and current pool are measured in [dataset progress](reports/dataset_progress.md). Source provenance is in [MailEx source](reports/mailex_source.md) and [Enron source](data/raw/enron/README.md). Raw downloaded data and generated JSONL under `ai/data/` are ignored by Git. Keep original input files unchanged. Validate records before splitting. Splits group all messages from a source-qualified thread; synthetic records are restricted to training and never become gold.
 
 ## Workflow
 
@@ -32,4 +34,4 @@ MailEx defaults to the extracted official release under `ai/data/raw/mailex/extr
 4. Review a 200–300 email seed with two annotators where feasible. Resolve disagreements and freeze guidelines.
 5. Build a real, human-reviewed 300–500 email gold test set, isolated by thread, before model development.
 
-See [dataset progress](reports/dataset_progress.md) for executed counts and current limitations.
+For independent human annotation, use the [simple local annotator](annotation/simple_annotator/README.md). Label Studio remains an alternative. See [dataset progress](reports/dataset_progress.md) for executed counts and current limitations.
