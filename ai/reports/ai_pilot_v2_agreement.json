@@ -1,0 +1,419 @@
+{
+  "pilot_records": 50,
+  "paired_records": 50,
+  "both_ai_prelabelled_records": 49,
+  "clean_subset_records": 31,
+  "unresolved_records": 1,
+  "unresolved_email_ids": [
+    "enron-51730ac5c0e544a597560004"
+  ],
+  "needs_review_flags": {
+    "flagged_records": 19,
+    "flagged_email_ids": [
+      "enron-8aefcd78fd4ad5a2675ad7ee",
+      "enron-1a4dd490a7e72504ff43b92f",
+      "enron-e481ace74637a7820f347bdf",
+      "enron-33ffdc48314c40b8490d27f8",
+      "enron-0a3fe89bc236307a122b37f9",
+      "enron-45a24f823f7b07f5a8eb4820",
+      "enron-f26fe4defd428d78ebcc10ab",
+      "enron-ebe8f2fc3935dc5b4af28331",
+      "enron-9111485979a861943e29295d",
+      "enron-ca67c7634b2b0f0a4b02537d",
+      "enron-6b0d08f84a9478ff92bd991b",
+      "enron-30760d7401b5151d50118b8a",
+      "enron-cef01981fcf364bc0f9d27c9",
+      "enron-1fcfd6751170660300f642f7",
+      "enron-6a27a95215a5f21b9aa2f3bc",
+      "enron-4f805fb09254fd6f39d11790",
+      "enron-51730ac5c0e544a597560004",
+      "enron-9f0e3c4631e91dd77087c3a9",
+      "enron-aa03a9c623aede42529fc5e4"
+    ],
+    "by_reviewer": {
+      "A": {
+        "count": 14,
+        "email_ids": [
+          "enron-8aefcd78fd4ad5a2675ad7ee",
+          "enron-e481ace74637a7820f347bdf",
+          "enron-33ffdc48314c40b8490d27f8",
+          "enron-45a24f823f7b07f5a8eb4820",
+          "enron-f26fe4defd428d78ebcc10ab",
+          "enron-ebe8f2fc3935dc5b4af28331",
+          "enron-ca67c7634b2b0f0a4b02537d",
+          "enron-6b0d08f84a9478ff92bd991b",
+          "enron-30760d7401b5151d50118b8a",
+          "enron-cef01981fcf364bc0f9d27c9",
+          "enron-1fcfd6751170660300f642f7",
+          "enron-4f805fb09254fd6f39d11790",
+          "enron-51730ac5c0e544a597560004",
+          "enron-aa03a9c623aede42529fc5e4"
+        ]
+      },
+      "B": {
+        "count": 9,
+        "email_ids": [
+          "enron-8aefcd78fd4ad5a2675ad7ee",
+          "enron-1a4dd490a7e72504ff43b92f",
+          "enron-e481ace74637a7820f347bdf",
+          "enron-0a3fe89bc236307a122b37f9",
+          "enron-f26fe4defd428d78ebcc10ab",
+          "enron-9111485979a861943e29295d",
+          "enron-6a27a95215a5f21b9aa2f3bc",
+          "enron-51730ac5c0e544a597560004",
+          "enron-9f0e3c4631e91dd77087c3a9"
+        ]
+      }
+    }
+  },
+  "reviewer_status_counts": {
+    "A": {
+      "ai_prelabelled": 49,
+      "unlabelled": 1
+    },
+    "B": {
+      "ai_prelabelled": 50
+    }
+  },
+  "raw_pairwise_agreement": {
+    "basis": "All paired records, including unresolved and needs_review records. Empty labels on unresolved rows are raw output values, not verified negatives.",
+    "records": 50,
+    "classification": {
+      "label_set_exact_match_records": 33,
+      "label_set_exact_match_rate": 0.66,
+      "per_label": {
+        "ACTION_REQUEST": {
+          "both_present": 14,
+          "both_absent": 26,
+          "a_only": 6,
+          "b_only": 4,
+          "agreement_records": 40,
+          "agreement_rate": 0.8
+        },
+        "APPROVAL": {
+          "both_present": 1,
+          "both_absent": 48,
+          "a_only": 1,
+          "b_only": 0,
+          "agreement_records": 49,
+          "agreement_rate": 0.98
+        },
+        "DEADLINE": {
+          "both_present": 11,
+          "both_absent": 37,
+          "a_only": 1,
+          "b_only": 1,
+          "agreement_records": 48,
+          "agreement_rate": 0.96
+        },
+        "DEPARTMENTAL_INPUT": {
+          "both_present": 2,
+          "both_absent": 45,
+          "a_only": 0,
+          "b_only": 3,
+          "agreement_records": 47,
+          "agreement_rate": 0.94
+        },
+        "FOLLOW_UP": {
+          "both_present": 1,
+          "both_absent": 47,
+          "a_only": 1,
+          "b_only": 1,
+          "agreement_records": 48,
+          "agreement_rate": 0.96
+        },
+        "GENERAL_UPDATE": {
+          "both_present": 20,
+          "both_absent": 25,
+          "a_only": 2,
+          "b_only": 3,
+          "agreement_records": 45,
+          "agreement_rate": 0.9
+        },
+        "MEETING": {
+          "both_present": 9,
+          "both_absent": 37,
+          "a_only": 2,
+          "b_only": 2,
+          "agreement_records": 46,
+          "agreement_rate": 0.92
+        },
+        "NON_PROJECT": {
+          "both_present": 18,
+          "both_absent": 26,
+          "a_only": 4,
+          "b_only": 2,
+          "agreement_records": 44,
+          "agreement_rate": 0.88
+        },
+        "REPORT_REQUEST": {
+          "both_present": 7,
+          "both_absent": 42,
+          "a_only": 0,
+          "b_only": 1,
+          "agreement_records": 49,
+          "agreement_rate": 0.98
+        }
+      }
+    },
+    "spans": {
+      "record_exact_span_set_match_records": 23,
+      "record_exact_span_set_match_rate": 0.46,
+      "shared_span_instances": 71,
+      "a_only_span_instances": 72,
+      "b_only_span_instances": 63,
+      "per_span_label": {
+        "ACTION_ITEM": {
+          "records_exact_match": 30,
+          "exact_match_rate": 0.6,
+          "shared_spans": 17,
+          "a_only_spans": 33,
+          "b_only_spans": 12
+        },
+        "AGENDA": {
+          "records_exact_match": 47,
+          "exact_match_rate": 0.94,
+          "shared_spans": 5,
+          "a_only_spans": 2,
+          "b_only_spans": 6
+        },
+        "DEADLINE_DATE": {
+          "records_exact_match": 41,
+          "exact_match_rate": 0.82,
+          "shared_spans": 20,
+          "a_only_spans": 8,
+          "b_only_spans": 9
+        },
+        "DEADLINE_TIME": {
+          "records_exact_match": 49,
+          "exact_match_rate": 0.98,
+          "shared_spans": 1,
+          "a_only_spans": 0,
+          "b_only_spans": 1
+        },
+        "DEPARTMENT": {
+          "records_exact_match": 46,
+          "exact_match_rate": 0.92,
+          "shared_spans": 2,
+          "a_only_spans": 0,
+          "b_only_spans": 4
+        },
+        "MEETING_DATE": {
+          "records_exact_match": 45,
+          "exact_match_rate": 0.9,
+          "shared_spans": 7,
+          "a_only_spans": 4,
+          "b_only_spans": 2
+        },
+        "MEETING_TIME": {
+          "records_exact_match": 46,
+          "exact_match_rate": 0.92,
+          "shared_spans": 5,
+          "a_only_spans": 3,
+          "b_only_spans": 3
+        },
+        "PARTICIPANT": {
+          "records_exact_match": 48,
+          "exact_match_rate": 0.96,
+          "shared_spans": 0,
+          "a_only_spans": 0,
+          "b_only_spans": 2
+        },
+        "PROJECT": {
+          "records_exact_match": 41,
+          "exact_match_rate": 0.82,
+          "shared_spans": 8,
+          "a_only_spans": 7,
+          "b_only_spans": 6
+        },
+        "REQUESTED_DOCUMENT": {
+          "records_exact_match": 44,
+          "exact_match_rate": 0.88,
+          "shared_spans": 6,
+          "a_only_spans": 13,
+          "b_only_spans": 7
+        },
+        "RESPONSIBLE_PARTY": {
+          "records_exact_match": 44,
+          "exact_match_rate": 0.88,
+          "shared_spans": 0,
+          "a_only_spans": 2,
+          "b_only_spans": 11
+        }
+      }
+    }
+  },
+  "clean_subset_agreement": {
+    "basis": "Both reviewers marked ai_prelabelled and neither set needs_review=true.",
+    "records": 31,
+    "classification": {
+      "label_set_exact_match_records": 25,
+      "label_set_exact_match_rate": 0.8064516129032258,
+      "per_label": {
+        "ACTION_REQUEST": {
+          "both_present": 10,
+          "both_absent": 17,
+          "a_only": 1,
+          "b_only": 3,
+          "agreement_records": 27,
+          "agreement_rate": 0.8709677419354839
+        },
+        "APPROVAL": {
+          "both_present": 0,
+          "both_absent": 31,
+          "a_only": 0,
+          "b_only": 0,
+          "agreement_records": 31,
+          "agreement_rate": 1.0
+        },
+        "DEADLINE": {
+          "both_present": 4,
+          "both_absent": 26,
+          "a_only": 0,
+          "b_only": 1,
+          "agreement_records": 30,
+          "agreement_rate": 0.967741935483871
+        },
+        "DEPARTMENTAL_INPUT": {
+          "both_present": 1,
+          "both_absent": 30,
+          "a_only": 0,
+          "b_only": 0,
+          "agreement_records": 31,
+          "agreement_rate": 1.0
+        },
+        "FOLLOW_UP": {
+          "both_present": 1,
+          "both_absent": 29,
+          "a_only": 1,
+          "b_only": 0,
+          "agreement_records": 30,
+          "agreement_rate": 0.967741935483871
+        },
+        "GENERAL_UPDATE": {
+          "both_present": 11,
+          "both_absent": 18,
+          "a_only": 0,
+          "b_only": 2,
+          "agreement_records": 29,
+          "agreement_rate": 0.9354838709677419
+        },
+        "MEETING": {
+          "both_present": 4,
+          "both_absent": 24,
+          "a_only": 2,
+          "b_only": 1,
+          "agreement_records": 28,
+          "agreement_rate": 0.9032258064516129
+        },
+        "NON_PROJECT": {
+          "both_present": 15,
+          "both_absent": 13,
+          "a_only": 3,
+          "b_only": 0,
+          "agreement_records": 28,
+          "agreement_rate": 0.9032258064516129
+        },
+        "REPORT_REQUEST": {
+          "both_present": 3,
+          "both_absent": 27,
+          "a_only": 0,
+          "b_only": 1,
+          "agreement_records": 30,
+          "agreement_rate": 0.967741935483871
+        }
+      }
+    },
+    "spans": {
+      "record_exact_span_set_match_records": 17,
+      "record_exact_span_set_match_rate": 0.5483870967741935,
+      "shared_span_instances": 33,
+      "a_only_span_instances": 37,
+      "b_only_span_instances": 31,
+      "per_span_label": {
+        "ACTION_ITEM": {
+          "records_exact_match": 22,
+          "exact_match_rate": 0.7096774193548387,
+          "shared_spans": 10,
+          "a_only_spans": 16,
+          "b_only_spans": 8
+        },
+        "AGENDA": {
+          "records_exact_match": 29,
+          "exact_match_rate": 0.9354838709677419,
+          "shared_spans": 5,
+          "a_only_spans": 2,
+          "b_only_spans": 5
+        },
+        "DEADLINE_DATE": {
+          "records_exact_match": 29,
+          "exact_match_rate": 0.9354838709677419,
+          "shared_spans": 7,
+          "a_only_spans": 1,
+          "b_only_spans": 2
+        },
+        "DEADLINE_TIME": {
+          "records_exact_match": 31,
+          "exact_match_rate": 1.0,
+          "shared_spans": 0,
+          "a_only_spans": 0,
+          "b_only_spans": 0
+        },
+        "DEPARTMENT": {
+          "records_exact_match": 30,
+          "exact_match_rate": 0.967741935483871,
+          "shared_spans": 1,
+          "a_only_spans": 0,
+          "b_only_spans": 1
+        },
+        "MEETING_DATE": {
+          "records_exact_match": 27,
+          "exact_match_rate": 0.8709677419354839,
+          "shared_spans": 2,
+          "a_only_spans": 4,
+          "b_only_spans": 1
+        },
+        "MEETING_TIME": {
+          "records_exact_match": 29,
+          "exact_match_rate": 0.9354838709677419,
+          "shared_spans": 0,
+          "a_only_spans": 2,
+          "b_only_spans": 1
+        },
+        "PARTICIPANT": {
+          "records_exact_match": 30,
+          "exact_match_rate": 0.967741935483871,
+          "shared_spans": 0,
+          "a_only_spans": 0,
+          "b_only_spans": 1
+        },
+        "PROJECT": {
+          "records_exact_match": 27,
+          "exact_match_rate": 0.8709677419354839,
+          "shared_spans": 6,
+          "a_only_spans": 3,
+          "b_only_spans": 2
+        },
+        "REQUESTED_DOCUMENT": {
+          "records_exact_match": 29,
+          "exact_match_rate": 0.9354838709677419,
+          "shared_spans": 2,
+          "a_only_spans": 7,
+          "b_only_spans": 3
+        },
+        "RESPONSIBLE_PARTY": {
+          "records_exact_match": 27,
+          "exact_match_rate": 0.8709677419354839,
+          "shared_spans": 0,
+          "a_only_spans": 2,
+          "b_only_spans": 7
+        }
+      }
+    }
+  },
+  "metric_interpretation": "Agreement between the two AI outputs only; not accuracy against gold labels.",
+  "comparison_is_inter_ai_agreement_only": true,
+  "gold_labels_used": false,
+  "accuracy_reported": false,
+  "disagreement_count": 33
+}

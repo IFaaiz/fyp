@@ -132,7 +132,7 @@ def build_project_pilot_seed(
         raise ValueError(f"pilot selection splits candidate-pool threads: {partial_threads[:3]}")
     manifest = {
         "source_dataset": "enron",
-        "display_name": "Project email pilot",
+        "display_name": str(config.get("display_name") or "Project email pilot")[:80],
         "input_pool": str(pool_path.relative_to(PROJECT_ROOT)).replace("\\", "/"),
         "input_pool_sha256": digest.hexdigest(),
         "selection_config": str(config_path.relative_to(PROJECT_ROOT)).replace("\\", "/"),

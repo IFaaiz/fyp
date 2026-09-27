@@ -20,6 +20,9 @@ python ai/scripts/create_candidate_pool.py --input ai/data/interim/enron_full.js
 python ai/scripts/validate_dataset.py ai/data/processed/mailex.jsonl
 # Current AI-only pilot: compare two independent local prelabel files:
 ai/.venv/Scripts/python.exe ai/scripts/compare_ai_pilot.py --reviewer-a ai/data/annotated/ai/project_pilot_50/reviewer_a.jsonl --reviewer-b ai/data/annotated/ai/project_pilot_50/reviewer_b.jsonl --report ai/reports/ai_pilot_agreement.json
+# Second blind AI pilot, using a separate seed and reviewer files:
+ai/.venv/Scripts/python.exe ai/scripts/build_project_pilot_v2.py
+ai/.venv/Scripts/python.exe ai/scripts/compare_ai_pilot.py --pilot-seed ai/data/annotated/ai/project_pilot_50_v2/annotation_seed_50.jsonl --reviewer-a ai/data/annotated/ai/project_pilot_50_v2/reviewers/reviewer_a.jsonl --reviewer-b ai/data/annotated/ai/project_pilot_50_v2/reviewers/reviewer_b.jsonl --report ai/reports/ai_pilot_v2_agreement.json --disagreements ai/data/annotated/ai_reviewed/project_pilot_50_v2/disagreements.jsonl
 # When human-reviewed records become available later:
 python ai/scripts/create_splits.py ai/data/annotated/human/reviewed.jsonl
 ```
@@ -34,4 +37,4 @@ MailEx defaults to the extracted official release under `ai/data/raw/mailex/extr
 4. Review a 200–300 email seed with two annotators where feasible. Resolve disagreements and freeze guidelines.
 5. Build a real, human-reviewed 300–500 email gold test set, isolated by thread, before model development.
 
-The current AI-only pilot and its limits are in the [AI pilot review](reports/ai_pilot_review.md). Human annotation is deferred; when resumed, use the [simple local annotator](annotation/simple_annotator/README.md). Label Studio remains an alternative. See [dataset progress](reports/dataset_progress.md) for executed counts and current limitations.
+The two AI-only pilots and their limits are in the [first review](reports/ai_pilot_review.md) and [second review](reports/ai_pilot_v2_review.md). Human annotation is deferred; when resumed, use the [simple local annotator](annotation/simple_annotator/README.md). Label Studio remains an alternative. See [dataset progress](reports/dataset_progress.md) for executed counts and current limitations.
