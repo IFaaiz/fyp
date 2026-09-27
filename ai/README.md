@@ -18,9 +18,9 @@ python ai/scripts/prepare_mailex.py
 python ai/scripts/prepare_enron.py --maildir ai/data/raw/enron/full/maildir --output ai/data/interim/enron_full.jsonl
 python ai/scripts/create_candidate_pool.py --input ai/data/interim/enron_full.jsonl --output ai/data/interim/enron_candidates.jsonl --secondary-thread-links --thread-mode whole
 python ai/scripts/validate_dataset.py ai/data/processed/mailex.jsonl
-# First independent human pilot (after installing Flask):
-python ai/annotation/simple_annotator/app.py --reviewer faaiz --limit 50
-# After human-reviewed records exist:
+# Current AI-only pilot: compare two independent local prelabel files:
+ai/.venv/Scripts/python.exe ai/scripts/compare_ai_pilot.py --reviewer-a ai/data/annotated/ai/project_pilot_50/reviewer_a.jsonl --reviewer-b ai/data/annotated/ai/project_pilot_50/reviewer_b.jsonl --report ai/reports/ai_pilot_agreement.json
+# When human-reviewed records become available later:
 python ai/scripts/create_splits.py ai/data/annotated/human/reviewed.jsonl
 ```
 
@@ -34,4 +34,4 @@ MailEx defaults to the extracted official release under `ai/data/raw/mailex/extr
 4. Review a 200–300 email seed with two annotators where feasible. Resolve disagreements and freeze guidelines.
 5. Build a real, human-reviewed 300–500 email gold test set, isolated by thread, before model development.
 
-For independent human annotation, use the [simple local annotator](annotation/simple_annotator/README.md). Label Studio remains an alternative. See [dataset progress](reports/dataset_progress.md) for executed counts and current limitations.
+The current AI-only pilot and its limits are in the [AI pilot review](reports/ai_pilot_review.md). Human annotation is deferred; when resumed, use the [simple local annotator](annotation/simple_annotator/README.md). Label Studio remains an alternative. See [dataset progress](reports/dataset_progress.md) for executed counts and current limitations.

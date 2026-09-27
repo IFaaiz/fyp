@@ -1,0 +1,403 @@
+{
+  "pilot_records": 50,
+  "paired_records": 50,
+  "both_ai_prelabelled_records": 50,
+  "clean_subset_records": 36,
+  "unresolved_records": 0,
+  "unresolved_email_ids": [],
+  "needs_review_flags": {
+    "flagged_records": 14,
+    "flagged_email_ids": [
+      "enron-692ca42dcbaf060ce8e39fce",
+      "enron-1479c03ae5be69e745ca4610",
+      "enron-4584e43aad64cef0f947ce8c",
+      "enron-322eb38d6ea21ec28142e459",
+      "enron-e00d3e0c03369bb1fe931b14",
+      "enron-b0f95896e80b19f049b851b4",
+      "enron-0dd4f3de68e375315b4bacf6",
+      "enron-14f41621b6644f793ae1e126",
+      "enron-a2b8e54c2785f6360ae602c9",
+      "enron-d642716bef26e63735fd6b90",
+      "enron-edfb25d53418fb7acd788f70",
+      "enron-63b3eda1e58e9e2059d8c5df",
+      "enron-d0811c26eacdc7c9511f1531",
+      "enron-e493df17333eb18fe5492fe7"
+    ],
+    "by_reviewer": {
+      "A": {
+        "count": 2,
+        "email_ids": [
+          "enron-1479c03ae5be69e745ca4610",
+          "enron-edfb25d53418fb7acd788f70"
+        ]
+      },
+      "B": {
+        "count": 13,
+        "email_ids": [
+          "enron-692ca42dcbaf060ce8e39fce",
+          "enron-4584e43aad64cef0f947ce8c",
+          "enron-322eb38d6ea21ec28142e459",
+          "enron-e00d3e0c03369bb1fe931b14",
+          "enron-b0f95896e80b19f049b851b4",
+          "enron-0dd4f3de68e375315b4bacf6",
+          "enron-14f41621b6644f793ae1e126",
+          "enron-a2b8e54c2785f6360ae602c9",
+          "enron-d642716bef26e63735fd6b90",
+          "enron-edfb25d53418fb7acd788f70",
+          "enron-63b3eda1e58e9e2059d8c5df",
+          "enron-d0811c26eacdc7c9511f1531",
+          "enron-e493df17333eb18fe5492fe7"
+        ]
+      }
+    }
+  },
+  "reviewer_status_counts": {
+    "A": {
+      "ai_prelabelled": 50
+    },
+    "B": {
+      "ai_prelabelled": 50
+    }
+  },
+  "raw_pairwise_agreement": {
+    "basis": "All paired records, including unresolved and needs_review records. Empty labels on unresolved rows are raw output values, not verified negatives.",
+    "records": 50,
+    "classification": {
+      "label_set_exact_match_records": 26,
+      "label_set_exact_match_rate": 0.52,
+      "per_label": {
+        "ACTION_REQUEST": {
+          "both_present": 17,
+          "both_absent": 22,
+          "a_only": 7,
+          "b_only": 4,
+          "agreement_records": 39,
+          "agreement_rate": 0.78
+        },
+        "APPROVAL": {
+          "both_present": 6,
+          "both_absent": 44,
+          "a_only": 0,
+          "b_only": 0,
+          "agreement_records": 50,
+          "agreement_rate": 1.0
+        },
+        "DEADLINE": {
+          "both_present": 23,
+          "both_absent": 21,
+          "a_only": 2,
+          "b_only": 4,
+          "agreement_records": 44,
+          "agreement_rate": 0.88
+        },
+        "DEPARTMENTAL_INPUT": {
+          "both_present": 2,
+          "both_absent": 44,
+          "a_only": 1,
+          "b_only": 3,
+          "agreement_records": 46,
+          "agreement_rate": 0.92
+        },
+        "FOLLOW_UP": {
+          "both_present": 0,
+          "both_absent": 48,
+          "a_only": 0,
+          "b_only": 2,
+          "agreement_records": 48,
+          "agreement_rate": 0.96
+        },
+        "GENERAL_UPDATE": {
+          "both_present": 28,
+          "both_absent": 18,
+          "a_only": 3,
+          "b_only": 1,
+          "agreement_records": 46,
+          "agreement_rate": 0.92
+        },
+        "MEETING": {
+          "both_present": 16,
+          "both_absent": 29,
+          "a_only": 0,
+          "b_only": 5,
+          "agreement_records": 45,
+          "agreement_rate": 0.9
+        },
+        "NON_PROJECT": {
+          "both_present": 10,
+          "both_absent": 39,
+          "a_only": 1,
+          "b_only": 0,
+          "agreement_records": 49,
+          "agreement_rate": 0.98
+        },
+        "REPORT_REQUEST": {
+          "both_present": 6,
+          "both_absent": 38,
+          "a_only": 0,
+          "b_only": 6,
+          "agreement_records": 44,
+          "agreement_rate": 0.88
+        }
+      }
+    },
+    "spans": {
+      "record_exact_span_set_match_records": 12,
+      "record_exact_span_set_match_rate": 0.24,
+      "shared_span_instances": 107,
+      "a_only_span_instances": 61,
+      "b_only_span_instances": 169,
+      "per_span_label": {
+        "ACTION_ITEM": {
+          "records_exact_match": 18,
+          "exact_match_rate": 0.36,
+          "shared_spans": 7,
+          "a_only_spans": 25,
+          "b_only_spans": 51
+        },
+        "AGENDA": {
+          "records_exact_match": 45,
+          "exact_match_rate": 0.9,
+          "shared_spans": 7,
+          "a_only_spans": 0,
+          "b_only_spans": 14
+        },
+        "DEADLINE_DATE": {
+          "records_exact_match": 38,
+          "exact_match_rate": 0.76,
+          "shared_spans": 21,
+          "a_only_spans": 9,
+          "b_only_spans": 15
+        },
+        "DEADLINE_TIME": {
+          "records_exact_match": 48,
+          "exact_match_rate": 0.96,
+          "shared_spans": 10,
+          "a_only_spans": 0,
+          "b_only_spans": 2
+        },
+        "DEPARTMENT": {
+          "records_exact_match": 45,
+          "exact_match_rate": 0.9,
+          "shared_spans": 1,
+          "a_only_spans": 1,
+          "b_only_spans": 4
+        },
+        "MEETING_DATE": {
+          "records_exact_match": 43,
+          "exact_match_rate": 0.86,
+          "shared_spans": 13,
+          "a_only_spans": 4,
+          "b_only_spans": 5
+        },
+        "MEETING_TIME": {
+          "records_exact_match": 48,
+          "exact_match_rate": 0.96,
+          "shared_spans": 10,
+          "a_only_spans": 2,
+          "b_only_spans": 1
+        },
+        "PARTICIPANT": {
+          "records_exact_match": 41,
+          "exact_match_rate": 0.82,
+          "shared_spans": 5,
+          "a_only_spans": 0,
+          "b_only_spans": 12
+        },
+        "PROJECT": {
+          "records_exact_match": 35,
+          "exact_match_rate": 0.7,
+          "shared_spans": 16,
+          "a_only_spans": 12,
+          "b_only_spans": 11
+        },
+        "REQUESTED_DOCUMENT": {
+          "records_exact_match": 33,
+          "exact_match_rate": 0.66,
+          "shared_spans": 7,
+          "a_only_spans": 5,
+          "b_only_spans": 24
+        },
+        "RESPONSIBLE_PARTY": {
+          "records_exact_match": 35,
+          "exact_match_rate": 0.7,
+          "shared_spans": 10,
+          "a_only_spans": 3,
+          "b_only_spans": 30
+        }
+      }
+    }
+  },
+  "clean_subset_agreement": {
+    "basis": "Both reviewers marked ai_prelabelled and neither set needs_review=true.",
+    "records": 36,
+    "classification": {
+      "label_set_exact_match_records": 21,
+      "label_set_exact_match_rate": 0.5833333333333334,
+      "per_label": {
+        "ACTION_REQUEST": {
+          "both_present": 12,
+          "both_absent": 17,
+          "a_only": 4,
+          "b_only": 3,
+          "agreement_records": 29,
+          "agreement_rate": 0.8055555555555556
+        },
+        "APPROVAL": {
+          "both_present": 5,
+          "both_absent": 31,
+          "a_only": 0,
+          "b_only": 0,
+          "agreement_records": 36,
+          "agreement_rate": 1.0
+        },
+        "DEADLINE": {
+          "both_present": 16,
+          "both_absent": 16,
+          "a_only": 1,
+          "b_only": 3,
+          "agreement_records": 32,
+          "agreement_rate": 0.8888888888888888
+        },
+        "DEPARTMENTAL_INPUT": {
+          "both_present": 1,
+          "both_absent": 33,
+          "a_only": 1,
+          "b_only": 1,
+          "agreement_records": 34,
+          "agreement_rate": 0.9444444444444444
+        },
+        "FOLLOW_UP": {
+          "both_present": 0,
+          "both_absent": 34,
+          "a_only": 0,
+          "b_only": 2,
+          "agreement_records": 34,
+          "agreement_rate": 0.9444444444444444
+        },
+        "GENERAL_UPDATE": {
+          "both_present": 17,
+          "both_absent": 17,
+          "a_only": 2,
+          "b_only": 0,
+          "agreement_records": 34,
+          "agreement_rate": 0.9444444444444444
+        },
+        "MEETING": {
+          "both_present": 9,
+          "both_absent": 25,
+          "a_only": 0,
+          "b_only": 2,
+          "agreement_records": 34,
+          "agreement_rate": 0.9444444444444444
+        },
+        "NON_PROJECT": {
+          "both_present": 10,
+          "both_absent": 25,
+          "a_only": 1,
+          "b_only": 0,
+          "agreement_records": 35,
+          "agreement_rate": 0.9722222222222222
+        },
+        "REPORT_REQUEST": {
+          "both_present": 4,
+          "both_absent": 29,
+          "a_only": 0,
+          "b_only": 3,
+          "agreement_records": 33,
+          "agreement_rate": 0.9166666666666666
+        }
+      }
+    },
+    "spans": {
+      "record_exact_span_set_match_records": 12,
+      "record_exact_span_set_match_rate": 0.3333333333333333,
+      "shared_span_instances": 76,
+      "a_only_span_instances": 41,
+      "b_only_span_instances": 106,
+      "per_span_label": {
+        "ACTION_ITEM": {
+          "records_exact_match": 14,
+          "exact_match_rate": 0.3888888888888889,
+          "shared_spans": 5,
+          "a_only_spans": 16,
+          "b_only_spans": 34
+        },
+        "AGENDA": {
+          "records_exact_match": 34,
+          "exact_match_rate": 0.9444444444444444,
+          "shared_spans": 4,
+          "a_only_spans": 0,
+          "b_only_spans": 9
+        },
+        "DEADLINE_DATE": {
+          "records_exact_match": 26,
+          "exact_match_rate": 0.7222222222222222,
+          "shared_spans": 14,
+          "a_only_spans": 9,
+          "b_only_spans": 12
+        },
+        "DEADLINE_TIME": {
+          "records_exact_match": 34,
+          "exact_match_rate": 0.9444444444444444,
+          "shared_spans": 7,
+          "a_only_spans": 0,
+          "b_only_spans": 2
+        },
+        "DEPARTMENT": {
+          "records_exact_match": 33,
+          "exact_match_rate": 0.9166666666666666,
+          "shared_spans": 0,
+          "a_only_spans": 1,
+          "b_only_spans": 2
+        },
+        "MEETING_DATE": {
+          "records_exact_match": 33,
+          "exact_match_rate": 0.9166666666666666,
+          "shared_spans": 10,
+          "a_only_spans": 2,
+          "b_only_spans": 3
+        },
+        "MEETING_TIME": {
+          "records_exact_match": 36,
+          "exact_match_rate": 1.0,
+          "shared_spans": 8,
+          "a_only_spans": 0,
+          "b_only_spans": 0
+        },
+        "PARTICIPANT": {
+          "records_exact_match": 32,
+          "exact_match_rate": 0.8888888888888888,
+          "shared_spans": 5,
+          "a_only_spans": 0,
+          "b_only_spans": 5
+        },
+        "PROJECT": {
+          "records_exact_match": 26,
+          "exact_match_rate": 0.7222222222222222,
+          "shared_spans": 9,
+          "a_only_spans": 8,
+          "b_only_spans": 8
+        },
+        "REQUESTED_DOCUMENT": {
+          "records_exact_match": 27,
+          "exact_match_rate": 0.75,
+          "shared_spans": 5,
+          "a_only_spans": 3,
+          "b_only_spans": 14
+        },
+        "RESPONSIBLE_PARTY": {
+          "records_exact_match": 27,
+          "exact_match_rate": 0.75,
+          "shared_spans": 9,
+          "a_only_spans": 2,
+          "b_only_spans": 17
+        }
+      }
+    }
+  },
+  "metric_interpretation": "Agreement between the two AI outputs only; not accuracy against gold labels.",
+  "comparison_is_inter_ai_agreement_only": true,
+  "gold_labels_used": false,
+  "accuracy_reported": false,
+  "disagreement_count": 39
+}
