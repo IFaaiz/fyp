@@ -23,6 +23,8 @@ ai/.venv/Scripts/python.exe ai/scripts/compare_ai_pilot.py --reviewer-a ai/data/
 # Second blind AI pilot, using a separate seed and reviewer files:
 ai/.venv/Scripts/python.exe ai/scripts/build_project_pilot_v2.py
 ai/.venv/Scripts/python.exe ai/scripts/compare_ai_pilot.py --pilot-seed ai/data/annotated/ai/project_pilot_50_v2/annotation_seed_50.jsonl --reviewer-a ai/data/annotated/ai/project_pilot_50_v2/reviewers/reviewer_a.jsonl --reviewer-b ai/data/annotated/ai/project_pilot_50_v2/reviewers/reviewer_b.jsonl --report ai/reports/ai_pilot_v2_agreement.json --disagreements ai/data/annotated/ai_reviewed/project_pilot_50_v2/disagreements.jsonl
+# Build the directly audited, classification-only AI silver batch:
+ai/.venv/Scripts/python.exe ai/scripts/build_ai_silver_classification.py
 # When human-reviewed records become available later:
 python ai/scripts/create_splits.py ai/data/annotated/human/reviewed.jsonl
 ```
@@ -35,6 +37,6 @@ MailEx defaults to the extracted official release under `ai/data/raw/mailex/extr
 2. Run preparation scripts to create canonical, initially unlabelled records and source-specific extraction proposals where justified.
 3. Select project candidates and random negatives for independent human annotation. Keyword selection is only for sampling.
 4. Review a 200–300 email seed with two annotators where feasible. Resolve disagreements and freeze guidelines.
-5. Build a real, human-reviewed 300–500 email gold test set, isolated by thread, before model development.
+5. Build a real, human-reviewed 300–500 email gold test set, isolated by thread, before reporting model accuracy or deployment readiness. AI-only prototypes may be built from the silver batch but must not be evaluated as if it were gold.
 
-The two AI-only pilots and their limits are in the [first review](reports/ai_pilot_review.md) and [second review](reports/ai_pilot_v2_review.md). Human annotation is deferred; when resumed, use the [simple local annotator](annotation/simple_annotator/README.md). Label Studio remains an alternative. See [dataset progress](reports/dataset_progress.md) for executed counts and current limitations.
+The two AI-only pilots and their limits are in the [first review](reports/ai_pilot_review.md) and [second review](reports/ai_pilot_v2_review.md). The [direct audit](reports/ai_pilot_v2_correctness_audit.md), [silver-batch report](reports/ai_silver_classification.md), and [v3 protocol](annotation/ai_review_protocol_v3.md) document the corrected classification-only prototype set. Human annotation is deferred; when resumed, use the [simple local annotator](annotation/simple_annotator/README.md). Label Studio remains an alternative. See [dataset progress](reports/dataset_progress.md) for executed counts and current limitations.
