@@ -6,6 +6,8 @@ The AI/NLP workstream has an annotation schema, a verified MailEx conversion, an
 
 **27 September update:** Two blind AI pilots and a direct AI correctness audit are complete. A classification-only silver batch now contains 41 AI suggestions and 9 held-back records; its spans are empty pending semantic review. See the [silver-batch report](ai_silver_classification.md) and [v3 protocol](../annotation/ai_review_protocol_v3.md). No gold set or model-accuracy estimate has been created.
 
+**28 September update:** A further 100 Enron messages received two independent classification-only AI reviews. A strict agreement and supervisor gate retained 66 provisional AI-silver decisions (65 `NON_PROJECT`, one multi-label project message) and excluded 34 uncertain cases; a second AI audit read all accepted rows. A text-free provisional manifest now selects 1,400 distinct messages for a larger, project-enriched review, with source messages kept in ignored data paths. Cross-source Enron/MailEx leakage grouping is in progress and remains a hard gate before a split or model evaluation. TF-IDF plus one-vs-rest logistic-regression infrastructure is implemented but has not been trained on real silver data. See [first expansion audit](training_expansion_100_audit.md), [baseline infrastructure](silver_classifier_training_baseline.md), and [extraction status](extraction_readiness.md).
+
 ## Correctness and schema
 
 - A source-qualified thread containing any real `annotation.status == "gold"` record is assigned wholly to test. The validator rejects gold in train/validation and synthetic records in test. Synthetic gold is invalid.
@@ -46,7 +48,7 @@ Label Studio has a multi-label classification and two-field span configuration, 
 
 ## Verification and remaining work
 
-- Unit suite: 60 tests passed in the final supervisor run, including gold isolation, validator invariants, MailEx span deduplication, same-sender thread-link rejection, complete-pair seed selection, and Label Studio conversion/agreement logic.
+- Unit suite: 95 tests passed in the 28 September supervisor run, including gold isolation, validator invariants, MailEx span deduplication, same-sender thread-link rejection, complete-pair seed selection, Label Studio conversion/agreement logic, cross-source leakage fixtures, and the silver-classifier loader/split fixtures.
 - Canonical validator: 3,936 MailEx records, 517,401 full Enron records, 8,000 full candidate-pool records, and 13 synthetic examples each passed with zero errors. The supervisor reran the full Enron and candidate validators after final generation. The full pool sidecar covers exactly the selected IDs and thread IDs; an in-memory thread split of 6,000/800/1,200 records had zero isolation errors.
 - Full Enron ingestion and validation are complete. The full candidate pool is built and validated. The human seed and blank-task transport verification are complete. Human annotation, adjudication, and gold reservation remain the gates for a defensible accuracy estimate; the AI-only silver batch is available for prototyping while that work is deferred.
 - The planned human protocol calls for independent seed labels, adjudication, and 300–500 real thread-isolated gold emails before a final training/evaluation claim. Historical Enron text needs institutional use/redistribution review before sharing. No training metric is reported from unreviewed data.

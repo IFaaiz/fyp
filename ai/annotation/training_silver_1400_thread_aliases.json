@@ -1,0 +1,25 @@
+{
+  "description": "Four reviewed seed records use candidate-pool heuristic thread IDs; the full Enron source and leakage sidecar retain canonical source thread IDs. Subject and current_message were verified byte-identical across representations. The training decision manifest must use canonical_thread_id, while this file preserves review-time provenance.",
+  "aliases": [
+    {
+      "email_id": "enron-3d63ac26b276a0dcbe647f08",
+      "reviewed_thread_id": "enron-heuristic-thread-199c2a0cd56249e86d1f",
+      "canonical_thread_id": "enron-thread-c6193a1f48255b85e06f"
+    },
+    {
+      "email_id": "enron-4d5151d2309a262558e8c9b2",
+      "reviewed_thread_id": "enron-heuristic-thread-64ee249c2b62d92733cd",
+      "canonical_thread_id": "enron-thread-b78faa5a9cc840fc15f2"
+    },
+    {
+      "email_id": "enron-85f7ea5222fe0a91f8fd00ab",
+      "reviewed_thread_id": "enron-heuristic-thread-5ac8ed4c65e79ee7ca62",
+      "canonical_thread_id": "enron-thread-2247de16785b70757554"
+    },
+    {
+      "email_id": "enron-a39f93e8ec53761a2b15fc8f",
+      "reviewed_thread_id": "enron-heuristic-thread-87efde5485e6bb6b321e",
+      "canonical_thread_id": "enron-thread-085d2baee10685a4ce70"
+    }
+  ]
+}

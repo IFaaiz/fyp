@@ -1,0 +1,13 @@
+{
+  "description": "Text-free curated exclusions identified before AI-silver training; leave original blind reviewer files unchanged.",
+  "training_exclusions": {
+    "enron-8e3611db3d1dc3b49f05b802": "First expansion reply contains quoted prior pilot content; excluded before training.",
+    "enron-df0a2eff30e67d88a938d333": "Large-seed record shares a leakage group with a prior pilot source record and contains quoted history.",
+    "enron-f287ed579e4ac0d2c74b4977": "Large-seed record shares a leakage group with a prior pilot source record and contains quoted history.",
+    "enron-aff58ab1ca50fb970efa09ca": "Large-seed record shares a leakage group with a prior pilot source record and contains quoted history.",
+    "enron-dc0eb8d52a4dd45bbee73a61": "Second selected member of a repeated full-corpus leakage group; retain earlier selected representative.",
+    "enron-3461679c35dc9dd5609df1d2": "Second selected member of a repeated full-corpus leakage group; retain earlier selected representative.",
+    "enron-33e85a69e854acdda915648d": "Second selected member of a repeated full-corpus leakage group; retain earlier selected representative.",
+    "enron-285c58695027dbc82250a55d": "Second selected member of a repeated full-corpus leakage group; retain earlier selected representative."
+  }
+}
