@@ -1,0 +1,15 @@
+{
+  "description": "Supervisor exclusions after reading the current authored message; IDs only, never gold annotations.",
+  "email_ids": [
+    "enron-b9f2f7ce58cad582ff83855d",
+    "enron-cbb294aecda008a5abc9a954",
+    "enron-6ed4287ab1dda8865929a1de",
+    "enron-c1eca5a27ad7f5c33854f711"
+  ],
+  "reasons": {
+    "enron-b9f2f7ce58cad582ff83855d": "Legal proceeding brief and hearing schedule lack clear managed-project scope.",
+    "enron-cbb294aecda008a5abc9a954": "Routine product index configuration and approval do not establish managed-project scope.",
+    "enron-6ed4287ab1dda8865929a1de": "Filing a protest against an external expansion project does not establish management of that project.",
+    "enron-c1eca5a27ad7f5c33854f711": "Commercial transaction condition and financing update may be project-related, but managed-project communication is uncertain."
+  }
+}
