@@ -10,6 +10,8 @@ The AI/NLP workstream has an annotation schema, a verified MailEx conversion, an
 
 **28 September selection correction:** The [full cross-source leakage audit](cross_source_leakage_audit.md) is complete and its 521,337-record group sidecar is available locally. The first 600 rows of the 1,400 selection have two blind reviews, but 601–1,100 are almost entirely sparse calendar/task exports. Review of that low-value segment stopped. A replacement 1,200-record seed was selected from the full Enron source using authored-text and leakage-group checks; two blind reviews and independent third audit are in progress. See the [selection correction report](training_silver_selection_correction.md). The 1,000-accepted-record training gate has not yet been reached; no model or accuracy metric has been produced.
 
+**First audited 300:** The [third-audit gate](training_silver_first300_third_audit.md) retained 145 text-free AI-silver decisions from the first 300 reviewed candidates. Combined with 41 pilot and 66 earlier expansion decisions, 252 AI-silver rows are available for classification prototyping; the new batch contributes 56 project-related records and 89 `NON_PROJECT`. The strict 1,000-row training gate still applies.
+
 ## Correctness and schema
 
 - A source-qualified thread containing any real `annotation.status == "gold"` record is assigned wholly to test. The validator rejects gold in train/validation and synthetic records in test. Synthetic gold is invalid.

@@ -104,6 +104,7 @@ def adjudicate(seed: list[dict], left: list[dict], right: list[dict], audit: lis
 
 def main() -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--seed", type=Path, default=SEED, help="frozen source JSONL under ignored data")
     parser.add_argument("--start", type=int, default=1, help="one-based seed row")
     parser.add_argument("--end", type=int, default=300, help="inclusive seed row")
     parser.add_argument("--reviewer-a", type=Path, default=BATCH / "reviewer_a_first300.jsonl")
@@ -112,7 +113,7 @@ def main() -> None:
     parser.add_argument("--supervisor-vetoes", type=Path, default=AI_DIR / "annotation/training_silver_supervisor_vetoes.json")
     parser.add_argument("--output", type=Path, default=AI_DIR / "annotation/training_silver_first300_decisions.jsonl")
     args = parser.parse_args()
-    seed = read_jsonl(SEED)[args.start - 1:args.end]
+    seed = read_jsonl(args.seed)[args.start - 1:args.end]
     a = read_jsonl(args.reviewer_a)
     b = read_jsonl(args.reviewer_b)
     audit = read_jsonl(args.third_audit)
