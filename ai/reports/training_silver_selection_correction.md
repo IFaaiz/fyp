@@ -38,3 +38,14 @@ agreements, and a deterministic 20% sample of other agreements. A strict
 adjudication gate excludes disagreements, flags, audit vetoes, and curated
 leakage exclusions from high-confidence training. AI-silver remains provisional
 and is not human gold.
+
+A further 600-message reserve pool was screened with the `rare_project` profile
+after the 1,200-message seed was frozen. Its text-free
+[manifest](../annotation/training_silver_extension_600_manifest.json) contains
+120 document-request, 100 departmental-input, 90 approval, 90 follow-up, 90
+deadline, 90 meeting, and 20 other-project cue candidates. These are screening
+strata, not labels. All 600 IDs, threads, and leakage groups are unique within
+the reserve, and its leakage groups are disjoint from both the original 1,400
+selection and the 1,200-message replacement. The ignored seed holds source text.
+An initial review of its first 25 records found off-scope and quoted-message
+risks, so none are accepted before blind review and independent audit.
