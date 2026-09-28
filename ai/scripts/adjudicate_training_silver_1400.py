@@ -18,6 +18,7 @@ from pathlib import Path
 AI_DIR = Path(__file__).resolve().parents[1]
 BATCH = AI_DIR / "data/annotated/ai/training_silver_1400"
 SEED = BATCH / "annotation_seed_1400.jsonl"
+SELECTION_MANIFEST = AI_DIR / "annotation/training_silver_1400_manifest.json"
 ALIASES = AI_DIR / "annotation/training_silver_1400_thread_aliases.json"
 EXCLUSIONS = AI_DIR / "annotation/training_leakage_exclusions.json"
 RARE_THRESHOLD = 10
@@ -26,6 +27,17 @@ SAMPLE_FRACTION = 0.2
 
 def read_jsonl(path: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def validate_seed_against_manifest(seed: list[dict], manifest_rows: list[dict], start: int) -> None:
+    if len(seed) != len(manifest_rows):
+        raise ValueError("seed and selection manifest row counts differ")
+    for order, (source, selected) in enumerate(zip(seed, manifest_rows), start):
+        digest = hashlib.sha256(source["current_message"].encode("utf-8")).hexdigest()
+        if (selected["order"] != order or selected["email_id"] != source["email_id"]
+                or selected["thread_id"] != source["thread_id"]
+                or selected["current_sha256"] != digest):
+            raise ValueError(f"selection manifest mismatch at seed row {order}")
 
 
 def expected_audit_ids(seed: list[dict], left: list[dict], right: list[dict]) -> set[str]:
@@ -55,7 +67,8 @@ def expected_audit_ids(seed: list[dict], left: list[dict], right: list[dict]) ->
 
 
 def adjudicate(seed: list[dict], left: list[dict], right: list[dict], audit: list[dict],
-               *, exclusions: set[str], aliases: dict[str, str], supervisor_vetoes: set[str]) -> list[dict]:
+               *, exclusions: set[str], aliases: dict[str, str], supervisor_vetoes: set[str],
+               exclude_calendar_task_exports: bool = False) -> list[dict]:
     required = expected_audit_ids(seed, left, right)
     audited = {}
     source_ids = {row["email_id"] for row in seed}
@@ -79,13 +92,17 @@ def adjudicate(seed: list[dict], left: list[dict], right: list[dict], audit: lis
         exact_unflagged = labels == set(b["labels"]) and not a["needs_review"] and not b["needs_review"] and bool(labels)
         third = audited.get(email_id)
         third_confirms = third is None or (set(third["labels"]) == labels and not third["needs_review"])
-        allowed = exact_unflagged and third_confirms and email_id not in exclusions and email_id not in supervisor_vetoes
+        sparse_export = exclude_calendar_task_exports and source["current_message"].startswith(("CALENDAR ENTRY", "TASK ASSIGNMENT"))
+        allowed = (exact_unflagged and third_confirms and email_id not in exclusions
+                   and email_id not in supervisor_vetoes and not sparse_export)
         if allowed:
             reason = "exact_unflagged_blind_agreement_third_audit_gate"
         elif email_id in exclusions:
             reason = "curated_leakage_exclusion"
         elif email_id in supervisor_vetoes:
             reason = "supervisor_scope_veto"
+        elif sparse_export:
+            reason = "sparse_calendar_task_export"
         elif not exact_unflagged:
             reason = "disagreement_flag_or_abstention"
         else:
@@ -105,15 +122,20 @@ def adjudicate(seed: list[dict], left: list[dict], right: list[dict], audit: lis
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--seed", type=Path, default=SEED, help="frozen source JSONL under ignored data")
+    parser.add_argument("--selection-manifest", type=Path, default=SELECTION_MANIFEST)
     parser.add_argument("--start", type=int, default=1, help="one-based seed row")
     parser.add_argument("--end", type=int, default=300, help="inclusive seed row")
     parser.add_argument("--reviewer-a", type=Path, default=BATCH / "reviewer_a_first300.jsonl")
     parser.add_argument("--reviewer-b", type=Path, default=BATCH / "reviewer_b_decisions_300.jsonl")
     parser.add_argument("--third-audit", type=Path, default=BATCH / "third_audit_first300.jsonl")
     parser.add_argument("--supervisor-vetoes", type=Path, default=AI_DIR / "annotation/training_silver_supervisor_vetoes.json")
+    parser.add_argument("--exclude-calendar-task-exports", action="store_true",
+                        help="exclude sparse Outlook calendar/task exports from this tranche")
     parser.add_argument("--output", type=Path, default=AI_DIR / "annotation/training_silver_first300_decisions.jsonl")
     args = parser.parse_args()
     seed = read_jsonl(args.seed)[args.start - 1:args.end]
+    selected = json.loads(args.selection_manifest.read_text(encoding="utf-8"))["records"][args.start - 1:args.end]
+    validate_seed_against_manifest(seed, selected, args.start)
     a = read_jsonl(args.reviewer_a)
     b = read_jsonl(args.reviewer_b)
     audit = read_jsonl(args.third_audit)
@@ -121,7 +143,9 @@ def main() -> None:
     alias_rows = json.loads(ALIASES.read_text(encoding="utf-8"))["aliases"]
     aliases = {row["email_id"]: row["canonical_thread_id"] for row in alias_rows}
     vetoes = set(json.loads(args.supervisor_vetoes.read_text(encoding="utf-8"))["email_ids"])
-    decisions = adjudicate(seed, a, b, audit, exclusions=exclusions, aliases=aliases, supervisor_vetoes=vetoes)
+    decisions = adjudicate(seed, a, b, audit, exclusions=exclusions, aliases=aliases,
+                           supervisor_vetoes=vetoes,
+                           exclude_calendar_task_exports=args.exclude_calendar_task_exports)
     content = "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in decisions)
     if args.output.exists() and args.output.read_text(encoding="utf-8") != content:
         raise ValueError("existing decision manifest differs; inspect before overwriting")

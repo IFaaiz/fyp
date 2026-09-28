@@ -12,6 +12,8 @@ The AI/NLP workstream has an annotation schema, a verified MailEx conversion, an
 
 **First audited 300:** The [third-audit gate](training_silver_first300_third_audit.md) retained 145 text-free AI-silver decisions from the first 300 reviewed candidates. Combined with 41 pilot and 66 earlier expansion decisions, 252 AI-silver rows are available for classification prototyping; the new batch contributes 56 project-related records and 89 `NON_PROJECT`. The strict 1,000-row training gate still applies.
 
+**Second audited 300:** The [second third audit](training_silver_second300_third_audit.md) covered all 215 required cases. Excluding the calendar/task-export selection error and applying the same strict disagreement, audit, supervisor, and leakage gates retained 61 more AI-silver rows (45 project-related, 16 `NON_PROJECT`). The cumulative accepted count is **313**. Blind review of the replacement 1,200-record authored-text seed continues; no model or validation metric has been produced.
+
 ## Correctness and schema
 
 - A source-qualified thread containing any real `annotation.status == "gold"` record is assigned wholly to test. The validator rejects gold in train/validation and synthetic records in test. Synthetic gold is invalid.

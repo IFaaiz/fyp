@@ -15,7 +15,9 @@ Only 125 were exact, unflagged, and nonempty: 72 `NON_PROJECT` and 53 with at
 least one project label. Fifty-four of those 125 are calendar/task exports.
 Two of the 125 are in the curated leakage exclusion list, leaving at most 123
 before third audit and supervisor checks. These are *candidates*, not accepted
-silver training rows.
+silver training rows. The final gate for this tranche excludes sparse
+calendar/task exports even when two reviewers agree, because the repeated
+calendar boilerplate contributes little project-management evidence.
 
 The replacement 1,200-message screening seed comes from the full Enron source.
 It uses the authored prefix of `current_message` for screening, requires at
