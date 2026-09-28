@@ -1,8 +1,13 @@
 """Focused tests for the leakage-safe silver baseline infrastructure."""
 
+import io
+import json
+import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
+from unittest.mock import patch
 
 from scripts.train_silver_classifier import (
     apply_curated_exclusions,
@@ -10,6 +15,7 @@ from scripts.train_silver_classifier import (
     grouped_train_validation_split,
     join_text_free_acceptance_manifest,
     load_leakage_group_map,
+    main as train_main,
 )
 from src.datasets.schemas import empty_record, write_jsonl
 from src.models.silver_classifier import (
@@ -160,6 +166,47 @@ class SilverClassifierTests(unittest.TestCase):
             }])
             with self.assertRaisesRegex(ValueError, "thread_id mismatch"):
                 load_leakage_group_map(path, [row])
+
+    def test_cli_excludes_abstentions_before_leakage_sidecar_join(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            accepted = [silver_row(1), silver_row(2, label="NON_PROJECT")]
+            abstention = silver_row(3, label=None)
+            abstention["thread_id"] = "candidate-heuristic-thread"
+            input_path = root / "input.jsonl"
+            sidecar_path = root / "groups.jsonl"
+            exclusions_path = root / "exclusions.json"
+            shortage_path = root / "shortage.md"
+            report_path = root / "report.json"
+            write_jsonl(input_path, accepted + [abstention])
+            write_jsonl(sidecar_path, [
+                {
+                    "source_dataset": row["source_dataset"],
+                    "email_id": row["email_id"],
+                    "thread_id": row["thread_id"],
+                    "leakage_group_id": f"group-{index}",
+                }
+                for index, row in enumerate(accepted)
+            ])
+            exclusions_path.write_text('{"training_exclusions": {}}', encoding="utf-8")
+            shortage_path.write_text(
+                "Fixture shortage: two accepted records are intentional for the CLI regression test.",
+                encoding="utf-8",
+            )
+            argv = [
+                "train_silver_classifier.py", "--input", str(input_path),
+                "--no-accepted-manifest", "--leakage-groups", str(sidecar_path),
+                "--exclude-manifest", str(exclusions_path),
+                "--shortage-report", str(shortage_path),
+                "--model", str(root / "model.json"),
+                "--split-manifest", str(root / "split.json"),
+                "--report", str(report_path), "--max-iter", "3",
+            ]
+            with patch.object(sys, "argv", argv), redirect_stdout(io.StringIO()):
+                self.assertEqual(train_main(), 0)
+            report = json.loads(report_path.read_text(encoding="utf-8"))
+            self.assertEqual(report["data"]["eligible_ai_silver_records"], 2)
+            self.assertEqual(report["data"]["other_records_excluded_from_model"], 1)
 
     def test_text_free_acceptance_manifest_joins_labels_to_canonical_source(self):
         source = empty_record(

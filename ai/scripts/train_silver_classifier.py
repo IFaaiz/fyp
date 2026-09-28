@@ -539,13 +539,16 @@ def main() -> int:
 
     exclusions, exclusion_hash = read_curated_exclusions(args.exclude_manifest)
     records, excluded = apply_curated_exclusions(all_records, exclusions)
-    groups = load_leakage_group_map(args.leakage_groups, records)
-    splits, split_summary = grouped_train_validation_split(
-        records, groups, validation_ratio=args.validation_ratio, seed=args.seed,
-    )
-    train_rows = [row for row in splits["train"] if eligible_ai_silver(row)]
-    validation_rows = [row for row in splits["validation"] if eligible_ai_silver(row)]
     excluded_counts = Counter(eligibility_reason(row) for row in records if not eligible_ai_silver(row))
+    eligible_records = [row for row in records if eligible_ai_silver(row)]
+    if not eligible_records:
+        raise ValueError("no eligible AI-silver records remain after abstention and provenance filtering")
+    groups = load_leakage_group_map(args.leakage_groups, eligible_records)
+    splits, split_summary = grouped_train_validation_split(
+        eligible_records, groups, validation_ratio=args.validation_ratio, seed=args.seed,
+    )
+    train_rows = splits["train"]
+    validation_rows = splits["validation"]
     if not train_rows:
         raise ValueError("the leakage-safe training partition has no eligible AI-silver records")
     eligible_total = len(train_rows) + len(validation_rows)
@@ -592,7 +595,8 @@ def main() -> int:
     partition_report = {
         "input_records_before_curated_exclusions": len(all_records),
         "curated_manifest_excluded": len(excluded),
-        "remaining_records_split_before_label_filter": len(records),
+        "records_after_curated_exclusions": len(records),
+        "eligible_records_split": len(eligible_records),
         "eligible_ai_silver_records": len(train_rows) + len(validation_rows),
         "eligible_ai_silver_used_for_training": len(train_rows),
         "eligible_ai_silver_reserved_for_validation": len(validation_rows),
