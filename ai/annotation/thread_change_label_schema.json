@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Separate future human-reviewed thread-change evaluation; no existing verified change labels",
+  "labels": [
+    "DEADLINE_MOVED_LATER",
+    "DEADLINE_MOVED_EARLIER",
+    "MEETING_RESCHEDULED",
+    "MEETING_CANCELLED",
+    "OWNER_CHANGED",
+    "NEW_ACTION_ASSIGNED",
+    "DOCUMENT_REQUESTED",
+    "DOCUMENT_DELIVERED",
+    "DOCUMENT_STILL_MISSING",
+    "FOLLOW_UP_ESCALATION",
+    "NO_CHANGE"
+  ],
+  "required_pair_fields": [
+    "pair_id", "source_dataset", "thread_id", "leakage_group_id",
+    "earlier_email_id", "later_email_id", "earlier_turn_index",
+    "later_turn_index", "source_sha256", "entity_links", "change_labels",
+    "state_before", "state_after", "evidence", "annotation", "split_role"
+  ],
+  "entity_link_fields": [
+    "entity_id", "entity_type", "earlier_evidence", "later_evidence"
+  ],
+  "entity_types": ["meeting", "action", "document"],
+  "evidence_fields": ["email_id", "field", "start", "end", "text"],
+  "allowed_evidence_fields": ["current_message", "subject"],
+  "annotation_fields": [
+    "status", "annotation_source", "annotator_ids", "needs_review",
+    "ambiguity_reason", "adjudicator_id"
+  ],
+  "annotation_statuses": ["unlabelled", "human_calibration", "human_reviewed", "gold"],
+  "split_roles": ["unassigned", "calibration", "train", "validation", "test"],
+  "constraints": [
+    "Both emails must belong to the same verified source thread and be chronologically ordered.",
+    "All thread and cross-source leakage components stay in one partition across classification and thread-change tasks.",
+    "Entity identity must be established by evidence; shared keywords alone do not link actions, meetings, or documents.",
+    "Each change label requires exact authored evidence in the later message; historical state requires earlier evidence.",
+    "NO_CHANGE is exclusive. Unresolved identity, scope, ordering, or state uses empty change_labels and needs_review=true.",
+    "Deadline direction requires two comparable due points for the same action or deliverable; a meeting date is not a deadline.",
+    "DOCUMENT_DELIVERED requires explicit delivery evidence; a filename or attachment mention alone does not prove the requested document was delivered.",
+    "Gold is independent human-adjudicated test data and never used for training, threshold tuning, or rule/prompt modification."
+  ]
+}

@@ -39,3 +39,6 @@ missing documents, and escalation need their own human-reviewed pair-level
 dataset. The existing Enron heuristic links are candidates, not verified
 conversation truth. MailEx's real thread structure is promising for sampling,
 but it does not itself supply FYP change labels.
+The separate [thread-change evaluation design](thread_change_evaluation_plan.md)
+defines linked before/after states, authored evidence, human adjudication, and
+cross-task leakage isolation for that future dataset.
