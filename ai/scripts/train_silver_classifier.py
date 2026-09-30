@@ -496,6 +496,8 @@ def main() -> int:
     parser.add_argument("--threshold", type=float, default=0.5)
     parser.add_argument("--max-iter", type=int, default=200)
     parser.add_argument("--learning-rate", type=float, default=1.0)
+    parser.add_argument("--optimizer", choices=("python", "sklearn"), default="python",
+                        help="optional standard lbfgs fitting; JSON prediction stays dependency-free")
     parser.add_argument("--evaluate", action="store_true", help="compute AI-silver validation diagnostics after training")
     parser.add_argument("--predict-text", help="predict one current-message string using --model")
     parser.add_argument("--predict-jsonl", type=Path, help="predict canonical records from JSONL using --model")
@@ -566,6 +568,7 @@ def main() -> int:
     model = TfidfOneVsRestLogisticRegression(
         c=args.c, threshold=args.threshold, max_iter=args.max_iter,
         learning_rate=args.learning_rate, seed=args.seed,
+        optimizer=args.optimizer,
     )
     model.fit(train_rows)
     input_paths = list(args.input)
@@ -646,6 +649,7 @@ def main() -> int:
             "regularization": "mean binary cross-entropy + L2 ||w||^2/(2*C*n)",
             "C": args.c,
             "threshold": args.threshold,
+            "optimizer": args.optimizer,
             "max_iter": args.max_iter,
             "learning_rate": args.learning_rate,
         },

@@ -1,8 +1,9 @@
-"""Dependency-free TF-IDF + one-vs-rest logistic regression prototype.
+"""TF-IDF + one-vs-rest logistic regression prototype.
 
 The implementation uses sparse Python dictionaries and deterministic full-batch
 gradient descent. It follows logistic-regression loss with L2 regularization;
-it is not scikit-learn and does not depend on NumPy/SciPy.
+The optional scikit-learn optimizer fits the same vectors and exports weights
+into the same JSON format; prediction never requires NumPy/SciPy.
 """
 from __future__ import annotations
 
@@ -154,16 +155,20 @@ class TfidfOneVsRestLogisticRegression:
     def __init__(
         self, *, c: float = 1.0, threshold: float = 0.5,
         max_iter: int = 200, learning_rate: float = 1.0, tolerance: float = 1e-5,
-        seed: int = 42,
+        seed: int = 42, optimizer: str = "python",
     ):
         if c <= 0 or not 0 < threshold < 1 or max_iter < 1 or learning_rate <= 0:
             raise ValueError("c, max_iter, and learning_rate must be positive; threshold must be in (0, 1)")
+        if optimizer not in {"python", "sklearn"}:
+            raise ValueError("optimizer must be python or sklearn")
         self.c = float(c)
         self.threshold = float(threshold)
         self.max_iter = int(max_iter)
         self.learning_rate = float(learning_rate)
         self.tolerance = float(tolerance)
         self.seed = int(seed)
+        self.optimizer = optimizer
+        self.optimizer_versions: dict[str, str] = {}
         self.vectorizer = TfidfVectorizer()
         self.classifiers: dict[str, dict[str, Any]] = {}
         self.training_records = 0
@@ -199,6 +204,8 @@ class TfidfOneVsRestLogisticRegression:
         vectors = self.vectorizer.transform(raw_documents)
         self.training_records = len(records)
         self.classifiers = {}
+        if self.optimizer == "sklearn":
+            return self._fit_sklearn(vectors, target_rows)
         document_count = len(records)
         # The objective is mean binary cross-entropy + ||w||^2/(2*C*n),
         # matching the usual C-style inverse regularization convention.
@@ -249,6 +256,55 @@ class TfidfOneVsRestLogisticRegression:
             }
         return self
 
+    def _fit_sklearn(self, vectors, target_rows):
+        """Fit standard binary logistic regressions, exporting portable weights."""
+        import warnings
+        import numpy
+        import scipy
+        import sklearn
+        from scipy.sparse import csr_matrix
+        from sklearn.exceptions import ConvergenceWarning
+        from sklearn.linear_model import LogisticRegression
+
+        self.optimizer_versions = {
+            "scikit_learn": sklearn.__version__,
+            "numpy": numpy.__version__, "scipy": scipy.__version__,
+        }
+        data, indices, indptr = [], [], [0]
+        for vector in vectors:
+            for index, value in sorted(vector.items()):
+                indices.append(index)
+                data.append(value)
+            indptr.append(len(data))
+        matrix = csr_matrix(
+            (data, indices, indptr),
+            shape=(len(vectors), len(self.vectorizer.vocabulary)), dtype="float64",
+        )
+        for label_index, label in enumerate(LABEL_ORDER):
+            targets = [row[label_index] for row in target_rows]
+            positive_count = sum(targets)
+            prior = (positive_count + 0.5) / (len(vectors) + 1.0)
+            bias, weights, iterations, converged = math.log(prior / (1 - prior)), {}, 0, True
+            if 0 < positive_count < len(vectors):
+                estimator = LogisticRegression(
+                    C=self.c, solver="lbfgs", max_iter=self.max_iter,
+                    tol=self.tolerance, random_state=self.seed,
+                )
+                with warnings.catch_warnings(record=True) as caught:
+                    warnings.simplefilter("always", ConvergenceWarning)
+                    estimator.fit(matrix, targets)
+                converged = not any(issubclass(w.category, ConvergenceWarning) for w in caught)
+                bias = float(estimator.intercept_[0])
+                weights = {str(i): float(w) for i, w in enumerate(estimator.coef_[0]) if w}
+                iterations = int(estimator.n_iter_[0])
+            self.classifiers[label] = {
+                "bias": bias, "weights": weights,
+                "training_positive": positive_count,
+                "training_negative": len(vectors) - positive_count,
+                "iterations": iterations, "converged": converged,
+            }
+        return self
+
     def predict_proba(self, record: dict[str, Any]) -> dict[str, float]:
         if not self.classifiers:
             raise ValueError("model has not been fitted")
@@ -283,7 +339,12 @@ class TfidfOneVsRestLogisticRegression:
         return {
             "format": MODEL_FORMAT,
             "model_type": "TF-IDF + one-vs-rest logistic regression",
-            "solver": "deterministic full-batch gradient descent on sparse vectors",
+            "solver": (
+                "scikit-learn binary logistic regression with lbfgs"
+                if self.optimizer == "sklearn" else
+                "deterministic full-batch gradient descent on sparse vectors"
+            ),
+            "optimizer_versions": self.optimizer_versions,
             "regularization": "mean binary cross-entropy + L2 ||w||^2/(2*C*n)",
             "hyperparameters": {
                 "C": self.c,
@@ -292,6 +353,7 @@ class TfidfOneVsRestLogisticRegression:
                 "learning_rate": self.learning_rate,
                 "tolerance": self.tolerance,
                 "seed": self.seed,
+                "optimizer": self.optimizer,
             },
             "labels": list(LABEL_ORDER),
             "vectorizer": self.vectorizer.to_dict(),
@@ -312,7 +374,9 @@ class TfidfOneVsRestLogisticRegression:
             learning_rate=float(hyperparameters["learning_rate"]),
             tolerance=float(hyperparameters["tolerance"]),
             seed=int(hyperparameters["seed"]),
+            optimizer=hyperparameters.get("optimizer", "python"),
         )
+        model.optimizer_versions = dict(payload.get("optimizer_versions", {}))
         model.vectorizer = TfidfVectorizer.from_dict(payload["vectorizer"])
         model.training_records = int(payload["training_records"])
         model.classifiers = dict(payload["classifiers"])

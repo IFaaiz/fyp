@@ -1,6 +1,7 @@
 """Focused tests for the leakage-safe silver baseline infrastructure."""
 
 import io
+import importlib.util
 import json
 import sys
 import tempfile
@@ -52,6 +53,30 @@ def silver_row(index, *, label="MEETING", source="enron", thread=None):
 
 
 class SilverClassifierTests(unittest.TestCase):
+    @unittest.skipUnless(importlib.util.find_spec("sklearn"), "optional training dependency")
+    def test_sklearn_weight_export_matches_reference_and_reloads(self):
+        from scipy.sparse import csr_matrix
+        from sklearn.linear_model import LogisticRegression
+
+        rows = [silver_row(i, label="MEETING" if i < 4 else "NON_PROJECT") for i in range(8)]
+        for i, row in enumerate(rows):
+            row["subject"] = "Project review" if i < 4 else "Social plans"
+            row["current_message"] = "Meet to review the project plan." if i < 4 else "Lunch with friends."
+        model = TfidfOneVsRestLogisticRegression(optimizer="sklearn", c=4, max_iter=1000).fit(rows)
+        vectors = model.vectorizer.transform([record_features(row) for row in rows])
+        dense = [[v.get(i, 0) for i in range(len(model.vectorizer.vocabulary))] for v in vectors]
+        reference = LogisticRegression(C=4, solver="lbfgs", max_iter=1000, tol=model.tolerance, random_state=42)
+        reference.fit(csr_matrix(dense), [int("MEETING" in row["labels"]) for row in rows])
+        expected = reference.predict_proba(csr_matrix(dense))[:, 1]
+        restored = TfidfOneVsRestLogisticRegression.from_dict(model.to_dict())
+        for row, probability in zip(rows, expected):
+            self.assertAlmostEqual(restored.predict_proba(row)["MEETING"], float(probability), places=10)
+            self.assertEqual(restored.predict(row), model.predict(row))
+        self.assertEqual(restored.optimizer, "sklearn")
+        self.assertTrue(all(x["converged"] for x in model.classifiers.values()))
+        self.assertEqual(model.classifiers["APPROVAL"]["training_positive"], 0)
+        self.assertLess(restored.predict_proba(rows[0])["APPROVAL"], 0.1)
+
     def test_sender_email_and_date_trims_lotus_quoted_history(self):
         body = (
             "Thanks for the attachment. How did the presentation go?\n\n"

@@ -6,7 +6,8 @@
 supervisor scope veto during the rare-label reread. All accepted records remain
 AI silver. The remaining replacement tranches have resumed two blind Luna
 reviews and independent third audit. A concrete Lotus quoted-header defect in
-baseline feature cleaning was repaired; the full suite passed **106 tests**.
+baseline feature cleaning was repaired, and the standard scikit-learn optimizer
+can now export portable model weights; the full suite passed **107 tests**.
 The historical counts below describe their respective earlier checkpoints.
 
 The AI/NLP workstream has an annotation schema, a verified MailEx conversion, and a fully ingested and validated official Enron corpus. The 50,000-file staged pass and the 517,401-file full pass both validate. Candidate sampling, Label Studio conversion, and independent-review tooling exist; the full-corpus candidate pool and first independent human assignments have been prepared. No model has been trained and no human gold labels have been claimed.
@@ -63,7 +64,7 @@ Label Studio has a multi-label classification and two-field span configuration, 
 
 ## Verification and remaining work
 
-- Unit suite: 106 tests passed in the 30 September supervisor run, including gold isolation, validator invariants, MailEx span deduplication, same-sender thread-link rejection, complete-pair seed selection, Label Studio conversion/agreement logic, cross-source leakage fixtures, the silver-classifier loader/split and abstention-filtering fixtures, and Lotus sender/date quoted-header isolation.
+- Unit suite: 107 tests passed in the 30 September supervisor run, including gold isolation, validator invariants, MailEx span deduplication, same-sender thread-link rejection, complete-pair seed selection, Label Studio conversion/agreement logic, cross-source leakage fixtures, the silver-classifier loader/split and abstention-filtering fixtures, Lotus sender/date quoted-header isolation, and scikit-learn coefficient export equivalence.
 - Canonical validator: 3,936 MailEx records, 517,401 full Enron records, 8,000 full candidate-pool records, and 13 synthetic examples each passed with zero errors. The supervisor reran the full Enron and candidate validators after final generation. The full pool sidecar covers exactly the selected IDs and thread IDs; an in-memory thread split of 6,000/800/1,200 records had zero isolation errors.
 - Full Enron ingestion and validation are complete. The full candidate pool is built and validated. The human seed and blank-task transport verification are complete. Human annotation, adjudication, and gold reservation remain the gates for a defensible accuracy estimate; the AI-only silver batch is available for prototyping while that work is deferred.
 - The planned human protocol calls for independent seed labels, adjudication, and 300–500 real thread-isolated gold emails before a final training/evaluation claim. Historical Enron text needs institutional use/redistribution review before sharing. No training metric is reported from unreviewed data.
