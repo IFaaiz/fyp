@@ -52,6 +52,32 @@ def silver_row(index, *, label="MEETING", source="enron", thread=None):
 
 
 class SilverClassifierTests(unittest.TestCase):
+    def test_sender_email_and_date_trims_lotus_quoted_history(self):
+        body = (
+            "Thanks for the attachment. How did the presentation go?\n\n"
+            "Casey Example <casey@example.test> on 03/14/2001 07:07:48 AM\n"
+            "Please respond to casey@example.test\n"
+            "To: Morgan Example <morgan@example.test>\n"
+            "cc: Taylor Example <taylor@example.test>\n"
+            "Subject: Previous project request\n\n"
+            "Please submit the report by Friday."
+        )
+        self.assertEqual(
+            extract_authored_prefix(body),
+            "Thanks for the attachment. How did the presentation go?",
+        )
+        row = silver_row(1)
+        row["current_message"] = body
+        self.assertNotIn("body:w:submit", record_features(row))
+
+    def test_sender_date_without_mail_header_block_remains_authored(self):
+        body = (
+            "Our attendance record follows.\n"
+            "Casey Example <casey@example.test> on 03/14/2001 07:07:48 AM\n"
+            "The participant completed the project demonstration."
+        )
+        self.assertEqual(extract_authored_prefix(body), body)
+
     def test_lotus_header_block_trims_embedded_prior_message(self):
         body = (
             "I have this on my calendar. I do not plan to bring anyone else.\n\n"

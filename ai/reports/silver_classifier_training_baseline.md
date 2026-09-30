@@ -13,7 +13,8 @@ decisions, human-reviewed rows, and gold rows do not train this prototype. The
 curated expansion exclusion manifest is applied before leakage lookup or split
 assignment. For feature extraction, the model uses the current message and
 subject only. Standard quote markers and obvious Lotus `date` / `To` / `Cc` /
-`Subject` header blocks are trimmed; unmarked quoted prose remains a limitation.
+`Subject` header blocks are trimmed, including a sender/email/date line followed
+by multiple mail headers; unmarked quoted prose remains a limitation.
 
 The split code requires a leakage sidecar and forms connected groups from both
 source-qualified thread IDs and `leakage_group_id`. This keeps thread messages
@@ -28,16 +29,19 @@ Example, once the leakage audit and dataset gate are complete:
 ai/.venv/Scripts/python.exe ai/scripts/train_silver_classifier.py `
   --input ai/data/annotated/ai/project_pilot_50_v2/silver_classification_only.jsonl `
   --accepted-manifest ai/annotation/training_expansion_100_silver_decisions.jsonl `
-  --source-records ai/data/interim/enron_candidates.jsonl `
+    ai/annotation/training_silver_first300_decisions.jsonl `
+    ai/annotation/training_silver_second300_decisions.jsonl `
+    ai/annotation/training_silver_extension_first300_decisions.jsonl `
+  --source-records ai/data/interim/enron_full.jsonl `
   --leakage-groups ai/data/interim/leakage_groups.jsonl `
   --evaluate
 ```
 
-The current first expansion manifest has 66 accepted records and 34 uncertain
-exclusions; 65 accepted rows are `NON_PROJECT`, and only one accepted row is a
-multi-label project example. Combined with the 41 usable v2 pilot rows, this
-does not meet the baseline's 1,000-record gate or provide useful project-label
-support. No model has been trained on the real silver data and no validation
+As of 30 September, the pilot and four audited acceptance manifests provide
+452 eligible AI-silver records after supervisor corrections. This
+does not meet the baseline's 1,000-record gate; rare project labels still have
+limited support. Add future audited acceptance manifests to the command only
+after their gates pass. No model has been trained on the real silver data and no validation
 metrics have been generated. A future AI-silver validation score will remain a
 diagnostic comparison, not a gold accuracy claim. Final FYP claims still need
 independent human-reviewed calibration data and a leakage-isolated human gold

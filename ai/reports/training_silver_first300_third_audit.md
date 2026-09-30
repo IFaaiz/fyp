@@ -18,16 +18,16 @@ all required IDs are present and rejects missing coverage or duplicates.
 | Gate result | Rows |
 | --- | ---: |
 | Reviewed by both blind agents | 300 |
-| Accepted AI-silver | 145 |
+| Accepted AI-silver | 144 |
 | Disagreement, review flag, or abstention excluded | 143 |
 | Third-audit veto of exact agreement | 7 |
-| Supervisor scope veto | 2 |
+| Supervisor scope veto | 3 |
 | Curated leakage exclusion | 3 |
 
-Accepted rows comprise 89 `NON_PROJECT` and 56 project-related records; 31
+Accepted rows comprise 89 `NON_PROJECT` and 55 project-related records; 30
 records have multiple project labels. Label counts are `ACTION_REQUEST` 24,
-`APPROVAL` 6, `DEADLINE` 16, `DEPARTMENTAL_INPUT` 3, `FOLLOW_UP` 1,
-`GENERAL_UPDATE` 38, `MEETING` 14, and `NON_PROJECT` 89. No
+`APPROVAL` 5, `DEADLINE` 16, `DEPARTMENTAL_INPUT` 3, `FOLLOW_UP` 1,
+`GENERAL_UPDATE` 37, `MEETING` 14, and `NON_PROJECT` 89. No
 `REPORT_REQUEST` survived this strict batch gate. Counts overlap on
 multi-label records. The [text-free decisions](../annotation/training_silver_first300_decisions.jsonl)
 join to canonical full-Enron text by source-qualified ID and use canonical
@@ -39,12 +39,18 @@ uncertain managed-project scope. The supervisor also checked independent
 third-audit mismatches and retained the conservative exclusion rule: a third
 agent's tie-break does not promote an original disagreement or review flag.
 This is AI-silver training material, not human-reviewed gold; it supplies no
-accuracy estimate. The current accepted total with the prior 41-record pilot
-and 66-record expansion is **252**.
+accuracy estimate. The accepted total for this batch with the prior 41-record pilot
+and 66-record expansion is **251** after the 30 September scope correction.
 
-The supervisor joined the accepted IDs to canonical full-Enron source rows:
-all 211 manifest-accepted rows passed canonical validation. With the earlier
+The initial supervisor integration check joined the accepted IDs to canonical full-Enron source rows:
+all 211 originally manifest-accepted rows passed canonical validation. With the earlier
 41-row pilot, a read-only leakage-group/thread split produced 199 training and
 53 validation assignments across 252 connected groups, with no split-boundary
 violation. This is an integration check; the 1,000-row training gate still
-prevents fitting or evaluation on this small batch.
+prevents fitting or evaluation on this small batch. These split counts record
+the initial check before the later scope veto; they are not current model partitions.
+
+On 30 September, a reread of every accepted approval example excluded one
+external regulatory tariff-approval notice because the message did not establish
+the team's managed-project scope. The supervisor-veto sidecar and decision
+manifest now reproduce the corrected 144-row gate above.

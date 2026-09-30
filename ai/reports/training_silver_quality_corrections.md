@@ -1,0 +1,28 @@
+# Supervisor quality corrections — 30 September 2026
+
+The supervisor reread every currently accepted example carrying
+`DEPARTMENTAL_INPUT` (7), `APPROVAL` (9 before correction), `REPORT_REQUEST` (9),
+or `FOLLOW_UP` (9). Counts overlap. The source text was inspected locally and
+is not reproduced here. The reread found one accepted external regulatory
+approval notice whose current text did not establish the team's managed-project
+scope. Its ID was added to the supervisor-veto sidecar, and the first 300-row
+decision manifest was regenerated. A row comparison confirmed that exactly
+this one decision changed from `ai_silver` to `excluded_uncertain` with empty
+labels. The corrected first tranche contains 144 accepted rows; cumulative
+eligible silver falls from 453 to **452**. This is a conservative exclusion,
+not a new gold annotation.
+
+The reread also found a concrete feature-cleaning defect. A Lotus quoted block
+starting with a sender name, angle-bracket email address, and `on` timestamp
+was retained when the timestamp was not on its own line. The feature cleaner
+now recognizes that anchor only when nearby mail-header fields corroborate the
+boundary. The real affected source now yields only its short authored reply.
+Two fixtures verify both quote removal and preservation of a sender/date line
+without a corroborating mail-header block. Source messages and frozen reviewer
+seeds are preserved.
+
+The corrected 452-row local join passes canonical validation with zero errors.
+The complete unit suite passes **106 tests**. All labels remain provisional
+AI silver; a human calibration set and independent 300–500-record human gold
+set are still required for final FYP evaluation. No classifier has been fitted
+on this partial set.

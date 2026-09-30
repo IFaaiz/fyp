@@ -56,6 +56,7 @@ record was accepted by a tie-break. The accepted label supports are:
 The supervisor read accepted examples from every label, including all three
 `REPORT_REQUEST` examples and the sole `DEPARTMENTAL_INPUT` example. The
 canonical join resolves every accepted ID and verifies its source thread;
-combined with prior accepted data there are **453** eligible AI-silver records
-in **453** distinct full-corpus leakage groups. Rare-label support remains low,
+combined with prior accepted data there are **452** eligible AI-silver records
+in **452** distinct full-corpus leakage groups after the 30 September supervisor
+scope correction to an earlier tranche. Rare-label support remains low,
 so this is not yet the 1,000-record training set.

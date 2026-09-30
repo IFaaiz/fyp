@@ -32,6 +32,11 @@ DATE_HEADER_RE = re.compile(
     r"|(?:mon|tue|wed|thu|fri|sat|sun)[a-z]*,?\s+.{5,30}\d{4}\s+\d{1,2}:\d{2})$",
     re.IGNORECASE,
 )
+SENDER_DATE_HEADER_RE = re.compile(
+    r"^[^<>\n]{1,120}<[^<>\s]+@[^<>\s]+>\s+on\s+"
+    r"\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\s+\d{1,2}:\d{2}(?::\d{2})?\s*(?:am|pm)?$",
+    re.IGNORECASE,
+)
 
 
 def extract_authored_prefix(text: str) -> str:
@@ -55,7 +60,7 @@ def extract_authored_prefix(text: str) -> str:
             if field_match:
                 fields.add(field_match.group(1).lower())
                 starts.append(cursor)
-            elif DATE_HEADER_RE.match(stripped):
+            elif DATE_HEADER_RE.match(stripped) or SENDER_DATE_HEADER_RE.match(stripped):
                 fields.add("date")
                 starts.append(cursor)
         has_anchor = bool(fields.intersection({"from", "sent", "date"}))
