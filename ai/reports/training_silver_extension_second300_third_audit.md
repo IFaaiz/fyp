@@ -42,6 +42,8 @@ approval examples, and hard negatives covering routine HR training, an automated
 invoice notice, and recruitment mail. The current authored text, rather than
 a quoted request or incidental project term, controlled the boundary checks.
 All accepted IDs join to canonical source records; combined with earlier
-corrected batches there are **618 eligible records** in **618 distinct leakage
+corrected batches there are **617 eligible records** in **617 distinct leakage
 groups**, with zero canonical validation errors. This remains below the
-1,000-record training gate, with limited rare-label support.
+1,000-record training gate, with limited rare-label support. The count reflects
+a later supervisor exclusion of one ambiguous Phase 2 date in the first
+replacement tranche; the 166 accepted rows in this tranche are unchanged.

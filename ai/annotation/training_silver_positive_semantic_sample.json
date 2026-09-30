@@ -1,0 +1,143 @@
+{
+  "sample_name": "positive_semantic_checkpoint_618",
+  "date": "2026-09-30",
+  "sampling_seed": "fyp-positive-check-20260930",
+  "sampling_rule": "first3 SHA256(seed:label:email_id) per nonrare positive label at618-row checkpoint",
+  "reviewer": "supervisor_ai",
+  "status": "AI-only quality sampling, not human or gold",
+  "accepted_dataset_size_before_correction": 618,
+  "records": [
+    {
+      "sampled_label": "MEETING",
+      "source_dataset": "enron",
+      "email_id": "enron-1fcfd6751170660300f642f7",
+      "current_sha256": "c7f33fc8d28a83f586c54f179406340e3241ba6f5e0455eab4bdea937f04ab9b",
+      "silver_labels_at_sampling": [
+        "MEETING",
+        "DEADLINE",
+        "GENERAL_UPDATE"
+      ],
+      "qa_finding": "no_clear_label_error"
+    },
+    {
+      "sampled_label": "MEETING",
+      "source_dataset": "enron",
+      "email_id": "enron-3632db45ce44db1faac3ac0c",
+      "current_sha256": "00e1a6ada809db79f417341ab5803bdb445f86debaae2da68f0ba94cefb223df",
+      "silver_labels_at_sampling": [
+        "MEETING"
+      ],
+      "qa_finding": "no_clear_label_error"
+    },
+    {
+      "sampled_label": "MEETING",
+      "source_dataset": "enron",
+      "email_id": "enron-8d00d9716be48ce73e0822ee",
+      "current_sha256": "fa7d5eff902352ba264ee144135d68360dea1dd5f1dba103f99409e4fc559cec",
+      "silver_labels_at_sampling": [
+        "MEETING"
+      ],
+      "qa_finding": "no_clear_label_error"
+    },
+    {
+      "sampled_label": "DEADLINE",
+      "source_dataset": "enron",
+      "email_id": "enron-6a27a95215a5f21b9aa2f3bc",
+      "current_sha256": "460f5909c0e6c5d461f8569c5b2102d992806c4fee15b6c18fb1d0f094dc4231",
+      "silver_labels_at_sampling": [
+        "ACTION_REQUEST",
+        "DEADLINE",
+        "GENERAL_UPDATE"
+      ],
+      "qa_finding": "no_clear_label_error"
+    },
+    {
+      "sampled_label": "DEADLINE",
+      "source_dataset": "enron",
+      "email_id": "enron-95a8e97da04134b58f53468c",
+      "current_sha256": "48a85bea24a7362a57d84cbb0dabec1db3b372aedc2739005eef39f813a8b885",
+      "silver_labels_at_sampling": [
+        "GENERAL_UPDATE",
+        "DEADLINE"
+      ],
+      "qa_finding": "excluded_date_role_ambiguity"
+    },
+    {
+      "sampled_label": "DEADLINE",
+      "source_dataset": "enron",
+      "email_id": "enron-907b2d6ca5560154f6c98107",
+      "current_sha256": "32c41bc5920614ba006c3ab2f74526abd97efa5f81f48e5d8b4d30a8204cdbde",
+      "silver_labels_at_sampling": [
+        "ACTION_REQUEST",
+        "DEADLINE",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "qa_finding": "no_clear_label_error"
+    },
+    {
+      "sampled_label": "ACTION_REQUEST",
+      "source_dataset": "enron",
+      "email_id": "enron-5023e34ab671f7e97dc63a77",
+      "current_sha256": "c46a1f250f7d04026ab96da33b2c59a31374e08af8c794122bbc079c40a21596",
+      "silver_labels_at_sampling": [
+        "ACTION_REQUEST"
+      ],
+      "qa_finding": "no_clear_label_error"
+    },
+    {
+      "sampled_label": "ACTION_REQUEST",
+      "source_dataset": "enron",
+      "email_id": "enron-4bc4cac39fab9082bc598a4a",
+      "current_sha256": "1af1837712e718eca23dc177890a715a7e1eed945038bb8d8b3d94c35eeb6c2a",
+      "silver_labels_at_sampling": [
+        "ACTION_REQUEST",
+        "MEETING"
+      ],
+      "qa_finding": "no_clear_label_error"
+    },
+    {
+      "sampled_label": "ACTION_REQUEST",
+      "source_dataset": "enron",
+      "email_id": "enron-9d2fee9ddab9382448cca01b",
+      "current_sha256": "576ed303fdb0b199d65fc561201e1685889c1837f66c92ef282bc16959b94157",
+      "silver_labels_at_sampling": [
+        "ACTION_REQUEST",
+        "MEETING"
+      ],
+      "qa_finding": "no_clear_label_error"
+    },
+    {
+      "sampled_label": "GENERAL_UPDATE",
+      "source_dataset": "enron",
+      "email_id": "enron-06e22566af5c6f2595ca8db5",
+      "current_sha256": "f7301de31f1615e72f707093c617e337bb59e706412fd211756b3d453b171dad",
+      "silver_labels_at_sampling": [
+        "GENERAL_UPDATE"
+      ],
+      "qa_finding": "no_clear_label_error"
+    },
+    {
+      "sampled_label": "GENERAL_UPDATE",
+      "source_dataset": "enron",
+      "email_id": "enron-5daaa037ae0538144f986568",
+      "current_sha256": "e92bda9bf231b9c0ee65508c8ac0f10db150921c0bb099da1c7a0f6b96441fa4",
+      "silver_labels_at_sampling": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "qa_finding": "no_clear_label_error"
+    },
+    {
+      "sampled_label": "GENERAL_UPDATE",
+      "source_dataset": "enron",
+      "email_id": "enron-3521724c438ec73a71918ce1",
+      "current_sha256": "4e7bd7c84e733cb440322b8ace8e7b2066b99e5837996524660e0558cc531b52",
+      "silver_labels_at_sampling": [
+        "GENERAL_UPDATE",
+        "REPORT_REQUEST"
+      ],
+      "qa_finding": "no_clear_label_error"
+    }
+  ]
+}

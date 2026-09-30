@@ -6,7 +6,8 @@
     "enron-6ed4287ab1dda8865929a1de",
     "enron-c1eca5a27ad7f5c33854f711",
     "enron-1d4602f2517a4301e69213b0",
-    "enron-4f706dd7b8fddab7352491a5"
+    "enron-4f706dd7b8fddab7352491a5",
+    "enron-95a8e97da04134b58f53468c"
   ],
   "reasons": {
     "enron-b9f2f7ce58cad582ff83855d": "Legal proceeding brief and hearing schedule lack clear managed-project scope.",
@@ -14,6 +15,7 @@
     "enron-6ed4287ab1dda8865929a1de": "Filing a protest against an external expansion project does not establish management of that project.",
     "enron-c1eca5a27ad7f5c33854f711": "Commercial transaction condition and financing update may be project-related, but managed-project communication is uncertain.",
     "enron-1d4602f2517a4301e69213b0": "An external pipeline open-season bid deadline and service date are not clearly deadlines for this team's managed project work.",
-    "enron-4f706dd7b8fddab7352491a5": "External regulatory tariff-approval notice lacks clear evidence of this team's managed-project scope."
+    "enron-4f706dd7b8fddab7352491a5": "External regulatory tariff-approval notice lacks clear evidence of this team's managed-project scope.",
+    "enron-95a8e97da04134b58f53468c": "Target date for Phase 2 does not establish whether the date is a start/launch or a required completion; deadline role remains ambiguous."
   }
 }

@@ -35,20 +35,20 @@ This is an AI audit artifact for the silver-data acceptance gate. It is not huma
 ## Strict adjudication outcome
 
 The text-free [decision manifest](../annotation/training_silver_extension_first300_decisions.jsonl)
-retains **140 of 300** reviewed records: 66 `NON_PROJECT` and 74 with at least
-one project label, including 32 multi-label records. It excludes 143 reviewer
+retains **139 of 300** reviewed records: 66 `NON_PROJECT` and 73 with at least
+one project label, including 31 multi-label records. It excludes 143 reviewer
 disagreements, flags, or abstentions; 16 otherwise exact agreements vetoed by
-the independent audit; and one supervisor scope veto. No disputed or flagged
+the independent audit; and two supervisor scope/date-role vetoes. No disputed or flagged
 record was accepted by a tie-break. The accepted label supports are:
 
 | Label | Accepted records |
 | --- | ---: |
 | `ACTION_REQUEST` | 29 |
 | `APPROVAL` | 2 |
-| `DEADLINE` | 11 |
+| `DEADLINE` | 10 |
 | `DEPARTMENTAL_INPUT` | 1 |
 | `FOLLOW_UP` | 3 |
-| `GENERAL_UPDATE` | 48 |
+| `GENERAL_UPDATE` | 47 |
 | `MEETING` | 23 |
 | `NON_PROJECT` | 66 |
 | `REPORT_REQUEST` | 3 |
@@ -56,7 +56,8 @@ record was accepted by a tie-break. The accepted label supports are:
 The supervisor read accepted examples from every label, including all three
 `REPORT_REQUEST` examples and the sole `DEPARTMENTAL_INPUT` example. The
 canonical join resolves every accepted ID and verifies its source thread;
-combined with prior accepted data there are **452** eligible AI-silver records
-in **452** distinct full-corpus leakage groups after the 30 September supervisor
-scope correction to an earlier tranche. Rare-label support remains low,
+combined with prior accepted data there are **451** eligible AI-silver records
+in **451** distinct full-corpus leakage groups after the 30 September supervisor
+scope and date-role corrections. The later second replacement tranche brings
+the cumulative count to 617. Rare-label support remains low,
 so this is not yet the 1,000-record training set.

@@ -1,0 +1,211 @@
+{
+  "sample_name": "negative_semantic_checkpoint_618",
+  "date": "2026-09-30",
+  "sampling_seed": "fyp-semantic-check-20260930",
+  "sampling_rule": "first20 SHA256(seed:email_id) among accepted NON_PROJECT at618-row checkpoint",
+  "reviewer": "supervisor_ai",
+  "status": "AI-only quality sampling, not human or gold",
+  "accepted_dataset_size_at_sampling": 618,
+  "records": [
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-0da229d47d1ce690a846c93f",
+      "current_sha256": "8ad8fc9a100f826c2d858fc251329ef72b21524a4a5871028070ad25f456337a",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "personal_sports",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-674818102ad1aecd4d3eff02",
+      "current_sha256": "11247be9ce2685ff9cb09e6a896e50d3507c9978cc54df51dafadcfea3b68142",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "corporate_organization_notice",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-0a3fe89bc236307a122b37f9",
+      "current_sha256": "d9ac51240b51349da349024fd8832fa223407631e736df916773b1f21fd88cf6",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "non_project_business_meeting",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-f8c29018471a16c7def78e56",
+      "current_sha256": "58c46df575ce4884b9334bc6bbfed6a781f398164d0f711abd3e61ed80f041b9",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "personal_social",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-f0de38c262a32c54d5219029",
+      "current_sha256": "276040c6a7120e7fd2a963ce8327c42a35b4d120e9af113483280437b24d804b",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "regulatory_industry_notice",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-cbff4961e82fd3a0e0bf2d44",
+      "current_sha256": "a720ec798a9000c3ad50a52af1d63256b6524993ba05128441679ff0038c32bf",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "routine_hr_performance_review",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-ec5a5b347e6410c15f290bf6",
+      "current_sha256": "15935d462bb48ca5132c42c5d738734458eecc4f5e49973c51a68eee1dfd0067",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "generic_commercial_document_transfer",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-53aeeca2d78f156c6ab6f82b",
+      "current_sha256": "f34ed79841d96c6d1e14303f72216ce168cc41fb6eee1cad44a631e9869d4583",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "regulatory_industry_notice",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-2ce6d7415e36833ca8c08cca",
+      "current_sha256": "c050db30fcf1a589b6b9633a3c94c910125ade10722ce54933f99fcf941b23a1",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "promotion",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-d5979cb0a000cb0432c6f253",
+      "current_sha256": "08818f8b764c562234a727c3817e8801032bead43ddfaa9a35954f79dc72d76b",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "professional_conference_event",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-1b5f12c7a3a9abd4df24fdb0",
+      "current_sha256": "6789169a75f4fe76f4efff3950d24f8510534f697d4a6e4d3725403aebf086ba",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "routine_operational_approval",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-67c9f590a11399b1a8530319",
+      "current_sha256": "65e14eb150f50386f86d27b79a8956f41cd83e5aefea31e204ba861f375c714d",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "automated_invoice_reminder",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-2ad4c14bf729bd9244b3c97c",
+      "current_sha256": "e1dbaeb5b092a9315b2f5e4c5a8e933ad74b49cda3e8dd4a73a3f7c593bf4bf5",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "personal_family",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-ba20c4f3345e253da1cc300b",
+      "current_sha256": "e4f4ac80f6d3f80b20ec77aaabc6449bb7566976e16160da014726069cdf59d1",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "generic_commercial_correspondence",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-e0651997b34eb8dff17118c6",
+      "current_sha256": "739742de0bd9c092bbb29aa1859724284d26c1898aa6aa47929f5fd4de02c18d",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "corporate_community_promotion",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-0a442a8eaff56b5b4c83bea1",
+      "current_sha256": "ce24ba413633707eedb2f703e6a4e0ad64cacff5a5db8062f1cc4046feb15d95",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "corporate_organization_notice",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-36744ea8a00f85c36fa183ff",
+      "current_sha256": "8f5bab19e46a8dcc347487e07c0cccee7655534063aa6a0797daaa1512df9059",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "external_operational_test_notice",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-4ae7f5e9a2071f67a924e14d",
+      "current_sha256": "96ccdef28bd5905485d0d34415fe73b9801d73e994ee885bd668201f6d95b769",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "recreational_promotion",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-3e8f71e4f38f8a24089bcd3e",
+      "current_sha256": "a53f86e4b6f68bc39a550ad04b8376a0f2512757206b5281cf3024549ba60ef5",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "hr_filing_task",
+      "qa_finding": "supported_non_project"
+    },
+    {
+      "source_dataset": "enron",
+      "email_id": "enron-27161c67fbe4a44afdbe9f7e",
+      "current_sha256": "021856b552fc88847fcfdfb1021602b684b56281dd6cfdcc4aa0cfc99885e1ab",
+      "existing_silver_labels": [
+        "NON_PROJECT"
+      ],
+      "boundary_category": "calendar_entry_without_project_purpose",
+      "qa_finding": "supported_non_project"
+    }
+  ]
+}

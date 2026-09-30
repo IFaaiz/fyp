@@ -52,7 +52,7 @@ including labels absent from training. The full suite passed 107 tests on
 quality metric.
 
 As of 30 September, the pilot and five audited acceptance manifests provide
-618 eligible AI-silver records after supervisor corrections. This
+617 eligible AI-silver records after supervisor corrections. This
 does not meet the baseline's 1,000-record gate; rare project labels still have
 limited support. Add future audited acceptance manifests to the command only
 after their gates pass. No model has been trained on the real silver data and no validation
