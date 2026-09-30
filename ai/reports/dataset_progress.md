@@ -2,13 +2,23 @@
 
 ## Status
 
-**30 September current status:** The accepted count is **452** after a further
-supervisor scope veto during the rare-label reread. All accepted records remain
+**30 September current status:** The accepted count is **618** after a further
+supervisor scope veto during the rare-label reread and strict acceptance of
+166 rows from the replacement seed's second tranche. All accepted records remain
 AI silver. The remaining replacement tranches have resumed two blind Luna
 reviews and independent third audit. A concrete Lotus quoted-header defect in
 baseline feature cleaning was repaired, and the standard scikit-learn optimizer
 can now export portable model weights; the full suite passed **107 tests**.
 The historical counts below describe their respective earlier checkpoints.
+
+The [second replacement-tranche audit](training_silver_extension_second300_third_audit.md)
+covered all 202 required cases. It retained 166 rows (98 project-related, 68
+`NON_PROJECT`) and excluded 134. The current source join passes canonical
+validation with zero errors and resolves 618 distinct leakage groups. Current
+label supports are `NON_PROJECT` 323, `MEETING` 90, `ACTION_REQUEST` 105,
+`GENERAL_UPDATE` 195, `DEADLINE` 56, `DEPARTMENTAL_INPUT` 8,
+`REPORT_REQUEST` 10, `FOLLOW_UP` 11, and `APPROVAL` 17. Counts overlap; the
+1,000-row gate and rare-label coverage work remain outstanding.
 
 The AI/NLP workstream has an annotation schema, a verified MailEx conversion, and a fully ingested and validated official Enron corpus. The 50,000-file staged pass and the 517,401-file full pass both validate. Candidate sampling, Label Studio conversion, and independent-review tooling exist; the full-corpus candidate pool and first independent human assignments have been prepared. No model has been trained and no human gold labels have been claimed.
 

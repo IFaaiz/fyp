@@ -38,6 +38,7 @@ ai/.venv/Scripts/python.exe ai/scripts/train_silver_classifier.py `
     ai/annotation/training_silver_first300_decisions.jsonl `
     ai/annotation/training_silver_second300_decisions.jsonl `
     ai/annotation/training_silver_extension_first300_decisions.jsonl `
+    ai/annotation/training_silver_extension_second300_decisions.jsonl `
   --source-records ai/data/interim/enron_full.jsonl `
   --leakage-groups ai/data/interim/leakage_groups.jsonl `
   --optimizer sklearn --max-iter 1000 `
@@ -50,8 +51,8 @@ including labels absent from training. The full suite passed 107 tests on
 30 September. This verifies implementation transport; it is not a real-data
 quality metric.
 
-As of 30 September, the pilot and four audited acceptance manifests provide
-452 eligible AI-silver records after supervisor corrections. This
+As of 30 September, the pilot and five audited acceptance manifests provide
+618 eligible AI-silver records after supervisor corrections. This
 does not meet the baseline's 1,000-record gate; rare project labels still have
 limited support. Add future audited acceptance manifests to the command only
 after their gates pass. No model has been trained on the real silver data and no validation
