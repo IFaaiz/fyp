@@ -34,7 +34,7 @@ DATE_HEADER_RE = re.compile(
     re.IGNORECASE,
 )
 SENDER_DATE_HEADER_RE = re.compile(
-    r"^[^<>\n]{1,120}<[^<>\s]+@[^<>\s]+>\s+on\s+"
+    r"^(?:[^<>\n]{1,120}<[^<>\s]+@[^<>\s]+>|[^\s<>]+@[^\s<>]+)\s+on\s+"
     r"\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\s+\d{1,2}:\d{2}(?::\d{2})?\s*(?:am|pm)?$",
     re.IGNORECASE,
 )
@@ -50,6 +50,21 @@ def extract_authored_prefix(text: str) -> str:
     """
     _, current = clean_email_body(text)
     lines = current.split("\n")
+    for index, line in enumerate(lines):
+        # Column-aligned Lotus exports place To/Subject beside sender/date.
+        block = "\n".join(lines[max(0, index - 1):index + 5])
+        if (re.search(r"\bTo:\s*\S", line, re.I)
+                and re.search(r"\bSubject:\s*\S", block, re.I)
+                and re.search(r"\bcc:", block, re.I)
+                and re.search(r"\b\d{1,2}/\d{1,2}/\d{2,4}\b", block)
+                and "@" in block):
+            cutoff = index
+            previous = index - 1
+            while previous >= 0 and not lines[previous].strip():
+                previous -= 1
+            if previous >= 0 and "@" in lines[previous]:
+                cutoff = previous
+            return "\n".join(lines[:cutoff]).strip()
     for index in range(1, len(lines)):
         fields: set[str] = set()
         starts: list[int] = []

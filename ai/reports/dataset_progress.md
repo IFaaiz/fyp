@@ -2,6 +2,8 @@
 
 ## Status
 
+**2 October current status:** Tonight's verified accepted local state of **718** AI-silver emails was frozen and semantically audited. All 353 project-positive sources and 60 negatives were reviewed: **346 confirmed, 23 corrected, 44 excluded uncertain**. The frozen diagnostic snapshot contains **674** emails. Actual TF-IDF and weighted/unweighted DistilBERT models were trained on the same **426 fitting / 110 tuning / 138 validation** split. Tuned TF-IDF micro/macro F1 is **0.626 / 0.363**; unweighted DistilBERT at 0.5 is **0.611 / 0.169**. These are **AI-silver diagnostic metrics only**. Fifty transformer error sources were personally inspected; six further uncertain references are quarantined for future training (**668 eligible after quarantine**). A runnable **180-row human calibration queue** excludes all validation IDs, threads and groups. The complete suite passes **120 tests**. See [tonight's A–G result report](tonight_training_comparison.md). Expansion, DAPT and extraction work stopped for this experiment. The historical checkpoints below retain their original dates and limitations.
+
 **30 September current status:** The accepted count is **617** after further
 supervisor scope/date-role vetoes during semantic sampling and strict acceptance of
 166 rows from the replacement seed's second tranche. All accepted records remain
@@ -20,7 +22,7 @@ label supports are `NON_PROJECT` 323, `MEETING` 90, `ACTION_REQUEST` 105,
 `REPORT_REQUEST` 10, `FOLLOW_UP` 11, and `APPROVAL` 17. Counts overlap; the
 1,000-row gate and rare-label coverage work remain outstanding.
 
-The AI/NLP workstream has an annotation schema, a verified MailEx conversion, and a fully ingested and validated official Enron corpus. The 50,000-file staged pass and the 517,401-file full pass both validate. Candidate sampling, Label Studio conversion, and independent-review tooling exist; the full-corpus candidate pool and first independent human assignments have been prepared. No model has been trained and no human gold labels have been claimed.
+At the earlier foundation checkpoint, the AI/NLP workstream had an annotation schema, a verified MailEx conversion, and a fully ingested and validated official Enron corpus. The 50,000-file staged pass and the 517,401-file full pass both validate. Candidate sampling, Label Studio conversion, and independent-review tooling exist; the full-corpus candidate pool and first independent human assignments have been prepared. No model had been trained at that earlier checkpoint; no human gold labels have been claimed.
 
 **27 September update:** Two blind AI pilots and a direct AI correctness audit are complete. A classification-only silver batch now contains 41 AI suggestions and 9 held-back records; its spans are empty pending semantic review. See the [silver-batch report](ai_silver_classification.md) and [v3 protocol](../annotation/ai_review_protocol_v3.md). No gold set or model-accuracy estimate has been created.
 

@@ -1,0 +1,818 @@
+{
+  "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy.",
+  "pretrained_model": "distilbert-base-uncased",
+  "pretrained_checkpoint_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+  "pretrained_cache_directory": "E:\\Projects\\FYP\\ai\\data\\cache\\distilbert-base-uncased",
+  "pretrained_checkpoint_file_sha256": {
+    "checkpoint_manifest.json": "f428d1e7fd2b330543d97ed22f3f51c9c0d3efa5a4d08201cd9f4ce55fa8a096",
+    "config.json": "69c94b0222d5d1f4b0ad027ca7416cdafb98378cbbb8305d0bf47c9365c60c83",
+    "model.safetensors": "5e3f1108e3cb34ee048634875d8482665b65ac713291a7e32396fb18f6ff0063",
+    "tokenizer.json": "ce64fce797c24f68df90b40a3f74f579b336a493db14bd583fd520ea0d8c9a98",
+    "tokenizer_config.json": "a025160ef0431f1a392f6f050c1310f4c5d9fb6f275932dbccba73c4d214bf10",
+    "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+  },
+  "label_order": [
+    "MEETING",
+    "DEADLINE",
+    "REPORT_REQUEST",
+    "DEPARTMENTAL_INPUT",
+    "ACTION_REQUEST",
+    "FOLLOW_UP",
+    "APPROVAL",
+    "GENERAL_UPDATE",
+    "NON_PROJECT"
+  ],
+  "created_utc": "2026-10-01T19:54:48.028027+00:00",
+  "data": {
+    "snapshot": "ai\\data\\experiments\\tonight_20261002\\corrected_silver_snapshot.jsonl",
+    "snapshot_sha256": "3bd621f18e2118f06b8e1734198f1d01936ea817d081e4e2f6f420c29c9a9988",
+    "text_free_manifest": "ai\\annotation\\training_silver_v2_manifest.jsonl",
+    "text_free_manifest_sha256": "0e022f93fcdaff59f21ca2c4406ce1f07e1b60a0f22f609ab9fcbca3d3e015fc",
+    "split_manifest": "ai\\data\\splits\\tonight_silver_v2_shared_split.json",
+    "split_manifest_sha256": "ebcdf58b3ffdaf9be854a3bad4ab5bfa79cffc52cb2d0899a07a742db049a1d5",
+    "source_commit_sha": "7c6096700582ef8db9da5780fee3bc28149c6e9b",
+    "implementation_sha256": {
+      "train_transfer_diagnostic.py": "d0b32b4cbcbfcda63f5033f9561e7e6b1398385b626957525b4b1837e91e4e58",
+      "transfer_diagnostic.py": "3c4a5e3461f084b02c1f46cc85d86e456dd698756c57959d630f81de915024ba",
+      "download_transfer_checkpoint.py": "833eaa364dba2687b4b671fef19657b533d3ea77457abca445c0831516157500"
+    },
+    "snapshot_validation": {
+      "records": 674,
+      "label_counts": {
+        "MEETING": 93,
+        "DEADLINE": 57,
+        "REPORT_REQUEST": 9,
+        "DEPARTMENTAL_INPUT": 17,
+        "ACTION_REQUEST": 107,
+        "FOLLOW_UP": 10,
+        "APPROVAL": 13,
+        "GENERAL_UPDATE": 212,
+        "NON_PROJECT": 357
+      },
+      "source_counts": {
+        "enron": 674
+      },
+      "ai_silver_records": 674,
+      "human_or_gold_records": 0
+    },
+    "split_validation": {
+      "partition_records": {
+        "fit": 426,
+        "tuning": 110,
+        "validation": 138
+      },
+      "partition_label_counts": {
+        "fit": {
+          "MEETING": 56,
+          "DEADLINE": 33,
+          "REPORT_REQUEST": 5,
+          "DEPARTMENTAL_INPUT": 10,
+          "ACTION_REQUEST": 67,
+          "FOLLOW_UP": 6,
+          "APPROVAL": 8,
+          "GENERAL_UPDATE": 132,
+          "NON_PROJECT": 227
+        },
+        "tuning": {
+          "MEETING": 16,
+          "DEADLINE": 9,
+          "REPORT_REQUEST": 2,
+          "DEPARTMENTAL_INPUT": 4,
+          "ACTION_REQUEST": 16,
+          "FOLLOW_UP": 2,
+          "APPROVAL": 2,
+          "GENERAL_UPDATE": 37,
+          "NON_PROJECT": 56
+        },
+        "validation": {
+          "MEETING": 21,
+          "DEADLINE": 15,
+          "REPORT_REQUEST": 2,
+          "DEPARTMENTAL_INPUT": 3,
+          "ACTION_REQUEST": 24,
+          "FOLLOW_UP": 2,
+          "APPROVAL": 3,
+          "GENERAL_UPDATE": 43,
+          "NON_PROJECT": 74
+        }
+      },
+      "partition_leakage_groups": {
+        "fit": 426,
+        "tuning": 110,
+        "validation": 111
+      },
+      "fixed_outer_validation": true,
+      "validation_used_for_training_or_threshold_selection": false
+    },
+    "provenance": "AI silver only; human/gold rows excluded and rejected",
+    "gold_or_human_rows_used": 0,
+    "requirements_transfer_sha256": "e4110622572bf5ab3e561768f357977d359d83f412b3bbbdd341d80db18a1760",
+    "checkpoint_download_manifest_sha256": "f428d1e7fd2b330543d97ed22f3f51c9c0d3efa5a4d08201cd9f4ce55fa8a096"
+  },
+  "training": {
+    "epochs": 3,
+    "batch_size": 8,
+    "learning_rate": 5e-05,
+    "optimizer": "AdamW",
+    "weight_decay": 0.01,
+    "loss": "BCEWithLogitsLoss",
+    "reproducibility": "Python, NumPy, PyTorch and CUDA seeds set; cuDNN deterministic; strict deterministic algorithms; eager attention",
+    "input_format": "[SUBJECT] subject\\n[BODY] hash-validated authored_message matching extract_authored_prefix(current_message), then remove pure separator lines of 20+ *, -, _, =, or ~ characters",
+    "token_distribution": {
+      "measured_on_partition": "fit",
+      "records": 426,
+      "with_special_tokens": true,
+      "p50_tokens": 166,
+      "p90_tokens": 475,
+      "p95_tokens": 607,
+      "p99_tokens": 863,
+      "max_tokens": 1843,
+      "chosen_max_length": 512,
+      "selection_rule": "round the fit-partition p95 token length up to the next 32; clamp to 64..512"
+    },
+    "truncation_by_partition": {
+      "fit": {
+        "records": 426,
+        "truncated_records": 32,
+        "truncated_fraction": 0.07511737089201878,
+        "token_p50": 166,
+        "token_p90": 475,
+        "token_p95": 607,
+        "token_max": 1843
+      },
+      "tuning": {
+        "records": 110,
+        "truncated_records": 5,
+        "truncated_fraction": 0.045454545454545456,
+        "token_p50": 133,
+        "token_p90": 408,
+        "token_p95": 501,
+        "token_max": 775
+      },
+      "validation": {
+        "records": 138,
+        "truncated_records": 5,
+        "truncated_fraction": 0.036231884057971016,
+        "token_p50": 167,
+        "token_p90": 366,
+        "token_p95": 438,
+        "token_max": 626
+      }
+    },
+    "fit_partition_only_for_gradient_updates": true,
+    "tuning_partition_only_for_thresholds": true,
+    "final_validation_used_for_training_or_model_selection": false,
+    "early_stopping": false,
+    "non_project_exclusivity": "if NON_PROJECT crosses its threshold, retain it only when its probability is at least the strongest project-label probability"
+  },
+  "versions": {
+    "python": "3.12.14",
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.6",
+    "tokenizers": "0.22.2",
+    "numpy": "2.5.3",
+    "cuda_runtime": "12.8",
+    "cuda_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 5070",
+    "tokenizer_class": "DistilBertTokenizerFast",
+    "safetensors": "0.8.0",
+    "huggingface_hub": "0.36.2"
+  },
+  "variants": {
+    "weighted": {
+      "seed": 20261002,
+      "epochs": 3,
+      "epoch_mean_loss": [
+        1.2156814314700939,
+        1.2558914853466883,
+        1.1730679074923198
+      ],
+      "training_seconds": 26.71980149999945,
+      "loss": "BCEWithLogitsLoss",
+      "pos_weight_applied": true,
+      "fit_only_class_weights": {
+        "MEETING": {
+          "positive": 56,
+          "negative": 370,
+          "pos_weight": 6.607142857142857,
+          "weight_unavailable_no_positive_fit_examples": false
+        },
+        "DEADLINE": {
+          "positive": 33,
+          "negative": 393,
+          "pos_weight": 11.909090909090908,
+          "weight_unavailable_no_positive_fit_examples": false
+        },
+        "REPORT_REQUEST": {
+          "positive": 5,
+          "negative": 421,
+          "pos_weight": 84.2,
+          "weight_unavailable_no_positive_fit_examples": false
+        },
+        "DEPARTMENTAL_INPUT": {
+          "positive": 10,
+          "negative": 416,
+          "pos_weight": 41.6,
+          "weight_unavailable_no_positive_fit_examples": false
+        },
+        "ACTION_REQUEST": {
+          "positive": 67,
+          "negative": 359,
+          "pos_weight": 5.358208955223881,
+          "weight_unavailable_no_positive_fit_examples": false
+        },
+        "FOLLOW_UP": {
+          "positive": 6,
+          "negative": 420,
+          "pos_weight": 70.0,
+          "weight_unavailable_no_positive_fit_examples": false
+        },
+        "APPROVAL": {
+          "positive": 8,
+          "negative": 418,
+          "pos_weight": 52.25,
+          "weight_unavailable_no_positive_fit_examples": false
+        },
+        "GENERAL_UPDATE": {
+          "positive": 132,
+          "negative": 294,
+          "pos_weight": 2.227272727272727,
+          "weight_unavailable_no_positive_fit_examples": false
+        },
+        "NON_PROJECT": {
+          "positive": 227,
+          "negative": 199,
+          "pos_weight": 0.8766519823788547,
+          "weight_unavailable_no_positive_fit_examples": false
+        }
+      },
+      "thresholds_selected_on_tuning_partition": {
+        "MEETING": {
+          "threshold": 0.5282900333404541,
+          "tuning_positive_support": 16,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.48484848484848486,
+          "unstable_support_below_20": true
+        },
+        "DEADLINE": {
+          "threshold": 0.5297195315361023,
+          "tuning_positive_support": 9,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.4444444444444444,
+          "unstable_support_below_20": true
+        },
+        "REPORT_REQUEST": {
+          "threshold": 0.3254133462905884,
+          "tuning_positive_support": 2,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.04878048780487806,
+          "unstable_support_below_20": true
+        },
+        "DEPARTMENTAL_INPUT": {
+          "threshold": 0.5906611680984497,
+          "tuning_positive_support": 4,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.2857142857142857,
+          "unstable_support_below_20": true
+        },
+        "ACTION_REQUEST": {
+          "threshold": 0.4960366189479828,
+          "tuning_positive_support": 16,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.4615384615384615,
+          "unstable_support_below_20": true
+        },
+        "FOLLOW_UP": {
+          "threshold": 0.5779718160629272,
+          "tuning_positive_support": 2,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.1818181818181818,
+          "unstable_support_below_20": true
+        },
+        "APPROVAL": {
+          "threshold": 0.48676612973213196,
+          "tuning_positive_support": 2,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.11764705882352941,
+          "unstable_support_below_20": true
+        },
+        "GENERAL_UPDATE": {
+          "threshold": 0.5227351784706116,
+          "tuning_positive_support": 37,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.7142857142857143,
+          "unstable_support_below_20": false
+        },
+        "NON_PROJECT": {
+          "threshold": 0.4587124288082123,
+          "tuning_positive_support": 56,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.7338129496402878,
+          "unstable_support_below_20": false
+        }
+      },
+      "validation_metrics": {
+        "threshold_0_5": {
+          "records": 138,
+          "micro_precision": 0.17121588089330025,
+          "micro_recall": 0.3689839572192513,
+          "micro_f1": 0.23389830508474577,
+          "macro_f1": 0.16530385409213327,
+          "subset_match_rate": 0.0,
+          "hamming_loss": 0.3639291465378422,
+          "per_label": {
+            "MEETING": {
+              "support": 21,
+              "predicted": 49,
+              "precision": 0.22448979591836735,
+              "recall": 0.5238095238095238,
+              "f1": 0.3142857142857143,
+              "unstable_support_below_20": false
+            },
+            "DEADLINE": {
+              "support": 15,
+              "predicted": 77,
+              "precision": 0.16883116883116883,
+              "recall": 0.8666666666666667,
+              "f1": 0.28260869565217395,
+              "unstable_support_below_20": true
+            },
+            "REPORT_REQUEST": {
+              "support": 2,
+              "predicted": 44,
+              "precision": 0.022727272727272728,
+              "recall": 0.5,
+              "f1": 0.04347826086956522,
+              "unstable_support_below_20": true
+            },
+            "DEPARTMENTAL_INPUT": {
+              "support": 3,
+              "predicted": 91,
+              "precision": 0.03296703296703297,
+              "recall": 1.0,
+              "f1": 0.06382978723404255,
+              "unstable_support_below_20": true
+            },
+            "ACTION_REQUEST": {
+              "support": 24,
+              "predicted": 3,
+              "precision": 0.6666666666666666,
+              "recall": 0.08333333333333333,
+              "f1": 0.14814814814814814,
+              "unstable_support_below_20": false
+            },
+            "FOLLOW_UP": {
+              "support": 2,
+              "predicted": 40,
+              "precision": 0.05,
+              "recall": 1.0,
+              "f1": 0.09523809523809523,
+              "unstable_support_below_20": true
+            },
+            "APPROVAL": {
+              "support": 3,
+              "predicted": 5,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "GENERAL_UPDATE": {
+              "support": 43,
+              "predicted": 94,
+              "precision": 0.39361702127659576,
+              "recall": 0.8604651162790697,
+              "f1": 0.54014598540146,
+              "unstable_support_below_20": false
+            },
+            "NON_PROJECT": {
+              "support": 74,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": false
+            }
+          },
+          "macro_precision": 0.17325543982078936,
+          "macro_recall": 0.5371416266765103,
+          "exact_set_accuracy": 0.0,
+          "no_label_predictions": 0,
+          "no_label_expected": 0,
+          "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+        },
+        "threshold_tuned": {
+          "records": 138,
+          "micro_precision": 0.19413919413919414,
+          "micro_recall": 0.28342245989304815,
+          "micro_f1": 0.23043478260869568,
+          "macro_f1": 0.16976209652394691,
+          "subset_match_rate": 0.021739130434782608,
+          "hamming_loss": 0.28502415458937197,
+          "per_label": {
+            "MEETING": {
+              "support": 21,
+              "predicted": 18,
+              "precision": 0.4444444444444444,
+              "recall": 0.38095238095238093,
+              "f1": 0.41025641025641024,
+              "unstable_support_below_20": false
+            },
+            "DEADLINE": {
+              "support": 15,
+              "predicted": 15,
+              "precision": 0.13333333333333333,
+              "recall": 0.13333333333333333,
+              "f1": 0.13333333333333333,
+              "unstable_support_below_20": true
+            },
+            "REPORT_REQUEST": {
+              "support": 2,
+              "predicted": 101,
+              "precision": 0.019801980198019802,
+              "recall": 1.0,
+              "f1": 0.038834951456310676,
+              "unstable_support_below_20": true
+            },
+            "DEPARTMENTAL_INPUT": {
+              "support": 3,
+              "predicted": 18,
+              "precision": 0.05555555555555555,
+              "recall": 0.3333333333333333,
+              "f1": 0.09523809523809525,
+              "unstable_support_below_20": true
+            },
+            "ACTION_REQUEST": {
+              "support": 24,
+              "predicted": 10,
+              "precision": 0.3,
+              "recall": 0.125,
+              "f1": 0.17647058823529413,
+              "unstable_support_below_20": false
+            },
+            "FOLLOW_UP": {
+              "support": 2,
+              "predicted": 3,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "APPROVAL": {
+              "support": 3,
+              "predicted": 31,
+              "precision": 0.03225806451612903,
+              "recall": 0.3333333333333333,
+              "f1": 0.0588235294117647,
+              "unstable_support_below_20": true
+            },
+            "GENERAL_UPDATE": {
+              "support": 43,
+              "predicted": 76,
+              "precision": 0.4605263157894737,
+              "recall": 0.813953488372093,
+              "f1": 0.5882352941176471,
+              "unstable_support_below_20": false
+            },
+            "NON_PROJECT": {
+              "support": 74,
+              "predicted": 1,
+              "precision": 1.0,
+              "recall": 0.013513513513513514,
+              "f1": 0.026666666666666665,
+              "unstable_support_below_20": false
+            }
+          },
+          "macro_precision": 0.27176885487077285,
+          "macro_recall": 0.34815770920422084,
+          "exact_set_accuracy": 0.021739130434782608,
+          "no_label_predictions": 1,
+          "no_label_expected": 0,
+          "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+        }
+      },
+      "trainable_parameters": 66960393,
+      "total_parameters": 66960393,
+      "model_weights_size_bytes": 267854100,
+      "model_package_size_bytes_including_tokenizer": 268799489,
+      "checkpoint_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+      "checkpoint_file_sha256": {
+        "config.json": "50ed87979c2c1c66cee909809584018aa52125ded6932bd2514196165cadda66",
+        "model.safetensors": "e0ad5f4b5ac3da5fa637f614e57000925b98e3dd298bc776c5babe6db8e06670",
+        "special_tokens_map.json": "3c3507f36dff57bce437223db3b3081d1e2b52ec3e56ee55438193ecb2c94dd6",
+        "tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+        "tokenizer_config.json": "21c3bea73b6711617c657664adcd4d0b02ce20d2db4b2ebdd722a6da8da28bcd",
+        "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+      },
+      "inference_latency": {
+        "sample_records": 24,
+        "single_record_repetitions": 10,
+        "single_record_forward_ms": 14.171340000029886,
+        "repetitions": 3,
+        "batch_forward_ms_per_record": 2.3270458333778756,
+        "tokenization_ms_per_record": 0.7464708332918235,
+        "single_record_tokenization_plus_forward_ms": 14.91781083332171,
+        "device": "cuda",
+        "batch_size": 24
+      },
+      "model_directory": "ai\\data\\models\\tonight\\weighted",
+      "attention_implementation": "eager",
+      "mixed_precision_fp16": true
+    },
+    "unweighted": {
+      "seed": 20261002,
+      "epochs": 3,
+      "epoch_mean_loss": [
+        0.37981272240479785,
+        0.2762553609079785,
+        0.20743753498903028
+      ],
+      "training_seconds": 11.076799999998912,
+      "loss": "BCEWithLogitsLoss with unit pos_weight",
+      "pos_weight_applied": false,
+      "fit_only_class_weights": null,
+      "thresholds_selected_on_tuning_partition": {
+        "MEETING": {
+          "threshold": 0.05460060387849808,
+          "tuning_positive_support": 16,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.4225352112676056,
+          "unstable_support_below_20": true
+        },
+        "DEADLINE": {
+          "threshold": 0.12907303869724274,
+          "tuning_positive_support": 9,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.4444444444444444,
+          "unstable_support_below_20": true
+        },
+        "REPORT_REQUEST": {
+          "threshold": 0.013070784509181976,
+          "tuning_positive_support": 2,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.03738317757009346,
+          "unstable_support_below_20": true
+        },
+        "DEPARTMENTAL_INPUT": {
+          "threshold": 0.03289904072880745,
+          "tuning_positive_support": 4,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.22222222222222224,
+          "unstable_support_below_20": true
+        },
+        "ACTION_REQUEST": {
+          "threshold": 0.3107989728450775,
+          "tuning_positive_support": 16,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.5,
+          "unstable_support_below_20": true
+        },
+        "FOLLOW_UP": {
+          "threshold": 0.034293949604034424,
+          "tuning_positive_support": 2,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.4,
+          "unstable_support_below_20": true
+        },
+        "APPROVAL": {
+          "threshold": 0.03521113470196724,
+          "tuning_positive_support": 2,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.22222222222222224,
+          "unstable_support_below_20": true
+        },
+        "GENERAL_UPDATE": {
+          "threshold": 0.2762022018432617,
+          "tuning_positive_support": 37,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.85,
+          "unstable_support_below_20": false
+        },
+        "NON_PROJECT": {
+          "threshold": 0.8,
+          "tuning_positive_support": 56,
+          "tuning_records": 110,
+          "best_binary_f1_before_exclusivity": 0.9285714285714286,
+          "unstable_support_below_20": false
+        }
+      },
+      "validation_metrics": {
+        "threshold_0_5": {
+          "records": 138,
+          "micro_precision": 0.8198198198198198,
+          "micro_recall": 0.48663101604278075,
+          "micro_f1": 0.610738255033557,
+          "macro_f1": 0.16865581675708258,
+          "subset_match_rate": 0.5579710144927537,
+          "hamming_loss": 0.09339774557165861,
+          "per_label": {
+            "MEETING": {
+              "support": 21,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": false
+            },
+            "DEADLINE": {
+              "support": 15,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "REPORT_REQUEST": {
+              "support": 2,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "DEPARTMENTAL_INPUT": {
+              "support": 3,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "ACTION_REQUEST": {
+              "support": 24,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": false
+            },
+            "FOLLOW_UP": {
+              "support": 2,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "APPROVAL": {
+              "support": 3,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "GENERAL_UPDATE": {
+              "support": 43,
+              "predicted": 27,
+              "precision": 0.8518518518518519,
+              "recall": 0.5348837209302325,
+              "f1": 0.6571428571428571,
+              "unstable_support_below_20": false
+            },
+            "NON_PROJECT": {
+              "support": 74,
+              "predicted": 84,
+              "precision": 0.8095238095238095,
+              "recall": 0.918918918918919,
+              "f1": 0.860759493670886,
+              "unstable_support_below_20": false
+            }
+          },
+          "macro_precision": 0.18459729570840683,
+          "macro_recall": 0.16153362664990573,
+          "exact_set_accuracy": 0.5579710144927537,
+          "no_label_predictions": 27,
+          "no_label_expected": 0,
+          "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+        },
+        "threshold_tuned": {
+          "records": 138,
+          "micro_precision": 0.4064748201438849,
+          "micro_recall": 0.6042780748663101,
+          "micro_f1": 0.48602150537634414,
+          "macro_f1": 0.2482657245263361,
+          "subset_match_rate": 0.427536231884058,
+          "hamming_loss": 0.19243156199677938,
+          "per_label": {
+            "MEETING": {
+              "support": 21,
+              "predicted": 62,
+              "precision": 0.25806451612903225,
+              "recall": 0.7619047619047619,
+              "f1": 0.38554216867469876,
+              "unstable_support_below_20": false
+            },
+            "DEADLINE": {
+              "support": 15,
+              "predicted": 4,
+              "precision": 0.25,
+              "recall": 0.06666666666666667,
+              "f1": 0.10526315789473685,
+              "unstable_support_below_20": true
+            },
+            "REPORT_REQUEST": {
+              "support": 2,
+              "predicted": 54,
+              "precision": 0.037037037037037035,
+              "recall": 1.0,
+              "f1": 0.07142857142857142,
+              "unstable_support_below_20": true
+            },
+            "DEPARTMENTAL_INPUT": {
+              "support": 3,
+              "predicted": 13,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "ACTION_REQUEST": {
+              "support": 24,
+              "predicted": 19,
+              "precision": 0.21052631578947367,
+              "recall": 0.16666666666666666,
+              "f1": 0.186046511627907,
+              "unstable_support_below_20": false
+            },
+            "FOLLOW_UP": {
+              "support": 2,
+              "predicted": 4,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "APPROVAL": {
+              "support": 3,
+              "predicted": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "GENERAL_UPDATE": {
+              "support": 43,
+              "predicted": 50,
+              "precision": 0.62,
+              "recall": 0.7209302325581395,
+              "f1": 0.6666666666666666,
+              "unstable_support_below_20": false
+            },
+            "NON_PROJECT": {
+              "support": 74,
+              "predicted": 70,
+              "precision": 0.8428571428571429,
+              "recall": 0.7972972972972973,
+              "f1": 0.8194444444444444,
+              "unstable_support_below_20": false
+            }
+          },
+          "macro_precision": 0.24649833464585397,
+          "macro_recall": 0.3903850694548369,
+          "exact_set_accuracy": 0.427536231884058,
+          "no_label_predictions": 6,
+          "no_label_expected": 0,
+          "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+        }
+      },
+      "trainable_parameters": 66960393,
+      "total_parameters": 66960393,
+      "model_weights_size_bytes": 267854100,
+      "model_package_size_bytes_including_tokenizer": 268799489,
+      "checkpoint_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+      "checkpoint_file_sha256": {
+        "config.json": "50ed87979c2c1c66cee909809584018aa52125ded6932bd2514196165cadda66",
+        "model.safetensors": "918c8c0caf47fef41932442245c3876b8cf75df30176d590f3c858a7ce86e12b",
+        "special_tokens_map.json": "3c3507f36dff57bce437223db3b3081d1e2b52ec3e56ee55438193ecb2c94dd6",
+        "tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+        "tokenizer_config.json": "21c3bea73b6711617c657664adcd4d0b02ce20d2db4b2ebdd722a6da8da28bcd",
+        "vocab.txt": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+      },
+      "inference_latency": {
+        "sample_records": 24,
+        "single_record_repetitions": 10,
+        "single_record_forward_ms": 13.322469999911846,
+        "repetitions": 3,
+        "batch_forward_ms_per_record": 2.313244444445041,
+        "tokenization_ms_per_record": 0.6426541667678976,
+        "single_record_tokenization_plus_forward_ms": 13.965124166679743,
+        "device": "cuda",
+        "batch_size": 24
+      },
+      "model_directory": "ai\\data\\models\\tonight\\unweighted",
+      "attention_implementation": "eager",
+      "mixed_precision_fp16": true
+    }
+  },
+  "prediction_file": "ai\\data\\experiments\\tonight_20261002\\transfer_predictions.jsonl",
+  "prediction_file_sha256": "f8f2ab0d699bb06428a76afcd4f664b33743fd06a3c8918a974a99e31134f0fc",
+  "determinism_rerun": {
+    "final_run": "eager attention with strict deterministic algorithms; no nondeterministic CUDA warning observed",
+    "earlier_run_archive": "ai/data/experiments/tonight_20261002/first_run_warnonly",
+    "earlier_run_reason": "Preserved because CUDA memory-efficient attention warned of nondeterministic backward; repeated with unchanged seed, data, split, learning rate, batch size, and epochs.",
+    "validation_driven_run_selection": false
+  },
+  "comparison_note": "Unweighted has higher micro-F1 at fixed 0.5 on this diagnostic split; rare-class outcomes remain weak and unstable, so this does not select a model for generalization.",
+  "gold_test_evaluated": false
+}

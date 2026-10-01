@@ -13,6 +13,7 @@ from unittest.mock import patch
 from scripts.train_silver_classifier import (
     apply_curated_exclusions,
     eligible_ai_silver,
+    eligibility_reason,
     grouped_train_validation_split,
     join_text_free_acceptance_manifest,
     load_leakage_group_map,
@@ -103,6 +104,14 @@ class SilverClassifierTests(unittest.TestCase):
         )
         self.assertEqual(extract_authored_prefix(body), body)
 
+    def test_bare_email_timestamp_and_column_headers_trim_prior_messages(self):
+        for header in (
+            "casey@example.test on 03/14/2001 07:07:48 AM\nTo: Morgan\ncc:\nSubject: Prior request",
+            "       casey@\n       example.test   To: morgan@example.test\n                      cc:\n       03/14/01       Subject: Prior request\n       09:19 AM",
+        ):
+            body = "The current task is complete.\n\n" + header + "\n\nPlease submit the report by Friday."
+            self.assertEqual(extract_authored_prefix(body), "The current task is complete.")
+
     def test_lotus_header_block_trims_embedded_prior_message(self):
         body = (
             "I have this on my calendar. I do not plan to bring anyone else.\n\n"
@@ -159,6 +168,17 @@ class SilverClassifierTests(unittest.TestCase):
         )
         self.assertEqual([row["email_id"] for row in kept], [safe["email_id"]])
         self.assertEqual([row["email_id"] for row in excluded], [quoted["email_id"]])
+
+    def test_forward_only_record_cannot_train_from_subject(self):
+        row = silver_row(1)
+        row["current_message"] = (
+            "From: Casey <casey@example.test>\nTo: Morgan <morgan@example.test>\n"
+            "Subject: FW: Project meeting\nDate: 03/14/2001\n\n"
+            "Schedule the project review for Friday."
+        )
+        self.assertEqual(extract_authored_prefix(row["current_message"]), "")
+        self.assertFalse(eligible_ai_silver(row))
+        self.assertEqual(eligibility_reason(row), "empty_authored_message")
 
     def test_split_unions_thread_and_cross_source_leakage_groups(self):
         rows = []

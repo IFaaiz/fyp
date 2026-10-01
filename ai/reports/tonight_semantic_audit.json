@@ -1,0 +1,179 @@
+{
+  "metric_provenance": "AI-silver diagnostic metrics",
+  "source_commit": "7c6096700582ef8db9da5780fee3bc28149c6e9b",
+  "original": 718,
+  "audited": 413,
+  "positive_audited": 353,
+  "negative_sample": 50,
+  "targeted_calendar_audited": 12,
+  "verdict_counts": {
+    "confirmed": 346,
+    "exclude_uncertain": 44,
+    "corrected": 23
+  },
+  "corrected_silver_v2": 674,
+  "unaudited_negative_retained": 305,
+  "excluded_ids": [
+    "enron-00406c78f8cb7bc97b754148",
+    "enron-011bcf78cd047d486245c1d1",
+    "enron-0e08f803ae160778b19cfdb2",
+    "enron-0fe581a79c3c300576e29add",
+    "enron-103ddb7c126f7928e279c0ad",
+    "enron-1458545153d8bf17de184a73",
+    "enron-1547adbc6fe0070dfa441711",
+    "enron-179d04276c928966a64ca57a",
+    "enron-18410bf9cd2a9ab6dd742bd4",
+    "enron-1b2f9641a263e16ead94c53e",
+    "enron-20627492f7e3cd11807700bc",
+    "enron-21b0e1268c58c3a8fa323e59",
+    "enron-23184b46a1dd48a7c0b93411",
+    "enron-27161c67fbe4a44afdbe9f7e",
+    "enron-288a7b19320c189fee0c6fbf",
+    "enron-291fbc9ae026ec6ec64891ae",
+    "enron-329ff158d0460de12cd80a63",
+    "enron-3f69daf29ed8528b06a1e840",
+    "enron-455b7000c216ca73dd34de3d",
+    "enron-4f805fb09254fd6f39d11790",
+    "enron-4fa4fa7a1db20cf9de82c870",
+    "enron-568c6c41fd2a7c8ccb65a30c",
+    "enron-609e5563b05b9af947f5f32b",
+    "enron-6201028e61fe2d5d050e2fba",
+    "enron-6546c84a89ff2496a625a8f4",
+    "enron-66f3a2a0b20f94dcc98900d9",
+    "enron-6a0246473bb8309b1cfc23a4",
+    "enron-6b0d08f84a9478ff92bd991b",
+    "enron-6d63da847d85357fe298c99a",
+    "enron-6e815ae77957cd59541c87f7",
+    "enron-6f1705a65befdc22d2ef0b56",
+    "enron-70c0e23b65c6cca0d73948d8",
+    "enron-729b3b96eb261b01fb6eb266",
+    "enron-7987e679cee7cc14447b17c3",
+    "enron-7c8d5d1dadcc14875861ddb7",
+    "enron-822c1bb440ed94d1feedf546",
+    "enron-92c138cc933dc411aa073742",
+    "enron-96c82dee9496d7b20ba28413",
+    "enron-a06749b02f1d9187568a6b17",
+    "enron-b2e7bf7ca3577db04bbf3e28",
+    "enron-b978dd348fdc8722126413e0",
+    "enron-c64726a94eac85d50df59014",
+    "enron-cc711374452f971bbade427a",
+    "enron-ff64b7ff7e678fbbc2c11518"
+  ],
+  "training_ready": false,
+  "diagnostic_override": "User explicitly requests actual prototype results below the historical 1000 AI-silver readiness gate; no human or gold quality claim.",
+  "label_support": {
+    "MEETING": {
+      "support_before": 98,
+      "removed": 7,
+      "added": 2,
+      "support_after": 93
+    },
+    "DEADLINE": {
+      "support_before": 62,
+      "removed": 6,
+      "added": 1,
+      "support_after": 57
+    },
+    "REPORT_REQUEST": {
+      "support_before": 11,
+      "removed": 3,
+      "added": 1,
+      "support_after": 9
+    },
+    "DEPARTMENTAL_INPUT": {
+      "support_before": 8,
+      "removed": 1,
+      "added": 10,
+      "support_after": 17
+    },
+    "ACTION_REQUEST": {
+      "support_before": 121,
+      "removed": 15,
+      "added": 1,
+      "support_after": 107
+    },
+    "FOLLOW_UP": {
+      "support_before": 13,
+      "removed": 3,
+      "added": 0,
+      "support_after": 10
+    },
+    "APPROVAL": {
+      "support_before": 17,
+      "removed": 5,
+      "added": 1,
+      "support_after": 13
+    },
+    "GENERAL_UPDATE": {
+      "support_before": 237,
+      "removed": 27,
+      "added": 2,
+      "support_after": 212
+    },
+    "NON_PROJECT": {
+      "support_before": 365,
+      "removed": 8,
+      "added": 0,
+      "support_after": 357
+    }
+  },
+  "snapshot_manifest_sha256": "0e022f93fcdaff59f21ca2c4406ce1f07e1b60a0f22f609ab9fcbca3d3e015fc",
+  "snapshot_sha256": "3bd621f18e2118f06b8e1734198f1d01936ea817d081e4e2f6f420c29c9a9988",
+  "split_sha256": "ebcdf58b3ffdaf9be854a3bad4ab5bfa79cffc52cb2d0899a07a742db049a1d5",
+  "split": {
+    "partition_records": {
+      "fit": 426,
+      "tuning": 110,
+      "validation": 138
+    },
+    "partition_label_counts": {
+      "fit": {
+        "MEETING": 56,
+        "DEADLINE": 33,
+        "REPORT_REQUEST": 5,
+        "DEPARTMENTAL_INPUT": 10,
+        "ACTION_REQUEST": 67,
+        "FOLLOW_UP": 6,
+        "APPROVAL": 8,
+        "GENERAL_UPDATE": 132,
+        "NON_PROJECT": 227
+      },
+      "tuning": {
+        "MEETING": 16,
+        "DEADLINE": 9,
+        "REPORT_REQUEST": 2,
+        "DEPARTMENTAL_INPUT": 4,
+        "ACTION_REQUEST": 16,
+        "FOLLOW_UP": 2,
+        "APPROVAL": 2,
+        "GENERAL_UPDATE": 37,
+        "NON_PROJECT": 56
+      },
+      "validation": {
+        "MEETING": 21,
+        "DEADLINE": 15,
+        "REPORT_REQUEST": 2,
+        "DEPARTMENTAL_INPUT": 3,
+        "ACTION_REQUEST": 24,
+        "FOLLOW_UP": 2,
+        "APPROVAL": 3,
+        "GENERAL_UPDATE": 43,
+        "NON_PROJECT": 74
+      }
+    },
+    "partition_leakage_groups": {
+      "fit": 426,
+      "tuning": 110,
+      "validation": 111
+    },
+    "fixed_outer_validation": true,
+    "validation_used_for_training_or_threshold_selection": false
+  },
+  "known_risks": [
+    "AI agreement and supervisor adjudication are not human ground truth.",
+    "Only deterministic 50 NON_PROJECT plus targeted calendar negatives reviewed; other negatives retain earlier AI labels.",
+    "All records come from historical Enron mail, not modern Outlook project workflows.",
+    "All rare labels have low support; diagnostic metrics cannot establish production quality.",
+    "Conservative template grouping reduces effective independent sample size."
+  ]
+}

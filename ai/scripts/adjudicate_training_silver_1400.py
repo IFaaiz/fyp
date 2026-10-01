@@ -11,11 +11,15 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
 from collections import Counter
 from pathlib import Path
 
 
 AI_DIR = Path(__file__).resolve().parents[1]
+if str(AI_DIR) not in sys.path:
+    sys.path.insert(0, str(AI_DIR))
+from src.models.silver_classifier import extract_authored_prefix
 BATCH = AI_DIR / "data/annotated/ai/training_silver_1400"
 SEED = BATCH / "annotation_seed_1400.jsonl"
 SELECTION_MANIFEST = AI_DIR / "annotation/training_silver_1400_manifest.json"
@@ -93,8 +97,9 @@ def adjudicate(seed: list[dict], left: list[dict], right: list[dict], audit: lis
         third = audited.get(email_id)
         third_confirms = third is None or (set(third["labels"]) == labels and not third["needs_review"])
         sparse_export = exclude_calendar_task_exports and source["current_message"].startswith(("CALENDAR ENTRY", "TASK ASSIGNMENT"))
+        empty_authored = not extract_authored_prefix(str(source.get("current_message") or ""))
         allowed = (exact_unflagged and third_confirms and email_id not in exclusions
-                   and email_id not in supervisor_vetoes and not sparse_export)
+                   and email_id not in supervisor_vetoes and not sparse_export and not empty_authored)
         if allowed:
             reason = "exact_unflagged_blind_agreement_third_audit_gate"
         elif email_id in exclusions:
@@ -105,6 +110,8 @@ def adjudicate(seed: list[dict], left: list[dict], right: list[dict], audit: lis
             reason = "sparse_calendar_task_export"
         elif not exact_unflagged:
             reason = "disagreement_flag_or_abstention"
+        elif empty_authored:
+            reason = "empty_authored_message"
         else:
             reason = "third_audit_veto"
         decisions.append({

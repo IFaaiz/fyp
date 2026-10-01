@@ -17,6 +17,8 @@ class TrainingSilverAdjudicationTests(unittest.TestCase):
             {"source_dataset": "enron", "email_id": "b", "thread_id": "thread-b"},
             {"source_dataset": "enron", "email_id": "c", "thread_id": "thread-c"},
         ]
+        for row in self.seed:
+            row["current_message"] = "Please review the project plan."
         self.left = [
             {"email_id": "a", "labels": ["MEETING"], "needs_review": False},
             {"email_id": "b", "labels": ["NON_PROJECT"], "needs_review": False},
@@ -57,6 +59,15 @@ class TrainingSilverAdjudicationTests(unittest.TestCase):
         audit = [row for row in audit if row["email_id"] != "c"]
         with self.assertRaisesRegex(ValueError, "third audit missing"):
             self.adjudicate(audit)
+
+    def test_three_agreements_do_not_accept_forward_only_message(self) -> None:
+        self.seed[0]["current_message"] = (
+            "From: Casey <casey@example.test>\nTo: Morgan <morgan@example.test>\n"
+            "Subject: Project review\nDate: 03/14/2001\n\nPlease meet Friday."
+        )
+        result = self.adjudicate(self.audit())
+        self.assertEqual(result[0]["status"], "excluded_uncertain")
+        self.assertEqual(result[0]["acceptance_rule"], "empty_authored_message")
 
     def test_seed_hash_must_match_frozen_selection(self) -> None:
         source = [{"email_id": "a", "thread_id": "thread-a", "current_message": "Project report"}]

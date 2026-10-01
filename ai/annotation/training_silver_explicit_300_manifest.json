@@ -1,0 +1,3032 @@
+{
+  "manifest_version": "1.0.0",
+  "selection_name": "training_silver_explicit_300_v1",
+  "selection_seed": "fyp-silver-explicit-20260930-v1",
+  "screening_profile": "explicit_project",
+  "status": "screening_only_pending_blind_review",
+  "selection_rationale": "Deterministic rare-function project-context cue screening to improve REPORT_REQUEST, DEPARTMENTAL_INPUT, APPROVAL, FOLLOW_UP, DEADLINE, and MEETING coverage. Cues never assign labels. Every full-source leakage component is unique and disjoint from prior selections.",
+  "source_dataset": "enron",
+  "source_file": "ai/data/interim/enron_full.jsonl",
+  "leakage_sidecar": "ai/data/interim/leakage_groups.jsonl",
+  "selected_count": 300,
+  "screening_pool_counts": {
+    "approval_cue": 125,
+    "deadline_cue": 82,
+    "department_input_cue": 552,
+    "document_request_cue": 14,
+    "followup_cue": 36,
+    "meeting_cue": 462
+  },
+  "screening_quotas": {
+    "department_input_cue": 130,
+    "document_request_cue": 6,
+    "approval_cue": 60,
+    "followup_cue": 14,
+    "deadline_cue": 40,
+    "meeting_cue": 50,
+    "other_project_cue": 0,
+    "pm_cue_no_project_marker": 0
+  },
+  "records": [
+    {
+      "order": 1,
+      "email_id": "enron-6af79cbe13d7ecd3bc3a2694",
+      "thread_id": "enron-thread-b1205a9c3a0170dc2b42",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 410,
+      "current_sha256": "6ca526e3fd714e4a540377ed16d5670cb94f9a621b2ef7103f77aa58f8a9ad74",
+      "leakage_group_id": "lg-9c9a88cca29220a2"
+    },
+    {
+      "order": 2,
+      "email_id": "enron-960db7535ef53c5f9b7a79cf",
+      "thread_id": "enron-thread-c47c1fc09a1bb3a839df",
+      "source_dataset": "enron",
+      "screening_stratum": "document_request_cue",
+      "current_chars": 294,
+      "current_sha256": "0e5bb209c6e6ccdb07343fd211c630d59702c5183818591436e6cd0a26b99921",
+      "leakage_group_id": "lg-8b697d7ef8e08a75"
+    },
+    {
+      "order": 3,
+      "email_id": "enron-0c831e304ac834c2db6d2de7",
+      "thread_id": "enron-thread-16c106e0d6903dd9b416",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 551,
+      "current_sha256": "4e4ed7604e4a11ef3cefebea18c0e6bd326a020d772471348984efad4990a70d",
+      "leakage_group_id": "lg-6f6045c78be66be2"
+    },
+    {
+      "order": 4,
+      "email_id": "enron-92db315dfea845a9dcc69776",
+      "thread_id": "enron-thread-90daf368a73c36a1525a",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 263,
+      "current_sha256": "fd36fe8c4c64d0bb16c7ed0b76aa6196c9738466369f5c129e21f3d1358b7360",
+      "leakage_group_id": "lg-4fa1b71ce1cfb84d"
+    },
+    {
+      "order": 5,
+      "email_id": "enron-9e461f05ab3b666a68ea0d05",
+      "thread_id": "enron-thread-8e277c82098320b33e2a",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 2848,
+      "current_sha256": "e04fb76f33f2e38c8bb586a812e9e9d6a531d06e749ad6324cc346a65c06f144",
+      "leakage_group_id": "lg-c2270c78ad4331ee"
+    },
+    {
+      "order": 6,
+      "email_id": "enron-ccfeddcea2f76c672fe49948",
+      "thread_id": "enron-thread-fecd7cf27dfd8aba52a0",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 935,
+      "current_sha256": "30c4b59dc67667514acc2615795a4bd0808140fdd91c9aa6d05601f8747b54c4",
+      "leakage_group_id": "lg-cbe08b861ecf62eb"
+    },
+    {
+      "order": 7,
+      "email_id": "enron-c9405b96e868695da3f3f9de",
+      "thread_id": "enron-thread-a053c73523684f2a6b8e",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1190,
+      "current_sha256": "18df9e9f42625c8133b3ba0fe7bd3b71465b10ea650fd6223dfc8d3e02c9f022",
+      "leakage_group_id": "lg-211769bb7e535f76"
+    },
+    {
+      "order": 8,
+      "email_id": "enron-b89e394c053fc6311f5720b6",
+      "thread_id": "enron-thread-ba8b7c83033a21633f5e",
+      "source_dataset": "enron",
+      "screening_stratum": "document_request_cue",
+      "current_chars": 284,
+      "current_sha256": "f88af9d619f513e72f670be8e84015026590b0e480dc55543fa6582929394842",
+      "leakage_group_id": "lg-854e39b6dbc8ac44"
+    },
+    {
+      "order": 9,
+      "email_id": "enron-ab9592ceab9c06473784b713",
+      "thread_id": "enron-thread-786d201f941163aa26e7",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1317,
+      "current_sha256": "d656af8532e9956151cd1c6fd8fd0d887ee8eecf20f9fa97e751c39712616490",
+      "leakage_group_id": "lg-fbe9aa587a38c1e6"
+    },
+    {
+      "order": 10,
+      "email_id": "enron-49beae25cf35eae900db1eda",
+      "thread_id": "enron-thread-9df04f7c2ec7e97871fe",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 709,
+      "current_sha256": "56f6a1dd69635879aac9250559ef7894e8440c22abf97e50bf40090d95402f62",
+      "leakage_group_id": "lg-c3df66faa2e14315"
+    },
+    {
+      "order": 11,
+      "email_id": "enron-b9e80075d6b7faa19efe473b",
+      "thread_id": "enron-thread-999d10fb33cb8a59d6ea",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 232,
+      "current_sha256": "665f870fc04fdd8a00da73e78142da4be09e2452d4d00ad434b6495383046dd8",
+      "leakage_group_id": "lg-6850b82c488e251c"
+    },
+    {
+      "order": 12,
+      "email_id": "enron-8f3f1e16f0b58f88352acdc9",
+      "thread_id": "enron-thread-2c4735a1ac169a726a75",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 743,
+      "current_sha256": "daa575454de3ad49635293b04ffb26d76392c0f694ee5d86cda066b264e6ae6d",
+      "leakage_group_id": "lg-55c1bcc60f0e7864"
+    },
+    {
+      "order": 13,
+      "email_id": "enron-5b960e278c12f727fd6d93bd",
+      "thread_id": "enron-thread-16276559efd2a3d3d0f7",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2375,
+      "current_sha256": "3b52babe1a1c1add4659758db413985c93925b304df68ba8476f1d2561bce7f0",
+      "leakage_group_id": "lg-42edb6d681780d8d"
+    },
+    {
+      "order": 14,
+      "email_id": "enron-bf833c8f582e9a17541bdd65",
+      "thread_id": "enron-thread-33d023140d1fc0138755",
+      "source_dataset": "enron",
+      "screening_stratum": "document_request_cue",
+      "current_chars": 331,
+      "current_sha256": "619f07129233dea96e78e796995ab88d9142094eaa29936f4550cfdff03be5b8",
+      "leakage_group_id": "lg-145214d42e3b7db2"
+    },
+    {
+      "order": 15,
+      "email_id": "enron-909c2a91290bd44fee720cfd",
+      "thread_id": "enron-thread-10400b0fe5e1ebfe9317",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 720,
+      "current_sha256": "cc8ad19956c26bb4163844cc97740fe803b53f6e9d95f2a99ac03f4622c9faee",
+      "leakage_group_id": "lg-c932ff1b52f286c9"
+    },
+    {
+      "order": 16,
+      "email_id": "enron-f5504507b0a2ab3bfa1ef6cd",
+      "thread_id": "enron-thread-b548bc259f2f13cf98c2",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 1581,
+      "current_sha256": "c7b74343656f0377ce15ec175061a9b1ee11eba417407bddc1def11554450f84",
+      "leakage_group_id": "lg-15fe7599087ba276"
+    },
+    {
+      "order": 17,
+      "email_id": "enron-f6cf1b5e824d475bcb85918e",
+      "thread_id": "enron-thread-6c96368ae1ec765bc4f6",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 554,
+      "current_sha256": "2af8d6a68f6ec6a4e1606773a28ac4f2407a24649859aba140627b88b2ffbfdb",
+      "leakage_group_id": "lg-5f0baf7c30943248"
+    },
+    {
+      "order": 18,
+      "email_id": "enron-2ab93572d0f7925fb94389a5",
+      "thread_id": "enron-thread-da303239d5077e2fe002",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 293,
+      "current_sha256": "99de26596302ae493253d22e1592bdfcef5cd4c5b6d22c5de9890e4963796ff7",
+      "leakage_group_id": "lg-3776137c3b3cb79d"
+    },
+    {
+      "order": 19,
+      "email_id": "enron-e988adbb37ed232ce0903bdd",
+      "thread_id": "enron-thread-823711d6c555728a2098",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1426,
+      "current_sha256": "f20e77ea8249eda0247bc2d7f292645e52851037a46161dba3c3b54c1c9981d4",
+      "leakage_group_id": "lg-738f987bab0baec7"
+    },
+    {
+      "order": 20,
+      "email_id": "enron-b9e8927bf2eb2d027828bb82",
+      "thread_id": "enron-thread-f63dffa4510faff613e7",
+      "source_dataset": "enron",
+      "screening_stratum": "document_request_cue",
+      "current_chars": 748,
+      "current_sha256": "9c940b445205278a99797d994626332e5523029f083141198aa2657e5678eafd",
+      "leakage_group_id": "lg-371d46b9f3271ef3"
+    },
+    {
+      "order": 21,
+      "email_id": "enron-a8d897d7bbd06e3eb9e42405",
+      "thread_id": "enron-thread-6ed545e7fb45efd6d79a",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 938,
+      "current_sha256": "90855d7d27c4afe0fd72211d405e34db25f77158a920f8f272994491ad832ed8",
+      "leakage_group_id": "lg-2c4385bf8cbd1d7f"
+    },
+    {
+      "order": 22,
+      "email_id": "enron-87ffda9a89da7ea3b1125a1b",
+      "thread_id": "enron-thread-4e40cb90a675e9d786d9",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 2430,
+      "current_sha256": "f5dee06549885488ea7aa9ba314e62e8dcefc4f2f643f73142fe79ecf319017a",
+      "leakage_group_id": "lg-3b000272bdf119b4"
+    },
+    {
+      "order": 23,
+      "email_id": "enron-28a4d5fe89e047e839aa4774",
+      "thread_id": "enron-thread-6e42a4a1f1e536dad81c",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 338,
+      "current_sha256": "0542f333a46938dda8b5f4b945582943ce789fdb746da9bfbadf3b9b30de3e08",
+      "leakage_group_id": "lg-7bf0f650a80a60a5"
+    },
+    {
+      "order": 24,
+      "email_id": "enron-3079807ae165881d5a70de48",
+      "thread_id": "enron-thread-827d101dc9d22bed5eea",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 188,
+      "current_sha256": "39c28743b72ac276123189ac7bfa912bd85f0e15b37c9db1068d1ea3e937c1aa",
+      "leakage_group_id": "lg-e57ab0f39a94464f"
+    },
+    {
+      "order": 25,
+      "email_id": "enron-c2560c3cce61ac6b8b620f8e",
+      "thread_id": "enron-thread-a9942eca5de8c073f88e",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 382,
+      "current_sha256": "6b71386b00f9c6f9391dddab15a1ba3dbd144e707cb5cf2f7d6a75aec6d98b42",
+      "leakage_group_id": "lg-90f228621cb77c76"
+    },
+    {
+      "order": 26,
+      "email_id": "enron-7f1723f3222995ae41f64663",
+      "thread_id": "enron-thread-1100ee94d215658b36b8",
+      "source_dataset": "enron",
+      "screening_stratum": "document_request_cue",
+      "current_chars": 594,
+      "current_sha256": "6fde55a5930a9c9306c5f764d73035f7cb991182dfa266fa1b7009b39957284d",
+      "leakage_group_id": "lg-1b347fd69d09ce50"
+    },
+    {
+      "order": 27,
+      "email_id": "enron-bfd728fd05460d50e03936c4",
+      "thread_id": "enron-thread-832636c7edaf330b11bf",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 2641,
+      "current_sha256": "78acbbb016c54283814051c359b60fdffe42e30a473f8f4324bdb04907538dc8",
+      "leakage_group_id": "lg-4594134480137b75"
+    },
+    {
+      "order": 28,
+      "email_id": "enron-b325dbbcd2010debee983f32",
+      "thread_id": "enron-thread-06f9ef3747701c84d2fe",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 1443,
+      "current_sha256": "4352daed569f3e21397895222be8232e1ad7dffb20607d85ea55e53fc989d656",
+      "leakage_group_id": "lg-3087d7e6ac32a58d"
+    },
+    {
+      "order": 29,
+      "email_id": "enron-bee465a80629208db8e1bb55",
+      "thread_id": "enron-thread-2bef5a04ab037bc0fc0d",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 780,
+      "current_sha256": "b4c00fffbf5eb3c64d01a630008a77b2a1dfbf44f137ee7d9871686f658d30ea",
+      "leakage_group_id": "lg-dcc71479d2249eb7"
+    },
+    {
+      "order": 30,
+      "email_id": "enron-d7bc4623edeb21cb4cd47525",
+      "thread_id": "enron-thread-736acedd823ff8d048ac",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 587,
+      "current_sha256": "26e7e5d8a0b6811de7835a4c4908ecd09b97dbc6e6ff4db42660605aa36e60a7",
+      "leakage_group_id": "lg-c1ef6d9c71bced45"
+    },
+    {
+      "order": 31,
+      "email_id": "enron-256196672daea9b13a317026",
+      "thread_id": "enron-thread-a154560575313ec52522",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 872,
+      "current_sha256": "d52b264ea7d4732203acbcb6021e868c8c9681079661fb2a60c46904a36f163b",
+      "leakage_group_id": "lg-c22163921127f05f"
+    },
+    {
+      "order": 32,
+      "email_id": "enron-33b16b48941d5ec515793564",
+      "thread_id": "enron-thread-9604e978204a5437226c",
+      "source_dataset": "enron",
+      "screening_stratum": "document_request_cue",
+      "current_chars": 695,
+      "current_sha256": "ea7ff820c7525d4131123935d2e8ad48d5fa188a8b195333c619adf15aaee28c",
+      "leakage_group_id": "lg-033e9e835b543ee5"
+    },
+    {
+      "order": 33,
+      "email_id": "enron-893d41ca57c0e12dbdd26016",
+      "thread_id": "enron-thread-fcbb5590091d15c5a5b4",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 612,
+      "current_sha256": "d6c19c0c4d0c6a8d930b007c2f383950758a55e654f13a539fea61963cff6f2b",
+      "leakage_group_id": "lg-01612b02f9fd1b73"
+    },
+    {
+      "order": 34,
+      "email_id": "enron-b22a66545c976d5b7076d825",
+      "thread_id": "enron-thread-f6359631835d52b0e65a",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 359,
+      "current_sha256": "cedcc140b159cbed2452ca92999042e9c499b1a27ce5350971ed8750702d67f8",
+      "leakage_group_id": "lg-9659b9fffcb5e754"
+    },
+    {
+      "order": 35,
+      "email_id": "enron-d26fa9687be9b4dc800711b2",
+      "thread_id": "enron-thread-ef7474d4928a927149e7",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 3223,
+      "current_sha256": "56638cba066400df2cdffad835c86e41409d85e633b5019a14b0ea1699a12ded",
+      "leakage_group_id": "lg-30eb5f0e83693e11"
+    },
+    {
+      "order": 36,
+      "email_id": "enron-f2a87f3c7fd33d6454717996",
+      "thread_id": "enron-thread-13b3b3386363e5d7d37c",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 139,
+      "current_sha256": "c6991c2fd79a4f006eb38339fcfcce1d7a6499751d1ab941867c93e227f70f2d",
+      "leakage_group_id": "lg-58e3283da85fd659"
+    },
+    {
+      "order": 37,
+      "email_id": "enron-350c8575e7c129fcb7041800",
+      "thread_id": "enron-thread-de960f1c84d1b9ce3f10",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1051,
+      "current_sha256": "a9d99691888e489b89daeae2b6d01ea11ba456c20f63c4a50504bf67339ee070",
+      "leakage_group_id": "lg-65a750de86138ca8"
+    },
+    {
+      "order": 38,
+      "email_id": "enron-c1abde7fbc2368d50f0056ed",
+      "thread_id": "enron-thread-a0fa11e245f799c6b7e1",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 325,
+      "current_sha256": "63d564d3f1ba3145d5d065a143c0e891f956765350836ec2b1781da061c6b829",
+      "leakage_group_id": "lg-aa6998ac9cdd4cdd"
+    },
+    {
+      "order": 39,
+      "email_id": "enron-7596fcc39ea1d222db3e2733",
+      "thread_id": "enron-thread-a2f4540bb94e8f7d0db0",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 1427,
+      "current_sha256": "4a8468fe23668269209a148c2d13433739963c7b25aecf735e47fccfab5befd6",
+      "leakage_group_id": "lg-f62d7d96a5431316"
+    },
+    {
+      "order": 40,
+      "email_id": "enron-592350ba75a48e30ddaab969",
+      "thread_id": "enron-thread-251fc816e3f6546ed668",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 938,
+      "current_sha256": "d652143d66f6ac4078bc6f5846d58bc0113c441048c209a7b5dbdc39181cfeb9",
+      "leakage_group_id": "lg-2e710e2f7df7611a"
+    },
+    {
+      "order": 41,
+      "email_id": "enron-84791d13a0cc7ddf27c94dcb",
+      "thread_id": "enron-thread-cd8975603f4d62d9b3be",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 417,
+      "current_sha256": "5191263dc76477ef1796521fb6fc0c902cbd5013ed3bd5a3310c5eb327af15c7",
+      "leakage_group_id": "lg-8f1a1f3a6c5aa40f"
+    },
+    {
+      "order": 42,
+      "email_id": "enron-e365e30f727c5824a737e046",
+      "thread_id": "enron-thread-59e19bcc98d9a770d6d1",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1053,
+      "current_sha256": "2b8fee93836d7e5e1a5debbf6a941981686cd3de10bf07a897b7d57895c7a15b",
+      "leakage_group_id": "lg-d64f54b757c520cf"
+    },
+    {
+      "order": 43,
+      "email_id": "enron-794bca8538a857ac9b0e41c8",
+      "thread_id": "enron-thread-890ee32755df6a383656",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 2414,
+      "current_sha256": "5b93a25221dafe022c1d66d24d73c3db28b67865a7e1740c59bbf1907f77fa86",
+      "leakage_group_id": "lg-e3dad6f26ca4a884"
+    },
+    {
+      "order": 44,
+      "email_id": "enron-5d69e35612e37363d5d1f261",
+      "thread_id": "enron-thread-4cf9eea6ef55a6385c53",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 624,
+      "current_sha256": "5d3904a2f9f35eb50c53d1eb8ff543522221b0995aa0e7fa6e6c4de433ddd315",
+      "leakage_group_id": "lg-708b59c98226ee3c"
+    },
+    {
+      "order": 45,
+      "email_id": "enron-5dcd24a1474a4fcfb2177350",
+      "thread_id": "enron-thread-74ea2403194f5e93927f",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 948,
+      "current_sha256": "c7bf4af341e4a64c9507ab7600ae7d055b222ade14e8e2da85b62df0017cdc82",
+      "leakage_group_id": "lg-5d7a80487f287425"
+    },
+    {
+      "order": 46,
+      "email_id": "enron-51edd799b1884c3f3509627c",
+      "thread_id": "enron-thread-1373960b20f897967494",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 8100,
+      "current_sha256": "7e08dcddf6a328d75404c6f98c0ff58f437b7a99868946f0d5ebbbd054dfcd50",
+      "leakage_group_id": "lg-54ddbf29c95c3c2e"
+    },
+    {
+      "order": 47,
+      "email_id": "enron-7233e5c65f3fe6f5e61233a8",
+      "thread_id": "enron-thread-692860214e342344e3d6",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 786,
+      "current_sha256": "3b9ee99023560ff9bc4f70c1a1e3fcbd57103530538463161c719ef23cdd881d",
+      "leakage_group_id": "lg-ef7b194407655d74"
+    },
+    {
+      "order": 48,
+      "email_id": "enron-866ef2f053799ba73fe36602",
+      "thread_id": "enron-thread-009e1dceebe7d6ed2e69",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 547,
+      "current_sha256": "636f0530dfe98dad428deb0b9c01db2e7305f777ece42716767bd50622e2eb47",
+      "leakage_group_id": "lg-afc3cdb4cd663710"
+    },
+    {
+      "order": 49,
+      "email_id": "enron-a694c4b5daa5e8cf4e499133",
+      "thread_id": "enron-thread-139d80ec0d36c4d5015e",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 658,
+      "current_sha256": "afae6d4ad5df986c1bdecdb2b1a6028fe1f55e7a22f316c21c2941b1351b53dd",
+      "leakage_group_id": "lg-dccafbc76406049b"
+    },
+    {
+      "order": 50,
+      "email_id": "enron-5b89cf44dd5515bce5c04564",
+      "thread_id": "enron-thread-f37c19bd1924d5c891c9",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 554,
+      "current_sha256": "15d18cdee63611f6fb27e8f0715105dc45a36c0f3e7375650891b0a880afb7a9",
+      "leakage_group_id": "lg-f3184f0d521c8a0a"
+    },
+    {
+      "order": 51,
+      "email_id": "enron-8886391b03c3f54f92b42201",
+      "thread_id": "enron-thread-9e080026faac3d3a7dba",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 1899,
+      "current_sha256": "b5efd73bbaebc5e545f69ccee4cfb57e8b27b0c72b38abbb180f2ac767b68c78",
+      "leakage_group_id": "lg-85ba084515128e44"
+    },
+    {
+      "order": 52,
+      "email_id": "enron-5cb0cfa9868bc846ce0d27ca",
+      "thread_id": "enron-thread-7dfed6c7e133cc3ed9d5",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1090,
+      "current_sha256": "a255fda7fa668459a2732772e7ea2561ce67f344ef8552edd0fd6597379150c3",
+      "leakage_group_id": "lg-1c60eb395d5ca9e5"
+    },
+    {
+      "order": 53,
+      "email_id": "enron-d05025644a3d1ae11754e457",
+      "thread_id": "enron-thread-a3bd1f4e18b98a252723",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1409,
+      "current_sha256": "ff23005064af32016b286f1cc415ad59e41aaffd358b81f3340997f9c1a1ea5c",
+      "leakage_group_id": "lg-f0a5f44947c44ef4"
+    },
+    {
+      "order": 54,
+      "email_id": "enron-620f124587e91b9fde693975",
+      "thread_id": "enron-thread-1c385df876213702aafb",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 263,
+      "current_sha256": "b4d2275f72231ce0f7e5f4e2ca3b57449df11159fff0a1b265f837d830142259",
+      "leakage_group_id": "lg-a8c1edb027cddb42"
+    },
+    {
+      "order": 55,
+      "email_id": "enron-abb01108460ff6dba556bd52",
+      "thread_id": "enron-thread-c131e9138d3e572bf829",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 820,
+      "current_sha256": "b7af9ed9acebdf43e7274a58ced762598731919d0f04c6a4bede8540f04c6626",
+      "leakage_group_id": "lg-b55d6b71c75ec31c"
+    },
+    {
+      "order": 56,
+      "email_id": "enron-e0f608d8cc9e23fce4015433",
+      "thread_id": "enron-thread-0ec385ce2eee8d3d751b",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 347,
+      "current_sha256": "04aade61be29759d6abdb3da35761ee04d6b4c44c689ed0dacf74a06e7fdda41",
+      "leakage_group_id": "lg-558bbe2a7da9ee91"
+    },
+    {
+      "order": 57,
+      "email_id": "enron-1bb901662b46adb5f336f695",
+      "thread_id": "enron-thread-2fb284eb562e7b4df316",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1902,
+      "current_sha256": "a38dbcf64eccef10a0d9f1f29c91c1e8697084155c67073fc0a761b93edbd24a",
+      "leakage_group_id": "lg-486eb4b2d89a11fe"
+    },
+    {
+      "order": 58,
+      "email_id": "enron-d54ce61ca52dfce6f4eb5b3a",
+      "thread_id": "enron-thread-b166a419425d18a5a9a5",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1233,
+      "current_sha256": "2e0c40b27a461c58ccbdbfd5a7b4c92447ada5ba0fbfecab8752f0f063242786",
+      "leakage_group_id": "lg-ab06fb305105485d"
+    },
+    {
+      "order": 59,
+      "email_id": "enron-ffe71f31345fe5457fb40f32",
+      "thread_id": "enron-thread-d60856abd0b269d6c239",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 292,
+      "current_sha256": "04924aad7c6a39edcc2a4eab315854e3984bcf25ee4927e4970d2ff23860ea9a",
+      "leakage_group_id": "lg-a2246ab3c067a729"
+    },
+    {
+      "order": 60,
+      "email_id": "enron-1e18d8450f472778aa379c3a",
+      "thread_id": "enron-thread-a64ba711d77907210aff",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 1568,
+      "current_sha256": "6a1830e6e283f0b96f086c17bfd07e312d0f3f8378ee86e9a4d487c89d56e2c6",
+      "leakage_group_id": "lg-df1fd9804c19aaa9"
+    },
+    {
+      "order": 61,
+      "email_id": "enron-1121118bf101ea1b33a664f2",
+      "thread_id": "enron-thread-39dc1c1b28c774efecc9",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 219,
+      "current_sha256": "ac8d4ef345c81d9956cfb79dfa946cf91177936f48ef4d62e85cc6de5a63de1e",
+      "leakage_group_id": "lg-9aecac25d1dc9377"
+    },
+    {
+      "order": 62,
+      "email_id": "enron-ee737c92efb7224b5ca6332c",
+      "thread_id": "enron-thread-f97bfbd7ac1b2f0d64ff",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 313,
+      "current_sha256": "1efe212065b515ebc86596e3fe4249d481a45e8ca4887baacc97873e91f6d4f3",
+      "leakage_group_id": "lg-31c7299e253c538f"
+    },
+    {
+      "order": 63,
+      "email_id": "enron-84da755b254d7b968d4cf734",
+      "thread_id": "enron-thread-c8477a725cc2337bab31",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 2968,
+      "current_sha256": "541447b5252c4e2cc76e82b4dd4a34cf74de6d1b60b26009e809b60d188b3432",
+      "leakage_group_id": "lg-fd6c33ce6f402a62"
+    },
+    {
+      "order": 64,
+      "email_id": "enron-2929d845df2ab0b1532f6182",
+      "thread_id": "enron-thread-0b81fae5bde17be2c53b",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 1555,
+      "current_sha256": "d91cd6d9c386326bc708c76f43d51bf670b2f8fd469204bfb092ec1d47d09bd9",
+      "leakage_group_id": "lg-76fdf47af52b6d6f"
+    },
+    {
+      "order": 65,
+      "email_id": "enron-dde9d651b8653e06353b2038",
+      "thread_id": "enron-thread-9547b0b9b39dc5da5346",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 1563,
+      "current_sha256": "d95d18f12389e6e7601023bf18b2a43f3ffe4e3fbaafdc375c93e84aab4d05cf",
+      "leakage_group_id": "lg-cccb5f36c151cd95"
+    },
+    {
+      "order": 66,
+      "email_id": "enron-91386933567ecac887509201",
+      "thread_id": "enron-thread-d39447ab9446d4dc592c",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 208,
+      "current_sha256": "79a064a524ccea2de018450845850716913b65f8e6327989ca48ba1c619c5ba9",
+      "leakage_group_id": "lg-cf62c62ea3336c4d"
+    },
+    {
+      "order": 67,
+      "email_id": "enron-c57290cc9d3b27f585c6e851",
+      "thread_id": "enron-thread-653e64b27866db63513a",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 526,
+      "current_sha256": "0791dd0a6eb26ef74bc80e0a43087d1a20ca49c57a38a9a47c8875f89b4363ff",
+      "leakage_group_id": "lg-2e5b9697cc68723a"
+    },
+    {
+      "order": 68,
+      "email_id": "enron-c3e71e7c4db0a650963b80f2",
+      "thread_id": "enron-thread-b99a61c81a4c766d9902",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1004,
+      "current_sha256": "6b6b04eb9a16b55e9ba427a94e696ddcf375f47da4a62864e223030eaf7e2790",
+      "leakage_group_id": "lg-5ae7234cf0cc4689"
+    },
+    {
+      "order": 69,
+      "email_id": "enron-541c3b90c517b7679ea2cb18",
+      "thread_id": "enron-thread-8b4240e069c4fd36f75e",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 306,
+      "current_sha256": "49a7b30b72a1bc99bf9c13ffe160fd68d1c323abfb0896e1637be4a6f9e559a2",
+      "leakage_group_id": "lg-02e0f7aa58a69101"
+    },
+    {
+      "order": 70,
+      "email_id": "enron-9d8ea423a463886a800c6988",
+      "thread_id": "enron-thread-1cff5e597e2cdf89dd13",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 2232,
+      "current_sha256": "f99909fccad6f539169da59061286b46aba76ed57edeae696b52e594c95a1ec2",
+      "leakage_group_id": "lg-54b63c4bf96cb041"
+    },
+    {
+      "order": 71,
+      "email_id": "enron-cf6e1477cb6273aa7768d4b8",
+      "thread_id": "enron-thread-e352806dc6db92d4d0c6",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 337,
+      "current_sha256": "f54bc7048cd568f5b01febcbafcc7db8e54369a208c87b492689f496f6b66c91",
+      "leakage_group_id": "lg-37649d38d6b440b5"
+    },
+    {
+      "order": 72,
+      "email_id": "enron-b5ee052457f25ae6f1dfe7f8",
+      "thread_id": "enron-thread-b26ea9749f018382a717",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1422,
+      "current_sha256": "51ddaf63bf936b98101fba03f80e807abe73aa0149fca83b6c5d8e2abbc8f631",
+      "leakage_group_id": "lg-2eb547aea9847079"
+    },
+    {
+      "order": 73,
+      "email_id": "enron-3a92d1d5da29d2de7a7fd4d8",
+      "thread_id": "enron-thread-8fe1045010ef1d767ec9",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 635,
+      "current_sha256": "898e2b2b942c946d35b07f908738f52a03e76e652ebf21654e71507f41815c2e",
+      "leakage_group_id": "lg-f05433f6832e33fb"
+    },
+    {
+      "order": 74,
+      "email_id": "enron-b17496c1c6b223ea9948ccb6",
+      "thread_id": "enron-thread-8198396c22b649c7f118",
+      "source_dataset": "enron",
+      "screening_stratum": "followup_cue",
+      "current_chars": 528,
+      "current_sha256": "fd5c68a562d86bf34d7c0e430fb83560be80c061f32a06753ff8ef02fab4f790",
+      "leakage_group_id": "lg-69e0a9f41d7bf63b"
+    },
+    {
+      "order": 75,
+      "email_id": "enron-e2d5b1e8bf2da3902cb96514",
+      "thread_id": "enron-thread-b70fd698207019d537d2",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 3322,
+      "current_sha256": "94bcfb600072cb4ddcdd0ab03d2f0a5a2d39758b944f689c23b3db4f345f8e9c",
+      "leakage_group_id": "lg-cba904842cdd290f"
+    },
+    {
+      "order": 76,
+      "email_id": "enron-52b302573b5c2703a743d5d3",
+      "thread_id": "enron-thread-1a77bd6d136b89e161d3",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 166,
+      "current_sha256": "be0b1bba9f8df51b1cd15599dbc03be9dbc61f742f5daf1f3a55b1f60849d89d",
+      "leakage_group_id": "lg-0aa73b4e67eeb761"
+    },
+    {
+      "order": 77,
+      "email_id": "enron-70557b5b66413cea601e1e9d",
+      "thread_id": "enron-thread-ea641e6ea8163851b91c",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 3487,
+      "current_sha256": "da43128a59d80859a30d88f13af21ded5e45faf5d62117edb2fbc189325b85bf",
+      "leakage_group_id": "lg-85e821f094f01e45"
+    },
+    {
+      "order": 78,
+      "email_id": "enron-8f46424d5f36227e3d2c1835",
+      "thread_id": "enron-thread-f13cde1ce2f2675086e4",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1235,
+      "current_sha256": "a45c8db26bbb8c1cca9328a6bb8dce657b99bfac2fe665cef2bd0fc5c9b45eec",
+      "leakage_group_id": "lg-86925ec57407da08"
+    },
+    {
+      "order": 79,
+      "email_id": "enron-59e05fdb15c638713d4f8a5f",
+      "thread_id": "enron-thread-6894c45320fb7231002d",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 2609,
+      "current_sha256": "62150bf571cfd40b73b6dfac9fc623a5e87bd27cec8108d73dfea9cc81c587ac",
+      "leakage_group_id": "lg-ae2b8d54fcecaa42"
+    },
+    {
+      "order": 80,
+      "email_id": "enron-533105c6271705c486ae4505",
+      "thread_id": "enron-thread-68a649cf04b808bbc006",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 524,
+      "current_sha256": "a48db5a8f09c74b18aa9d0b7072c7b1fb8b03e05e19e01a7343fb10c17b38151",
+      "leakage_group_id": "lg-abbaf776ad8dfec7"
+    },
+    {
+      "order": 81,
+      "email_id": "enron-ad9ddb9e0151a92132ff1691",
+      "thread_id": "enron-thread-7835de4b552ff7b868b4",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 780,
+      "current_sha256": "d9b62b29c891dd12b06bec76873c900b00882d61e17806420c2d8c8f57a74057",
+      "leakage_group_id": "lg-689a0b7a0ed9fa56"
+    },
+    {
+      "order": 82,
+      "email_id": "enron-8b2a0851754be7de1eb6378e",
+      "thread_id": "enron-thread-38457dd9e3e5c2af87c2",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 298,
+      "current_sha256": "d22a01e7f26275e0bb7c458eb1e22b10f2689bddde83f054c05b29cf9dab46cd",
+      "leakage_group_id": "lg-f3930fcf3e242f5c"
+    },
+    {
+      "order": 83,
+      "email_id": "enron-ea708ad4e822ce9d6bca11e6",
+      "thread_id": "enron-thread-eec5fcb6c354e756c1e9",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 983,
+      "current_sha256": "7772ecdecad16fc3102a29cabc0b077a3dfcce9bb6fa6aef764361ae8df00a4c",
+      "leakage_group_id": "lg-dfd3b64d5b8dd65d"
+    },
+    {
+      "order": 84,
+      "email_id": "enron-3f1ce4ced9fda3bd25036e64",
+      "thread_id": "enron-thread-2d191e606dd9a5f95d54",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 134,
+      "current_sha256": "29890532ddc3cde361528ca9ad3aff8d7dcb03c3524a9264b46c34d31e326d80",
+      "leakage_group_id": "lg-f57ddce73e7d73fe"
+    },
+    {
+      "order": 85,
+      "email_id": "enron-2bd9c02e91a6e18e826ec6c2",
+      "thread_id": "enron-thread-a5f2b099d975b4532902",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1032,
+      "current_sha256": "ff80d870a808f3696eae20e84267fa5c97cd4067f52179859f54287244eb02a7",
+      "leakage_group_id": "lg-0ed589929835e13a"
+    },
+    {
+      "order": 86,
+      "email_id": "enron-60c687b5b0fcf9a364760023",
+      "thread_id": "enron-thread-c88c52d989c59fad272b",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1616,
+      "current_sha256": "e889b8076c64458ceca66ff58bb8d6f1649ef5cd12bc89608c518efc98fc6413",
+      "leakage_group_id": "lg-3c451bbe2dd4b082"
+    },
+    {
+      "order": 87,
+      "email_id": "enron-3db01e05ab56da7bc8ad6507",
+      "thread_id": "enron-thread-b4bd91726ae72fb48e79",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 1457,
+      "current_sha256": "c80c8e5eba8083c91a9fc0508344ba95a4a8a133e80cb793a9f0e2210457b96f",
+      "leakage_group_id": "lg-b5d7468771f1c08b"
+    },
+    {
+      "order": 88,
+      "email_id": "enron-4b04eb5f6a8cbc6aa94f0123",
+      "thread_id": "enron-thread-be3d71fae5be178d7c58",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 446,
+      "current_sha256": "811b3051d6183b5d4d1b721eb75a73fefe8e56588f714f93d04990e8bd6d3974",
+      "leakage_group_id": "lg-72f2079d1a61663a"
+    },
+    {
+      "order": 89,
+      "email_id": "enron-a3295eebf3f132a5f47db9eb",
+      "thread_id": "enron-thread-dffbab751e04d9b53c84",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 332,
+      "current_sha256": "52266b13a72e0e886b7040e85b0eab6afc6278e70787a8abbabd209a4e46b380",
+      "leakage_group_id": "lg-fd44158645cf7c0e"
+    },
+    {
+      "order": 90,
+      "email_id": "enron-9ed9f4bf7d914b1504afcdde",
+      "thread_id": "enron-thread-69cf2e773fa9472d0a1b",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 690,
+      "current_sha256": "891ee5a58bb421490d673a0bc7ca6f71d679058fc5d9741c8ae2ffe36ebc07ab",
+      "leakage_group_id": "lg-febd4026552ee59d"
+    },
+    {
+      "order": 91,
+      "email_id": "enron-2805c2d17a64c09b51fd00be",
+      "thread_id": "enron-thread-4f4f5ac731fe65b9b8ca",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 2398,
+      "current_sha256": "3b7ad4563e51add3af0471834f358e23f3af3100fcdb76b98b76dc9cc83b66d3",
+      "leakage_group_id": "lg-80a7e67d6d2b9474"
+    },
+    {
+      "order": 92,
+      "email_id": "enron-f7088859712fd84e2cc1108d",
+      "thread_id": "enron-thread-cdc0eb6d30aa9932357c",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 357,
+      "current_sha256": "a19a6a51edcf36aea2cd52f311fb14e107e05c009e7598a5483d16b24fa776c2",
+      "leakage_group_id": "lg-b22b3cf4d1abc1d1"
+    },
+    {
+      "order": 93,
+      "email_id": "enron-0d0a5d2246473e4d65347534",
+      "thread_id": "enron-thread-bbf24a49947860ebb0c1",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 616,
+      "current_sha256": "5deb4a1b0e259f3f068b6e783df3083fec773550db328aabb7dd2e4ab7ba67ee",
+      "leakage_group_id": "lg-41b7103ea4da8376"
+    },
+    {
+      "order": 94,
+      "email_id": "enron-37b38f140834fb6302d61944",
+      "thread_id": "enron-thread-f1d3dd140310926252d5",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 915,
+      "current_sha256": "87d21bae87a40bcfe31113aae38c20ad9b0670e346c8511270098c433f0a77d3",
+      "leakage_group_id": "lg-e214da4fd3f966d4"
+    },
+    {
+      "order": 95,
+      "email_id": "enron-f3c94c52f7e9d67b9a5429fb",
+      "thread_id": "enron-thread-7758a73197193e0d61f6",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 2598,
+      "current_sha256": "c6b7b0e3612197de779ca221b8076616657a765ff7b9c47628799fd965aa672a",
+      "leakage_group_id": "lg-6c9f1e0f866ca40d"
+    },
+    {
+      "order": 96,
+      "email_id": "enron-e7a22c39dbd8a249bec8f6c1",
+      "thread_id": "enron-thread-3a4f6ad790ce92698b85",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 386,
+      "current_sha256": "bd1af0831efa6da4480be032c5947dbc95dddc30e5d8cf07b8852ec2e92b4ec9",
+      "leakage_group_id": "lg-bb041ad02c233bb8"
+    },
+    {
+      "order": 97,
+      "email_id": "enron-94450c2c81f390664e459246",
+      "thread_id": "enron-thread-d667da82847c19a49947",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 342,
+      "current_sha256": "7ccde7cb7ac952e1bab5a2e44d473a94daf9fd1e5ef56c44e79efc543042616f",
+      "leakage_group_id": "lg-30fda7ac7e2b7018"
+    },
+    {
+      "order": 98,
+      "email_id": "enron-748ff45c67a98fe5d8f02b99",
+      "thread_id": "enron-thread-edc9ffb03b65ccdcfa50",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 773,
+      "current_sha256": "85d8f8b402ca5e4c9302eae177c3b53679804d3f0276d13a0edd7cfa8337306e",
+      "leakage_group_id": "lg-2dff36d45b6a9ec7"
+    },
+    {
+      "order": 99,
+      "email_id": "enron-8d9ae565294889ba72fa0985",
+      "thread_id": "enron-thread-17b9121562ff9b00b89d",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 2265,
+      "current_sha256": "8d981e84dd9149d3883af64fb6252a0ee4116dec1d6a3d95f7d6367cb37ba111",
+      "leakage_group_id": "lg-64c4a0bff34678c2"
+    },
+    {
+      "order": 100,
+      "email_id": "enron-b416a7ac69fbba6644771837",
+      "thread_id": "enron-thread-8808051560fd698ac667",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 345,
+      "current_sha256": "0c28fa77c7dc0743b995c2036f926c2c65ac782275d55dd8dde7b67b129c26b1",
+      "leakage_group_id": "lg-b391c0a5206e4132"
+    },
+    {
+      "order": 101,
+      "email_id": "enron-d7bb03c109b789e25c508a4c",
+      "thread_id": "enron-thread-e4602f22c6dacd60bede",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 566,
+      "current_sha256": "0ec3e0d3b5e225e369f5e926c6878b4a3c08e85cb0c27561c832b6a17df85455",
+      "leakage_group_id": "lg-401cd8609acee0fc"
+    },
+    {
+      "order": 102,
+      "email_id": "enron-379b6f448c7e93816e6b8efa",
+      "thread_id": "enron-thread-c3172648e11521080cb5",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 2676,
+      "current_sha256": "2e3fbac8b56bd1f636d84a6b7fd4de15f7f5dc844744549c26159078d57f5949",
+      "leakage_group_id": "lg-cef0d0ee4774b5e6"
+    },
+    {
+      "order": 103,
+      "email_id": "enron-2dc49a7e8db1d7a11087c4bd",
+      "thread_id": "enron-thread-cd8846aa5f1ca1080f7e",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 310,
+      "current_sha256": "466c698e143c8ccc29ea96f18cc4d45598bf7404d3245085353ca75e232a3702",
+      "leakage_group_id": "lg-d9df64e442d59404"
+    },
+    {
+      "order": 104,
+      "email_id": "enron-f514c68bf8bb30d358513e0c",
+      "thread_id": "enron-thread-f6bea2bd3e05d9e725fb",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 288,
+      "current_sha256": "6903e0a23ea85fb6ca6e40d261f2514dc757c67907789bb3393edba731068c92",
+      "leakage_group_id": "lg-60fc6bc075065137"
+    },
+    {
+      "order": 105,
+      "email_id": "enron-9f8ad12587552faa0406ccd4",
+      "thread_id": "enron-thread-2c3ae1e1c0a549210cc5",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 815,
+      "current_sha256": "1ac6f9c2b8ad9fbacf074e3fa2ad4a90e30d28ede7f9b917d0b93d59accc4eb5",
+      "leakage_group_id": "lg-429be809d16c5502"
+    },
+    {
+      "order": 106,
+      "email_id": "enron-e3503cdbc6e5ba5893d45242",
+      "thread_id": "enron-thread-28d4d293d4e5f8ef7e71",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 540,
+      "current_sha256": "c159181fb2b466377b0c5f04600a8d34baaeb4fbf776f4b877d99e0f5b414c6a",
+      "leakage_group_id": "lg-0877cc1d2e82082c"
+    },
+    {
+      "order": 107,
+      "email_id": "enron-2be70ae39f943e28784e14d7",
+      "thread_id": "enron-thread-25620e19566b31211a78",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 2955,
+      "current_sha256": "3e14820049f5a00deddb6d3d06086ca631701afe586c8c9cb5c848c9cccd69e9",
+      "leakage_group_id": "lg-7cabeabb558be5d3"
+    },
+    {
+      "order": 108,
+      "email_id": "enron-2a5dcf55e71c6528389c2efb",
+      "thread_id": "enron-thread-f74e74a19fec3383ef18",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 1845,
+      "current_sha256": "9cb03879d4edb6fc7c4c5fe6b0360c987263bf5dccba6c9c2f9bb1adcd00ac35",
+      "leakage_group_id": "lg-0f78135141e21015"
+    },
+    {
+      "order": 109,
+      "email_id": "enron-abd359a815586ddb3a9ec12c",
+      "thread_id": "enron-thread-a57f3fcf0eaf9a8892b8",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 590,
+      "current_sha256": "00dd516db711a4d2c9c96976fdbaad054c9db0119cc9fcb697f9c5111ac7ce43",
+      "leakage_group_id": "lg-c77da2efc848e53b"
+    },
+    {
+      "order": 110,
+      "email_id": "enron-3b7fdf84ac7a22e2b29d7386",
+      "thread_id": "enron-thread-9fc301d1ce0c9790bf49",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 2244,
+      "current_sha256": "6bb794372c7ac91eade41666e7cbfb0fa2a81fde55542a708927165e69603f03",
+      "leakage_group_id": "lg-da6f9964c9fd4d25"
+    },
+    {
+      "order": 111,
+      "email_id": "enron-64228e6b59de3a5e9d9f19db",
+      "thread_id": "enron-thread-c44d9c97fedbf2e7952e",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 1344,
+      "current_sha256": "74a550605ca7387fd17ac5fd6d7c3a6e3bd005e1a3f13459084eaab0b6b842d4",
+      "leakage_group_id": "lg-0c5a750e48b52865"
+    },
+    {
+      "order": 112,
+      "email_id": "enron-a1253b3b3d425a21b752e17c",
+      "thread_id": "enron-thread-f2b7eaa1ccf4487708b1",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 687,
+      "current_sha256": "054b36352cd85813194ab57771e839896d61d47bcca41597444c0bf77cf5a318",
+      "leakage_group_id": "lg-b664eedee2a8bf0f"
+    },
+    {
+      "order": 113,
+      "email_id": "enron-1b5c9c2adac85429cd7eee64",
+      "thread_id": "enron-thread-5bca72b322395442f48f",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 617,
+      "current_sha256": "d251361af6e85519b023ce34ac265ba4f5c2627c402388846d534db6ed4cc598",
+      "leakage_group_id": "lg-4b36a6a18aff79e4"
+    },
+    {
+      "order": 114,
+      "email_id": "enron-88fd2308581337b7e8c8f04b",
+      "thread_id": "enron-thread-1dad157e4453ec3dc046",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1516,
+      "current_sha256": "7da8a7d64fe1652e7f3231e3d7493f1e57c62359951267f995fc284845a31443",
+      "leakage_group_id": "lg-5db8a50ae561f564"
+    },
+    {
+      "order": 115,
+      "email_id": "enron-7bea91e5c8c3466553615b5e",
+      "thread_id": "enron-thread-db594a8bd1cd41ab99eb",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 596,
+      "current_sha256": "fe3b1b5761e32096e28ca5b5e7657b19c0644f1f62cffcdc174841bf3a3ed9e5",
+      "leakage_group_id": "lg-399663b4d87db4d1"
+    },
+    {
+      "order": 116,
+      "email_id": "enron-7f04e6d3025f471cb030951d",
+      "thread_id": "enron-thread-e44b7d9daf146ccbfb0c",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 353,
+      "current_sha256": "8e55e03be8116566a6a68d06172bab1703f0938a0f46d6fe0267c1e1519094ef",
+      "leakage_group_id": "lg-13ebbfb19665ffff"
+    },
+    {
+      "order": 117,
+      "email_id": "enron-c19d5b433ee5d1279ebac90a",
+      "thread_id": "enron-thread-3956aad9cdd0e32b8a3f",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 765,
+      "current_sha256": "75dc36683cd9db250fadd60e67259a3d151c4ce45ad363dfc038fd9c0ff36f8c",
+      "leakage_group_id": "lg-8382ee86451d3545"
+    },
+    {
+      "order": 118,
+      "email_id": "enron-5f6c63e79fe60012087924ac",
+      "thread_id": "enron-thread-aa6f759daf208cb4f0a5",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 606,
+      "current_sha256": "ea729b1534030d5cb81dd5ab1bc78a424638455b9eeb29183865dda6b09bab68",
+      "leakage_group_id": "lg-8443c4ce9b06b2e5"
+    },
+    {
+      "order": 119,
+      "email_id": "enron-c4f4af7afe8148cd616a7024",
+      "thread_id": "enron-thread-4e9ea53c18bd9cf805b2",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 919,
+      "current_sha256": "9e3b06c48b2cadec5d8628865a3698985dc875be1c899cf13f2281e6db6ddc6f",
+      "leakage_group_id": "lg-6f4dee4c44ae0eae"
+    },
+    {
+      "order": 120,
+      "email_id": "enron-02765424ca15536bf17201fb",
+      "thread_id": "enron-thread-7c2ff58e0363239e3b8f",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 108,
+      "current_sha256": "0fc2857cb65e48adcd3199959c51c9c20e8ee49270eedb7d8a0bd62f6fecb626",
+      "leakage_group_id": "lg-33eb5354fa9a7a3d"
+    },
+    {
+      "order": 121,
+      "email_id": "enron-b9098e156cd540c5a71384f8",
+      "thread_id": "enron-thread-078a2ccfd0c867d4fc31",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 729,
+      "current_sha256": "c3db862e42c26ef5170f0572462811f7075d79b7e3d3909f8aa2a098313ddc2c",
+      "leakage_group_id": "lg-04a09e8382b140a3"
+    },
+    {
+      "order": 122,
+      "email_id": "enron-434caab02f7a04d81f7443b2",
+      "thread_id": "enron-thread-cc88cd4bf00e8d9e3671",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 649,
+      "current_sha256": "d5cf7ea6b2fd54683af17bbd1cd0e379c959a383abdbe1a344912199e3926fb1",
+      "leakage_group_id": "lg-2e5ff4980bb402de"
+    },
+    {
+      "order": 123,
+      "email_id": "enron-2fb0ec71cda01f53a88410dd",
+      "thread_id": "enron-thread-33c9d4194e87029e3e02",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 694,
+      "current_sha256": "dc8cacefb0d52adc1122da95222e73c041eb171e28857b54bce29e83d185f62b",
+      "leakage_group_id": "lg-d27f2bf2c6b60e94"
+    },
+    {
+      "order": 124,
+      "email_id": "enron-e58140add2a3df2682d152cb",
+      "thread_id": "enron-thread-94c8f055010fc8c6f702",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 1854,
+      "current_sha256": "e7cc3519c04e9d7467b83084be4a26643cc17890ec86c52231ca1093ce966e6f",
+      "leakage_group_id": "lg-7837baa5f53e488b"
+    },
+    {
+      "order": 125,
+      "email_id": "enron-a511a3124b7849198367fe42",
+      "thread_id": "enron-thread-41068105ebd079bd3dbc",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1531,
+      "current_sha256": "7ac9c63365c9797944e4aced16529fcb2146c1111e75f643c3542a2ffac49b8a",
+      "leakage_group_id": "lg-7e577fada6784c66"
+    },
+    {
+      "order": 126,
+      "email_id": "enron-c5da2ab6696e1653a6b31267",
+      "thread_id": "enron-thread-eed5232afa5deedf929e",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 893,
+      "current_sha256": "807f1ca08a8c48c8457309c2aa1184721f468f383ebf6a5da8a95506bd7f7771",
+      "leakage_group_id": "lg-1a43c82faa2dc5b1"
+    },
+    {
+      "order": 127,
+      "email_id": "enron-5bcd7e90c75ef9912c194356",
+      "thread_id": "enron-thread-55c8ce6fdbff9e546063",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 453,
+      "current_sha256": "ebf8c934c2b2a7dbc9b9c1c4fe748a3dfb42d63f06ff6c0ff7f26a0135e14bed",
+      "leakage_group_id": "lg-57a40cbaa6123e11"
+    },
+    {
+      "order": 128,
+      "email_id": "enron-7c191ed03045f9d18b29a314",
+      "thread_id": "enron-thread-a8bc54e7d9a13855fdf8",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 198,
+      "current_sha256": "993582bfa15162752c475226b45d8b70b9fb4c40e059bd7290fc7903dee8f484",
+      "leakage_group_id": "lg-5d3d25d9f6ab0bd1"
+    },
+    {
+      "order": 129,
+      "email_id": "enron-23642372b7307c00920b431d",
+      "thread_id": "enron-thread-75012a5e7225e30abb16",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1048,
+      "current_sha256": "3a433fbd3088a1bbf324f55533e224f4ff7ca91fcce193df09467c6a5e2f48d2",
+      "leakage_group_id": "lg-44bcc01dcac531f9"
+    },
+    {
+      "order": 130,
+      "email_id": "enron-574912c8960ec3dac3500c8f",
+      "thread_id": "enron-thread-7f9ec7616678ceee7cf1",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 2962,
+      "current_sha256": "931fce5d34b84e1cdaa19fef0ae5da626a2962a6dca75f1258a2d6f22912c444",
+      "leakage_group_id": "lg-e6e9add15c5fd764"
+    },
+    {
+      "order": 131,
+      "email_id": "enron-7de4ad0201c5c5dcc3676e83",
+      "thread_id": "enron-thread-8762215507762def8984",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 255,
+      "current_sha256": "2e4a83d1bc90ac176ba9f083e93a84aed7e8b71f86f280e2149c7e54f750de2c",
+      "leakage_group_id": "lg-993e86f3609fdd91"
+    },
+    {
+      "order": 132,
+      "email_id": "enron-e1d60027df58e3f38e2c08f2",
+      "thread_id": "enron-thread-8cdd029bf1596b843f6f",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 705,
+      "current_sha256": "7522f3ccc0c560eed2f10f18c67a3675792ab19b961392981d0a17a82624859f",
+      "leakage_group_id": "lg-46e86eb9cd3571af"
+    },
+    {
+      "order": 133,
+      "email_id": "enron-bb405c9fe3aacb29a1d98a07",
+      "thread_id": "enron-thread-480beb3160dcf2f99b3c",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1635,
+      "current_sha256": "342869c6f4ef808831e1197cc9f162caead4d5023ef80801af7741c05e30a77b",
+      "leakage_group_id": "lg-c1b4677610ee3799"
+    },
+    {
+      "order": 134,
+      "email_id": "enron-7ff1be25e79207fb5e8b3909",
+      "thread_id": "enron-thread-43a2874483ef9c7487c3",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 678,
+      "current_sha256": "6fc71c1676c3ead910660fc5524cfa0e61f8721b6b5bd36f87a9cb24ed34fa4f",
+      "leakage_group_id": "lg-bd86d02fc5678109"
+    },
+    {
+      "order": 135,
+      "email_id": "enron-bdb3fc3361942c69e326b6b1",
+      "thread_id": "enron-thread-9333dd4ca14513b5cd5b",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 162,
+      "current_sha256": "38fe20be15358ac08a2a6485061bd489c7b991b1761a236d54aacd858f0f1b0a",
+      "leakage_group_id": "lg-347c8765f8c3072d"
+    },
+    {
+      "order": 136,
+      "email_id": "enron-e60bac8e7183f565ddc4c7fa",
+      "thread_id": "enron-thread-74db319510590b90fe37",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 289,
+      "current_sha256": "300be30a9963da4cc72363e5a9269dee8c6f36f79804fe024513fecbfcb37fa4",
+      "leakage_group_id": "lg-413f6420f795c678"
+    },
+    {
+      "order": 137,
+      "email_id": "enron-09e07c639b4fdacc75b22557",
+      "thread_id": "enron-thread-8a086614f16e46ed15cc",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 307,
+      "current_sha256": "91a25caf45d3cbfcb062b2e1eeee5a1b3c7d8f5f7d074e783dbdcb1ba39732cd",
+      "leakage_group_id": "lg-0386006e340ac3f7"
+    },
+    {
+      "order": 138,
+      "email_id": "enron-121abe5fe561589adaffc97e",
+      "thread_id": "enron-thread-a31d441809f4420b1f30",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1357,
+      "current_sha256": "343f4e9fa7cf69589405b88a40ba352df672600058ed90b8b385fd9b7408e142",
+      "leakage_group_id": "lg-332312b39bfa41fa"
+    },
+    {
+      "order": 139,
+      "email_id": "enron-687e7ee501b784d6d955ca63",
+      "thread_id": "enron-thread-48dbd893c69201b6b01c",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 326,
+      "current_sha256": "df03a891d6bba5f68193b707ed9f7f90e9f6b311d93b65cf258622c0a2c9ff85",
+      "leakage_group_id": "lg-c437202a4fb934a6"
+    },
+    {
+      "order": 140,
+      "email_id": "enron-a29df3a2764d5bb0b2019a9b",
+      "thread_id": "enron-thread-3c335ce493f2b282ac4f",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 908,
+      "current_sha256": "f2bd69d50e0376b6798e2968428302f05ce0e01dd8e2e4a25a8a0805499e586a",
+      "leakage_group_id": "lg-7fa4c699c529be35"
+    },
+    {
+      "order": 141,
+      "email_id": "enron-a06da88b973173cdc96c843c",
+      "thread_id": "enron-thread-750f043c729f7b97ad5a",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 918,
+      "current_sha256": "4acd8ed53ec757f6ec6b4dbdec914c88e4e428821981fe755e6367052165f567",
+      "leakage_group_id": "lg-b71da21547c5abe0"
+    },
+    {
+      "order": 142,
+      "email_id": "enron-1f09001d381bf6e62cebb15b",
+      "thread_id": "enron-thread-c8ac390018752ef11d86",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 458,
+      "current_sha256": "93efd9533421513d2369aeef1ab0252ef95a43a1681bb8ce7216daab403b62d0",
+      "leakage_group_id": "lg-c3cb209fedeca3dc"
+    },
+    {
+      "order": 143,
+      "email_id": "enron-16619310a1059aa568fae1bb",
+      "thread_id": "enron-thread-0c256330014c9f769f89",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 649,
+      "current_sha256": "e4e3a92f64961da18f345769467f2891feb30a4e82654afcbe1acd11390d97af",
+      "leakage_group_id": "lg-4ca4ff30f4dd7400"
+    },
+    {
+      "order": 144,
+      "email_id": "enron-638c177b0f1a15a629cfcebd",
+      "thread_id": "enron-thread-4e8cd36e94f08f869edc",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 690,
+      "current_sha256": "3af04114c875b622bf636f4753c1d7878dddb0e938906fd2144dc186f6d191e2",
+      "leakage_group_id": "lg-b02652e0ab2b805a"
+    },
+    {
+      "order": 145,
+      "email_id": "enron-6062746959b03864aa30c4a2",
+      "thread_id": "enron-thread-1c942a13c4baee29b500",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 643,
+      "current_sha256": "4dd0ec7a8bf2d327933f925afee9abb3d0972938fe443e4ad3b0a6602259e3b1",
+      "leakage_group_id": "lg-281936f1c220010a"
+    },
+    {
+      "order": 146,
+      "email_id": "enron-cd9731f494982318f1d8d1af",
+      "thread_id": "enron-thread-b058dbb44866a1ac57d5",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 2757,
+      "current_sha256": "7c6c9b173b9a8ee2ab5f5cd7d2775b7aae9adf931aa3d4b04f4ed5335c97bf60",
+      "leakage_group_id": "lg-557057039f3a76ed"
+    },
+    {
+      "order": 147,
+      "email_id": "enron-d51f50c58a8dbe4019569181",
+      "thread_id": "enron-thread-16a7f81e2b10d230d64e",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 610,
+      "current_sha256": "1ad2a884fda373922c93492e12409675a3fddb8f79715383a506efeab87fe534",
+      "leakage_group_id": "lg-8ca7fe8d572396aa"
+    },
+    {
+      "order": 148,
+      "email_id": "enron-45d0897c58c48bcb96c9d27c",
+      "thread_id": "enron-thread-52fce45c893d2a248b5a",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 813,
+      "current_sha256": "0a8cf81062c659328cbf72305717259b17c358d9d48ac567cd14801e74cbb213",
+      "leakage_group_id": "lg-5cf061030ccf05ce"
+    },
+    {
+      "order": 149,
+      "email_id": "enron-b532bf0c940bc9278ee96f88",
+      "thread_id": "enron-thread-4dfda1b1052e71ff0fa3",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 556,
+      "current_sha256": "2ed4f762c095302b3db8615b7a263a94137b7095a993ca622443ae33a97e3108",
+      "leakage_group_id": "lg-d6e6f508b2876787"
+    },
+    {
+      "order": 150,
+      "email_id": "enron-876706fc97439f5f53aad25d",
+      "thread_id": "enron-thread-b574cbc25bcbd7d385de",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1943,
+      "current_sha256": "3103f528f1164594903389cd65ace33fcb3324ae356178e780f3f343d5d255cd",
+      "leakage_group_id": "lg-9fa279f0708950b6"
+    },
+    {
+      "order": 151,
+      "email_id": "enron-09292ca637783430b2e55931",
+      "thread_id": "enron-thread-85534cf364ea9e568e80",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 2202,
+      "current_sha256": "2910ff28c7f052faf556c45e381ebb7478c422e4f27472c79b83791621b12dde",
+      "leakage_group_id": "lg-3f00fee0987dc3f6"
+    },
+    {
+      "order": 152,
+      "email_id": "enron-29c922d4077828a95c8f5cdd",
+      "thread_id": "enron-thread-fe3bacd4da33b984dc22",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 381,
+      "current_sha256": "ae649699ab79b7f3221d27cd2fbfb1ef1456010d0c1ce74008524f1ad46585b9",
+      "leakage_group_id": "lg-4c8afdf1d3116485"
+    },
+    {
+      "order": 153,
+      "email_id": "enron-6457ab9c2372196574777863",
+      "thread_id": "enron-thread-5170d31d34a74c9a101a",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1382,
+      "current_sha256": "8107305f40fd5345bc5d44bcf42fc8d5454a67523821412869bee77758b4bede",
+      "leakage_group_id": "lg-07c2852cd669d3c0"
+    },
+    {
+      "order": 154,
+      "email_id": "enron-942c77b21833dc297f082d92",
+      "thread_id": "enron-thread-95159a8836eb0f469c24",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1527,
+      "current_sha256": "fc5d14c5cc20ed395839d759f222ae58fd53224c6f4e973a7abbd325197eab6a",
+      "leakage_group_id": "lg-36a1b216f5ce131f"
+    },
+    {
+      "order": 155,
+      "email_id": "enron-18ff9f26b185c2d553db8bd2",
+      "thread_id": "enron-thread-ce95a843e344f7177c8e",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 1336,
+      "current_sha256": "1c8533a1425804a65b84a180f2d9119cf5e2c1be0da237b7ea9716b9d8069201",
+      "leakage_group_id": "lg-1a8955e0b6d6c322"
+    },
+    {
+      "order": 156,
+      "email_id": "enron-4bc31af73c68d4d5de9ef3ea",
+      "thread_id": "enron-thread-6c92cf10c3d6d8b58379",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 1128,
+      "current_sha256": "204d72cadd7e545b4e7ae74a2ad978550846867ae78751bc13b7f09b8565f6a1",
+      "leakage_group_id": "lg-32a8089cd1c4e4a9"
+    },
+    {
+      "order": 157,
+      "email_id": "enron-ce22c31738740be8c72249a0",
+      "thread_id": "enron-thread-39988f763d0d117d0749",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 109,
+      "current_sha256": "27fc5981b7264d7bf38d7f628f84148011ac21643b550cf4caaa336a47a7f778",
+      "leakage_group_id": "lg-fd02b1debbce8cab"
+    },
+    {
+      "order": 158,
+      "email_id": "enron-23af7f9588aa474d85e9ebae",
+      "thread_id": "enron-thread-83ab9ceabbecf1f86216",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1678,
+      "current_sha256": "a0a665d9d79050a0a02aa1b8c4e8fde3b7f97b6305f64ec597919bbef8fbc1a1",
+      "leakage_group_id": "lg-81538b4156c48f13"
+    },
+    {
+      "order": 159,
+      "email_id": "enron-55f08fa877d240b91454fca5",
+      "thread_id": "enron-thread-8afe75f0ef7db2a503a1",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 2050,
+      "current_sha256": "af69218cc606b65d9019deaa0fd6e8728684b5946e6b50fb6941230ce72736e9",
+      "leakage_group_id": "lg-fd4542ea07057139"
+    },
+    {
+      "order": 160,
+      "email_id": "enron-29e80eb75c7505f16c59c10e",
+      "thread_id": "enron-thread-eddf05e53a5612e4be1a",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 299,
+      "current_sha256": "3de153a6656692fd6e8178d6d1db8773b2ce92bf3193c272d41136a5f82a7d82",
+      "leakage_group_id": "lg-4bb044b37661f436"
+    },
+    {
+      "order": 161,
+      "email_id": "enron-5c841935a7b789a93cc0a948",
+      "thread_id": "enron-thread-33fbfe6a84aaacce592a",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2593,
+      "current_sha256": "9f437a369271c82e45adcd52be1a0f2b7026422f49a31ea9578caa9e0c86bf11",
+      "leakage_group_id": "lg-b4e190ba15e74e50"
+    },
+    {
+      "order": 162,
+      "email_id": "enron-f272421fb3c5aec1506c9b1e",
+      "thread_id": "enron-thread-e346a561a9dda864beb6",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1962,
+      "current_sha256": "19c6fe62bb8d0aa094ae3b01336f57019815a5074975303cd8e71a76816d404e",
+      "leakage_group_id": "lg-6b932dd8156c73b8"
+    },
+    {
+      "order": 163,
+      "email_id": "enron-24cf74238353bf3ae5c4c97f",
+      "thread_id": "enron-thread-a1381da4b5dbf0d21cc7",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 1468,
+      "current_sha256": "17dd4976c11cf40097533c06d9e143efe02326fd20fd042e689c9dd661bca6f0",
+      "leakage_group_id": "lg-b61123f5113e1517"
+    },
+    {
+      "order": 164,
+      "email_id": "enron-562384c150398074b071d4c0",
+      "thread_id": "enron-thread-50dec8d0d30bf2a800ad",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 368,
+      "current_sha256": "4ef9e9e62f01a846606c6f1f5b4247da3bb4e43da616d23773a0a2ec8aaddb62",
+      "leakage_group_id": "lg-5825ba5433130ad2"
+    },
+    {
+      "order": 165,
+      "email_id": "enron-885145548f54a735a73b5362",
+      "thread_id": "enron-thread-acaf58b79e8cc7385c0f",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1286,
+      "current_sha256": "28df2bee57b62202a24fb7f65b5ace66552223f3f3bf5bb97e3f852371d9a417",
+      "leakage_group_id": "lg-1555c1d9ddc5602a"
+    },
+    {
+      "order": 166,
+      "email_id": "enron-dbe9bea012d41b77ca961ab9",
+      "thread_id": "enron-thread-df5ebe4f90c1f9006b62",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1420,
+      "current_sha256": "76fd2677b9d43e7052099c0950d898515e1691bd8e9676a8493e8c8e97737822",
+      "leakage_group_id": "lg-3315cf5f3e0daca0"
+    },
+    {
+      "order": 167,
+      "email_id": "enron-2650752b468e8c2d8c578dec",
+      "thread_id": "enron-thread-8adf7462253b2ce8e6bc",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 2416,
+      "current_sha256": "bd5db052313618788ce7e1a660e646b55013b379149b37268536e8d01c75152e",
+      "leakage_group_id": "lg-f693c7ad459e3cf8"
+    },
+    {
+      "order": 168,
+      "email_id": "enron-12faa5f4f706ee1708e059d9",
+      "thread_id": "enron-thread-bd49fa8f31fa410f3071",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 1883,
+      "current_sha256": "03134d744818f79ac6a0b0e6650866cb20b93458b1a94082148f36c0d70b6544",
+      "leakage_group_id": "lg-c8349a5d482feb3e"
+    },
+    {
+      "order": 169,
+      "email_id": "enron-a483a930e61129259439f399",
+      "thread_id": "enron-thread-b31144caf42d970dc093",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2660,
+      "current_sha256": "f9d2a07b93ef5037cc818406670ad1b1689a5264a7f05572bf57670b35ac90d6",
+      "leakage_group_id": "lg-272e4928e2bc3af1"
+    },
+    {
+      "order": 170,
+      "email_id": "enron-a94d1737d7869bf665db17c7",
+      "thread_id": "enron-thread-496b630a46750661c60d",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 733,
+      "current_sha256": "8ab8fad2c144eb881828579ca557414f5493422c8a16660e9052f727749cf97d",
+      "leakage_group_id": "lg-84a7800c74cf4822"
+    },
+    {
+      "order": 171,
+      "email_id": "enron-084c16ccaa9dcf5e61392932",
+      "thread_id": "enron-thread-1554b8449df006000f6a",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 554,
+      "current_sha256": "5567ac44f3fe8037aaa31033a014f3fbacf90d2024b105297f052ff620547064",
+      "leakage_group_id": "lg-39b99c5423959a7c"
+    },
+    {
+      "order": 172,
+      "email_id": "enron-94c43a0f5929dcad05d1d55b",
+      "thread_id": "enron-thread-1575e9c004a06ef40a1b",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 1788,
+      "current_sha256": "5904c5d701f28a8b8d58cc68b9982874c0196c7d8ff2b1bf45114c50c35211d6",
+      "leakage_group_id": "lg-c99e89abc6ad2c72"
+    },
+    {
+      "order": 173,
+      "email_id": "enron-300d667a78caad0844e7746c",
+      "thread_id": "enron-thread-da96adccaa2469702979",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 215,
+      "current_sha256": "361a2718410a6b0f78d09ddd5f4a1030bfd4e49b48aee80d8cf2717b34267315",
+      "leakage_group_id": "lg-ece3cd005fcf94af"
+    },
+    {
+      "order": 174,
+      "email_id": "enron-62de83b02f85cc4bff35b7e2",
+      "thread_id": "enron-thread-49c66d47cedc675778ad",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1917,
+      "current_sha256": "e8744dbae18908c339fa05fe2bc43aa78086d0cae4c3019c1b4f646bd3cd59a8",
+      "leakage_group_id": "lg-b2fc146dc36934c1"
+    },
+    {
+      "order": 175,
+      "email_id": "enron-31c4db098fd09923801f7866",
+      "thread_id": "enron-thread-8785fb8087d4f55c34a7",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 1389,
+      "current_sha256": "8f07fd3d356d0a865d1a44091b155c04e6c6ec7fdfd2371e4e239f5eb9766054",
+      "leakage_group_id": "lg-05ea26e071fc6975"
+    },
+    {
+      "order": 176,
+      "email_id": "enron-8075bba07ab1da25743408f9",
+      "thread_id": "enron-thread-0cf0d91a3303fedf7049",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 594,
+      "current_sha256": "a8e47f80ac66da8799d4c49d4b5b27c6d0b403206ac090775315f172aa426a71",
+      "leakage_group_id": "lg-666a813363047a54"
+    },
+    {
+      "order": 177,
+      "email_id": "enron-5068610185e231061e3f8360",
+      "thread_id": "enron-thread-2b46327dd6d26a070265",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 852,
+      "current_sha256": "b4c6e79e721aa54014c0f13ddcc710d7cf3e76a2cece148ac4ed4ce050c50650",
+      "leakage_group_id": "lg-2b93a8239f9446f5"
+    },
+    {
+      "order": 178,
+      "email_id": "enron-081115d1fdc7357cabadd69d",
+      "thread_id": "enron-thread-aaf3fc3c26f988f37a26",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1494,
+      "current_sha256": "ae405f44ba1278cea241e8548e5b40aa98aff5f03c7ff6e46b97167218bec422",
+      "leakage_group_id": "lg-d64f761989d4fcb7"
+    },
+    {
+      "order": 179,
+      "email_id": "enron-027d36bd4d21bb5b6fe86662",
+      "thread_id": "enron-thread-627fa142931c3f5e0b8c",
+      "source_dataset": "enron",
+      "screening_stratum": "deadline_cue",
+      "current_chars": 853,
+      "current_sha256": "e91d5f55ae650189b1ce375540928da7741f47d12e9f07e773d57ee5f6e37c5a",
+      "leakage_group_id": "lg-32c163f30c90ab43"
+    },
+    {
+      "order": 180,
+      "email_id": "enron-2024bdcda4c42d83cbdee886",
+      "thread_id": "enron-thread-b49afe92a508c03b98c3",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 356,
+      "current_sha256": "644fd4afb52d651a3342528016b8840584b406458946a63df5882f88ac38f7a1",
+      "leakage_group_id": "lg-1981f7a09c1e7fdc"
+    },
+    {
+      "order": 181,
+      "email_id": "enron-b822984105c4792c79d71d4e",
+      "thread_id": "enron-thread-561fef7a919b41a658a2",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 3405,
+      "current_sha256": "20a078fa01a888eb9004ef94115bbc2adaf8b92236753669ae330ccab5b882e5",
+      "leakage_group_id": "lg-262a726802202c50"
+    },
+    {
+      "order": 182,
+      "email_id": "enron-7575a2a6c6813cee86525e2e",
+      "thread_id": "enron-thread-297833becce9bf22d3a2",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 441,
+      "current_sha256": "f534dc7e9380b799e69ba573084d693a756d3085250d2b098c5c6d23c0af140c",
+      "leakage_group_id": "lg-900766202d6fa259"
+    },
+    {
+      "order": 183,
+      "email_id": "enron-4206744fcc739b4b71bc6325",
+      "thread_id": "enron-thread-e42288ee0f775faf4809",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 253,
+      "current_sha256": "a5b52d4b570ad30757d905f4dc2a52ee60c90d20cbc2666711f054f3c8993b57",
+      "leakage_group_id": "lg-6a5fabd13b70988b"
+    },
+    {
+      "order": 184,
+      "email_id": "enron-93eaf0701a49f7ffc396928a",
+      "thread_id": "enron-thread-c0d2792333cbd527fe68",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1470,
+      "current_sha256": "ad9ab3766396322101e72d54ac7bb8a5fdf91ac2de370d262bc002b2749b9ff2",
+      "leakage_group_id": "lg-15935ba8b3fa55a4"
+    },
+    {
+      "order": 185,
+      "email_id": "enron-3175bd007b1d7273db3d7d57",
+      "thread_id": "enron-thread-9e4edbb23923adb18bc3",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 380,
+      "current_sha256": "476317ee003ea0dcabe2d1d8e1a36fa2ab668f1e0208d401edfebec38f636f60",
+      "leakage_group_id": "lg-592b7bb059eb8746"
+    },
+    {
+      "order": 186,
+      "email_id": "enron-aa8bee1baa7b2b59fc848ecc",
+      "thread_id": "enron-thread-f3382ba767f36dda53e8",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 746,
+      "current_sha256": "8a0f757996bcf1ac9436094f060b619de04d95e2bc9f3b61fd2d10b40a729f3d",
+      "leakage_group_id": "lg-1202783520f8d385"
+    },
+    {
+      "order": 187,
+      "email_id": "enron-01a10e76a84d9d21fa0eef4c",
+      "thread_id": "enron-thread-58408a2fbf2c1dced3f1",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1913,
+      "current_sha256": "4304c10cf58d591dbfed9bd5c76446b8ec4db52f39658cf178be94f8b8ae12eb",
+      "leakage_group_id": "lg-68102c275631875d"
+    },
+    {
+      "order": 188,
+      "email_id": "enron-eb7c026d245027e39804127c",
+      "thread_id": "enron-thread-b0d188182d41a5dae85d",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 2565,
+      "current_sha256": "96fa373f5a3409145f9ba3545794cdd1f378d722f256374198b2174514720724",
+      "leakage_group_id": "lg-f4cd90da8b7cd807"
+    },
+    {
+      "order": 189,
+      "email_id": "enron-80311f99201e196f5d706316",
+      "thread_id": "enron-thread-c38dc472aaee1f291072",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 786,
+      "current_sha256": "b531ee85ca77ddc42400a2a0013f225ad3c7434425a6151b6baa74c997e5d883",
+      "leakage_group_id": "lg-993dbb10278721e5"
+    },
+    {
+      "order": 190,
+      "email_id": "enron-ac73f475004b7ebfe538d2b0",
+      "thread_id": "enron-thread-df07de52e34bf167711d",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1683,
+      "current_sha256": "adba0d07d11adc5e7365853df896d4588d5714c91bffd69dabff7daa11778958",
+      "leakage_group_id": "lg-42a38e470b2de757"
+    },
+    {
+      "order": 191,
+      "email_id": "enron-ee93876b441fed1a9bad32fe",
+      "thread_id": "enron-thread-8c58104f39e73014e49d",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 971,
+      "current_sha256": "a4ad85b06714ce3022936b42ebf60ce01fc12fdcfe5d435500c6aa9225af17ff",
+      "leakage_group_id": "lg-2e38e1f9f369c947"
+    },
+    {
+      "order": 192,
+      "email_id": "enron-95f646516256183bb9e72768",
+      "thread_id": "enron-thread-de5fa984306878d3cf93",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 542,
+      "current_sha256": "fd38b38c330de59b2f307a6f4e7fcff939b7ae301b9201f2938cc9878921f15f",
+      "leakage_group_id": "lg-296a15968fc74e31"
+    },
+    {
+      "order": 193,
+      "email_id": "enron-11e86583ab06bf1220f7a7c8",
+      "thread_id": "enron-thread-25ec9809874ff3b3f27d",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 386,
+      "current_sha256": "3e4b961a3a12303cf1d9aa616947ef8f807b0b06a366df0ae0123541e6d8a983",
+      "leakage_group_id": "lg-71d01bfa7d9a2197"
+    },
+    {
+      "order": 194,
+      "email_id": "enron-3781100c1cf4991e6bf05725",
+      "thread_id": "enron-thread-e99a51f817312bccbcd3",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 169,
+      "current_sha256": "d2a9bcf5b4acee86a6c037633febb9b0c2ff52bd811f91c858cbdc5916cf37d1",
+      "leakage_group_id": "lg-eefb1fa3a39afcf9"
+    },
+    {
+      "order": 195,
+      "email_id": "enron-d9341db4c9e5e558b78a7120",
+      "thread_id": "enron-thread-204a339605b5529a82ae",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 538,
+      "current_sha256": "55aa7a797908e492418e45d43870dc3fb1499c1c786ccb63e865af1a797c9d43",
+      "leakage_group_id": "lg-96cee44631dcf440"
+    },
+    {
+      "order": 196,
+      "email_id": "enron-c3d0c30147cab85bf7ca0d50",
+      "thread_id": "enron-thread-981a251668695e63c94c",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1468,
+      "current_sha256": "9fdd675a6678c193acf1ad1ab9889c3d40cf073a3d0d9c57799040165ef0665e",
+      "leakage_group_id": "lg-e71f58501e055869"
+    },
+    {
+      "order": 197,
+      "email_id": "enron-d117cffdc01b337ee5d1d840",
+      "thread_id": "enron-thread-30c2f250fe0e1e040efb",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1904,
+      "current_sha256": "875b3f082f64b5d616b064be2ec8217e4abf8dbe987208dd5e785efb9c4dea99",
+      "leakage_group_id": "lg-7099dce79180df87"
+    },
+    {
+      "order": 198,
+      "email_id": "enron-951542926bf0bbac9af154b9",
+      "thread_id": "enron-thread-6677656701f5646a3397",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 429,
+      "current_sha256": "1b8ef2f611a9e21afbb1999fa0d8133b862313cb6f530a9974c6ecf7a8812700",
+      "leakage_group_id": "lg-0ffb370c91db6dbb"
+    },
+    {
+      "order": 199,
+      "email_id": "enron-a95ef258a9b6922cd6727129",
+      "thread_id": "enron-thread-e5d3a4e65a5c626f9955",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 888,
+      "current_sha256": "86be2f7a05b45b6ebc5b025fde95f3ceb9bea891bdc32edd07f27dd9bba79938",
+      "leakage_group_id": "lg-0ec349e5b40f69d8"
+    },
+    {
+      "order": 200,
+      "email_id": "enron-4b9b3e71973126422da89640",
+      "thread_id": "enron-thread-15de39daa3b55a7265e6",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 567,
+      "current_sha256": "44184487966211bbe032d27fb4211458d0e60989c911b3f7416f55ba28867d30",
+      "leakage_group_id": "lg-bc7419d829dd6bd6"
+    },
+    {
+      "order": 201,
+      "email_id": "enron-0b8fc63b7484cd4d53975c99",
+      "thread_id": "enron-thread-c591b7a5a257f9b0bdee",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 608,
+      "current_sha256": "28656ef0dec4f9a29e2dac420f580a21fd5b8e808095d6e828e4cfdb29710691",
+      "leakage_group_id": "lg-cd62bc8031e842e8"
+    },
+    {
+      "order": 202,
+      "email_id": "enron-a3ebd5fba687de2e0631a5da",
+      "thread_id": "enron-thread-8bd27fadc1d3c7876923",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 847,
+      "current_sha256": "2c5ad8368c23a8d68a521669e09cfde865851f274e26645d8c4c42ac1d4451ae",
+      "leakage_group_id": "lg-d3e792e7ce227050"
+    },
+    {
+      "order": 203,
+      "email_id": "enron-fd5bbc57c3017907311481ff",
+      "thread_id": "enron-thread-efaaea8b13f397e6d731",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 329,
+      "current_sha256": "5eec57e7b955440410bcf41954906f9e56d25f3a56b5ba70f8320ae9e788a445",
+      "leakage_group_id": "lg-257cec68e9c0830d"
+    },
+    {
+      "order": 204,
+      "email_id": "enron-13291f7f0f32e3d53883bae2",
+      "thread_id": "enron-thread-f7d3da591f96ba3e8783",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 750,
+      "current_sha256": "71df1b7fef2990068cf650a1477601e6f30da20a4c1496be0cd87ee8fa30e2b5",
+      "leakage_group_id": "lg-35a9ee72d95236c7"
+    },
+    {
+      "order": 205,
+      "email_id": "enron-b95c689b92bace72e83b4f27",
+      "thread_id": "enron-thread-1359ba96df418b716aa3",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1344,
+      "current_sha256": "762b79cdb5f52e9880770683dc4a397c3c0254522af6cffe47d4b22790300925",
+      "leakage_group_id": "lg-a49fd4c6e6740f4f"
+    },
+    {
+      "order": 206,
+      "email_id": "enron-233e8276d9f94b51aa679c07",
+      "thread_id": "enron-thread-84f0f4e079b2bbe1a1aa",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1154,
+      "current_sha256": "9270dc15e9c9ad25368911d67fb495119bfaff433bb04a2eabf8d5d77ff15ec8",
+      "leakage_group_id": "lg-ce3c1d927edf4881"
+    },
+    {
+      "order": 207,
+      "email_id": "enron-b7c14f4a18ed258541ec64de",
+      "thread_id": "enron-thread-a8dcb479cdef6700d372",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 2946,
+      "current_sha256": "d7ef1bc6f64d5cf00d3e6d33f1ef7a63ecb6a0ea97dec7a66d50b0f3abdbd847",
+      "leakage_group_id": "lg-7eac242b7c7f4cdb"
+    },
+    {
+      "order": 208,
+      "email_id": "enron-2af36d0419d5879ddc193572",
+      "thread_id": "enron-thread-150f605bd60ccfceafdb",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 413,
+      "current_sha256": "f846c3b16fb11e6ac90fb8f8d0e8c3d56fa08920331a6d44bfec2d43d60d06a9",
+      "leakage_group_id": "lg-a6f4f6238afdb026"
+    },
+    {
+      "order": 209,
+      "email_id": "enron-942edd53086b3879b643f6ca",
+      "thread_id": "enron-thread-3b325b69c017057405df",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 559,
+      "current_sha256": "46a0f636c1798840de8924963e1b468a5e8e52601d40941ba66096f9ac5d0833",
+      "leakage_group_id": "lg-aa8019c4b7ad3091"
+    },
+    {
+      "order": 210,
+      "email_id": "enron-bc5bfae87b5f45690e482453",
+      "thread_id": "enron-thread-c12d351a8ce920015489",
+      "source_dataset": "enron",
+      "screening_stratum": "meeting_cue",
+      "current_chars": 1245,
+      "current_sha256": "b8ddd92c7474b0c52efd4a1c48fc65c591497c6226c1fe3278366669429de4d1",
+      "leakage_group_id": "lg-7981ebb81d63c868"
+    },
+    {
+      "order": 211,
+      "email_id": "enron-369e8fa4bfd64af22bb9b197",
+      "thread_id": "enron-thread-c7487c6d67588a26f826",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 3340,
+      "current_sha256": "abb0b3559caa000e1d15778b361f3f3641be4b37c25189f9f7cce6065f059ffa",
+      "leakage_group_id": "lg-a4791c90f1301528"
+    },
+    {
+      "order": 212,
+      "email_id": "enron-38cb6ec7884decd34f0b7aae",
+      "thread_id": "enron-thread-d51616238a2be05b7666",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1844,
+      "current_sha256": "8a96f14e088895ee24492119047abc53a29cb9fa09b242f28bee46437b447484",
+      "leakage_group_id": "lg-480f7a2ef98eaa96"
+    },
+    {
+      "order": 213,
+      "email_id": "enron-2a55217a1a71361f72fbd7b4",
+      "thread_id": "enron-thread-301697355f939fdc84d4",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 259,
+      "current_sha256": "943fe136ec80e609d90182a28f3a9bc3c01a800dea984e137d73c84ce3776669",
+      "leakage_group_id": "lg-06771d9a038b1744"
+    },
+    {
+      "order": 214,
+      "email_id": "enron-d53eb8bef9a824399fc22e5f",
+      "thread_id": "enron-thread-fe0dcab35fae6fc4a0a2",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 866,
+      "current_sha256": "19500fe33823995c0b577660929b1c8172c191d989fca1c47d094c0dd1539db0",
+      "leakage_group_id": "lg-ea0945d866aa2bc7"
+    },
+    {
+      "order": 215,
+      "email_id": "enron-d186e5f7d21b95cbd6ed6a14",
+      "thread_id": "enron-thread-a6cfc956860d1f2c2a76",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 3194,
+      "current_sha256": "0fec0ffbfe16a00230de308f296daa34ef24e65ce0080416a496f89691cf6919",
+      "leakage_group_id": "lg-93502dfb8d62bc7c"
+    },
+    {
+      "order": 216,
+      "email_id": "enron-4d1128b99645e295488fc4b9",
+      "thread_id": "enron-thread-66a18a43e0e0ff64a6a1",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 2001,
+      "current_sha256": "54b99923946e7938fe73bc7f3cbcf43a6b7d2c40a7992a1c4bfa81402dbf77b9",
+      "leakage_group_id": "lg-121c30b92dab28e0"
+    },
+    {
+      "order": 217,
+      "email_id": "enron-eefc8f67422b5fbc1e9748bb",
+      "thread_id": "enron-thread-d1ddc935466509eb2fb2",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1928,
+      "current_sha256": "d5a7b39c1a637807fe247942d9bff37d5e7eb96cea64135e8e97cfeba7ba37a1",
+      "leakage_group_id": "lg-18a643299ddc992a"
+    },
+    {
+      "order": 218,
+      "email_id": "enron-3ac4e183b71af193462aff41",
+      "thread_id": "enron-thread-0be591a25b97dae01bda",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1014,
+      "current_sha256": "7d1295c79d1b8ee2e91246feea61f6827c75bc3f997b0b070af59f481f76210b",
+      "leakage_group_id": "lg-6893f211cebc25dc"
+    },
+    {
+      "order": 219,
+      "email_id": "enron-10e573dfb696952810782d4d",
+      "thread_id": "enron-thread-8fb3d8e26bd52cc34654",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 892,
+      "current_sha256": "830d6b1f523bd2a815a8c304c23c2b6e3dd7d5d58588cf4b1684fa3e6ed380d1",
+      "leakage_group_id": "lg-b1c9aa732e7715b4"
+    },
+    {
+      "order": 220,
+      "email_id": "enron-f06f53a75d9c146a98d44841",
+      "thread_id": "enron-thread-54446accb71302397a13",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 976,
+      "current_sha256": "c9213e9573fcd7e5d2cff48c49817c5d7cb0050b45984c35347b20e40ef7437d",
+      "leakage_group_id": "lg-3ed8dc55fe4fcff3"
+    },
+    {
+      "order": 221,
+      "email_id": "enron-bf9b2eeea6d7cce8d2172779",
+      "thread_id": "enron-thread-513043c4c4e7c26fd8e2",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1683,
+      "current_sha256": "55666afe4a1e3f7668dd18039855cde9408ffcbea593200cb15dda6e4c3018e4",
+      "leakage_group_id": "lg-ed1b29e81f197f8f"
+    },
+    {
+      "order": 222,
+      "email_id": "enron-7fd5af5457f98a957b64306c",
+      "thread_id": "enron-thread-059da3a5c7aa10c93ae3",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 206,
+      "current_sha256": "7832fc64083a7628983b6490c994d26e4a9ff35c3af3e3d8bc8d9bfeea91779b",
+      "leakage_group_id": "lg-495b1fc153b15f21"
+    },
+    {
+      "order": 223,
+      "email_id": "enron-28f2da234fc063c1c3010ce4",
+      "thread_id": "enron-thread-91eca9de48a4b8273d71",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 488,
+      "current_sha256": "c271245dab57563fe63f273fd92ed2b79d469d1eac2fe98da5a3aae60da8694c",
+      "leakage_group_id": "lg-d7aeeb5ff3a3776a"
+    },
+    {
+      "order": 224,
+      "email_id": "enron-28ca420174bd94af6cd9e112",
+      "thread_id": "enron-thread-c894849c2d21c6047827",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 2059,
+      "current_sha256": "0b6b23a1bb168f8b3655549de42326959ffda1673589ce5374c26c41c67c1339",
+      "leakage_group_id": "lg-99029a5a2a7b62b3"
+    },
+    {
+      "order": 225,
+      "email_id": "enron-c28c9d662239b7e9c6ea0405",
+      "thread_id": "enron-thread-b7b620e0895fa74c2a9a",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 186,
+      "current_sha256": "6dcce29f621964c725b1b4f11df4e75fc38ba0da7d5f9f13dda277bb604d78f0",
+      "leakage_group_id": "lg-53a7f57de82932ea"
+    },
+    {
+      "order": 226,
+      "email_id": "enron-ae697d3d729cbeda158caffd",
+      "thread_id": "enron-thread-62ce034f21291e791fbc",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1060,
+      "current_sha256": "061228b485092afc9f8af3070af37a06e8b544a20ec92fc2dee7d68d5043c128",
+      "leakage_group_id": "lg-8cb06796f3483203"
+    },
+    {
+      "order": 227,
+      "email_id": "enron-66a65f05c19ffcbbeaf8a97f",
+      "thread_id": "enron-thread-10db847445396a7d5f56",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1131,
+      "current_sha256": "03b0142f13729ae3f7b60f6b4e899f323b453fb1800c357029fcc76ecf2a330a",
+      "leakage_group_id": "lg-e7ef9ccf9d21d238"
+    },
+    {
+      "order": 228,
+      "email_id": "enron-22ec11f9226e9464a6978960",
+      "thread_id": "enron-thread-969e6b6040ce6f29999d",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1862,
+      "current_sha256": "c3e1ff217a4a0050fc97fdae7fbaaa9a787781b17f3a7252b3a5e4fc683d0f64",
+      "leakage_group_id": "lg-d6c588cc673eddbb"
+    },
+    {
+      "order": 229,
+      "email_id": "enron-d195dbc1a09ae15e9d2be540",
+      "thread_id": "enron-thread-ca47363c7411062c0337",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2517,
+      "current_sha256": "4cf4c98b7a2d670dad4f4be1a53ca0c1facd0216a6786ee1522d3955d1c1af98",
+      "leakage_group_id": "lg-c9eadddeea4143dc"
+    },
+    {
+      "order": 230,
+      "email_id": "enron-521a2ae1978b436aa99bf8b0",
+      "thread_id": "enron-thread-be7421425bdee54a99d1",
+      "source_dataset": "enron",
+      "screening_stratum": "approval_cue",
+      "current_chars": 1668,
+      "current_sha256": "fb28f134e942b3d3268b045d958fac747b1d92dd160646aaf81eca142027312a",
+      "leakage_group_id": "lg-81b3e84081b749e5"
+    },
+    {
+      "order": 231,
+      "email_id": "enron-e301cce8a5f8f3320598529e",
+      "thread_id": "enron-thread-5ef6de6219644519b75d",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1284,
+      "current_sha256": "b27c5e536ec39dfeda2c22b188244550c2b4f4b2317558b3aa0f28870a6519af",
+      "leakage_group_id": "lg-24e85bc10a539cdb"
+    },
+    {
+      "order": 232,
+      "email_id": "enron-2cbd4a0e8f831708a99f0089",
+      "thread_id": "enron-thread-f5ca171a231372c7a351",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2552,
+      "current_sha256": "f0e8ac6dcfaf76dc64347e823dcbc1534ba22b673ce81710a9d2397cc1191279",
+      "leakage_group_id": "lg-c379060593fd8e90"
+    },
+    {
+      "order": 233,
+      "email_id": "enron-f2833d06b359c96b46d4b4ba",
+      "thread_id": "enron-thread-a66a8d2bff8d590d5a35",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2240,
+      "current_sha256": "53da960faa86953c0e8d0cf11e1ddc5bb384a2fb5ee719c7198f495a2479dacd",
+      "leakage_group_id": "lg-c96f3d187d169f59"
+    },
+    {
+      "order": 234,
+      "email_id": "enron-ad8ab8f89e6b62d7769856fd",
+      "thread_id": "enron-thread-1ed9d5027ee8b9a05000",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 192,
+      "current_sha256": "fe1cd7108cf9823eee31a0320967b69b96349db6fbae3a3757d333a9c2ecbc1c",
+      "leakage_group_id": "lg-93710156f8f2c008"
+    },
+    {
+      "order": 235,
+      "email_id": "enron-c28732eaf1655bd7397159ac",
+      "thread_id": "enron-thread-0c8b49b600c468c27f4b",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 321,
+      "current_sha256": "6d401ffc96a49bdeaa3e4dd45260cbafdb0d7fa42cd2cadf57406617587d0abe",
+      "leakage_group_id": "lg-dcdc2842c825119e"
+    },
+    {
+      "order": 236,
+      "email_id": "enron-28a0245eaf70e04af3d0df22",
+      "thread_id": "enron-thread-a57d184ce49fe8caa7ff",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2181,
+      "current_sha256": "123d9b8e695718d78a3f4f774b246c43ee91e5e529336088e29874ede98b1040",
+      "leakage_group_id": "lg-d95b8117f9fab9ac"
+    },
+    {
+      "order": 237,
+      "email_id": "enron-e086aa0ba27581a2396a7d36",
+      "thread_id": "enron-thread-2a088c2f6e79d9924261",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1047,
+      "current_sha256": "703101d796c8fcedcbcba1b4d197788129ea8215bb58a9e005a522fb9a281406",
+      "leakage_group_id": "lg-1c8f9925d51c2fac"
+    },
+    {
+      "order": 238,
+      "email_id": "enron-3a1439c4d8f53338815d7131",
+      "thread_id": "enron-thread-60847094a74d1a2af09e",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1398,
+      "current_sha256": "d5f8765125e5f2e1b24ff5f58cff1e88707ae36ce5c69223be176569420f0cb6",
+      "leakage_group_id": "lg-09537943852593f4"
+    },
+    {
+      "order": 239,
+      "email_id": "enron-fce8aad6fd0140a887c6973d",
+      "thread_id": "enron-thread-22a0a8a1f5d34ef646b0",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 133,
+      "current_sha256": "343737415e99695a04f8bbdd99d61a4bafe8476ed6050af852f23228c957d08a",
+      "leakage_group_id": "lg-e0a091a75803ae29"
+    },
+    {
+      "order": 240,
+      "email_id": "enron-90febe44dd2b94540dea3891",
+      "thread_id": "enron-thread-8a7382516a35e09dedfc",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 630,
+      "current_sha256": "b57bc742efa13c37bc38eb98a3a5e9054c265e3afb4895d35203081ee0c26073",
+      "leakage_group_id": "lg-c8a5c2edd85f3486"
+    },
+    {
+      "order": 241,
+      "email_id": "enron-e76999b3a7b39751282cca42",
+      "thread_id": "enron-thread-fbdaff2c182e35bbb7ca",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1577,
+      "current_sha256": "55732c917d0f2ea6c48dae8e188aaef7dc2b2471fedef329d98962ba207d5a0b",
+      "leakage_group_id": "lg-1443a85f15d4ad2a"
+    },
+    {
+      "order": 242,
+      "email_id": "enron-61924d7dbcdb0e225c9695a5",
+      "thread_id": "enron-thread-ca205decfffdeda8ab08",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2488,
+      "current_sha256": "5f3266baeb376f4635596a7b773d4377986e37ac77758e54d04d68c05f903a5b",
+      "leakage_group_id": "lg-471bedb65f5477d8"
+    },
+    {
+      "order": 243,
+      "email_id": "enron-31b04d109f2a567699e57330",
+      "thread_id": "enron-thread-49b8a1bf097d8bf79377",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 706,
+      "current_sha256": "d071bd6b13e464e08e94fe89a63fcbf32bf0f9da546fad28490bba55b425baf6",
+      "leakage_group_id": "lg-d21ec5b54f9ee8fd"
+    },
+    {
+      "order": 244,
+      "email_id": "enron-b5a2035918777650207eec9f",
+      "thread_id": "enron-thread-dfebf166abb7e2bec8e2",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1033,
+      "current_sha256": "ca65d486c7b93d06b93b2face34a0590cb1bd8a80243a09997731c15a303339c",
+      "leakage_group_id": "lg-bc794cf206de869d"
+    },
+    {
+      "order": 245,
+      "email_id": "enron-5744b9951fb19b6a60346c27",
+      "thread_id": "enron-thread-864c24eb86da86c3ba48",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1775,
+      "current_sha256": "7fcc7c7400ffab0c89cf83ac2647966ed0940dec61e8dd1945a31ca1ba8abf1e",
+      "leakage_group_id": "lg-dc5ebbe0ee6ec55b"
+    },
+    {
+      "order": 246,
+      "email_id": "enron-1c9f95c162555b9b08d82ee4",
+      "thread_id": "enron-thread-d14ba44cb846e9a71662",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 777,
+      "current_sha256": "ede09fc1e615e7e09ac6d62a992e0fb249c1f36aaef3ec6628c69b621110a53a",
+      "leakage_group_id": "lg-b64243612d6345f2"
+    },
+    {
+      "order": 247,
+      "email_id": "enron-193c1451ae77fc51ccd38d22",
+      "thread_id": "enron-thread-68ba77aa4e4db8df890f",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 466,
+      "current_sha256": "83175242e126b8743b0181edf740e9975032c9fffaa07392203224ab083113d1",
+      "leakage_group_id": "lg-f35983114da10449"
+    },
+    {
+      "order": 248,
+      "email_id": "enron-f77e64562b32db898baaea29",
+      "thread_id": "enron-thread-8a4e0f4397d7ec860ea5",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 257,
+      "current_sha256": "1fb235334e78cf9263b551ebfc2349ad10ec594aab802a19fae0854ea879b579",
+      "leakage_group_id": "lg-3b405453d3fc9781"
+    },
+    {
+      "order": 249,
+      "email_id": "enron-742f595b4eb87c6103fe0756",
+      "thread_id": "enron-thread-6edf83cd4d6677709cd8",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 337,
+      "current_sha256": "7ebbab950bab965235a7ff9ecbd1f35349c6df34ef796f2d9c3e4df315fc99dc",
+      "leakage_group_id": "lg-ded13622f94b30ad"
+    },
+    {
+      "order": 250,
+      "email_id": "enron-d9bdaaa3c32f26e64a5e6759",
+      "thread_id": "enron-thread-54c53c2fb56a79404ff5",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 623,
+      "current_sha256": "6ea8ab176c45d324ad85150fc3966dbe18d18b1eabfccca13b3685671e3cc7a6",
+      "leakage_group_id": "lg-804cc33f9b280e4f"
+    },
+    {
+      "order": 251,
+      "email_id": "enron-80fb2e0d0de7243994a2bf4f",
+      "thread_id": "enron-thread-d0ae534a6b88e77b594d",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 536,
+      "current_sha256": "e2ccadab1271c2a2acc65a794f918a9b255220bfcd54cd0be88933d1b89ddc06",
+      "leakage_group_id": "lg-f9d43ab31d4c7a75"
+    },
+    {
+      "order": 252,
+      "email_id": "enron-d7cce36b32ad86018fa9ca7e",
+      "thread_id": "enron-thread-ee6593a4fbcbda4b062a",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1659,
+      "current_sha256": "c173ac3bc221458fbb9a2778e9c06b33ed56532f6dd1868965b27425d3286ae6",
+      "leakage_group_id": "lg-d96be3fef3485e41"
+    },
+    {
+      "order": 253,
+      "email_id": "enron-1b558350a90b9a90a84a491c",
+      "thread_id": "enron-thread-782c08bb6d3a6c775709",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 573,
+      "current_sha256": "165cd97c4e67606a3fa142211161a036fef34c4d3addc1d17d249aa2960dbdd2",
+      "leakage_group_id": "lg-8026bfeace0f2e05"
+    },
+    {
+      "order": 254,
+      "email_id": "enron-b2c3f96159a651a27d833b97",
+      "thread_id": "enron-thread-c3a0f47f955ff9e829cc",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 3400,
+      "current_sha256": "3519cd8727080c18b312ed0a22b97f1a67db902ec3d541819cf02a41f3655436",
+      "leakage_group_id": "lg-48bb2d779afe0d33"
+    },
+    {
+      "order": 255,
+      "email_id": "enron-546d375a0fdd1082f81b64a5",
+      "thread_id": "enron-thread-ab449cc7a7cd50b87af8",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 3217,
+      "current_sha256": "a197ef61e356bb06a8e0deb5e3bb97ec790dfd073dd226a49ec3d4593901f3c4",
+      "leakage_group_id": "lg-670f98dd00f2cdec"
+    },
+    {
+      "order": 256,
+      "email_id": "enron-be906bab8959041f873b1bfc",
+      "thread_id": "enron-thread-45472ccb94ed622f7a87",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 707,
+      "current_sha256": "4832a8c00b84e9c79230f2318d03506c95d811ad358db72ecadf83089c04448a",
+      "leakage_group_id": "lg-ca809d3185e9f907"
+    },
+    {
+      "order": 257,
+      "email_id": "enron-4923cc4f51294bd11177b90e",
+      "thread_id": "enron-thread-fb45701a26b8c1404a71",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 930,
+      "current_sha256": "bb02a2e1c9448249b35515c4c5814c1be75123dc61549eb55b82686db3d865e9",
+      "leakage_group_id": "lg-34cc787eac7c29fa"
+    },
+    {
+      "order": 258,
+      "email_id": "enron-9aa84beaf7386377f21ad5b3",
+      "thread_id": "enron-thread-988f37086516f37499c7",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1072,
+      "current_sha256": "3d0d884db108fa57f3f6ac2264f4cbbae874c4e4d61dd0a6ee4f527e52c8ccfc",
+      "leakage_group_id": "lg-b5922ce64acfa9aa"
+    },
+    {
+      "order": 259,
+      "email_id": "enron-1a6ddf8ce0e58bfb031e1e17",
+      "thread_id": "enron-thread-92731d985c9a726c8ea9",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 957,
+      "current_sha256": "eb7e04c3ae904fdd574eba1ead5d1b6a3561c4ed144fe2eac682bd8f3b8841d1",
+      "leakage_group_id": "lg-1623ae0b92b05ecb"
+    },
+    {
+      "order": 260,
+      "email_id": "enron-99b37d701d5c6c36b2da456c",
+      "thread_id": "enron-thread-2ceca06ba63ff28766cd",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2303,
+      "current_sha256": "5d451dd9db08621ac86e7045d8dda26c37fbf37bb3e482dc5d25996a22895f60",
+      "leakage_group_id": "lg-01a0a10c35aecda3"
+    },
+    {
+      "order": 261,
+      "email_id": "enron-78ccd6b70f29d2fa2e4e6a2f",
+      "thread_id": "enron-thread-c4c990e382e6e24add93",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2195,
+      "current_sha256": "75ec79a78b8850990a83ee137eef7a87ce42b9026a91a75fd4f1c2e60a84474a",
+      "leakage_group_id": "lg-0e54054a14fdc386"
+    },
+    {
+      "order": 262,
+      "email_id": "enron-9e58946a05818c2177cc748a",
+      "thread_id": "enron-thread-d6e0e14a375576c3072e",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 506,
+      "current_sha256": "de023fa18fafbf4f7302881c01449fea9220f0e85546313444b74629aca86595",
+      "leakage_group_id": "lg-2cf8ba45aa4db81a"
+    },
+    {
+      "order": 263,
+      "email_id": "enron-23bab26e8a1278fcf865f97f",
+      "thread_id": "enron-thread-e266795389781d352d4d",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 720,
+      "current_sha256": "eaef4dd5411585efc5af5663a18cd26c57f5a17da6df9d6f49f570140a5054d7",
+      "leakage_group_id": "lg-754374633959ec96"
+    },
+    {
+      "order": 264,
+      "email_id": "enron-221b107bf0bced30b46d2621",
+      "thread_id": "enron-thread-3612ed74d3f9e7f14036",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1110,
+      "current_sha256": "0889247f35101498c82efb64bc120adf140659188fdb20689dc32a4ac6502547",
+      "leakage_group_id": "lg-2b71dcfbbe3fe375"
+    },
+    {
+      "order": 265,
+      "email_id": "enron-77d814c29511fed4498b6fc3",
+      "thread_id": "enron-thread-71f4496e843a1920f075",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 244,
+      "current_sha256": "2fd46f6fe88a1890db7669cf72fdfb227da5c74a011763a44b04f288bf3d01fb",
+      "leakage_group_id": "lg-976d2a6b3b06ddc4"
+    },
+    {
+      "order": 266,
+      "email_id": "enron-8ee74c009f457ccc26fd9f8b",
+      "thread_id": "enron-thread-2b286ba25e07e8669802",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1380,
+      "current_sha256": "810a00a8e2f55c8e92f37208b625e9258b679907f9ac8f8ab555a2123f50a038",
+      "leakage_group_id": "lg-6896071ff26bb311"
+    },
+    {
+      "order": 267,
+      "email_id": "enron-e31a7e8a07b07343a0bc8fab",
+      "thread_id": "enron-thread-5c7470620cc93d176b16",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1282,
+      "current_sha256": "6fa60a332d3c11a0354642d56abde683b7ab6cf5c93a0a5a17dd6d0fde7bab44",
+      "leakage_group_id": "lg-77f79ea1982449c4"
+    },
+    {
+      "order": 268,
+      "email_id": "enron-d14e8ff569483f4ba2fad06e",
+      "thread_id": "enron-thread-108dccb214f492887deb",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 204,
+      "current_sha256": "89fc727d27a380681119afdba048b0c845ef50089cceb8cc711a1f79eee88770",
+      "leakage_group_id": "lg-09a557e32b1c2c07"
+    },
+    {
+      "order": 269,
+      "email_id": "enron-31922f619924ab9df14107b7",
+      "thread_id": "enron-thread-8c24c2b2f29be988684e",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1239,
+      "current_sha256": "67557fb6872a5782cf211c35e0ff7f6cee9185f755774a370af2db90d70bd4ed",
+      "leakage_group_id": "lg-0c7ef56744c9419e"
+    },
+    {
+      "order": 270,
+      "email_id": "enron-333b9b99c8baf5eb83ec7d15",
+      "thread_id": "enron-thread-f5be9ccc20e0199c7415",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2096,
+      "current_sha256": "a257b41c9b35e0e8896b907894844d8345c9042c279ce273e4b16223b26e048e",
+      "leakage_group_id": "lg-c810d2c67d41e5a5"
+    },
+    {
+      "order": 271,
+      "email_id": "enron-61de3df77eb826c120f1b1da",
+      "thread_id": "enron-thread-3e12ffb310efbe8de8ca",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1890,
+      "current_sha256": "62c1b7a9368325108f2b9b21d7a8827e266f28c2f12d3c4fea7f733f98d8ec54",
+      "leakage_group_id": "lg-0183c4f167c6109b"
+    },
+    {
+      "order": 272,
+      "email_id": "enron-9ec119d48044793bddd8c2a4",
+      "thread_id": "enron-thread-2afba6361a227586dd0d",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 106,
+      "current_sha256": "7d21a75844669b49cac4615b00d16f9598fc5dbd15bba709c30c0bd117288af9",
+      "leakage_group_id": "lg-9ee1d36a4aa09501"
+    },
+    {
+      "order": 273,
+      "email_id": "enron-b908257fe58926049f2df33d",
+      "thread_id": "enron-thread-916888492138afebe35d",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 332,
+      "current_sha256": "fc9e86cce34e6a5341be39b9aa961aa3e25dd87e38ca3e4e582a832417ec6af0",
+      "leakage_group_id": "lg-bb3ff80659af6376"
+    },
+    {
+      "order": 274,
+      "email_id": "enron-2612ff1556c170af1311c4b2",
+      "thread_id": "enron-thread-6764892b7dd4cf428cf1",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 3501,
+      "current_sha256": "95e8d61eb353e01f3f742226189aee68cf994c66e928eb9200b2ca99baa14f80",
+      "leakage_group_id": "lg-4244207b9a7ccdc7"
+    },
+    {
+      "order": 275,
+      "email_id": "enron-6c9a17a1acd084e0b0fe5109",
+      "thread_id": "enron-thread-603be78b8b37606f82d6",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 470,
+      "current_sha256": "402b76916a7a6794036cce3b7898a01a8974dbf37fd5dfd408636c4e0f2a2f7d",
+      "leakage_group_id": "lg-0508a1390e00129b"
+    },
+    {
+      "order": 276,
+      "email_id": "enron-704df4f6a87c628661caee47",
+      "thread_id": "enron-thread-647118248a6ca03cc39f",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 584,
+      "current_sha256": "b291983cabcb0d3a1f71d0da09d33491547666fa3a74e6110348ae20502f3417",
+      "leakage_group_id": "lg-8fd5bb82c441ff01"
+    },
+    {
+      "order": 277,
+      "email_id": "enron-49d99c3aecae31214f11b39b",
+      "thread_id": "enron-thread-83216a8ba7137e7982a0",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 215,
+      "current_sha256": "f9ddcf113f4c34e335ed0bf11b830d26007edd566acdd3656fd7132e0644ee4e",
+      "leakage_group_id": "lg-c2347cd01df6af89"
+    },
+    {
+      "order": 278,
+      "email_id": "enron-854c25d7a13f7537770568bd",
+      "thread_id": "enron-thread-d720cdcbb92980a579c2",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 598,
+      "current_sha256": "c2c2a63873ae46964f72cc4655080e696dcfa27dc3655a98a069da9768c5b4f4",
+      "leakage_group_id": "lg-e8d456c1a2066401"
+    },
+    {
+      "order": 279,
+      "email_id": "enron-185f69127afc196a504b7b25",
+      "thread_id": "enron-thread-b88ceb1963d6d25f6dd0",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 3292,
+      "current_sha256": "d6edcaffce9ab5a61193678184ce8c66bef124a8d787b6394d22c7e7071581a3",
+      "leakage_group_id": "lg-567d193667e9c7c7"
+    },
+    {
+      "order": 280,
+      "email_id": "enron-98df23a4c0989a95046d307d",
+      "thread_id": "enron-thread-5567dc3ba93143005a3f",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2461,
+      "current_sha256": "2c893e4b6e18f88b5e41bddd677281fb71b5037bf8555d661ee6524cc59d5924",
+      "leakage_group_id": "lg-185643984075fe74"
+    },
+    {
+      "order": 281,
+      "email_id": "enron-d089e68bd7544c5b7ff63733",
+      "thread_id": "enron-thread-8517a5acca3d44bc4462",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 555,
+      "current_sha256": "6bbc7ee2a6cb5574e4e3b00d780fcf515d9a7c35dcca6f21018e89bea5c6ab50",
+      "leakage_group_id": "lg-9bedd0a1921046ec"
+    },
+    {
+      "order": 282,
+      "email_id": "enron-942f7ef50948dc65dc76bd0b",
+      "thread_id": "enron-thread-287a222cbd2511a9bb07",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 830,
+      "current_sha256": "aa030a0b9485fc4839dfb98590f506829f0a1e4fdea25954bf5955e3fc5bdad6",
+      "leakage_group_id": "lg-6b9d257aff6bbf1f"
+    },
+    {
+      "order": 283,
+      "email_id": "enron-4102a8ff43f89bb7fe5569e2",
+      "thread_id": "enron-thread-399dbf35ea6e31a360e2",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 358,
+      "current_sha256": "02463ec66c5d74e812ee746a47e0d31a1872ca1d76b53f8540c2f53485887c9b",
+      "leakage_group_id": "lg-5ceef33d32286669"
+    },
+    {
+      "order": 284,
+      "email_id": "enron-e74c2e76a696857fa45b989c",
+      "thread_id": "enron-thread-aa9b7dfa7893847c6686",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 4923,
+      "current_sha256": "ff194ad965f2d75955feb6abc89693713107d40348b5b0679623dc31f4e26631",
+      "leakage_group_id": "lg-b1d94e03f031cf2f"
+    },
+    {
+      "order": 285,
+      "email_id": "enron-02ee9559ec971c3cca5bb50f",
+      "thread_id": "enron-thread-fd8312f38e5d76ecbc21",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1842,
+      "current_sha256": "c73aa7eac340ae234b04e6799525f97b90ce0efaadf29073db82d3202b96c3df",
+      "leakage_group_id": "lg-f8f0888fd9af31b3"
+    },
+    {
+      "order": 286,
+      "email_id": "enron-56b4b2647ffa35a7417afb47",
+      "thread_id": "enron-thread-b6df164388f86ef586e7",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2433,
+      "current_sha256": "dfd3e47fcde52464c4680a466e22f54ad2ee2a0d2b338aceb774f7784ab7d5a8",
+      "leakage_group_id": "lg-8d41f46ebe0851df"
+    },
+    {
+      "order": 287,
+      "email_id": "enron-9b6f17116724ccddf946bc72",
+      "thread_id": "enron-thread-0910b52e79b4eba68384",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 418,
+      "current_sha256": "88394b374d39151988d148542193a273878e9daab9cda222dd16ea7fbc26b631",
+      "leakage_group_id": "lg-ef62d2f3b0bcb1d7"
+    },
+    {
+      "order": 288,
+      "email_id": "enron-366569b2630403498592236c",
+      "thread_id": "enron-thread-5a52765e0f0cf649907b",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 923,
+      "current_sha256": "18379d1d33ecc48a4450a7328d9bd14587bc19d07a4f08b0d03b4261d4fdeb6b",
+      "leakage_group_id": "lg-e8ca6eb3d50c87f1"
+    },
+    {
+      "order": 289,
+      "email_id": "enron-99cf4ccf3980208653e07030",
+      "thread_id": "enron-thread-b8a59fa32677793e8ecb",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 976,
+      "current_sha256": "24295609f2b3d63f284a251db19a9f011fab87216ebcb5af0c76e0018ca24465",
+      "leakage_group_id": "lg-71b77f0b51473c72"
+    },
+    {
+      "order": 290,
+      "email_id": "enron-6dffaaa359c1f8315b1b96b3",
+      "thread_id": "enron-thread-b4648bffdd9218702a0f",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1004,
+      "current_sha256": "e3b4a572942c383bb6c9da0c7d765481f54897f9ec843a06b6ff5183a91e1222",
+      "leakage_group_id": "lg-8203b1e569061ac3"
+    },
+    {
+      "order": 291,
+      "email_id": "enron-97eeb2af376dc9204d4d3fb0",
+      "thread_id": "enron-thread-43cefa9f4a7c214b510f",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 571,
+      "current_sha256": "13e21d4b56140bd9a1e6ae32a75b841267d0440211b766776e3316106814e0e6",
+      "leakage_group_id": "lg-d4dfaa070145b325"
+    },
+    {
+      "order": 292,
+      "email_id": "enron-9f49da1f50179984f10b9d84",
+      "thread_id": "enron-thread-e5dd781e4de394983f70",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 1716,
+      "current_sha256": "9dc7f86dc2b2ed4866bed2a6f081e0aa023239bfcc2e6c88fc261b3902b7a531",
+      "leakage_group_id": "lg-4b069524281c1934"
+    },
+    {
+      "order": 293,
+      "email_id": "enron-7bac109dc72a979dbb9e0e51",
+      "thread_id": "enron-thread-1ffae653128bb53a0c3b",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2457,
+      "current_sha256": "f0e8ca4e302b12d7fc050ef971f0d5a819727b472dbd914534709be5d380bfd1",
+      "leakage_group_id": "lg-e226ff97f2dd7d32"
+    },
+    {
+      "order": 294,
+      "email_id": "enron-343f36b89474a33ad6ec66d3",
+      "thread_id": "enron-thread-46a72bf3182905f08c22",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 2670,
+      "current_sha256": "2c4aa6b99cfe09fc510d2adcd3219387f789bcc93ddd8c2e59c3b0af07a568ba",
+      "leakage_group_id": "lg-5a9c9ad394784cca"
+    },
+    {
+      "order": 295,
+      "email_id": "enron-8d99597620fe9431df244a99",
+      "thread_id": "enron-thread-dd86676b19735966770d",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 523,
+      "current_sha256": "38a3f005c1699dde3774f01c113766ca730468481de1b9162724153f706a5bff",
+      "leakage_group_id": "lg-cceb473c78d522cd"
+    },
+    {
+      "order": 296,
+      "email_id": "enron-659a429a2ef2bb62c5a234be",
+      "thread_id": "enron-thread-cada88374b41d6a3f096",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 488,
+      "current_sha256": "e6b57d498265fe070d66da85f261b29229ceb2592bb169105d1ada2b03fcf2ac",
+      "leakage_group_id": "lg-1fade0dee32c5782"
+    },
+    {
+      "order": 297,
+      "email_id": "enron-121156d065b088cbdae69f50",
+      "thread_id": "enron-thread-ed261dc7af31e8091610",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 366,
+      "current_sha256": "cf4c9e2a4f0175b0d973ca616d6364170021c432a968f01a0cb3eb5d07b60e41",
+      "leakage_group_id": "lg-66d7bf0800d2db90"
+    },
+    {
+      "order": 298,
+      "email_id": "enron-2900681cb61efe1135252afe",
+      "thread_id": "enron-thread-8955716ebfa2c1a4e586",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 277,
+      "current_sha256": "c59460f1c36b5ee7d0f7d5c7a68c3223291528800a6d8c3c57c1063a8e3e02ab",
+      "leakage_group_id": "lg-1bd030c847323457"
+    },
+    {
+      "order": 299,
+      "email_id": "enron-ed9ca56c2a8890cdd3fd8555",
+      "thread_id": "enron-thread-73e2cc00f79299cc6554",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 469,
+      "current_sha256": "b84bf35f4430dde8da448d7d0fd2bbb71a06e9d4111666c7ecdfd08ae06e8828",
+      "leakage_group_id": "lg-514411b6f1eb3655"
+    },
+    {
+      "order": 300,
+      "email_id": "enron-614adf6f80579ee68569202f",
+      "thread_id": "enron-thread-75cfc72c9fcdc275c4b0",
+      "source_dataset": "enron",
+      "screening_stratum": "department_input_cue",
+      "current_chars": 3252,
+      "current_sha256": "76da6b4a9b5d63aa33cf444308c6f7477d8cfbb06b56484a2db36f84aaa768fe",
+      "leakage_group_id": "lg-0f699f99eab02647"
+    }
+  ]
+}

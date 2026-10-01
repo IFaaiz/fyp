@@ -54,6 +54,7 @@ def eligible_ai_silver(record: dict[str, Any]) -> bool:
         and isinstance(labels, list)
         and bool(labels)
         and all(label in LABELS for label in labels)
+        and bool(extract_authored_prefix(str(record.get("current_message") or "")))
     )
 
 
@@ -67,6 +68,8 @@ def eligibility_reason(record: dict[str, Any]) -> str:
         return "not_ai_prelabelled"
     if not record.get("labels"):
         return "empty_label_set"
+    if not extract_authored_prefix(str(record.get("current_message") or "")):
+        return "empty_authored_message"
     return "invalid_or_unknown_labels"
 
 
@@ -571,6 +574,7 @@ def main() -> int:
         optimizer=args.optimizer,
     )
     model.fit(train_rows)
+    evaluation = _evaluate(model, train_rows, validation_rows) if args.evaluate else None
     input_paths = list(args.input)
     if acceptance_manifest:
         input_paths.extend(args.source_records)
@@ -590,7 +594,7 @@ def main() -> int:
         "split_seed": args.seed,
         "human_reviewed_or_gold_used": 0,
         "gold_test_used": False,
-        "validation_evaluated": False,
+        "validation_evaluated": bool(args.evaluate),
     }
     args.model.parent.mkdir(parents=True, exist_ok=True)
     model.save(args.model)
@@ -635,7 +639,7 @@ def main() -> int:
             for name in ("train", "validation")
         },
         "training_data_summary": partition_report,
-        "validation_metrics_created": False,
+        "validation_metrics_created": bool(args.evaluate),
         "final_gold_test_claim": False,
     }
     _write_json(args.split_manifest, split_manifest)
@@ -644,8 +648,8 @@ def main() -> int:
         "scope": "AI-silver prototype training only; no gold accuracy claim.",
         "model": {
             "type": "TF-IDF + one-vs-rest logistic regression",
-            "implementation": "standard-library sparse optimizer; not scikit-learn",
-            "solver": "deterministic full-batch gradient descent",
+            "implementation": "scikit-learn fitting with portable JSON weights" if args.optimizer == "sklearn" else "standard-library sparse optimizer",
+            "solver": "lbfgs" if args.optimizer == "sklearn" else "deterministic full-batch gradient descent",
             "regularization": "mean binary cross-entropy + L2 ||w||^2/(2*C*n)",
             "C": args.c,
             "threshold": args.threshold,
@@ -654,7 +658,7 @@ def main() -> int:
             "learning_rate": args.learning_rate,
         },
         "data": partition_report,
-        "validation_metrics": _evaluate(model, train_rows, validation_rows) if args.evaluate else None,
+        "validation_metrics": evaluation,
         "validation_evaluated": bool(args.evaluate),
         "gold_test_evaluated": False,
         "model_path": str(args.model),

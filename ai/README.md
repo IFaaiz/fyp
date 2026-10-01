@@ -2,6 +2,18 @@
 
 This directory prepares English Outlook-style project emails for a future multi-label classifier and information extractor. V1 uses subject, body, thread context, Outlook metadata, and attachment filenames. It does not read attachment contents. The 22-page *FYP Proposal Report* controls this V1 scope; the 10-page revised proposal describes later attachment extraction.
 
+## Current measured prototype — 2 October 2026
+
+[Actual audit, TF-IDF/DistilBERT results and tomorrow's decision](reports/tonight_training_comparison.md): 674 frozen AI-silver records; shared fit/tuning/validation 426/110/138; 50 source-read transformer errors; 180-row blind human calibration queue. Tuned TF-IDF is stronger across the nine labels than the current transformer. All reported scores are AI-silver diagnostics, not gold or production accuracy. Six further uncertain references are excluded from the [668-row next-training manifest](annotation/tonight_next_training_manifest.jsonl).
+
+Launch the prepared calibration queue from the repository root:
+
+```powershell
+ai\.venv\Scripts\python.exe ai\annotation\simple_annotator\app.py --reviewer faaiz --seed-path ai\data\annotated\human\transfer_calibration\canonical_seed.jsonl --output-dir ai\data\annotated\human\transfer_calibration\reviewers
+```
+
+This queue reuses training/tuning records plus excluded sources and is not independent gold. The trained transformer checkpoints and full email data stay local under ignored `ai/data/**`.
+
 ## Canonical JSONL
 
 Each line is one email with source-qualified `email_id`, `thread_id`, `turn_index`, `subject`, preserved `raw_body`, derived `current_message` and `clean_body`, `thread_context`, metadata (`sender`, `recipients`, `cc`, `sent_at`, `attachment_names`), independent `labels`, exact `spans`, and `annotation` status. Span `start` is inclusive and `end` exclusive in `current_message`, or `subject` when `field` says so. Empty labels on an unlabelled record mean unknown. Human-reviewed unrelated mail uses `NON_PROJECT`. MailEx `raw_body` is reconstructed from official annotation tokens because its JSON does not contain the original RFC822 body; the downloaded archive itself is preserved unchanged.

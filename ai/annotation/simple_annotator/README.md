@@ -17,3 +17,15 @@ ai\.venv\Scripts\python.exe ai\annotation\simple_annotator\app.py --reviewer faa
 Read each **current message** and select every applicable classification label. Choose **Not Project Related** only when the message is clearly outside project-management work; choose **Needs another review** if you cannot decide. The app's **What should I label?** card has quick examples. For a text span, click **Add text span**, drag across the exact words in the **Subject** or **Current message** on the left, release the mouse, then choose a span type. Double-click selects one word. If the label menu does not appear, click **Use highlighted text**. You do not need a span when no relevant phrase is present. Use **Needs review** with a short note when the evidence is unclear. Progress saves automatically. Use Previous, Next, or Jump to unfinished; reopening resumes at the first unfinished email.
 
 For label boundaries and examples, read the [annotation guidelines](../annotation_guidelines.md). Label Studio remains available as an alternative. Enron is only a provisional stand-in for real Outlook project mail; evaluate domain fit before using its annotations to train the project model.
+
+## Prepared transfer calibration queue — 2 October 2026
+
+The local 180-message queue is blank and label-blind: fitting/tuning examples plus excluded ambiguous sources, with zero final-validation ID/thread/leakage-group overlap. It is training-reused calibration, not independent gold. See [tonight's result report](../../reports/tonight_training_comparison.md).
+
+From `E:\Projects\FYP`:
+
+```powershell
+ai\.venv\Scripts\python.exe ai\annotation\simple_annotator\app.py --reviewer faaiz --seed-path ai\data\annotated\human\transfer_calibration\canonical_seed.jsonl --output-dir ai\data\annotated\human\transfer_calibration\reviewers
+```
+
+The message view displays the exact hash-checked authored prefix and keeps quoted tails in reference-only thread context. Stored canonical source fields and span offsets remain unchanged. Mark unresolved scope as needing review; do not guess NON_PROJECT. Reviewer files remain local and never automatically become gold.

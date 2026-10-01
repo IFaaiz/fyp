@@ -1,0 +1,11 @@
+# Optional GPU transfer-learning environment; not required by the TF-IDF baseline.
+# Install torch from the official CUDA 12.8 wheel index:
+#   python -m pip install --index-url https://download.pytorch.org/whl/cu128 torch==2.11.0+cu128
+# Then install this file for the pinned Transformers/runtime packages.
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.11.0+cu128
+transformers==4.57.6
+tokenizers==0.22.2
+safetensors==0.8.0
+huggingface-hub==0.36.2
+numpy==2.5.3

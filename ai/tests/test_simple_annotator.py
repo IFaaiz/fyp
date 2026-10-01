@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import os
 import tempfile
@@ -12,6 +13,7 @@ from unittest.mock import patch
 
 from src.annotation.agreement import compare_reviewer_records
 from src.annotation.label_studio import python_to_utf16_offset
+from src.models.silver_classifier import extract_authored_prefix
 try:
     from ai.annotation.simple_annotator import create_app
     from ai.annotation.simple_annotator import store as annotator_store
@@ -124,6 +126,78 @@ class SimpleAnnotatorTests(unittest.TestCase):
         resumed = self._app(limit=4).test_client().get("/api/state").get_json()
         self.assertEqual(resumed["completed"], 2)
         self.assertEqual(resumed["first_unfinished"], 2)
+
+    def test_authored_display_moves_quote_tail_to_context_and_keeps_span_offsets_canonical(self):
+        record = copy.deepcopy(self.seed_records[0])
+        body = (
+            "Please review the project plan.\n\n"
+            "From: Previous Sender\n"
+            "Subject: Earlier project update\n\n"
+            "The quoted message contains unrelated older details."
+        )
+        record["raw_body"] = body
+        record["current_message"] = body
+        record["clean_body"] = body
+        record["thread_context"] = "Existing thread context."
+        record["labels"] = []
+        record["spans"] = []
+        record["annotation"] = {
+            "status": "unlabelled",
+            "annotator": None,
+            "annotation_source": None,
+            "confidence": None,
+        }
+        seed_path = self.temp_dir / "authored-view-seed.jsonl"
+        write_jsonl(seed_path, [record])
+        authored = extract_authored_prefix(body)
+        self.assertTrue(body.startswith(authored))
+        message_views = {
+            record["email_id"]: {
+                "source_sha256": "test-source",
+                "source_current_message_sha256": hashlib.sha256(body.encode("utf-8")).hexdigest(),
+                "view_sha256": hashlib.sha256(authored.encode("utf-8")).hexdigest(),
+                "display_mode": "authored_prefix",
+            }
+        }
+        (self.temp_dir / "manifest.json").write_text(
+            json.dumps({
+                "selected_email_ids": [record["email_id"]],
+                "selected_email_count": 1,
+                "source_dataset": "enron",
+                "display_view": "authored_prefix_if_exact_prefix",
+                "message_views": message_views,
+            }),
+            encoding="utf-8",
+        )
+
+        client = self._app(seed_path=seed_path, limit=1).test_client()
+        first = client.get("/api/email/0").get_json()
+        self.assertEqual(first["source"]["current_message"], authored)
+        self.assertEqual(first["labels"], [])
+        self.assertEqual(first["spans"], [])
+        self.assertIn("Quoted tail retained from Current message (reference only):", first["source"]["thread_context"])
+        self.assertIn("The quoted message contains unrelated older details.", first["source"]["thread_context"])
+
+        text = "review the project plan"
+        start = authored.index(text)
+        span = {
+            "field": "current_message",
+            "start": python_to_utf16_offset(authored, start),
+            "end": python_to_utf16_offset(authored, start + len(text)),
+            "text": text,
+            "label": "ACTION_ITEM",
+        }
+        saved = self._put(client, 0, labels=["ACTION_REQUEST"], spans=[span])
+        self.assertEqual(saved.status_code, 200, saved.get_json())
+        canonical = self._rows_from(self.output_dir / "reviewer_a.jsonl")[0]
+        self.assertEqual(canonical["current_message"], body)
+        self.assertEqual(canonical["spans"][0]["start"], start)
+        self.assertEqual(canonical["spans"][0]["end"], start + len(text))
+        self.assertEqual(canonical["spans"][0]["text"], text)
+
+        restored = client.get("/api/email/0").get_json()
+        self.assertEqual(restored["source"]["current_message"], authored)
+        self.assertEqual(restored["spans"], [span])
 
     def test_empty_draft_stays_unlabelled_and_does_not_count_as_reviewed(self):
         client = self._app(limit=2).test_client()

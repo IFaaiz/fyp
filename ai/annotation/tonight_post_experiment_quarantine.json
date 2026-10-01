@@ -1,0 +1,85 @@
+{
+  "status": "exclude_uncertain_for_future_training",
+  "experiment_snapshot_preserved": true,
+  "frozen_experiment_records": 674,
+  "next_training_eligible_after_quarantine": 668,
+  "reason": "Source-based error review raised further scope uncertainty. Frozen 138-record final-validation scores remain unchanged; no post-hoc improvement claim. These records must be excluded before future fitting or treated as uncertain until independent review.",
+  "records": [
+    {
+      "email_id": "enron-e168cc5bc5b43125472b8ba8",
+      "source_dataset": "enron",
+      "source_sha256": "80adc6e2e4c6452fa7fb6f6795a7110fe685d1626175947039cff1a84a8e589b",
+      "frozen_labels": [
+        "ACTION_REQUEST"
+      ],
+      "reason": "The requested ad hoc timeline-draft review does not identify the managed initiative; scope is unresolved.",
+      "reviewer": "root_source_adjudication"
+    },
+    {
+      "email_id": "enron-daf68b317f52768ea87df037",
+      "source_dataset": "enron",
+      "source_sha256": "f1a1955a756b0a24e9567f253bb178ce7ea2345de899d66201a39c4ad99b5179",
+      "frozen_labels": [
+        "MEETING",
+        "GENERAL_UPDATE"
+      ],
+      "reason": "Vendor demonstration/proposal notes do not establish managed implementation rather than commercial sales exploration.",
+      "reviewer": "root_source_adjudication"
+    },
+    {
+      "email_id": "enron-c48374dc1a986fb9b9d9d002",
+      "source_dataset": "enron",
+      "source_sha256": "c3cb14c856be0a97e6a3ceffaa9d2df0ec52111ce12bcac9b0cabb9b970e27b7",
+      "frozen_labels": [
+        "MEETING",
+        "DEADLINE",
+        "ACTION_REQUEST"
+      ],
+      "reason": "The Citizens O&M service proposal concerns an external project; our managed delivery scope is not established.",
+      "reviewer": "root_source_adjudication"
+    },
+    {
+      "email_id": "enron-58707034dc35d2fe6debd596",
+      "source_dataset": "enron",
+      "source_sha256": "f44fea03f512c00092936f97e5244e64ba41549642838c559295a214e7c32e40",
+      "frozen_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "reason": "Broker access LOI/deal-structure discussion does not establish managed implementation rather than commercial concept negotiation.",
+      "reviewer": "root_source_adjudication"
+    },
+    {
+      "email_id": "enron-acf4b3e58eb806a81f4f0ea1",
+      "source_dataset": "enron",
+      "source_sha256": "aa5e2ada721e1f9ee81123d1c365bd242eb61ff2293492caa026c34dae7adf50",
+      "frozen_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "reason": "Routine pipeline table reload versus managed report migration is unresolved in the current source.",
+      "reviewer": "root_source_adjudication"
+    },
+    {
+      "email_id": "enron-af24e0837f829aac5aa4883a",
+      "source_dataset": "enron",
+      "source_sha256": "85f0ce20587d81d05e633c84c617088d0365eb3cf1076c29af705cf8a0ba0c55",
+      "frozen_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "reason": "EBS/MSFT strategy-discussion transmittal does not establish a specific managed development initiative.",
+      "reviewer": "root_source_adjudication"
+    }
+  ],
+  "next_training_manifest_sha256": "903d82e41c57b1151f7a81bda43947cbf9cd37c8abb0600404c87a1d72b155af",
+  "next_training_snapshot_sha256": "bf714f2fdf80f6b7f0c22b499878c52a3d648c0085d1bfcf03b592a19e77d40f",
+  "next_training_label_support": {
+    "ACTION_REQUEST": 105,
+    "GENERAL_UPDATE": 208,
+    "NON_PROJECT": 357,
+    "DEADLINE": 56,
+    "DEPARTMENTAL_INPUT": 17,
+    "APPROVAL": 13,
+    "MEETING": 91,
+    "FOLLOW_UP": 10,
+    "REPORT_REQUEST": 9
+  }
+}

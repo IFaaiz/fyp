@@ -1,0 +1,1095 @@
+{
+  "scope": "AI-silver diagnostic source-based error analysis; not human/gold error adjudication.",
+  "primary_evaluation": "weighted DistilBERT, thresholds tuned on separate 110-row tuning portion",
+  "validation_records": 138,
+  "total_primary_errors": 135,
+  "errors_source_inspected": 50,
+  "all_50_sources_personally_read_by_root": true,
+  "sampling": "All rare-reference errors first, then deterministic SHA256 ranking; one error per leakage component until 50. No new tuning or reference changes.",
+  "category_counts": {
+    "action_vs_document_request": 27,
+    "rare_class": 8,
+    "multi_label_partial_miss": 19,
+    "meeting_scope": 7,
+    "deadline_date_role": 12,
+    "action_vs_department_input": 8,
+    "approval_scope": 15,
+    "project_scope": 25,
+    "general_update_overuse": 13,
+    "missing_context": 9
+  },
+  "reference_uncertainty_count": 6,
+  "post_experiment_quarantine_ids": [
+    "enron-e168cc5bc5b43125472b8ba8",
+    "enron-daf68b317f52768ea87df037",
+    "enron-c48374dc1a986fb9b9d9d002",
+    "enron-af24e0837f829aac5aa4883a",
+    "enron-58707034dc35d2fe6debd596",
+    "enron-acf4b3e58eb806a81f4f0ea1"
+  ],
+  "frozen_labels_and_metrics_changed": false,
+  "records": [
+    {
+      "email_id": "enron-4884732da95b98072ce2b1de",
+      "categories": [
+        "action_vs_document_request",
+        "rare_class",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The author approves use of a reviewed construction contract form, without requesting a formal document. Weighted tuning adds a document request; unweighted replaces approval with a generic update.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "APPROVAL"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST",
+        "APPROVAL"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-83ba63a46dba9197353447b9",
+      "categories": [
+        "meeting_scope",
+        "action_vs_document_request",
+        "rare_class"
+      ],
+      "reason": "The author explicitly chases previously expected attention to the apartment project and requests contact/advice. No meeting is scheduled and no formal document is requested.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "ACTION_REQUEST",
+        "FOLLOW_UP"
+      ],
+      "weighted_tuned_prediction": [
+        "MEETING",
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": []
+    },
+    {
+      "email_id": "enron-7f1d3b990380f0d14e74d01b",
+      "categories": [
+        "deadline_date_role",
+        "action_vs_department_input",
+        "rare_class",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The message coordinates an identified bank data-review meeting, explicitly distinguishes a noon information deadline, and reports readiness/data-format work by multiple units. Weighted inference substitutes an action and misses these distinct functions.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "MEETING",
+        "DEADLINE",
+        "DEPARTMENTAL_INPUT",
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-4ec4bf5604c8599b2c6ed3bd",
+      "categories": [
+        "action_vs_document_request",
+        "rare_class"
+      ],
+      "reason": "The current Pastoria message asks elimination of a project participant and checks LV status. A formal document is not requested; both action and follow-up are missed.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "ACTION_REQUEST",
+        "FOLLOW_UP"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-dea9a40f32385d7b3eac2b86",
+      "categories": [
+        "meeting_scope",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The author requests an electronic implementation document and arranges a Wednesday project call while reporting fuel-supply staffing and document-review status. Weighted inference adds an action but omits the call.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "MEETING",
+        "REPORT_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST",
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-d195c3b1d497837522185f8b",
+      "categories": [
+        "deadline_date_role",
+        "approval_scope",
+        "action_vs_department_input",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The message describes a later-today engineering discussion and substantive research requirements work. Travel/meeting dates are not completion deadlines, and no authorization is requested or granted.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "MEETING",
+        "DEPARTMENTAL_INPUT",
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "DEADLINE",
+        "DEPARTMENTAL_INPUT",
+        "ACTION_REQUEST",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": []
+    },
+    {
+      "email_id": "enron-5c5ede0800075c1b7f15253a",
+      "categories": [
+        "rare_class",
+        "multi_label_partial_miss"
+      ],
+      "reason": "Energy Operations explicitly withholds SAP completion signoff and supplies a concrete unresolved-requirements list. Weighted inference retains only status, losing the authorization and unit contribution.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "DEPARTMENTAL_INPUT",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": []
+    },
+    {
+      "email_id": "enron-ef440cea32a69340e701203c",
+      "categories": [
+        "approval_scope",
+        "deadline_date_role",
+        "action_vs_department_input",
+        "rare_class",
+        "multi_label_partial_miss",
+        "missing_context"
+      ],
+      "reason": "The current Red Rock message seeks a proceed decision on compressor commitments tied to explicit cutoff dates. GE is a supplier company, not a contributing department; weighted inference misses the decision/deadlines. Tokenizer inspection found 588 tokens and the explicit proceed-decision request beyond the 512-token input, so truncation contributes to the missed approval.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "DEADLINE",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "DEPARTMENTAL_INPUT",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-b18f7484440d14e0c2a54048",
+      "categories": [
+        "project_scope",
+        "action_vs_document_request",
+        "rare_class"
+      ],
+      "reason": "This is an automated overdue-payables reminder. An operational invoice is neither a managed-project document request nor evidence of project scope.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": []
+    },
+    {
+      "email_id": "enron-ea4512c987ed170c2aef3a26",
+      "categories": [
+        "project_scope",
+        "approval_scope",
+        "general_update_overuse"
+      ],
+      "reason": "The automated iPayit coding/approval notice describes routine invoice processing. It does not authorize a project or communicate project progress; unweighted inference correctly retains NON_PROJECT.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-211bd94be6b438a3a89ebdae",
+      "categories": [
+        "action_vs_document_request",
+        "approval_scope",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The current GTV development response distinguishes complete from unfinished inception requirements and work that can proceed. It neither requests a document nor grants project signoff.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST",
+        "APPROVAL"
+      ],
+      "unweighted_fixed_prediction": []
+    },
+    {
+      "email_id": "enron-e168cc5bc5b43125472b8ba8",
+      "categories": [
+        "project_scope",
+        "missing_context",
+        "action_vs_document_request"
+      ],
+      "reason": "The current author requests review/comments on an attached timeline recommendation draft. That is not a request to produce a formal document or a meeting. The terse ad hoc team description leaves the managed initiative unclear, so the reference ACTION_REQUEST itself needs quarantine for future review.",
+      "reference_silver_uncertainty": true,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "ACTION_REQUEST"
+      ],
+      "weighted_tuned_prediction": [
+        "MEETING",
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-e4fdf29b471f7b2b455a121b",
+      "categories": [
+        "deadline_date_role",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The worldwide Outlook migration notice gives a migration date and explicitly requires cleanup before it. The completion constraint comes from that before-date instruction, not merely the launch date; both models miss the task and deadline.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "DEADLINE",
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-3ef7bca7d50bb6a1003d6a25",
+      "categories": [
+        "project_scope",
+        "deadline_date_role",
+        "general_update_overuse"
+      ],
+      "reason": "This is a recurring counterparty name-change database/report notice with weekly maintenance schedules. Those operating dates do not become project deadlines, departmental input or project progress.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "DEADLINE",
+        "DEPARTMENTAL_INPUT",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-9a4bca1c62be215f13a6efb6",
+      "categories": [
+        "multi_label_partial_miss"
+      ],
+      "reason": "The author reports an expansion permit strategy and conditional future permit cancellation. That future intention does not assign a new current action to recipients.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-14e7bb229ec76f6008cfd437",
+      "categories": [
+        "action_vs_document_request",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The GEM message reports that automated workstation inventory has already completed. Future consolidation is described, but recipients are not asked to supply a formal document.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-daf68b317f52768ea87df037",
+      "categories": [
+        "project_scope",
+        "missing_context",
+        "deadline_date_role",
+        "approval_scope"
+      ],
+      "reason": "This supplies notes for a pilot discussion and recounts demonstrations/proposals to prospective buyers. No completion deadline, requested formal document or authorization is present. Managed implementation versus commercial sales exploration is unresolved in the silver reference.",
+      "reference_silver_uncertainty": true,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "MEETING",
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "DEADLINE",
+        "REPORT_REQUEST",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-3180b9d65ad0d881231d2712",
+      "categories": [
+        "project_scope",
+        "approval_scope",
+        "general_update_overuse"
+      ],
+      "reason": "This automated iBuyit payables notice requests ordinary invoice processing, not a project authorization, status update or formal project document.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "DEADLINE",
+        "REPORT_REQUEST",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-1eeeaabdef0cb2aaf9b45598",
+      "categories": [
+        "project_scope",
+        "action_vs_document_request",
+        "general_update_overuse"
+      ],
+      "reason": "The ten-day invoice reminder is routine accounts payable. An invoice-processing due date does not establish project scope or a formal project-document request.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-a80740d35c74f41e7806a81a",
+      "categories": [
+        "action_vs_document_request",
+        "approval_scope",
+        "general_update_overuse"
+      ],
+      "reason": "The identified Project Rock message requests review/comments on already attached contractor protocols. It does not ask for production of a new formal document or authorize project work.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "ACTION_REQUEST"
+      ],
+      "weighted_tuned_prediction": [
+        "DEADLINE",
+        "REPORT_REQUEST",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-e96ffa8e166a82809592f093",
+      "categories": [
+        "project_scope",
+        "meeting_scope",
+        "missing_context"
+      ],
+      "reason": "This sparse calendar entry names an ordinary customer-accounts meeting and supplies no project deliverable or document request. The export chairperson metadata does not establish migration-project scope.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-c55cc7c18a316045ec3f229e",
+      "categories": [
+        "project_scope",
+        "action_vs_document_request"
+      ],
+      "reason": "The body explicitly identifies a computer-room expansion fiber move and confirms it remains scheduled, supporting project status. It does not request any report; unweighted inference also misses that project purpose.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-c493a09223e3141e3b4aa5ce",
+      "categories": [
+        "project_scope",
+        "meeting_scope",
+        "action_vs_document_request"
+      ],
+      "reason": "This lunch invitation explains an oral-history project to general attendees. It is an informational event rather than work coordination or a request for a project document.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-ff8e4a3b08d08d1718e6753a",
+      "categories": [
+        "project_scope",
+        "deadline_date_role",
+        "action_vs_document_request"
+      ],
+      "reason": "This training-class enrollment confirmation and cancellation cutoff concern course attendance, not managed-project work or a document deliverable.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-9d9a8d2c2cc9ddc456f4045c",
+      "categories": [
+        "project_scope",
+        "missing_context",
+        "rare_class"
+      ],
+      "reason": "The current body only proposes a time for a Houston visit. It contains no expected project task being chased and no requested formal document, so weighted follow-up/document predictions are unsupported.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST",
+        "FOLLOW_UP"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-a920b01c397d6bd1795965ac",
+      "categories": [
+        "meeting_scope",
+        "action_vs_document_request"
+      ],
+      "reason": "The current text schedules a specific Project 20/20 due-diligence meeting. No formal document is requested; weighted inference misses the meeting entirely.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "MEETING"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": []
+    },
+    {
+      "email_id": "enron-23332287804b20b2622935aa",
+      "categories": [
+        "deadline_date_role",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The Tex Mex contract status explicitly sets a last date to issue notice to proceed or have the contract terminate. That is a decision/completion cutoff, distinct from the planned execution date.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "DEADLINE",
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": []
+    },
+    {
+      "email_id": "enron-cbff4961e82fd3a0e0bf2d44",
+      "categories": [
+        "project_scope",
+        "approval_scope",
+        "action_vs_department_input",
+        "general_update_overuse"
+      ],
+      "reason": "The current request collects employee performance and promotion inputs for a recurring HR review. A due date and business-unit feedback do not establish project-management scope.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "DEADLINE",
+        "DEPARTMENTAL_INPUT",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-be33631fe783c06248aa0c5c",
+      "categories": [
+        "action_vs_document_request",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The message schedules a named Lost Creek project meeting. It requests no report or document, so the additional weighted document label is unsupported.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "MEETING"
+      ],
+      "weighted_tuned_prediction": [
+        "MEETING",
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": []
+    },
+    {
+      "email_id": "enron-62aad6cefd6368061d5724f6",
+      "categories": [
+        "approval_scope",
+        "action_vs_department_input",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The report includes completion of owned site cleanup and preparation for new remediation construction, supporting progress. Filed permit applications and planned legal discussion do not constitute current authorization or substantive departmental input.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "DEPARTMENTAL_INPUT",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-eb8801d398dcb24fd2f91390",
+      "categories": [
+        "project_scope",
+        "meeting_scope",
+        "action_vs_document_request"
+      ],
+      "reason": "The reminder invites general attendees to an oral-history lecture, not project work coordination or provision of a project document.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-9d2fee9ddab9382448cca01b",
+      "categories": [
+        "action_vs_document_request",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The development-review hearing and preparatory meeting coordinate participation in our development process. No current document is requested; future presentation-material discussion is not a formal deliverable request.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "MEETING"
+      ],
+      "weighted_tuned_prediction": [
+        "MEETING",
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-d9b5366ae4023003c95e2efa",
+      "categories": [
+        "project_scope",
+        "general_update_overuse",
+        "action_vs_department_input",
+        "approval_scope"
+      ],
+      "reason": "The current text announces resignation and operational reporting-line realignment. Historical software-transition work is background, not a current managed-project contribution or authorization.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "DEPARTMENTAL_INPUT",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-baa02bc4048e4f9c1696b2f2",
+      "categories": [
+        "action_vs_document_request",
+        "multi_label_partial_miss"
+      ],
+      "reason": "A negotiated conditions-of-use document is supplied for an identified gas pipeline project. It is an already provided document; no new report is requested.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": []
+    },
+    {
+      "email_id": "enron-8a232a7c66accb282070c631",
+      "categories": [
+        "project_scope",
+        "deadline_date_role",
+        "action_vs_department_input",
+        "general_update_overuse"
+      ],
+      "reason": "The external vendor release announcement markets software features and licenses. Its release date and customer feedback are not our project deadline or departmental contribution.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "DEADLINE",
+        "DEPARTMENTAL_INPUT",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-0a8c50cf2232d1eb3e811a71",
+      "categories": [
+        "approval_scope",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The SAP implementation notice requires initial time entry by a concrete cutoff and reports rollout support. It does not ask for or grant project authorization.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "DEADLINE",
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "DEADLINE",
+        "ACTION_REQUEST",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-f1ccee84f7dc65b0738b9fe4",
+      "categories": [
+        "action_vs_document_request"
+      ],
+      "reason": "The Rio Nogales project contracts are already attached for review and comments. Reviewing an existing draft is an action, not a request to produce a formal document.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "ACTION_REQUEST"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-8014214a4765b4e3ed5a542a",
+      "categories": [
+        "action_vs_document_request"
+      ],
+      "reason": "The current author provides an executive status summary on Project Crane. Upcoming board consideration is described as process status; no recipient is asked to supply a document.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-0aea418b7cdc839bc53700b0",
+      "categories": [
+        "project_scope",
+        "action_vs_document_request",
+        "general_update_overuse"
+      ],
+      "reason": "This automatic rerouting of inactive-employee invoices is routine payables processing, not managed-project status or a project-document request.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-51730ac5c0e544a597560004",
+      "categories": [
+        "project_scope",
+        "action_vs_department_input",
+        "approval_scope",
+        "general_update_overuse"
+      ],
+      "reason": "The Woodside meeting explores commercial opportunities and asset transactions. General sales/business discussion, agenda input and attachments do not establish current management of a specific project.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "DEPARTMENTAL_INPUT",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-2654d7f4834ca0c3e574500f",
+      "categories": [
+        "multi_label_partial_miss"
+      ],
+      "reason": "The project cost report explains corrected forecasts and budget changes and explicitly asks recipients to review those changes. Both models preserve status but miss the current review request.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-3e89e33cfc5ea2753ee004eb",
+      "categories": [
+        "meeting_scope",
+        "approval_scope",
+        "general_update_overuse",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The technical forum explicitly coordinates groups working on network design/construction and asks the recipient to give a strategic presentation. It is not a current authorization or standalone progress report.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "MEETING",
+        "ACTION_REQUEST"
+      ],
+      "weighted_tuned_prediction": [
+        "ACTION_REQUEST",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": []
+    },
+    {
+      "email_id": "enron-8f4949e6f988338ecf05d081",
+      "categories": [
+        "action_vs_document_request",
+        "multi_label_partial_miss"
+      ],
+      "reason": "The West Gas rollout message explicitly instructs stopping the project pending legal clarification and supplies the reason. It does not request a formal document.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-fa6171d391b47bbe668a44b2",
+      "categories": [
+        "project_scope",
+        "general_update_overuse"
+      ],
+      "reason": "The public NYISO notice concerns the external operator systems, not recipient management of our project. The unweighted classifier correctly retains NON_PROJECT.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-c48374dc1a986fb9b9d9d002",
+      "categories": [
+        "project_scope",
+        "missing_context",
+        "deadline_date_role",
+        "action_vs_document_request"
+      ],
+      "reason": "This schedules an O&M service-proposal meeting and an RSVP cutoff, without establishing our managed delivery scope. A report is not requested; the frozen positive reference is uncertain and quarantined for future fitting.",
+      "reference_silver_uncertainty": true,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "MEETING",
+        "DEADLINE",
+        "ACTION_REQUEST"
+      ],
+      "weighted_tuned_prediction": [
+        "MEETING",
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": []
+    },
+    {
+      "email_id": "enron-af24e0837f829aac5aa4883a",
+      "categories": [
+        "project_scope",
+        "missing_context",
+        "deadline_date_role",
+        "approval_scope",
+        "action_vs_document_request"
+      ],
+      "reason": "The EBS/MSFT discussion-paper transmittal lacks an identified managed implementation. No deadline, authorization or requested formal document occurs; the frozen project-update reference is uncertain.",
+      "reference_silver_uncertainty": true,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "DEADLINE",
+        "REPORT_REQUEST",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-410a8de0f04613082b0e749c",
+      "categories": [
+        "project_scope",
+        "action_vs_document_request"
+      ],
+      "reason": "The current author says the service provider will be considered when a relevant project arrives and plans to resend information later. There is no current project or document request.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": []
+    },
+    {
+      "email_id": "enron-58707034dc35d2fe6debd596",
+      "categories": [
+        "project_scope",
+        "missing_context",
+        "action_vs_document_request"
+      ],
+      "reason": "This reviews broker-access LOI/deal concepts with uncertain future structures. Managed implementation versus commercial negotiation is unresolved, and no new formal document is requested.",
+      "reference_silver_uncertainty": true,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST"
+      ],
+      "unweighted_fixed_prediction": [
+        "GENERAL_UPDATE"
+      ]
+    },
+    {
+      "email_id": "enron-84a3aef7233203fa1154961d",
+      "categories": [
+        "project_scope",
+        "general_update_overuse",
+        "action_vs_document_request"
+      ],
+      "reason": "This is an employee charity-pledge campaign reminder and incentive notice. Campaign progress and pledge cards do not establish the target project-management or formal project-document function.",
+      "reference_silver_uncertainty": false,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "NON_PROJECT"
+      ],
+      "weighted_tuned_prediction": [
+        "REPORT_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    },
+    {
+      "email_id": "enron-acf4b3e58eb806a81f4f0ea1",
+      "categories": [
+        "project_scope",
+        "missing_context",
+        "deadline_date_role",
+        "approval_scope",
+        "action_vs_document_request"
+      ],
+      "reason": "The source reports a database table reload to keep operational data current and assist report migration. Project scope is unresolved; the source data date is not a deadline and no authorization/document request occurs.",
+      "reference_silver_uncertainty": true,
+      "reviewer": "root_source_error_review",
+      "reference_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "weighted_tuned_prediction": [
+        "DEADLINE",
+        "REPORT_REQUEST",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "unweighted_fixed_prediction": [
+        "NON_PROJECT"
+      ]
+    }
+  ],
+  "truncation_inspection": {
+    "final_validation_truncated_ids": [
+      "enron-86e48c13305b4b23774bf255",
+      "enron-8a232a7c66accb282070c631",
+      "enron-a84b83803f09bbbd7de1adc4",
+      "enron-e7b5eb5ab4cbc7e5a3e34ce5",
+      "enron-ef440cea32a69340e701203c"
+    ],
+    "selected_error_with_critical_authorization_after_cutoff": "enron-ef440cea32a69340e701203c",
+    "other_selected_truncated_error": "enron-8a232a7c66accb282070c631",
+    "other_selected_truncation_note": "Only footer/contact/attachment material after cutoff; main vendor release scope visible."
+  }
+}

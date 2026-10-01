@@ -1,0 +1,46 @@
+{
+  "scope": "Text-free saved-checkpoint smoke check for AI-silver diagnostic artifacts.",
+  "model_directory": "ai\\data\\models\\tonight\\unweighted",
+  "pretrained_model": "distilbert-base-uncased",
+  "pretrained_checkpoint_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+  "model_checkpoint_hashes_match_training_report": true,
+  "source_record_id_sha256": "cd999ebf1552d88b5f973c433607a33a36bafff540df1cd3dcb87f94922ec6e1",
+  "source_label_count": 1,
+  "token_length": 512,
+  "device": "cuda",
+  "num_labels": 9,
+  "loaded_label_order": [
+    "MEETING",
+    "DEADLINE",
+    "REPORT_REQUEST",
+    "DEPARTMENTAL_INPUT",
+    "ACTION_REQUEST",
+    "FOLLOW_UP",
+    "APPROVAL",
+    "GENERAL_UPDATE",
+    "NON_PROJECT"
+  ],
+  "logits_shape": [
+    1,
+    9
+  ],
+  "all_logits_finite": true,
+  "max_probability_absolute_delta_from_saved_run": 0.00018262863159179688,
+  "comparison_tolerance": 0.005,
+  "saved_threshold_0_5_prediction": [
+    "NON_PROJECT"
+  ],
+  "reloaded_threshold_0_5_prediction": [
+    "NON_PROJECT"
+  ],
+  "checks": {
+    "snapshot_manifest_source_hashes_and_authored_prefixes_valid": true,
+    "shared_split_valid_and_validation_record_selected": true,
+    "checkpoint_hashes_match_training_report": true,
+    "nine_output_labels_match_registered_order": true,
+    "logits_finite": true,
+    "probabilities_within_tolerance_of_saved_run": true,
+    "exclusive_0_5_prediction_matches_saved_run": true
+  },
+  "all_checks_passed": true
+}

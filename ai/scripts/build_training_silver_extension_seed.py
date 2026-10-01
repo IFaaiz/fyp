@@ -48,6 +48,16 @@ RARE_PROJECT_QUOTAS = {
     "other_project_cue": 20,
     "pm_cue_no_project_marker": 0,
 }
+EXPLICIT_PROJECT_QUOTAS = {
+    "department_input_cue": 130,
+    "document_request_cue": 6,
+    "approval_cue": 60,
+    "followup_cue": 14,
+    "deadline_cue": 40,
+    "meeting_cue": 50,
+    "other_project_cue": 0,
+    "pm_cue_no_project_marker": 0,
+}
 PROJECT = re.compile(r"\b(project|implementation|migration|pilot|rollout|workstream|phase\s+[ivx0-9]+|remediation|development|launch|construction)\b", re.I)
 DOC = re.compile(r"\b(report|presentation|project plan|meeting minutes|proposal|budget|forecast|deliverable|documentation|document)\b", re.I)
 REQUEST = re.compile(r"\b(please|could you|would you|need|request|send|submit|prepare|provide|share|deliver|forward|complete)\b", re.I)
@@ -58,6 +68,19 @@ FOLLOWUP = re.compile(r"\b(follow.?up|remind|reminder|outstanding|still waiting|
 DEADLINE = re.compile(r"\b(deadline|due|by (?:monday|tuesday|wednesday|thursday|friday|tomorrow|[0-9]{1,2}/[0-9]{1,2})|no later than|end of day|COB)\b", re.I)
 MEETING = re.compile(r"\b(meeting|conference call|status call|design review|planning session|workshop)\b", re.I)
 PM_CUE = re.compile(r"\b(meeting|deadline|due|approve|approval|report|action|review|plan|status update|follow.?up)\b", re.I)
+EXPLICIT_PROJECT = re.compile(r"\b(project|implementation|migration|pilot|rollout|workstream|phase\s+[ivx0-9]+|remediation|construction)\b", re.I)
+DOCUMENT_REQUEST = re.compile(
+    r"\b(?:please|could you|would you|can you|you must|you should|need you to)\b.{0,80}"
+    r"\b(?:send|submit|prepare|provide|share|deliver|forward|complete|finalize|develop|produce)\b.{0,100}"
+    r"\b(?:report|presentation|plan|minutes|proposal|budget|forecast|documentation|document)\b", re.I,
+)
+UNIT_CONTRIBUTION = re.compile(
+    r"\b(?:finance|marketing|legal|engineering|operations|risk|technology|IT|HR|human resources|compliance|accounting|department|team|group)\b"
+    r".{0,100}\b(?:provide|send|submit|prepare|contribute|input|feedback|comments|estimates|figures)\b"
+    r"|\b(?:provide|send|submit|prepare|input|feedback|comments|estimates|figures)\b.{0,100}"
+    r"\b(?:finance|marketing|legal|engineering|operations|risk|technology|IT|HR|human resources|compliance|accounting|department|team|group)\b", re.I,
+)
+CURRENT_CHASE = re.compile(r"\b(?:following up|follow.up on|still waiting|overdue|outstanding|status of|checking (?:in|on)|reminder)\b", re.I)
 
 
 def read_jsonl(path: Path):
@@ -71,7 +94,7 @@ def stable_rank(email_id: str, selection_seed: str = SELECTION_SEED) -> str:
     return hashlib.sha256((selection_seed + ":" + email_id).encode("utf-8")).hexdigest()
 
 
-def screening_stratum(row: dict) -> str | None:
+def screening_stratum(row: dict, profile: str = "balanced") -> str | None:
     body = extract_authored_prefix(row["current_message"])
     if not 100 <= len(body) <= 3500:
         return None
@@ -82,6 +105,25 @@ def screening_stratum(row: dict) -> str | None:
     # Current authored content is the label target. A project word deep in a
     # forwarded thread or corporate signature is weak evidence for screening.
     text = row["subject"] + "\n" + body[:450]
+    if profile == "explicit_project":
+        if not EXPLICIT_PROJECT.search(text):
+            return None
+        # Proximity and explicit request forms reduce incidental signature and
+        # attachment cues. These remain screening rules, never annotations.
+        prose = " ".join(body[:2000].split())
+        if UNIT_CONTRIBUTION.search(prose):
+            return "department_input_cue"
+        if DOCUMENT_REQUEST.search(prose):
+            return "document_request_cue"
+        if APPROVAL.search(prose):
+            return "approval_cue"
+        if CURRENT_CHASE.search(prose):
+            return "followup_cue"
+        if DEADLINE.search(prose):
+            return "deadline_cue"
+        if MEETING.search(prose):
+            return "meeting_cue"
+        return None
     scoped = bool(PROJECT.search(text))
     if not scoped:
         return "pm_cue_no_project_marker" if PM_CUE.search(text) else None
@@ -102,14 +144,15 @@ def screening_stratum(row: dict) -> str | None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--profile", choices=("balanced", "rare_project"), default="balanced")
+    parser.add_argument("--profile", choices=("balanced", "rare_project", "explicit_project"), default="balanced")
     parser.add_argument("--additional-prior-manifest", type=Path, action="append", default=[])
     parser.add_argument("--output", type=Path, default=OUTPUT)
     parser.add_argument("--manifest", type=Path, default=MANIFEST)
     parser.add_argument("--selection-name", default="training_silver_extension_1200_v1")
     parser.add_argument("--selection-seed", default=SELECTION_SEED)
     args = parser.parse_args()
-    quotas = QUOTAS if args.profile == "balanced" else RARE_PROJECT_QUOTAS
+    quotas = {"balanced": QUOTAS, "rare_project": RARE_PROJECT_QUOTAS,
+              "explicit_project": EXPLICIT_PROJECT_QUOTAS}[args.profile]
     prior_ids = set()
     for path in (PREVIOUS, *args.additional_prior_manifest):
         prior_manifest = json.loads(path.read_text(encoding="utf-8"))
@@ -138,7 +181,7 @@ def main() -> None:
             raise ValueError(f"full source ID absent from leakage sidecar: {email_id}")
         if email_id in prior_ids or group in banned_groups:
             continue
-        stratum = screening_stratum(row)
+        stratum = screening_stratum(row, args.profile)
         if stratum is None:
             continue
         counts[stratum] += 1
@@ -182,6 +225,7 @@ def main() -> None:
         "manifest_version": "1.0.0",
         "selection_name": args.selection_name,
         "selection_seed": args.selection_seed,
+        **({"screening_profile": args.profile} if args.profile == "explicit_project" else {}),
         "status": "screening_only_pending_blind_review",
         "selection_rationale": (
             "Deterministic project-context and PM-function cue screening, with 50 cue-bearing hard-negative candidates. No screening cue assigns a label. Every selected full-source leakage component is unique and disjoint from previously selected IDs/components."

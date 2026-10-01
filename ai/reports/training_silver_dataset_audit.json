@@ -1,0 +1,122 @@
+{
+  "scope": "Provisional AI-silver classification dataset; no human-gold accuracy claim",
+  "accepted": 718,
+  "source_counts": {
+    "enron": 718
+  },
+  "label_counts": {
+    "MEETING": 98,
+    "DEADLINE": 62,
+    "REPORT_REQUEST": 11,
+    "DEPARTMENTAL_INPUT": 8,
+    "ACTION_REQUEST": 121,
+    "FOLLOW_UP": 13,
+    "APPROVAL": 17,
+    "GENERAL_UPDATE": 237,
+    "NON_PROJECT": 365
+  },
+  "label_cardinality": {
+    "1": 575,
+    "2": 83,
+    "3": 50,
+    "4": 9,
+    "5": 1
+  },
+  "average_labels": 1.298050139275766,
+  "canonical_validation_errors": 0,
+  "human_reviewed_or_gold_used": 0,
+  "source_qualified_threads": 718,
+  "selected_leakage_groups": 718,
+  "selected_components_with_full_corpus_duplicates": 538,
+  "largest_selected_full_component": 92,
+  "selected_cross_source_components": 2,
+  "repeated_normalized_authored_bodies": 0,
+  "current_length": {
+    "min": 100,
+    "median": 696.5,
+    "mean": 962.9275766016713,
+    "max": 8507,
+    "quartiles": [
+      337.75,
+      696.5,
+      1293.75
+    ],
+    "empty": 0,
+    "below100": 0
+  },
+  "authored_prefix": {
+    "empty": 0,
+    "below100": 3,
+    "trimmed_records": 38
+  },
+  "calendar_task_exports": 12,
+  "screening_strata": {
+    "legacy_pilot_or_expansion": 106,
+    "focused_project_30": 7,
+    "project_deadline": 53,
+    "project_input": 31,
+    "project_approval": 10,
+    "pm_cue_without_project_marker": 43,
+    "project_document": 17,
+    "project_meeting": 11,
+    "project_followup": 12,
+    "project_pm_cue": 21,
+    "followup_cue": 59,
+    "deadline_cue": 61,
+    "other_project_cue": 54,
+    "pm_cue_no_project_marker": 26,
+    "meeting_cue": 55,
+    "document_request_cue": 43,
+    "department_input_cue": 66,
+    "approval_cue": 43
+  },
+  "curated_excluded": 0,
+  "other_excluded_by_reason": {
+    "abstention_or_needs_review": 9
+  },
+  "acceptance_manifest": {
+    "files": [
+      {
+        "path": "ai\\annotation\\training_expansion_100_silver_decisions.jsonl",
+        "rows": 100,
+        "sha256": "6c45f713add3be29f59dc17e470fa3bc31fed63a6ed8744143df6aebf400abe3"
+      },
+      {
+        "path": "ai\\annotation\\training_silver_first300_decisions.jsonl",
+        "rows": 300,
+        "sha256": "a47c2b66ebe439c0d4986ea1adf4622ea1ba5cc4061c0bc19d52ed3eb907efbe"
+      },
+      {
+        "path": "ai\\annotation\\training_silver_second300_decisions.jsonl",
+        "rows": 300,
+        "sha256": "95ee7645deafe51c9f3ad380672664b55cea647c7b194e77a0838064d89cb2ee"
+      },
+      {
+        "path": "ai\\annotation\\training_silver_extension_first300_decisions.jsonl",
+        "rows": 300,
+        "sha256": "89144477693a8cbdbb4e6eda71b2bdc48f06315ce1fedb524276365e5a108314"
+      },
+      {
+        "path": "ai\\annotation\\training_silver_extension_second300_decisions.jsonl",
+        "rows": 300,
+        "sha256": "b200f2b34607576041740a879381bf2764f7b25ce3779d32146e738bf77fa7c4"
+      },
+      {
+        "path": "ai\\annotation\\training_silver_extension_third300_decisions.jsonl",
+        "rows": 300,
+        "sha256": "46346099f117a1db8c3ee3dd850aca2dc8c7062e84f0a964ba352fc5923c785c"
+      }
+    ],
+    "rows": 1600,
+    "accepted_rows": 677,
+    "status_counts": {
+      "ai_silver": 677,
+      "excluded_uncertain": 923
+    },
+    "training_provenance": "ai_silver",
+    "text_free": true
+  },
+  "leakage_sidecar_sha256": "2907b98b2ffffe68baa43387b90e2266fe82f1df45d8a9d2b148bded0f3634f7",
+  "exclusion_manifest_sha256": "99365a7ae2581931f30029f13bd7918c6c7d7109b614ccdcf9f1d2611e058d85",
+  "text_free": true
+}

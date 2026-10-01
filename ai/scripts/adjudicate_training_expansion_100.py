@@ -22,6 +22,8 @@ SUPERVISOR_EXCLUSIONS = {
     # Staffing an EnronOnline customer onboarding effort could be ongoing
     # operations or managed rollout work; exclude instead of guessing.
     "enron-b8bb47f003abbacfef057c42": "possible project scope",
+    # The current text consists wholly of a forwarded message/header block.
+    "enron-20699120d90c49d12c07b0b7": "empty authored message after quote removal",
 }
 
 

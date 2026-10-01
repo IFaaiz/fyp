@@ -1,0 +1,1335 @@
+{
+  "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy.",
+  "created_utc": "2026-10-01T19:53:25.275622+00:00",
+  "training_ready": false,
+  "historical_gate": {
+    "minimum_ai_silver_records": 1000,
+    "corrected_snapshot_ai_silver_records": 674,
+    "minimum_met": false,
+    "prototype_override_used": true,
+    "override_reason": "One-off diagnostic explicitly requested on the corrected fixed split; this override does not grant training readiness.",
+    "training_ready": false
+  },
+  "model": {
+    "family": "TF-IDF + one-vs-rest logistic regression",
+    "optimizer": "scikit-learn LogisticRegression(solver='lbfgs')",
+    "C": 1.0,
+    "max_iter": 1000,
+    "seed": 20261002,
+    "portable_model_serialized_bytes": 21246559,
+    "portable_model_serialized_sha256": "da7a1a5fd64f9ad0e70defb102d766e0fea71d8eaeb8f243304d09f14dd14b12",
+    "portable_model_persisted": false,
+    "fit_seconds": 1.8180683999999019,
+    "label_convergence": {
+      "MEETING": {
+        "iterations": 13,
+        "converged": true,
+        "fit_positive_support": 56,
+        "fit_negative_support": 370
+      },
+      "DEADLINE": {
+        "iterations": 13,
+        "converged": true,
+        "fit_positive_support": 33,
+        "fit_negative_support": 393
+      },
+      "REPORT_REQUEST": {
+        "iterations": 11,
+        "converged": true,
+        "fit_positive_support": 5,
+        "fit_negative_support": 421
+      },
+      "DEPARTMENTAL_INPUT": {
+        "iterations": 11,
+        "converged": true,
+        "fit_positive_support": 10,
+        "fit_negative_support": 416
+      },
+      "ACTION_REQUEST": {
+        "iterations": 12,
+        "converged": true,
+        "fit_positive_support": 67,
+        "fit_negative_support": 359
+      },
+      "FOLLOW_UP": {
+        "iterations": 11,
+        "converged": true,
+        "fit_positive_support": 6,
+        "fit_negative_support": 420
+      },
+      "APPROVAL": {
+        "iterations": 11,
+        "converged": true,
+        "fit_positive_support": 8,
+        "fit_negative_support": 418
+      },
+      "GENERAL_UPDATE": {
+        "iterations": 24,
+        "converged": true,
+        "fit_positive_support": 132,
+        "fit_negative_support": 294
+      },
+      "NON_PROJECT": {
+        "iterations": 7,
+        "converged": true,
+        "fit_positive_support": 227,
+        "fit_negative_support": 199
+      }
+    },
+    "optimizer_package_versions": {
+      "scikit_learn": "1.9.1",
+      "numpy": "2.5.3",
+      "scipy": "1.18.1"
+    }
+  },
+  "fixed_split": {
+    "fit_prevalence": {
+      "records": 426,
+      "positive_counts": {
+        "MEETING": 56,
+        "DEADLINE": 33,
+        "REPORT_REQUEST": 5,
+        "DEPARTMENTAL_INPUT": 10,
+        "ACTION_REQUEST": 67,
+        "FOLLOW_UP": 6,
+        "APPROVAL": 8,
+        "GENERAL_UPDATE": 132,
+        "NON_PROJECT": 227
+      },
+      "positive_fraction": {
+        "MEETING": 0.13145539906103287,
+        "DEADLINE": 0.07746478873239436,
+        "REPORT_REQUEST": 0.011737089201877934,
+        "DEPARTMENTAL_INPUT": 0.023474178403755867,
+        "ACTION_REQUEST": 0.1572769953051643,
+        "FOLLOW_UP": 0.014084507042253521,
+        "APPROVAL": 0.018779342723004695,
+        "GENERAL_UPDATE": 0.30985915492957744,
+        "NON_PROJECT": 0.5328638497652582
+      },
+      "no_label_records": 0,
+      "non_project_only_records": 227
+    },
+    "tuning_prevalence": {
+      "records": 110,
+      "positive_counts": {
+        "MEETING": 16,
+        "DEADLINE": 9,
+        "REPORT_REQUEST": 2,
+        "DEPARTMENTAL_INPUT": 4,
+        "ACTION_REQUEST": 16,
+        "FOLLOW_UP": 2,
+        "APPROVAL": 2,
+        "GENERAL_UPDATE": 37,
+        "NON_PROJECT": 56
+      },
+      "positive_fraction": {
+        "MEETING": 0.14545454545454545,
+        "DEADLINE": 0.08181818181818182,
+        "REPORT_REQUEST": 0.01818181818181818,
+        "DEPARTMENTAL_INPUT": 0.03636363636363636,
+        "ACTION_REQUEST": 0.14545454545454545,
+        "FOLLOW_UP": 0.01818181818181818,
+        "APPROVAL": 0.01818181818181818,
+        "GENERAL_UPDATE": 0.33636363636363636,
+        "NON_PROJECT": 0.509090909090909
+      },
+      "no_label_records": 0,
+      "non_project_only_records": 56
+    },
+    "validation_prevalence": {
+      "records": 138,
+      "positive_counts": {
+        "MEETING": 21,
+        "DEADLINE": 15,
+        "REPORT_REQUEST": 2,
+        "DEPARTMENTAL_INPUT": 3,
+        "ACTION_REQUEST": 24,
+        "FOLLOW_UP": 2,
+        "APPROVAL": 3,
+        "GENERAL_UPDATE": 43,
+        "NON_PROJECT": 74
+      },
+      "positive_fraction": {
+        "MEETING": 0.15217391304347827,
+        "DEADLINE": 0.10869565217391304,
+        "REPORT_REQUEST": 0.014492753623188406,
+        "DEPARTMENTAL_INPUT": 0.021739130434782608,
+        "ACTION_REQUEST": 0.17391304347826086,
+        "FOLLOW_UP": 0.014492753623188406,
+        "APPROVAL": 0.021739130434782608,
+        "GENERAL_UPDATE": 0.3115942028985507,
+        "NON_PROJECT": 0.5362318840579711
+      },
+      "no_label_records": 0,
+      "non_project_only_records": 74
+    },
+    "thresholds_tuned_on_tuning_only": {
+      "MEETING": {
+        "threshold": 0.1541065043467979,
+        "tuning_positive_support": 16,
+        "tuning_records": 110,
+        "best_binary_f1_before_exclusivity": 0.7586206896551724,
+        "unstable_support_below_20": true
+      },
+      "DEADLINE": {
+        "threshold": 0.09505333510048287,
+        "tuning_positive_support": 9,
+        "tuning_records": 110,
+        "best_binary_f1_before_exclusivity": 0.5333333333333333,
+        "unstable_support_below_20": true
+      },
+      "REPORT_REQUEST": {
+        "threshold": 0.011842174844423119,
+        "tuning_positive_support": 2,
+        "tuning_records": 110,
+        "best_binary_f1_before_exclusivity": 0.16,
+        "unstable_support_below_20": true
+      },
+      "DEPARTMENTAL_INPUT": {
+        "threshold": 0.02789841127172601,
+        "tuning_positive_support": 4,
+        "tuning_records": 110,
+        "best_binary_f1_before_exclusivity": 0.6666666666666666,
+        "unstable_support_below_20": true
+      },
+      "ACTION_REQUEST": {
+        "threshold": 0.174227919634961,
+        "tuning_positive_support": 16,
+        "tuning_records": 110,
+        "best_binary_f1_before_exclusivity": 0.5945945945945946,
+        "unstable_support_below_20": true
+      },
+      "FOLLOW_UP": {
+        "threshold": 0.01652180892530971,
+        "tuning_positive_support": 2,
+        "tuning_records": 110,
+        "best_binary_f1_before_exclusivity": 0.6666666666666666,
+        "unstable_support_below_20": true
+      },
+      "APPROVAL": {
+        "threshold": 0.03222006044779157,
+        "tuning_positive_support": 2,
+        "tuning_records": 110,
+        "best_binary_f1_before_exclusivity": 0.6666666666666666,
+        "unstable_support_below_20": true
+      },
+      "GENERAL_UPDATE": {
+        "threshold": 0.3569705463087101,
+        "tuning_positive_support": 37,
+        "tuning_records": 110,
+        "best_binary_f1_before_exclusivity": 0.7777777777777778,
+        "unstable_support_below_20": false
+      },
+      "NON_PROJECT": {
+        "threshold": 0.5068295874227874,
+        "tuning_positive_support": 56,
+        "tuning_records": 110,
+        "best_binary_f1_before_exclusivity": 0.8376068376068376,
+        "unstable_support_below_20": false
+      }
+    },
+    "tuning_probability_seconds": 0.600416099998256,
+    "validation_metrics": {
+      "tfidf_threshold_0_5": {
+        "records": 138,
+        "micro_precision": 0.7865168539325843,
+        "micro_recall": 0.37433155080213903,
+        "micro_f1": 0.5072463768115942,
+        "macro_f1": 0.11115571613363663,
+        "subset_match_rate": 0.5072463768115942,
+        "hamming_loss": 0.10950080515297907,
+        "per_label": {
+          "MEETING": {
+            "support": 21,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": false
+          },
+          "DEADLINE": {
+            "support": 15,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "REPORT_REQUEST": {
+            "support": 2,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "DEPARTMENTAL_INPUT": {
+            "support": 3,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "ACTION_REQUEST": {
+            "support": 24,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": false
+          },
+          "FOLLOW_UP": {
+            "support": 2,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "APPROVAL": {
+            "support": 3,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "GENERAL_UPDATE": {
+            "support": 43,
+            "predicted": 4,
+            "precision": 1.0,
+            "recall": 0.09302325581395349,
+            "f1": 0.1702127659574468,
+            "unstable_support_below_20": false
+          },
+          "NON_PROJECT": {
+            "support": 74,
+            "predicted": 85,
+            "precision": 0.7764705882352941,
+            "recall": 0.8918918918918919,
+            "f1": 0.830188679245283,
+            "unstable_support_below_20": false
+          }
+        },
+        "macro_precision": 0.19738562091503267,
+        "macro_recall": 0.1094350164117606,
+        "exact_set_accuracy": 0.5072463768115942,
+        "no_label_predictions": 49,
+        "no_label_expected": 0,
+        "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+      },
+      "tfidf_threshold_tuned": {
+        "records": 138,
+        "micro_precision": 0.6494252873563219,
+        "micro_recall": 0.6042780748663101,
+        "micro_f1": 0.6260387811634348,
+        "macro_f1": 0.36295323791229156,
+        "subset_match_rate": 0.5869565217391305,
+        "hamming_loss": 0.10869565217391304,
+        "per_label": {
+          "MEETING": {
+            "support": 21,
+            "predicted": 14,
+            "precision": 0.7142857142857143,
+            "recall": 0.47619047619047616,
+            "f1": 0.5714285714285714,
+            "unstable_support_below_20": false
+          },
+          "DEADLINE": {
+            "support": 15,
+            "predicted": 3,
+            "precision": 0.6666666666666666,
+            "recall": 0.13333333333333333,
+            "f1": 0.2222222222222222,
+            "unstable_support_below_20": true
+          },
+          "REPORT_REQUEST": {
+            "support": 2,
+            "predicted": 16,
+            "precision": 0.0625,
+            "recall": 0.5,
+            "f1": 0.1111111111111111,
+            "unstable_support_below_20": true
+          },
+          "DEPARTMENTAL_INPUT": {
+            "support": 3,
+            "predicted": 1,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5,
+            "unstable_support_below_20": true
+          },
+          "ACTION_REQUEST": {
+            "support": 24,
+            "predicted": 25,
+            "precision": 0.32,
+            "recall": 0.3333333333333333,
+            "f1": 0.32653061224489793,
+            "unstable_support_below_20": false
+          },
+          "FOLLOW_UP": {
+            "support": 2,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "APPROVAL": {
+            "support": 3,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "GENERAL_UPDATE": {
+            "support": 43,
+            "predicted": 32,
+            "precision": 0.84375,
+            "recall": 0.627906976744186,
+            "f1": 0.72,
+            "unstable_support_below_20": false
+          },
+          "NON_PROJECT": {
+            "support": 74,
+            "predicted": 83,
+            "precision": 0.7710843373493976,
+            "recall": 0.8648648648648649,
+            "f1": 0.8152866242038217,
+            "unstable_support_below_20": false
+          }
+        },
+        "macro_precision": 0.4864763020335309,
+        "macro_recall": 0.36321803531105856,
+        "exact_set_accuracy": 0.5869565217391305,
+        "no_label_predictions": 3,
+        "no_label_expected": 0,
+        "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+      },
+      "always_non_project": {
+        "records": 138,
+        "micro_precision": 0.5362318840579711,
+        "micro_recall": 0.39572192513368987,
+        "micro_f1": 0.45538461538461544,
+        "macro_f1": 0.07756813417190775,
+        "subset_match_rate": 0.5362318840579711,
+        "hamming_loss": 0.14251207729468598,
+        "per_label": {
+          "MEETING": {
+            "support": 21,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": false
+          },
+          "DEADLINE": {
+            "support": 15,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "REPORT_REQUEST": {
+            "support": 2,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "DEPARTMENTAL_INPUT": {
+            "support": 3,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "ACTION_REQUEST": {
+            "support": 24,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": false
+          },
+          "FOLLOW_UP": {
+            "support": 2,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "APPROVAL": {
+            "support": 3,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "GENERAL_UPDATE": {
+            "support": 43,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": false
+          },
+          "NON_PROJECT": {
+            "support": 74,
+            "predicted": 138,
+            "precision": 0.5362318840579711,
+            "recall": 1.0,
+            "f1": 0.6981132075471698,
+            "unstable_support_below_20": false
+          }
+        },
+        "macro_precision": 0.059581320450885676,
+        "macro_recall": 0.1111111111111111,
+        "exact_set_accuracy": 0.5362318840579711,
+        "no_label_predictions": 0,
+        "no_label_expected": 0,
+        "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+      },
+      "existing_keyword_baseline": {
+        "records": 138,
+        "micro_precision": 0.32335329341317365,
+        "micro_recall": 0.2887700534759358,
+        "micro_f1": 0.3050847457627119,
+        "macro_f1": 0.21463442920898332,
+        "subset_match_rate": 0.21014492753623187,
+        "hamming_loss": 0.19806763285024154,
+        "per_label": {
+          "MEETING": {
+            "support": 21,
+            "predicted": 36,
+            "precision": 0.4444444444444444,
+            "recall": 0.7619047619047619,
+            "f1": 0.5614035087719298,
+            "unstable_support_below_20": false
+          },
+          "DEADLINE": {
+            "support": 15,
+            "predicted": 8,
+            "precision": 0.5,
+            "recall": 0.26666666666666666,
+            "f1": 0.3478260869565218,
+            "unstable_support_below_20": true
+          },
+          "REPORT_REQUEST": {
+            "support": 2,
+            "predicted": 3,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "DEPARTMENTAL_INPUT": {
+            "support": 3,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "ACTION_REQUEST": {
+            "support": 24,
+            "predicted": 30,
+            "precision": 0.16666666666666666,
+            "recall": 0.20833333333333334,
+            "f1": 0.1851851851851852,
+            "unstable_support_below_20": false
+          },
+          "FOLLOW_UP": {
+            "support": 2,
+            "predicted": 13,
+            "precision": 0.07692307692307693,
+            "recall": 0.5,
+            "f1": 0.13333333333333336,
+            "unstable_support_below_20": true
+          },
+          "APPROVAL": {
+            "support": 3,
+            "predicted": 13,
+            "precision": 0.07692307692307693,
+            "recall": 0.3333333333333333,
+            "f1": 0.125,
+            "unstable_support_below_20": true
+          },
+          "GENERAL_UPDATE": {
+            "support": 43,
+            "predicted": 18,
+            "precision": 0.4444444444444444,
+            "recall": 0.18604651162790697,
+            "f1": 0.2622950819672131,
+            "unstable_support_below_20": false
+          },
+          "NON_PROJECT": {
+            "support": 74,
+            "predicted": 46,
+            "precision": 0.41304347826086957,
+            "recall": 0.25675675675675674,
+            "f1": 0.31666666666666665,
+            "unstable_support_below_20": false
+          }
+        },
+        "macro_precision": 0.23582724307361985,
+        "macro_recall": 0.27922681818030654,
+        "exact_set_accuracy": 0.21014492753623187,
+        "no_label_predictions": 0,
+        "no_label_expected": 0,
+        "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+      }
+    },
+    "inference_latency": {
+      "sample_records": 24,
+      "single_record_repetitions": 10,
+      "single_record_ms": 0.09897000018099789,
+      "batch_repetitions": 3,
+      "batch_ms_per_record": 0.873372222233431,
+      "measurement": "CPU wall clock; includes TF-IDF transform and all nine label scores; first sample warmed once"
+    },
+    "validation_prediction_seconds": 0.7867892000031134,
+    "validation_prediction_ms_per_record": 5.701371014515314,
+    "final_validation_used_for_training_or_threshold_selection": false
+  },
+  "group_safe_5fold_diagnostic": {
+    "method": "deterministic greedy assignment of connected thread/leakage components",
+    "fold_count": 5,
+    "fit_records": 426,
+    "independent_components": 426,
+    "fit_positive_support": {
+      "MEETING": 56,
+      "DEADLINE": 33,
+      "REPORT_REQUEST": 5,
+      "DEPARTMENTAL_INPUT": 10,
+      "ACTION_REQUEST": 67,
+      "FOLLOW_UP": 6,
+      "APPROVAL": 8,
+      "GENERAL_UPDATE": 132,
+      "NON_PROJECT": 227
+    },
+    "positive_components": {
+      "MEETING": 56,
+      "DEADLINE": 33,
+      "REPORT_REQUEST": 5,
+      "DEPARTMENTAL_INPUT": 10,
+      "ACTION_REQUEST": 67,
+      "FOLLOW_UP": 6,
+      "APPROVAL": 8,
+      "GENERAL_UPDATE": 132,
+      "NON_PROJECT": 227
+    },
+    "common_labels_evaluated": [
+      "MEETING",
+      "DEADLINE",
+      "ACTION_REQUEST",
+      "GENERAL_UPDATE",
+      "NON_PROJECT"
+    ],
+    "rare_or_group_limited_labels_unstable": [
+      "REPORT_REQUEST",
+      "DEPARTMENTAL_INPUT",
+      "FOLLOW_UP",
+      "APPROVAL"
+    ],
+    "threshold_policy": "fixed 0.5 in every fold; no threshold tuning on the held-out fold",
+    "status": "complete",
+    "fold_record_counts": [
+      86,
+      85,
+      85,
+      85,
+      85
+    ],
+    "fold_common_positive_counts": [
+      {
+        "MEETING": 12,
+        "DEADLINE": 7,
+        "ACTION_REQUEST": 14,
+        "GENERAL_UPDATE": 26,
+        "NON_PROJECT": 45
+      },
+      {
+        "MEETING": 11,
+        "DEADLINE": 7,
+        "ACTION_REQUEST": 14,
+        "GENERAL_UPDATE": 26,
+        "NON_PROJECT": 45
+      },
+      {
+        "MEETING": 11,
+        "DEADLINE": 6,
+        "GENERAL_UPDATE": 27,
+        "ACTION_REQUEST": 13,
+        "NON_PROJECT": 46
+      },
+      {
+        "MEETING": 11,
+        "DEADLINE": 7,
+        "GENERAL_UPDATE": 27,
+        "ACTION_REQUEST": 13,
+        "NON_PROJECT": 45
+      },
+      {
+        "MEETING": 11,
+        "DEADLINE": 6,
+        "GENERAL_UPDATE": 26,
+        "ACTION_REQUEST": 13,
+        "NON_PROJECT": 46
+      }
+    ],
+    "folds": [
+      {
+        "fold": 1,
+        "fit_records": 340,
+        "held_out_records": 86,
+        "fit_seconds": 0.5856123000012303,
+        "metrics": {
+          "records": 86,
+          "micro_precision": 0.6851851851851852,
+          "micro_recall": 0.3425925925925926,
+          "micro_f1": 0.45679012345679015,
+          "macro_f1": 0.0830527497194164,
+          "subset_match_rate": 0.43023255813953487,
+          "hamming_loss": 0.11369509043927649,
+          "per_label": {
+            "MEETING": {
+              "support": 12,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "DEADLINE": {
+              "support": 7,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "REPORT_REQUEST": {
+              "support": 0,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "DEPARTMENTAL_INPUT": {
+              "support": 2,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "ACTION_REQUEST": {
+              "support": 14,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "FOLLOW_UP": {
+              "support": 1,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "APPROVAL": {
+              "support": 1,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "GENERAL_UPDATE": {
+              "support": 26,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": false
+            },
+            "NON_PROJECT": {
+              "support": 45,
+              "predicted": 54,
+              "precision": 0.6851851851851852,
+              "recall": 0.8222222222222222,
+              "f1": 0.7474747474747475,
+              "unstable_support_below_20": false
+            }
+          },
+          "macro_precision": 0.07613168724279835,
+          "macro_recall": 0.09135802469135802,
+          "exact_set_accuracy": 0.43023255813953487,
+          "no_label_predictions": 32,
+          "no_label_expected": 0,
+          "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+        },
+        "common_label_macro_f1": 0.14949494949494951,
+        "held_out_positive_support": {
+          "MEETING": 12,
+          "DEADLINE": 7,
+          "REPORT_REQUEST": 0,
+          "DEPARTMENTAL_INPUT": 2,
+          "ACTION_REQUEST": 14,
+          "FOLLOW_UP": 1,
+          "APPROVAL": 1,
+          "GENERAL_UPDATE": 26,
+          "NON_PROJECT": 45
+        }
+      },
+      {
+        "fold": 2,
+        "fit_records": 341,
+        "held_out_records": 85,
+        "fit_seconds": 0.5965746000001673,
+        "metrics": {
+          "records": 85,
+          "micro_precision": 0.7727272727272727,
+          "micro_recall": 0.3148148148148148,
+          "micro_f1": 0.4473684210526316,
+          "macro_f1": 0.09156378600823044,
+          "subset_match_rate": 0.4,
+          "hamming_loss": 0.10980392156862745,
+          "per_label": {
+            "MEETING": {
+              "support": 11,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "DEADLINE": {
+              "support": 7,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "REPORT_REQUEST": {
+              "support": 0,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "DEPARTMENTAL_INPUT": {
+              "support": 2,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "ACTION_REQUEST": {
+              "support": 14,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "FOLLOW_UP": {
+              "support": 2,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "APPROVAL": {
+              "support": 1,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "GENERAL_UPDATE": {
+              "support": 26,
+              "predicted": 1,
+              "precision": 1.0,
+              "recall": 0.038461538461538464,
+              "f1": 0.07407407407407407,
+              "unstable_support_below_20": false
+            },
+            "NON_PROJECT": {
+              "support": 45,
+              "predicted": 43,
+              "precision": 0.7674418604651163,
+              "recall": 0.7333333333333333,
+              "f1": 0.7499999999999999,
+              "unstable_support_below_20": false
+            }
+          },
+          "macro_precision": 0.19638242894056848,
+          "macro_recall": 0.08575498575498575,
+          "exact_set_accuracy": 0.4,
+          "no_label_predictions": 41,
+          "no_label_expected": 0,
+          "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+        },
+        "common_label_macro_f1": 0.1648148148148148,
+        "held_out_positive_support": {
+          "MEETING": 11,
+          "DEADLINE": 7,
+          "REPORT_REQUEST": 0,
+          "DEPARTMENTAL_INPUT": 2,
+          "ACTION_REQUEST": 14,
+          "FOLLOW_UP": 2,
+          "APPROVAL": 1,
+          "GENERAL_UPDATE": 26,
+          "NON_PROJECT": 45
+        }
+      },
+      {
+        "fold": 3,
+        "fit_records": 341,
+        "held_out_records": 85,
+        "fit_seconds": 0.5638814000012644,
+        "metrics": {
+          "records": 85,
+          "micro_precision": 0.7916666666666666,
+          "micro_recall": 0.34545454545454546,
+          "micro_f1": 0.4810126582278481,
+          "macro_f1": 0.09634749957330604,
+          "subset_match_rate": 0.4470588235294118,
+          "hamming_loss": 0.10718954248366012,
+          "per_label": {
+            "MEETING": {
+              "support": 11,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "DEADLINE": {
+              "support": 6,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "REPORT_REQUEST": {
+              "support": 2,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "DEPARTMENTAL_INPUT": {
+              "support": 3,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "ACTION_REQUEST": {
+              "support": 13,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "FOLLOW_UP": {
+              "support": 1,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "APPROVAL": {
+              "support": 1,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "GENERAL_UPDATE": {
+              "support": 27,
+              "predicted": 1,
+              "precision": 1.0,
+              "recall": 0.037037037037037035,
+              "f1": 0.07142857142857142,
+              "unstable_support_below_20": false
+            },
+            "NON_PROJECT": {
+              "support": 46,
+              "predicted": 47,
+              "precision": 0.7872340425531915,
+              "recall": 0.8043478260869565,
+              "f1": 0.795698924731183,
+              "unstable_support_below_20": false
+            }
+          },
+          "macro_precision": 0.19858156028368792,
+          "macro_recall": 0.09348720701377705,
+          "exact_set_accuracy": 0.4470588235294118,
+          "no_label_predictions": 37,
+          "no_label_expected": 0,
+          "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+        },
+        "common_label_macro_f1": 0.17342549923195089,
+        "held_out_positive_support": {
+          "MEETING": 11,
+          "DEADLINE": 6,
+          "REPORT_REQUEST": 2,
+          "DEPARTMENTAL_INPUT": 3,
+          "ACTION_REQUEST": 13,
+          "FOLLOW_UP": 1,
+          "APPROVAL": 1,
+          "GENERAL_UPDATE": 27,
+          "NON_PROJECT": 46
+        }
+      },
+      {
+        "fold": 4,
+        "fit_records": 341,
+        "held_out_records": 85,
+        "fit_seconds": 0.5621226000002935,
+        "metrics": {
+          "records": 85,
+          "micro_precision": 0.7818181818181819,
+          "micro_recall": 0.39090909090909093,
+          "micro_f1": 0.5212121212121212,
+          "macro_f1": 0.10221260221260221,
+          "subset_match_rate": 0.5058823529411764,
+          "hamming_loss": 0.10326797385620914,
+          "per_label": {
+            "MEETING": {
+              "support": 11,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "DEADLINE": {
+              "support": 7,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "REPORT_REQUEST": {
+              "support": 2,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "DEPARTMENTAL_INPUT": {
+              "support": 1,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "ACTION_REQUEST": {
+              "support": 13,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "FOLLOW_UP": {
+              "support": 1,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "APPROVAL": {
+              "support": 3,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "GENERAL_UPDATE": {
+              "support": 27,
+              "predicted": 1,
+              "precision": 1.0,
+              "recall": 0.037037037037037035,
+              "f1": 0.07142857142857142,
+              "unstable_support_below_20": false
+            },
+            "NON_PROJECT": {
+              "support": 45,
+              "predicted": 54,
+              "precision": 0.7777777777777778,
+              "recall": 0.9333333333333333,
+              "f1": 0.8484848484848485,
+              "unstable_support_below_20": false
+            }
+          },
+          "macro_precision": 0.19753086419753085,
+          "macro_recall": 0.10781893004115226,
+          "exact_set_accuracy": 0.5058823529411764,
+          "no_label_predictions": 30,
+          "no_label_expected": 0,
+          "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+        },
+        "common_label_macro_f1": 0.18398268398268397,
+        "held_out_positive_support": {
+          "MEETING": 11,
+          "DEADLINE": 7,
+          "REPORT_REQUEST": 2,
+          "DEPARTMENTAL_INPUT": 1,
+          "ACTION_REQUEST": 13,
+          "FOLLOW_UP": 1,
+          "APPROVAL": 3,
+          "GENERAL_UPDATE": 27,
+          "NON_PROJECT": 45
+        }
+      },
+      {
+        "fold": 5,
+        "fit_records": 341,
+        "held_out_records": 85,
+        "fit_seconds": 0.5586896999993769,
+        "metrics": {
+          "records": 85,
+          "micro_precision": 0.8,
+          "micro_recall": 0.3333333333333333,
+          "micro_f1": 0.47058823529411764,
+          "macro_f1": 0.09465020576131687,
+          "subset_match_rate": 0.4235294117647059,
+          "hamming_loss": 0.10588235294117647,
+          "per_label": {
+            "MEETING": {
+              "support": 11,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "DEADLINE": {
+              "support": 6,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "REPORT_REQUEST": {
+              "support": 1,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "DEPARTMENTAL_INPUT": {
+              "support": 2,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "ACTION_REQUEST": {
+              "support": 13,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "FOLLOW_UP": {
+              "support": 1,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "APPROVAL": {
+              "support": 2,
+              "predicted": 0,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "unstable_support_below_20": true
+            },
+            "GENERAL_UPDATE": {
+              "support": 26,
+              "predicted": 1,
+              "precision": 1.0,
+              "recall": 0.038461538461538464,
+              "f1": 0.07407407407407407,
+              "unstable_support_below_20": false
+            },
+            "NON_PROJECT": {
+              "support": 46,
+              "predicted": 44,
+              "precision": 0.7954545454545454,
+              "recall": 0.7608695652173914,
+              "f1": 0.7777777777777778,
+              "unstable_support_below_20": false
+            }
+          },
+          "macro_precision": 0.1994949494949495,
+          "macro_recall": 0.08881456707543664,
+          "exact_set_accuracy": 0.4235294117647059,
+          "no_label_predictions": 40,
+          "no_label_expected": 0,
+          "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy."
+        },
+        "common_label_macro_f1": 0.17037037037037037,
+        "held_out_positive_support": {
+          "MEETING": 11,
+          "DEADLINE": 6,
+          "REPORT_REQUEST": 1,
+          "DEPARTMENTAL_INPUT": 2,
+          "ACTION_REQUEST": 13,
+          "FOLLOW_UP": 1,
+          "APPROVAL": 2,
+          "GENERAL_UPDATE": 26,
+          "NON_PROJECT": 46
+        }
+      }
+    ],
+    "mean_fold_micro_f1": 0.47539431184870173,
+    "mean_fold_common_label_macro_f1": 0.1684176635789539,
+    "scope": "Exploratory grouped folds within the fixed fit partition only; not used to select the final model."
+  },
+  "group_safe_5fold_seconds": 5.441375700000208,
+  "label_order": [
+    "MEETING",
+    "DEADLINE",
+    "REPORT_REQUEST",
+    "DEPARTMENTAL_INPUT",
+    "ACTION_REQUEST",
+    "FOLLOW_UP",
+    "APPROVAL",
+    "GENERAL_UPDATE",
+    "NON_PROJECT"
+  ],
+  "input": {
+    "snapshot": "ai\\data\\experiments\\tonight_20261002\\corrected_silver_snapshot.jsonl",
+    "snapshot_sha256": "3bd621f18e2118f06b8e1734198f1d01936ea817d081e4e2f6f420c29c9a9988",
+    "text_free_manifest": "ai\\annotation\\training_silver_v2_manifest.jsonl",
+    "text_free_manifest_sha256": "0e022f93fcdaff59f21ca2c4406ce1f07e1b60a0f22f609ab9fcbca3d3e015fc",
+    "shared_split": "ai\\data\\splits\\tonight_silver_v2_shared_split.json",
+    "shared_split_sha256": "ebcdf58b3ffdaf9be854a3bad4ab5bfa79cffc52cb2d0899a07a742db049a1d5",
+    "source_commit_sha": "7c6096700582ef8db9da5780fee3bc28149c6e9b",
+    "implementation_sha256": {
+      "train_tfidf_diagnostic.py": "47437a77c4673c6fc68739918675bcc915f1c830ef3b0f18e606a7f671cdc671",
+      "transfer_diagnostic.py": "3c4a5e3461f084b02c1f46cc85d86e456dd698756c57959d630f81de915024ba",
+      "silver_classifier.py": "a80c1b5af5c9400e6f676a5716779dc15acf227ad62213b2da1cbd68ad96d4b6",
+      "train_silver_classifier.py": "8c76ec2ee77585fa0187978d47f0a013c7860f5a68d7f908797eeaa10668f272"
+    },
+    "snapshot_validation": {
+      "records": 674,
+      "label_counts": {
+        "MEETING": 93,
+        "DEADLINE": 57,
+        "REPORT_REQUEST": 9,
+        "DEPARTMENTAL_INPUT": 17,
+        "ACTION_REQUEST": 107,
+        "FOLLOW_UP": 10,
+        "APPROVAL": 13,
+        "GENERAL_UPDATE": 212,
+        "NON_PROJECT": 357
+      },
+      "source_counts": {
+        "enron": 674
+      },
+      "ai_silver_records": 674,
+      "human_or_gold_records": 0
+    },
+    "split_validation": {
+      "partition_records": {
+        "fit": 426,
+        "tuning": 110,
+        "validation": 138
+      },
+      "partition_label_counts": {
+        "fit": {
+          "MEETING": 56,
+          "DEADLINE": 33,
+          "REPORT_REQUEST": 5,
+          "DEPARTMENTAL_INPUT": 10,
+          "ACTION_REQUEST": 67,
+          "FOLLOW_UP": 6,
+          "APPROVAL": 8,
+          "GENERAL_UPDATE": 132,
+          "NON_PROJECT": 227
+        },
+        "tuning": {
+          "MEETING": 16,
+          "DEADLINE": 9,
+          "REPORT_REQUEST": 2,
+          "DEPARTMENTAL_INPUT": 4,
+          "ACTION_REQUEST": 16,
+          "FOLLOW_UP": 2,
+          "APPROVAL": 2,
+          "GENERAL_UPDATE": 37,
+          "NON_PROJECT": 56
+        },
+        "validation": {
+          "MEETING": 21,
+          "DEADLINE": 15,
+          "REPORT_REQUEST": 2,
+          "DEPARTMENTAL_INPUT": 3,
+          "ACTION_REQUEST": 24,
+          "FOLLOW_UP": 2,
+          "APPROVAL": 3,
+          "GENERAL_UPDATE": 43,
+          "NON_PROJECT": 74
+        }
+      },
+      "partition_leakage_groups": {
+        "fit": 426,
+        "tuning": 110,
+        "validation": 111
+      },
+      "fixed_outer_validation": true,
+      "validation_used_for_training_or_threshold_selection": false
+    },
+    "provenance": "Corrected AI-silver snapshot only; human/gold rows excluded and rejected.",
+    "source_text_written_to_report": false
+  },
+  "packages": {
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "scikit_learn": "1.9.1"
+  },
+  "gold_test_evaluated": false,
+  "human_or_gold_rows_used": 0
+}

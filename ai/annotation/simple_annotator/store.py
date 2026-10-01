@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import os
 import re
@@ -18,6 +19,7 @@ from src.annotation.label_studio import (
 )
 from src.datasets.schemas import LABELS, SPAN_LABELS
 from src.datasets.validation import validate_record
+from src.models.silver_classifier import extract_authored_prefix
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
@@ -197,6 +199,10 @@ class AnnotationStore:
         if expected_source not in {"enron", "manual"}:
             raise ValueError("seed manifest source_dataset must be enron or manual")
 
+        display_authored_prefix = (
+            manifest.get("display_view") == "authored_prefix_if_exact_prefix"
+        )
+
         records: list[dict[str, Any]] = []
         task_ids: list[str] = []
         for number, task in enumerate(tasks, 1):
@@ -238,6 +244,32 @@ class AnnotationStore:
 
         if task_ids != selected_ids:
             raise ValueError("seed task ID order does not match manifest selected_email_ids")
+
+        self._display_authored_prefix = display_authored_prefix
+        self._message_views: dict[str, dict[str, str]] = {}
+        if display_authored_prefix:
+            message_views = manifest.get("message_views")
+            if not isinstance(message_views, dict) or set(message_views) != set(task_ids):
+                raise ValueError("authored display manifest must cover every selected email ID")
+            for record in records:
+                email_id = record["email_id"]
+                view = message_views.get(email_id)
+                if not isinstance(view, dict):
+                    raise ValueError(f"authored display metadata is missing for {email_id}")
+                original = record["current_message"]
+                authored = extract_authored_prefix(original)
+                use_authored = bool(authored) and original.startswith(authored)
+                visible = authored if use_authored else original
+                expected_mode = "authored_prefix" if use_authored else "canonical_current_message"
+                source_hash = hashlib.sha256(original.encode("utf-8")).hexdigest()
+                view_hash = hashlib.sha256(visible.encode("utf-8")).hexdigest()
+                if (
+                    view.get("source_current_message_sha256") != source_hash
+                    or view.get("view_sha256") != view_hash
+                    or view.get("display_mode") != expected_mode
+                ):
+                    raise ValueError(f"authored display hashes or mode do not match {email_id}")
+                self._message_views[email_id] = view
         return records, task_ids
 
     def _reviewer_baseline(self, record: dict[str, Any]) -> dict[str, Any]:
@@ -345,6 +377,22 @@ class AnnotationStore:
             "recipients", "cc", "sent_at", "attachment_names", "thread_id", "turn_index",
         )
         source = {key: copy.deepcopy(record.get(key)) for key in source_fields}
+        if self._display_authored_prefix:
+            view = self._message_views[record["email_id"]]
+            if view["display_mode"] == "authored_prefix":
+                original_message = source["current_message"]
+                authored_message = extract_authored_prefix(original_message)
+                quoted_tail = original_message[len(authored_message):]
+                source["current_message"] = authored_message
+                if quoted_tail.strip():
+                    context_parts = [source["thread_context"].strip()]
+                    context_parts.append(
+                        "Quoted tail retained from Current message (reference only):\n"
+                        + quoted_tail.strip()
+                    )
+                    source["thread_context"] = "\n\n".join(
+                        part for part in context_parts if part
+                    )
         spans = []
         visible_spans = record["spans"]
         if (not self._is_completed(record)

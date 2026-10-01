@@ -1,4 +1,6 @@
-# Silver classification baseline infrastructure
+# Silver classification baseline
+
+**2 October measured result:** The baseline has now been fitted on actual corrected AI silver with a shared leakage-safe split. At the fixed threshold its micro/macro F1 is 0.507/0.111; training-only tuned thresholds yield 0.626/0.363. These are AI-silver diagnostics. [Full TF-IDF and DistilBERT comparison](tonight_training_comparison.md). The infrastructure notes and 30 September counts below are historical.
 
 The first reusable baseline is TF-IDF over `subject` and the authored prefix of
 `current_message`, followed by nine one-vs-rest logistic regressions. It uses a
