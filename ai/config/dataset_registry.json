@@ -885,7 +885,7 @@
     {
       "redistribution_allowed": null,
       "raw_text_allowed_in_git": false,
-      "training_permitted": false,
+      "training_permitted": true,
       "quality_gates": {
         "official_source_verified": true,
         "usage_terms_documented": true,
@@ -897,7 +897,7 @@
         "tests_passed": true,
         "orchestrator_source_audit": true
       },
-      "status": "source_audited_v2_annotation_training_review_pending",
+      "status": "integrated_auxiliary",
       "mapping_policy": {
         "fyp_labels_generated": false,
         "role": "unlabelled source or original auxiliary annotations; final classification needs independent review"
@@ -913,7 +913,9 @@
       "intended_component": [
         "corporate email candidate discovery",
         "AI structured annotation",
-        "hard negatives"
+        "hard negatives",
+        "structured scope baseline from explicitly authorized accepted TRAIN only",
+        "structured speech-act baseline from explicitly authorized accepted TRAIN only"
       ],
       "original_labels": [],
       "checksum": {
@@ -943,8 +945,15 @@
         "CMU offers research use with a privacy caveat; no standard open content license is inferred",
         "Derived current_message can retain forwarded headers/older content; source-grounded current-function review is required",
         "No actual References/In-Reply-To links in prepared release; singleton grouping is not true conversation structure",
-        "New structured annotation/export approval still required; no permission for training from unlabelled source candidates"
-      ]
+        "Only independently reviewed, adjudicated, root-authorized accepted TRAIN exports may train the named primitive baselines; unlabelled candidates, protected history and evaluation sources remain ineligible"
+      ],
+      "training_permission_review": {
+        "reviewed_on": "2026-10-03",
+        "issued_by": "orchestrator",
+        "basis": "Source audit, official research-source terms, parser/offset tests and first complete actual structured review batch",
+        "scope": "Private research use of exact accepted exports; source permission alone does not authorize model fit or candidate training",
+        "human_gold_count": 0
+      }
     },
     {
       "redistribution_allowed": true,

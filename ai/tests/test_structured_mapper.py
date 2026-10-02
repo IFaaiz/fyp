@@ -144,6 +144,22 @@ class StructuredMapperTests(unittest.TestCase):
         add_deadline(b, target_id=action, relation_text="by Friday")
         self.assertEqual(b.map().labels, ("DEADLINE", "REPORT_REQUEST"))
 
+    def test_due_relation_maps_without_an_extra_speech_act_targeting_deadline(self):
+        b = Builder("Please contact the vendor by Friday.")
+        action = b.action("contact the vendor")
+        b.act("REQUEST", "Please contact the vendor", target_type="ACTION", target_id=action)
+        add_deadline(b, target_id=action)
+        b.annotation["acts"] = [act for act in b.annotation["acts"] if act["target_type"] != "DEADLINE"]
+        self.assertTrue(validate_annotation(b.annotation, current_source_id=b.source_id, sources=b.sources).valid)
+        result = b.map()
+        self.assertEqual(result.labels, ("DEADLINE", "ACTION_REQUEST"))
+        self.assertFalse(result.needs_review)
+
+        b.annotation["temporal_entities"][0]["confidence"] = "uncertain"
+        result = b.map()
+        self.assertEqual(result.labels, ("ACTION_REQUEST",))
+        self.assertTrue(result.needs_review)
+
     def test_independent_operational_and_document_requests_coexist(self):
         b = Builder("Contact the vendor and send the revised report by Friday.")
         action = b.action("Contact the vendor")

@@ -1,10 +1,10 @@
 # Structured primitive baseline harness
 
-Status: harness implemented; no real-data preflight or model fit performed.
+Status: two real accepted-export preflights completed; both blocked by class support. No model fit performed.
 
 ## Result
 
-As of 2026-10-03, there is no orchestrator-authorized `accepted_train.jsonl` for this harness to consume. **Models trained: 0. Evaluation performed: no.** There are no model scores, predictions, or accuracy claims. The tests use small synthetic contract fixtures only; they are not annotation truth, corpus samples, or training data.
+As of 2026-10-03, two private orchestrator-authorized exports (8 accepted rows each) passed the full real-data provenance loader and preflight. The first contains 0 PROJECT / 8 NON_PROJECT; the second 1 PROJECT / 7 NON_PROJECT. Both fail the predeclared 20-per-class minimum. **Models trained: 0. Evaluation performed: no.** There are no model scores, predictions or accuracy claims. A 78-source enriched TRAIN seed is being independently reviewed; none of its rows is yet claimed accepted.
 
 The local runtime reports Python 3.12.14 and scikit-learn 1.9.1. No model artifact was created.
 
@@ -51,6 +51,6 @@ Focused command from `ai/`:
 .\.venv\Scripts\python.exe -m unittest tests.test_structured_model_gates
 ```
 
-The suite exercises authorization and hash failures, protected paths, review-handoff rejection, uncertainty and partition gates, source-evidence validation, authored-range feature preparation, project-only speech targets, per-head support selection, and minimum-count enforcement. It also builds a complete synthetic review-to-export chain, passes it through the real public provenance verifier and model preflight, then confirms that changing the immutable decision manifest blocks loading. It does not fit models. No real-data preflight has been performed.
+The suite exercises authorization and hash failures, protected paths, review-handoff rejection, uncertainty and partition gates, source-evidence validation, authored-range feature preparation, project-only speech targets, per-head support selection, and minimum-count enforcement. It also builds a complete synthetic review-to-export chain, passes it through the real public provenance verifier and model preflight, then confirms that changing the immutable decision manifest blocks loading. These synthetic tests do not fit models. The two actual preflights above separately verified the accepted exports and reported insufficient support.
 
-Latest focused results: `tests.test_structured_model_gates` — 21 passed; `tests.test_structured_review_workflow` — 7 passed. Both suites use synthetic records only.
+Latest focused results: `tests.test_structured_model_gates` â€” 21 passed; `tests.test_structured_review_workflow` â€” 7 passed. Both suites use synthetic records only.

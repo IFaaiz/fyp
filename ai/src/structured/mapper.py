@@ -199,21 +199,6 @@ def map_labels(annotation: Any, *, current_source_id: str,
                 else:
                     suppress("MEETING", act, "ACT-MEETING-EVENT", "meeting_event_uncertain", "The meeting event is uncertain.")
 
-        if target_type == "DEADLINE" and speech in {"REQUEST", "INFORM", "COMMIT", "REMIND"} and target:
-            target_collection = "actions" if target["target_type"] == "ACTION" else "documents"
-            due_target = entities[target_collection][target["target_id"]]
-            temporal_ids = target["due_date_ids"] + target["due_time_ids"]
-            temporal = entities["temporal_entities"]
-            relation_supported = (
-                target["confidence"] == "supported" and due_target["confidence"] == "supported"
-                and all(temporal[t_id]["confidence"] == "supported" for t_id in temporal_ids)
-            )
-            if base_supported and relation_supported:
-                emit("DEADLINE", act, "ACT-DUE-RELATION", "Explicit due relation connects a date/time to an existing action or deliverable target.")
-            else:
-                suppress("DEADLINE", act, "ACT-DUE-RELATION", "deadline_target_or_time_uncertain",
-                         "The due relation, temporal value, or target is uncertain.")
-
         if target_type == "STATUS_UPDATE" and speech in {"INFORM", "COMMIT", "DELIVER", "APPROVE", "REJECT"} and target:
             if target["kind"] == "other":
                 suppress("GENERAL_UPDATE", act, "ACT-PROJECT-STATUS", "status_kind_other_uncertain",
@@ -222,6 +207,25 @@ def map_labels(annotation: Any, *, current_source_id: str,
                 emit("GENERAL_UPDATE", act, "ACT-PROJECT-STATUS", "A substantive project status/update primitive is explicitly evidenced.")
             else:
                 suppress("GENERAL_UPDATE", act, "ACT-PROJECT-STATUS", "status_update_uncertain", "The project status update is uncertain.")
+
+    # A due relation is its own primitive. A request may target the action or
+    # document; it need not be duplicated as a speech act targeting DEADLINE.
+    for deadline in entities["deadlines"].values():
+        target_collection = "actions" if deadline["target_type"] == "ACTION" else "documents"
+        due_target = entities[target_collection][deadline["target_id"]]
+        temporal_ids = deadline["due_date_ids"] + deadline["due_time_ids"]
+        temporal = entities["temporal_entities"]
+        relation_supported = (
+            deadline["confidence"] == "supported" and due_target["confidence"] == "supported"
+            and all(temporal[temporal_id]["confidence"] == "supported" for temporal_id in temporal_ids)
+        )
+        relation_evidence = {"evidence_ids": deadline["due_relation_evidence_ids"]}
+        if relation_supported:
+            emit("DEADLINE", relation_evidence, "DUE-RELATION",
+                 "Supported current due relation connects a date/time to an action or deliverable.")
+        else:
+            suppress("DEADLINE", relation_evidence, "DUE-RELATION", "deadline_target_or_time_uncertain",
+                     "The due relation, temporal value, or target is uncertain.")
 
     labels = tuple(sorted(emitted, key=LABELS.index))
     if not labels:

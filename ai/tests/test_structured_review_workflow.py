@@ -159,14 +159,14 @@ class StructuredReviewWorkflowTests(unittest.TestCase):
         _write_json(self.registry_path, {"datasets": [row]})
 
     def _run(self, run_id: str, purpose: str = "TRAIN_SCREEN", *, source_path: Path | None = None,
-             offset: int = 0, limit: int | None = None):
+             offset: int = 0, limit: int | None = None, indices: list[int] | tuple[int, ...] | None = None):
         source_path = source_path or (self.train_path if purpose in {"TRAIN", "TRAIN_SCREEN"} else self.eval_path)
         return workflow.prepare_run(
             source_path=source_path, output_dir=self.data / "structured_review" / run_id,
             purpose=purpose, dataset_id="fixture", reviewer_a="reviewer-a", reviewer_b="reviewer-b",
             assignments_path=self.boundary_path,
             partition_name="TRAIN_SCREEN" if purpose in {"TRAIN", "TRAIN_SCREEN"} else None,
-            record_offset=offset, record_limit=limit, root=self.root,
+            record_offset=offset, record_limit=limit, record_indices=indices, root=self.root,
         )
 
     def _packet(self, run_id: str, role: str) -> tuple[Path, dict]:
@@ -550,6 +550,77 @@ class StructuredReviewWorkflowTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self._run("cross-partition-component", limit=1)
 
+    def test_explicit_record_indices_preserve_order_and_bind_the_full_source_file(self):
+        ordered = self._run("indexed-order", indices=[1, 0])
+        manifest_path = self.data / "structured_review" / "indexed-order" / "source_manifest.json"
+        source_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        _packet_path, packet = self._packet("indexed-order", "A")
+        self.assertEqual(source_manifest["selection_policy"],
+                         "explicit_ordered_source_file_indices_hash_bound_to_full_input")
+        self.assertEqual(source_manifest["record_indices"], [1, 0])
+        self.assertIsNone(source_manifest["record_offset"])
+        self.assertEqual(source_manifest["record_count"], 2)
+        self.assertEqual([row["source_id"] for row in packet["records"]], ["train-2", "train-1"])
+        self.assertEqual(source_manifest["source_file_sha256"], hashlib.sha256(self.train_path.read_bytes()).hexdigest())
+        self.assertEqual(ordered["source_bundle_sha256"], packet["source_bundle_sha256"])
+        workflow._load_run(self.data / "structured_review" / "indexed-order", root=self.root)
+
+        single = self._run("indexed-full-file-binding", indices=[1])
+        self.assertEqual(single["source_bundle_sha256"], json.loads(
+            (self.data / "structured_review" / "indexed-full-file-binding" / "source_manifest.json").read_text(encoding="utf-8")
+        )["source_bundle_sha256"])
+        original_source = self.train_path.read_bytes()
+        try:
+            rows = [json.loads(line) for line in original_source.decode("utf-8").splitlines()]
+            rows[0]["current_message"] = "changed only outside the explicit selection"
+            _write_jsonl(self.train_path, rows)
+            with self.assertRaisesRegex(ValueError, "original source JSONL changed"):
+                workflow._load_run(self.data / "structured_review" / "indexed-full-file-binding", root=self.root)
+        finally:
+            self.train_path.write_bytes(original_source)
+
+    def test_explicit_record_indices_reject_invalid_selectors_and_offset_combinations(self):
+        invalid = (
+            ("empty", [], 0, None),
+            ("duplicate", [1, 1], 0, None),
+            ("boolean", [True], 0, None),
+            ("out-of-range", [2], 0, None),
+            ("non-integer", [1.0], 0, None),
+            ("unordered", {0, 1}, 0, None),
+            ("offset-combination", [1], 1, None),
+            ("limit-combination", [1], 0, 1),
+        )
+        for name, indices, offset, limit in invalid:
+            with self.subTest(selector=name):
+                target = self.data / "structured_review" / f"invalid-indices-{name}"
+                with self.assertRaises(ValueError):
+                    self._run(f"invalid-indices-{name}", indices=indices, offset=offset, limit=limit)
+                self.assertFalse(target.exists())
+
+    def test_explicit_record_indices_tampering_is_caught_after_manifest_rehash(self):
+        run = self.data / "structured_review" / "tampered-index-order"
+        self._run("tampered-index-order", indices=[1, 0])
+        source_manifest_path = run / "source_manifest.json"
+        run_manifest_path = run / "run_manifest.json"
+        original_source_manifest = source_manifest_path.read_bytes()
+        original_run_manifest = run_manifest_path.read_bytes()
+        try:
+            source_manifest = json.loads(original_source_manifest.decode("utf-8"))
+            source_manifest["record_indices"] = [0, 1]
+            source_basis = dict(source_manifest)
+            source_basis.pop("source_manifest_sha256", None)
+            source_manifest["source_manifest_sha256"] = workflow.digest_json(source_basis)
+            _write_json(source_manifest_path, source_manifest)
+
+            run_manifest = json.loads(original_run_manifest.decode("utf-8"))
+            run_manifest["source_manifest_sha256"] = hashlib.sha256(source_manifest_path.read_bytes()).hexdigest()
+            _write_json(run_manifest_path, run_manifest)
+            with self.assertRaisesRegex(ValueError, "selected source hashes do not match"):
+                workflow._load_run(run, root=self.root)
+        finally:
+            source_manifest_path.write_bytes(original_source_manifest)
+            run_manifest_path.write_bytes(original_run_manifest)
+
     def test_fresh_status_reports_all_records_pending_without_comparison_or_stale_progress(self):
         run_id = "fresh-status"
         self._run(run_id, limit=1)
@@ -558,6 +629,87 @@ class StructuredReviewWorkflowTests(unittest.TestCase):
         status = workflow.summarize_run(run_dir=run, root=self.root)
         self.assertEqual(status["counts"], {"accepted": 0, "rejected": 0, "review_required": 1})
         self.assertEqual(status["pending"][0]["reason"], "blind_reviews_incomplete")
+
+    def test_status_is_read_only_and_finalization_persists_only_a_complete_batch(self):
+        run_id = "atomic-finalization"
+        report_row = {
+            "source_id": "train-2", "subject": "Project Orion train-2",
+            "current_message": "Project Orion train-2 update. Please prepare the project report before the synthetic review checkpoint.",
+        }
+        rows = [copy.deepcopy(self.train_rows[0]), report_row]
+        source_path = self.source_dir / f"{run_id}.jsonl"
+        _write_jsonl(source_path, rows)
+        index = build_global_index([
+            identity_from_row(row, "fixture", "FIXTURE")
+            for row in rows + self.eval_rows + [self.protected_row]
+        ])
+        _write_json(self.index_path, index.export())
+        self.index_sha = hashlib.sha256(self.index_path.read_bytes()).hexdigest()
+        self.boundary["index_sha256"] = self.index_sha
+        self.boundary["train_screen_candidates_sha256"] = hashlib.sha256(source_path.read_bytes()).hexdigest()
+        _write_json(self.boundary_path, self.boundary)
+
+        self._run(run_id, source_path=source_path, limit=2)
+        run = self.data / "structured_review" / run_id
+        action = _annotation("train-1", rows[0]["current_message"])
+        report_a = _annotation("train-2", report_row["current_message"], kind="report")
+        report_b = _annotation("train-2", report_row["current_message"], kind="report", act_span="the project report")
+        comparison = self._submit_ab(run_id, {
+            "A": {"train-1": action, "train-2": report_a},
+            "B": {"train-1": copy.deepcopy(action), "train-2": report_b},
+        })
+        rows_by_id = {record["source_id"]: record for record in comparison["records"]}
+        self.assertFalse(rows_by_id["train-1"]["primitive_disagreement"])
+        self.assertFalse(rows_by_id["train-1"]["third_required"])
+        self.assertTrue(rows_by_id["train-2"]["third_required"])
+        self.assertTrue(rows_by_id["train-2"]["root_decision_required"])
+
+        comparison_path = run / "pair_comparison.json"
+        comparison_bytes = comparison_path.read_bytes()
+        progress_path = run / "progress.json"
+        _write_json(progress_path, {"sentinel": "status must not rewrite progress"})
+        progress_bytes = progress_path.read_bytes()
+        decision_manifest_path = run / "decision_manifest.json"
+
+        status = workflow.summarize_run(run_dir=run, root=self.root)
+        self.assertEqual(status["counts"], {"accepted": 0, "rejected": 0, "review_required": 2})
+        self.assertEqual(status["provisional_counts"], {"accepted": 1, "rejected": 0, "review_required": 1})
+        self.assertEqual({row["source_id"] for row in status["pending"]}, {"train-1", "train-2"})
+        self.assertEqual(comparison_path.read_bytes(), comparison_bytes)
+        self.assertEqual(progress_path.read_bytes(), progress_bytes)
+        self.assertFalse(decision_manifest_path.exists())
+        self.assertFalse(list((run / "decisions").glob("*.json")))
+
+        pending = workflow.finalize_run(run_dir=run, root=self.root)
+        self.assertEqual(pending["counts"], {"accepted": 0, "rejected": 0, "review_required": 2})
+        self.assertEqual(pending["provisional_counts"], {"accepted": 1, "rejected": 0, "review_required": 1})
+        self.assertFalse(decision_manifest_path.exists())
+        self.assertFalse(list((run / "decisions").glob("*.json")))
+
+        # An orphan row decision from the old incremental behavior fails clearly.
+        old_partial = run / "decisions" / (workflow.digest_json("train-1") + ".json")
+        _write_json(old_partial, {"synthetic_old_partial": True})
+        with self.assertRaisesRegex(ValueError, "partial stored decision files"):
+            workflow.finalize_run(run_dir=run, root=self.root)
+        old_partial.unlink()
+
+        self._complete_third(run_id, resolution="select_a")
+        workflow.add_root_decision(
+            run_dir=run, source_id="train-2", annotation_sha256=workflow.digest_json(report_a),
+            decision="approve", root_identity="orchestrator-root",
+            reason="Synthetic report request reviewed after C adjudication.", root=self.root,
+        )
+        ready = workflow.summarize_run(run_dir=run, root=self.root)
+        self.assertEqual(ready["counts"], {"accepted": 0, "rejected": 0, "review_required": 2})
+        self.assertEqual(ready["provisional_counts"], {"accepted": 2, "rejected": 0, "review_required": 0})
+        self.assertFalse(decision_manifest_path.exists())
+        self.assertFalse(list((run / "decisions").glob("*.json")))
+
+        finalized = workflow.finalize_run(run_dir=run, root=self.root)
+        self.assertEqual(finalized["counts"], {"accepted": 2, "rejected": 0, "review_required": 0})
+        self.assertEqual(finalized["provisional_counts"], finalized["counts"])
+        self.assertTrue(decision_manifest_path.is_file())
+        self.assertEqual(len(list((run / "decisions").glob("*.json"))), 2)
 
     def test_temporal_evidence_and_local_id_renames_do_not_create_primitive_disagreement(self):
         source_id = "temporal-fixture"

@@ -1,6 +1,8 @@
-# Structured pipeline evaluation — source boundary checkpoint
+# Structured pipeline evaluation â€” source boundary checkpoint
 
-Date: 2026-10-02. New experiment: structured V2, schema `2-alpha`.
+Source-boundary checkpoint: 2026-10-02. Annotation update: 2026-10-03. New experiment: structured V2, schema `2-alpha`.
+
+Latest actual annotation/export results are in `structured_annotation_pilot.json`: 16 accepted / 16 excluded from the first 32 TRAIN sources; 15 NON_PROJECT / 1 PROJECT. Both authorized exports pass provenance but fail class-support preflight. Models, accepted EVAL annotations and new evaluation predictions remain zero. The following boundary table records the earlier source-only checkpoint.
 
 ## What is measured now
 
@@ -44,6 +46,6 @@ The historical flat TF-IDF V1 figures remain historical evidence only. They use 
 
 ## Current blockers
 
-The user approved brief private excerpts on 2026-10-03. Personal source audits now cover 51 Airspace, 50 Parakweet and 50 CEREC examples; details are in `auxiliary_source_audits.md`. Parakweet remains quarantined for unresolved original identity. CEREC remains inspection-only pending embedded-text rights, identity/global-index integration and review of suspicious entity links. BC3 needs valid registration details, CSpace has no established authorized release, and Avocado needs institutional access/agreements. No training authorization has been issued for the new Enron structured export.
+The user approved brief private excerpts on 2026-10-03. Personal source audits now cover 51 Airspace, 50 Parakweet and 50 CEREC examples; details are in `auxiliary_source_audits.md`. Parakweet remains quarantined for unresolved original identity. CEREC remains inspection-only pending embedded-text rights, identity/global-index integration and review of suspicious entity links. BC3 needs valid registration details, CSpace has no established authorized release, and Avocado needs institutional access/agreements. Enron permission now covers only explicitly authorized accepted TRAIN exports for the two primitive baselines; two such exports have been issued. Unlabelled candidates and protected/evaluation sources remain ineligible.
 
 The next substantive milestone is actual source-grounded annotation and adjudication, followed by an authorized TRAIN export and supported primitive heads. The code and candidate boundary alone do not satisfy that milestone.

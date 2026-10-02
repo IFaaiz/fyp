@@ -7,6 +7,8 @@ Canonical contract: unchanged; this schema is not a replacement for `ai/annotati
 
 The structured annotation separates scope, speech acts, entities, events, dates, and relations. The mapper derives the existing nine FYP labels from exact evidence plus typed targets and states. It does not extract primitives, run keyword rules, or accept a separate final-label prediction. The test strings are synthetic contract fixtures, not training annotations or claims about real-email accuracy.
 
+The 2026-10-03 source pilot exposed a missing deadline mapping: a request targeting an action could include a supported date/action due relation yet omit `DEADLINE` unless a redundant speech act targeted that relation. The mapper now emits it directly from the validated current due relation. Uncertain targets or dates still suppress it and require review. Original pilot packets and submissions are preserved; reviewers revalidate their own independent primitives in fresh packets bound to the corrected mapper before adjudication.
+
 Schema: `ai/config/structured_primitive_schema.json`
 Implementation: `ai/src/structured/validation.py`, `ai/src/structured/mapper.py`
 Tests: `ai/tests/test_structured_mapper.py`

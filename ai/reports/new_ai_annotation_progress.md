@@ -11,7 +11,7 @@ These are source counts. They do not measure project relevance, primitive suppor
 
 ## Review workflow
 
-The offline workflow prepares hash-bound source-only A/B packets. It supports deterministic contiguous batches through `record_offset` and `record_limit`, bound to the full candidate file and the actual global index and partition manifest. EVAL defaults to the frozen `EVAL_RESERVED` partition. Primitive/evidence differences trigger third review even when derived FYP labels match. Every EVAL record requires a third source-only verdict before the adjudication packet reveals A/B.
+The offline workflow prepares hash-bound source-only A/B packets. It supports contiguous batches and explicit ordered `record_indices`, both bound to the exact full candidate file, global index and frozen partition manifest. Status is read-only; explicit finalization writes decisions only when every row has a complete outcome. Eligible interim rows are reported as provisional. EVAL defaults to the frozen `EVAL_RESERVED` partition. Primitive/evidence differences trigger third review even when derived FYP labels match. Every EVAL record requires a third source-only verdict before the adjudication packet reveals A/B.
 
 High-risk labels and relations require an explicit root decision bound to the selected annotation. Root may reject an uncertain source so it does not hold a batch open; an uncertain annotation remains ineligible for acceptance. Finalization, handoff, explicit authorization, export, and `verify_accepted_train_provenance` recompute the source, schema/mapper, reviewer, adjudication, decision, isolation, registry, boundary, and export bindings.
 
@@ -28,19 +28,22 @@ Commands run from `ai/`:
 .\.venv\Scripts\python.exe -m unittest tests.test_structured_model_gates -v
 ```
 
-Results: 7 workflow tests passed; 21 model-gate tests passed. These synthetic tests establish workflow contracts only. They are not annotations, source-content audits, training data, model fits, or evaluation results.
+Results: 11 workflow tests passed; 21 model-gate tests passed. These synthetic tests establish workflow contracts only. They are not annotations, source-content audits, training data, model fits, or evaluation results.
 
 ## Current annotation status
 
-Real candidate annotations accepted: **0**.
-Human-gold labels: **0**.
-New training authorizations: **0**.
-New model fits and V2 performance claims: **0**.
+Two real 16-source TRAIN batches completed the independent A/B, frozen source-only C initial, post-blind adjudication and root checks. Of 32 sources, **16 were accepted and 16 excluded**. Accepted support is 15 NON_PROJECT and 1 PROJECT. Two private, explicitly authorized `accepted_train.jsonl` exports (8 rows each) passed full provenance verification and the actual model preflight. Both fail the predeclared minimum of 20 unique examples per scope class; no model was fitted.
 
-The next substantive milestone is source-grounded review on TRAIN candidates, followed by the complete EVAL A/B/C process and external review of any proposed TRAIN export. Acquisition, rights, identity, or primitive-support gaps remain as recorded in `structured_pipeline_evaluation.md`.
+Human-gold labels: **0**. Accepted EVAL annotations and new evaluation predictions: **0**. This is a source-grounded AI-silver seed, not an accuracy result. Exact evidence/primitive disagreements affected 31/32 initial A/B pairs; derived-label sets agreed on 28/32 after the deadline fix. Agreement is a review-process diagnostic, not correctness.
+
+Root excluded four additional rows after C: two insufficient scope judgments, one omitted current delivery act, and one forwarded-header-only current view. Original proposals remain private and preserved. A new 78-source TRAIN-only seed assignment combines the first 32 random candidates and 46 lexical-recall candidates with fresh independent reviewers. Recall words generate no labels. Its acceptance remains pending; it is not counted in the 16 accepted rows.
+
+Details and hashes: `structured_annotation_pilot.json`.
 
 ## Root verification update
 
-The root ran 132 focused tests on 2026-10-03: all passed, including 7 workflow, 21 model-gate and 12 preserved Enron parser tests. The 77-file closed-V1 integrity check passed with no missing or changed files and no training/inference performed. Exact duplicate model inputs now count once; conflicting primitive targets fail closed.
+All **137 focused tests** passed, including 53 mapper, 11 workflow, 21 model-gate and 12 preserved Enron parser tests. The 77-file closed-V1 integrity check passed with no changed or missing files, and no old TEST inference or training was performed.
 
-The user explicitly approved full assigned-email review after automatic review had rejected full reads under brief-excerpt permission. A real 16-source TRAIN_SCREEN review is in progress at `ai/data/structured_review/v2_train_batch001_review_20261003/`; A and B each confirm they read all 16 complete sources independently. This reading attestation is not an accepted annotation or model result. The earlier `v2_train_batch001_20261003` packet preparation was unused because the agent-thread limit required assignment to existing workers.
+Actual source review exposed two defects. DEADLINE previously needed a redundant speech act targeting the due relation; the mapper now derives it from a validated current date/target relation. Status previously called incremental finalization and wrote a provisional decision before C was complete; status is now read-only and finalization requires the complete batch. Thirteen partial artifacts from the affected second run were preserved in a private recovery directory; no training export existed at that recovery point. The repaired run subsequently finalized and exported successfully.
+
+The user explicitly approved full assigned-email annotation/adjudication review after automatic review had rejected full reads under brief-excerpt permission. Later separate relevance-pool display was rejected; that display stopped, and source-bound annotation assignments proceeded under the granted permission. Every raw message, evidence string, annotation, export and model asset remains Git-ignored. Distinct role identities, source-read attestations and hashes in a shared workspace establish an audit trail; they do not cryptographically prove process independence or constitute human gold.

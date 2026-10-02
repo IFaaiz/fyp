@@ -12,7 +12,7 @@ import re
 import copy
 from collections import Counter
 from pathlib import Path
-from typing import Any, Iterable, Mapping
+from typing import Any, Iterable, Mapping, Sequence
 
 from src.structured import map_labels, validate_annotation
 from src.structured.mapper import MappingResult
@@ -400,6 +400,26 @@ def _packet_source_bundle(packet: Mapping[str, Any]) -> list[dict[str, Any]]:
     return packet.get("records", [])
 
 
+_CONTIGUOUS_SELECTION_POLICY = "contiguous_source_file_slice_hash_bound_to_full_input"
+_INDEXED_SELECTION_POLICY = "explicit_ordered_source_file_indices_hash_bound_to_full_input"
+
+
+def _validate_record_indices(record_indices: Any, *, input_record_count: int) -> list[int]:
+    if (not isinstance(record_indices, Sequence)
+            or isinstance(record_indices, (str, bytes, bytearray))):
+        raise ValueError("record_indices must be a non-empty ordered sequence of integer offsets")
+    indices = list(record_indices)
+    if not indices:
+        raise ValueError("record_indices must be non-empty")
+    if any(isinstance(index, bool) or not isinstance(index, int) or index < 0 for index in indices):
+        raise ValueError("record_indices must contain only non-negative integer offsets")
+    if len(indices) != len(set(indices)):
+        raise ValueError("record_indices must contain unique offsets")
+    if any(index >= input_record_count for index in indices):
+        raise ValueError("record_indices contains an offset outside the source file record range")
+    return indices
+
+
 def _load_run(run_dir: str | Path, *, root: Path) -> tuple[Path, dict[str, Any]]:
     directory = _ensure_private(run_dir, root=root)
     manifest_path = directory / "run_manifest.json"
@@ -429,14 +449,32 @@ def _load_run(run_dir: str | Path, *, root: Path) -> tuple[Path, dict[str, Any]]
     if not source_file.is_file() or sha256_file(source_file) != source_manifest.get("source_file_sha256"):
         raise ValueError("original source JSONL changed after review run preparation")
     full_rows = _read_jsonl(source_file)
-    offset = source_manifest.get("record_offset", 0)
+    input_count = source_manifest.get("input_record_count", len(full_rows))
     count = source_manifest.get("record_count", source_manifest.get("source_count"))
-    if (isinstance(offset, bool) or not isinstance(offset, int) or offset < 0
-            or isinstance(count, bool) or not isinstance(count, int) or count <= 0
-            or len(full_rows) != source_manifest.get("input_record_count", len(full_rows))
-            or offset + count > len(full_rows)):
-        raise ValueError("source manifest has an invalid source-file slice")
-    normalized_rows = [_normalize_record(row) for row in full_rows[offset:offset + count]]
+    if (isinstance(input_count, bool) or not isinstance(input_count, int)
+            or input_count != len(full_rows)
+            or isinstance(count, bool) or not isinstance(count, int) or count <= 0):
+        raise ValueError("source manifest has an invalid source-file selection count")
+    policy = source_manifest.get("selection_policy", _CONTIGUOUS_SELECTION_POLICY)
+    if policy == _CONTIGUOUS_SELECTION_POLICY:
+        offset = source_manifest.get("record_offset", 0)
+        if (isinstance(offset, bool) or not isinstance(offset, int) or offset < 0
+                or source_manifest.get("record_indices") is not None
+                or offset + count > len(full_rows)):
+            raise ValueError("source manifest has an invalid source-file slice")
+        selected_rows = full_rows[offset:offset + count]
+    elif policy == _INDEXED_SELECTION_POLICY:
+        if source_manifest.get("record_offset") is not None:
+            raise ValueError("indexed source manifest cannot also specify record_offset")
+        indices = _validate_record_indices(
+            source_manifest.get("record_indices"), input_record_count=len(full_rows),
+        )
+        if len(indices) != count:
+            raise ValueError("source manifest record_indices length does not match record_count")
+        selected_rows = [full_rows[index] for index in indices]
+    else:
+        raise ValueError("source manifest has an unsupported source-file selection policy")
+    normalized_rows = [_normalize_record(row) for row in selected_rows]
     expected_source_hashes = [
         {"source_id": row["source_id"], "source_hash": row["current_source_hash"], "source_hashes": row["source_hashes"]}
         for row in normalized_rows
@@ -588,7 +626,8 @@ def prepare_run(
     dataset_id: str, reviewer_a: str, reviewer_b: str,
     index_path: str | Path | None = None, assignments_path: str | Path | None = None,
     partition_name: str | None = None, record_offset: int = 0,
-    record_limit: int | None = None, root: Path | None = None,
+    record_limit: int | None = None, record_indices: Sequence[int] | None = None,
+    root: Path | None = None,
 ) -> dict[str, Any]:
     """Create isolated A/B source-only packets and immutable hash manifests."""
     root = (root or Path(__file__).resolve().parents[3]).resolve()
@@ -610,12 +649,26 @@ def prepare_run(
     all_raw_ids = [_source_id(row) for row in all_input_rows]
     if len(all_raw_ids) != len(set(all_raw_ids)):
         raise ValueError("source IDs must be unique within the review run")
-    if record_offset >= len(all_input_rows):
-        raise ValueError("record_offset is outside the source file record range")
-    stop = len(all_input_rows) if record_limit is None else record_offset + record_limit
-    if stop > len(all_input_rows):
-        raise ValueError("record_offset + record_limit is outside the source file record range")
-    input_rows = all_input_rows[record_offset:stop]
+    if record_indices is not None:
+        if record_offset != 0 or record_limit is not None:
+            raise ValueError("record_indices cannot be combined with non-default record_offset or record_limit")
+        selected_indices = _validate_record_indices(
+            record_indices, input_record_count=len(all_input_rows),
+        )
+        input_rows = [all_input_rows[index] for index in selected_indices]
+        selection_policy = _INDEXED_SELECTION_POLICY
+        manifest_record_offset = None
+        manifest_record_indices: list[int] | None = selected_indices
+    else:
+        if record_offset >= len(all_input_rows):
+            raise ValueError("record_offset is outside the source file record range")
+        stop = len(all_input_rows) if record_limit is None else record_offset + record_limit
+        if stop > len(all_input_rows):
+            raise ValueError("record_offset + record_limit is outside the source file record range")
+        input_rows = all_input_rows[record_offset:stop]
+        selection_policy = _CONTIGUOUS_SELECTION_POLICY
+        manifest_record_offset = record_offset
+        manifest_record_indices = None
     raw_ids = [_source_id(row) for row in input_rows]
     input_sha = sha256_file(source_file)
     index_payload: dict[str, Any] | None = None
@@ -708,9 +761,10 @@ def prepare_run(
         "source_bundle_sha256": source_bundle_sha,
         "source_count": len(normalized),
         "input_record_count": len(all_input_rows),
-        "record_offset": record_offset,
+        "record_offset": manifest_record_offset,
+        "record_indices": manifest_record_indices,
         "record_count": len(normalized),
-        "selection_policy": "contiguous_source_file_slice_hash_bound_to_full_input",
+        "selection_policy": selection_policy,
         "source_hashes": [
             {"source_id": record["source_id"], "source_hash": record["current_source_hash"],
              "source_hashes": record["source_hashes"]}
@@ -1786,34 +1840,94 @@ def _final_annotation_and_review(
     return outcome.get("annotation"), outcome, sorted(flags)
 
 
-def finalize_run(*, run_dir: str | Path, root: Path | None = None) -> dict[str, Any]:
-    """Write immutable decisions only for rows satisfying every required gate."""
-    root = (root or Path(__file__).resolve().parents[3]).resolve()
+def _stored_decision_paths(directory: Path) -> set[Path]:
+    decisions_dir = directory / "decisions"
+    return set(decisions_dir.glob("*.json")) if decisions_dir.is_dir() else set()
+
+
+def _pretty_json_bytes(value: Any) -> bytes:
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2).encode("utf-8") + b"\n"
+
+
+def _decision_manifest_payload(
+    *, directory: Path, manifest: Mapping[str, Any], decisions: Mapping[str, Mapping[str, Any]],
+    records: Iterable[Mapping[str, Any]], decision_hashes: Mapping[str, str],
+    counts: Mapping[str, int],
+) -> dict[str, Any]:
+    return {
+        "workflow_version": WORKFLOW_VERSION,
+        "run_id": manifest["run_id"], "purpose": manifest["purpose"],
+        "run_manifest_sha256": sha256_file(directory / "run_manifest.json"),
+        "source_manifest_sha256": manifest["source_manifest_sha256"],
+        "counts": {"accepted": counts["accepted"], "rejected": counts["rejected"], "review_required": 0},
+        "records": [
+            {"source_id": record["source_id"], "status": decisions[record["source_id"]]["status"],
+             "decision_sha256": decision_hashes[record["source_id"]]}
+            for record in records
+        ],
+    }
+
+
+def _compute_finalization_state(
+    *, run_dir: str | Path, root: Path, require_comparison_artifact: bool,
+) -> tuple[Path, dict[str, Any], dict[str, Any], list[dict[str, Any]], dict[str, dict[str, Any]]]:
+    """Recompute all row outcomes without writing decisions or status artifacts."""
     directory, manifest = _load_run(run_dir, root=root)
-    comparison, _a_artifact, _b_artifact, a_packet = _load_verified_pair_comparison(directory=directory, manifest=manifest)
+    final_manifest_path = directory / "decision_manifest.json"
+    stored_paths = _stored_decision_paths(directory)
+    a_path, b_path = _envelope_path(directory, "A"), _envelope_path(directory, "B")
+    if not (a_path.is_file() and b_path.is_file()):
+        if final_manifest_path.exists() or stored_paths:
+            raise ValueError("stored final decisions exist before both blind reviews are complete")
+        source_manifest = _read_json(directory / manifest["source_manifest_path"])
+        pending = [
+            {"source_id": item["source_id"], "reason": "blind_reviews_incomplete", "risk_flags": []}
+            for item in source_manifest["source_hashes"]
+        ]
+        result = {
+            "computed_counts": {"accepted": 0, "rejected": 0, "review_required": len(pending)},
+            "total": len(pending), "pending": pending, "records": list(source_manifest["source_hashes"]),
+        }
+        return directory, manifest, result, [], {}
+
+    comparison_path = directory / "pair_comparison.json"
+    if comparison_path.is_file():
+        comparison, _a_artifact, _b_artifact, a_packet = _load_verified_pair_comparison(
+            directory=directory, manifest=manifest,
+        )
+    else:
+        if require_comparison_artifact or final_manifest_path.exists() or stored_paths:
+            raise ValueError("stored pair comparison is required to finalize immutable decisions")
+        comparison = _compute_pair_comparison(directory, manifest)
+        a_packet, _ = _load_packet(directory, manifest, "A")
     if _envelope_path(directory, "C_INITIAL").is_file():
         _verify_third_initial_artifact(directory=directory, manifest=manifest, comparison=comparison, a_packet=a_packet)
     if _envelope_path(directory, "C_ADJUDICATION").is_file():
         _verify_adjudication_artifact(directory=directory, manifest=manifest, root=root)
     elif (directory / "adjudication_assignment.json").is_file():
         _verify_adjudication_packet_context(directory=directory, manifest=manifest, root=root)
+
     comparison_by_id = {item["source_id"]: item for item in comparison["records"]}
-    counts: Counter[str] = Counter()
-    pending = []
+    computed_counts: Counter[str] = Counter()
+    pending: list[dict[str, Any]] = []
+    decisions: dict[str, dict[str, Any]] = {}
+    pair_comparison_sha = (
+        sha256_file(comparison_path) if comparison_path.is_file()
+        else digest_bytes(_pretty_json_bytes(comparison))
+    )
     for record in a_packet["records"]:
         sid = record["source_id"]
-        final_path = directory / "decisions" / (digest_json(sid) + ".json")
         selected, outcome, flags = _final_annotation_and_review(
             directory=directory, manifest=manifest, record=record,
             comparison=comparison_by_id[sid],
         )
         if outcome is None or outcome.get("status") not in {"accepted", "rejected"}:
-            if final_path.exists():
-                raise ValueError("stored decision exists although its current reviews no longer satisfy acceptance")
-            counts["review_required"] += 1
-            pending.append({"source_id": sid, "reason": outcome.get("reason") if outcome else "final_validation_failed", "risk_flags": flags})
+            computed_counts["review_required"] += 1
+            pending.append({"source_id": sid,
+                            "reason": outcome.get("reason") if outcome else "final_validation_failed",
+                            "risk_flags": flags})
             continue
-        decision = {
+        decisions[sid] = {
             "workflow_version": WORKFLOW_VERSION,
             "run_id": manifest["run_id"], "purpose": manifest["purpose"],
             "source_id": sid, "current_source_hash": record["current_source_hash"],
@@ -1825,7 +1939,7 @@ def finalize_run(*, run_dir: str | Path, root: Path | None = None) -> dict[str, 
             "reviewer_B_envelope_sha256": sha256_file(_envelope_path(directory, "B")),
             "reviewer_A_receipt_sha256": sha256_file(directory / "receipts" / "A.json"),
             "reviewer_B_receipt_sha256": sha256_file(directory / "receipts" / "B.json"),
-            "pair_comparison_sha256": sha256_file(directory / "pair_comparison.json"),
+            "pair_comparison_sha256": pair_comparison_sha,
             "third_initial_envelope_sha256": sha256_file(_envelope_path(directory, "C_INITIAL")) if _envelope_path(directory, "C_INITIAL").is_file() else None,
             "third_initial_receipt_sha256": sha256_file(directory / "receipts" / "C_INITIAL.json") if (directory / "receipts" / "C_INITIAL.json").is_file() else None,
             "third_adjudication_envelope_sha256": sha256_file(_envelope_path(directory, "C_ADJUDICATION")) if _envelope_path(directory, "C_ADJUDICATION").is_file() else None,
@@ -1838,77 +1952,135 @@ def finalize_run(*, run_dir: str | Path, root: Path | None = None) -> dict[str, 
             # Private run artifacts only. Never copied to reports.
             "annotation": selected,
         }
-        if final_path.is_file():
-            if _read_json(final_path) != decision:
-                raise ValueError("stored decision differs from the current verified review outcome")
-        else:
-            _write_json_new(final_path, decision)
-        counts[decision["status"]] += 1
+        computed_counts[decisions[sid]["status"]] += 1
+
     total = len(a_packet["records"])
-    counts["review_required"] += len(a_packet["records"]) - sum(counts.values()) if sum(counts.values()) < total else 0
-    decision_rows = []
-    for record in a_packet["records"]:
-        sid = record["source_id"]
-        path = directory / "decisions" / (digest_json(sid) + ".json")
-        if path.is_file():
-            decision = _read_json(path)
-            decision_rows.append({"source_id": sid, "status": decision["status"], "decision_sha256": sha256_file(path)})
-    decision_manifest_sha = None
-    if counts["review_required"] == 0 and len(decision_rows) == total:
-        decision_manifest = {
-            "workflow_version": WORKFLOW_VERSION,
-            "run_id": manifest["run_id"], "purpose": manifest["purpose"],
-            "run_manifest_sha256": sha256_file(directory / "run_manifest.json"),
-            "source_manifest_sha256": manifest["source_manifest_sha256"],
-            "counts": {"accepted": counts["accepted"], "rejected": counts["rejected"], "review_required": 0},
-            "records": decision_rows,
-        }
-        decision_manifest_path = directory / "decision_manifest.json"
-        if decision_manifest_path.exists():
-            if _read_json(decision_manifest_path) != decision_manifest:
-                raise ValueError("immutable decision manifest differs from current decision files")
-        else:
-            _write_json_new(decision_manifest_path, decision_manifest)
-        decision_manifest_sha = sha256_file(decision_manifest_path)
-    elif (directory / "decision_manifest.json").exists():
-        raise ValueError("complete decision manifest exists although current review gates are incomplete")
+    if sum(computed_counts.values()) != total:
+        computed_counts["review_required"] += total - sum(computed_counts.values())
     result = {
+        "computed_counts": {"accepted": computed_counts["accepted"], "rejected": computed_counts["rejected"],
+                            "review_required": computed_counts["review_required"]},
+        "total": total, "pending": pending, "records": a_packet["records"],
+    }
+    return directory, manifest, result, a_packet["records"], decisions
+
+
+def _existing_decision_manifest(
+    *, directory: Path, manifest: Mapping[str, Any], result: Mapping[str, Any],
+    records: list[dict[str, Any]], decisions: Mapping[str, Mapping[str, Any]],
+) -> str | None:
+    """Verify immutable files when present; reject partial artifacts from old runs."""
+    decision_manifest_path = directory / "decision_manifest.json"
+    stored_paths = _stored_decision_paths(directory)
+    if result["computed_counts"]["review_required"]:
+        if decision_manifest_path.exists():
+            raise ValueError("complete decision manifest exists although current review gates are incomplete")
+        if stored_paths:
+            raise ValueError("partial stored decision files exist without a complete decision manifest; recover the run artifacts before finalization")
+        return None
+    if not decision_manifest_path.exists():
+        if stored_paths:
+            raise ValueError("stored decision files exist without a complete immutable decision manifest; recover the run artifacts before finalization")
+        return None
+
+    expected_paths = {directory / "decisions" / (digest_json(sid) + ".json") for sid in decisions}
+    if stored_paths != expected_paths:
+        raise ValueError("decision manifest does not have exactly one stored decision for every source")
+    decision_hashes: dict[str, str] = {}
+    for sid, expected in decisions.items():
+        path = directory / "decisions" / (digest_json(sid) + ".json")
+        if _read_json(path) != expected:
+            raise ValueError("stored decision differs from the current verified review outcome")
+        decision_hashes[sid] = sha256_file(path)
+    counts = result["computed_counts"]
+    expected_manifest = _decision_manifest_payload(
+        directory=directory, manifest=manifest, decisions=decisions, records=records,
+        decision_hashes=decision_hashes, counts=counts,
+    )
+    if _read_json(decision_manifest_path) != expected_manifest:
+        raise ValueError("immutable decision manifest differs from current decision files")
+    return sha256_file(decision_manifest_path)
+
+
+def _status_result(
+    *, manifest: Mapping[str, Any], state: Mapping[str, Any], decision_manifest_sha: str | None,
+) -> dict[str, Any]:
+    total = state["total"]
+    computed_counts = state["computed_counts"]
+    if decision_manifest_sha is not None:
+        counts = dict(computed_counts)
+        pending: list[dict[str, Any]] = []
+    else:
+        # Candidate row outcomes remain provisional until an explicit, complete batch is finalized.
+        counts = {"accepted": 0, "rejected": 0, "review_required": total}
+        unresolved_by_id = {item["source_id"]: item for item in state["pending"]}
+        pending = []
+        for record in state["records"]:
+            sid = record["source_id"]
+            pending.append(unresolved_by_id.get(sid, {
+                "source_id": sid, "reason": "explicit_finalization_required", "risk_flags": [],
+            }))
+    return {
         "workflow_version": WORKFLOW_VERSION,
         "run_id": manifest["run_id"], "purpose": manifest["purpose"],
         "source_manifest_sha256": manifest["source_manifest_sha256"],
-        "counts": {"accepted": counts["accepted"], "rejected": counts["rejected"], "review_required": counts["review_required"]},
-        "total": total,
-        "decision_manifest_sha256": decision_manifest_sha,
+        "counts": counts, "provisional_counts": dict(computed_counts),
+        "total": total, "decision_manifest_sha256": decision_manifest_sha,
         "pending": pending,
     }
+
+
+def finalize_run(*, run_dir: str | Path, root: Path | None = None) -> dict[str, Any]:
+    """Persist immutable row decisions only after every source passes every gate."""
+    root = (root or Path(__file__).resolve().parents[3]).resolve()
+    directory, manifest, state, records, decisions = _compute_finalization_state(
+        run_dir=run_dir, root=root, require_comparison_artifact=True,
+    )
+    existing_sha = _existing_decision_manifest(
+        directory=directory, manifest=manifest, result=state, records=records, decisions=decisions,
+    )
+    decision_manifest_sha = existing_sha
+    if existing_sha is None and state["computed_counts"]["review_required"] == 0:
+        decision_hashes = {
+            sid: digest_bytes(_pretty_json_bytes(decision)) for sid, decision in decisions.items()
+        }
+        decision_manifest = _decision_manifest_payload(
+            directory=directory, manifest=manifest, decisions=decisions, records=records,
+            decision_hashes=decision_hashes, counts=state["computed_counts"],
+        )
+        created: list[Path] = []
+        try:
+            for record in records:
+                sid = record["source_id"]
+                path = directory / "decisions" / (digest_json(sid) + ".json")
+                stored_sha = _write_json_new(path, decisions[sid])
+                created.append(path)
+                if stored_sha != decision_hashes[sid]:
+                    raise ValueError("stored decision hash differs from its prepared batch hash")
+            decision_manifest_path = directory / "decision_manifest.json"
+            _write_json_new(decision_manifest_path, decision_manifest)
+            created.append(decision_manifest_path)
+        except Exception:
+            for path in reversed(created):
+                path.unlink(missing_ok=True)
+            raise
+        decision_manifest_sha = sha256_file(directory / "decision_manifest.json")
+
+    result = _status_result(manifest=manifest, state=state, decision_manifest_sha=decision_manifest_sha)
     _write_json_replace(directory / "progress.json", result)
     return result
 
 
 def summarize_run(*, run_dir: str | Path, root: Path | None = None) -> dict[str, Any]:
+    """Return current review and finalization status without writing any run artifact."""
     root = (root or Path(__file__).resolve().parents[3]).resolve()
-    directory, manifest = _load_run(run_dir, root=root)
-    a_path = _envelope_path(directory, "A")
-    b_path = _envelope_path(directory, "B")
-    if not (a_path.is_file() and b_path.is_file()):
-        if (directory / "decision_manifest.json").exists() or any((directory / "decisions").glob("*.json")):
-            raise ValueError("stored final decisions exist before both blind reviews are complete")
-        source_manifest = _read_json(directory / manifest["source_manifest_path"])
-        pending = [
-            {"source_id": item["source_id"], "reason": "blind_reviews_incomplete", "risk_flags": []}
-            for item in source_manifest["source_hashes"]
-        ]
-        return {
-            "workflow_version": WORKFLOW_VERSION,
-            "run_id": manifest["run_id"], "purpose": manifest["purpose"],
-            "source_manifest_sha256": manifest["source_manifest_sha256"],
-            "counts": {"accepted": 0, "rejected": 0, "review_required": len(pending)},
-            "total": len(pending), "decision_manifest_sha256": None,
-            "pending": pending,
-        }
-    if not (directory / "pair_comparison.json").is_file():
-        compare_run(run_dir=directory, root=root)
-    return finalize_run(run_dir=directory, root=root)
+    directory, manifest, state, records, decisions = _compute_finalization_state(
+        run_dir=run_dir, root=root, require_comparison_artifact=False,
+    )
+    decision_manifest_sha = _existing_decision_manifest(
+        directory=directory, manifest=manifest, result=state, records=records, decisions=decisions,
+    )
+    return _status_result(manifest=manifest, state=state, decision_manifest_sha=decision_manifest_sha)
 
 
 def _load_verified_training_boundary(

@@ -45,11 +45,11 @@ The current reports say there are zero accepted structured annotations, zero hum
 
 ## Findings and actions
 
-### Closed — validate both protected-ID representations at boundary intake
+### Closed â€” validate both protected-ID representations at boundary intake
 
 The follow-up code validates string values and duplicate IDs, then compares the qualified native IDs with the global protected IDs for the active dataset before checking their index presence and partition safety. The synthetic `test_deterministic_source_bound_slices_invalid_ranges_and_partition_isolation` now checks both a mismatched native/global list and an unassigned protected reserve that shares a component with TRAIN; both must be rejected. The metadata-only V2 boundary check continues to pass.
 
-### Closed — add synthetic coverage for the C/EVAL and root decision path
+### Closed â€” add synthetic coverage for the C/EVAL and root decision path
 
 The new `ai/tests/test_structured_review_workflow.py` covers the requested high-risk branches with invented source strings:
 
@@ -62,7 +62,7 @@ The new `ai/tests/test_structured_review_workflow.py` covers the requested high-
 
 The existing model-gate suite still supplies targeted invalid-export, uncertainty, registry, index/hash, count-floor, and no-fit preflight coverage. The root-run focused suite passed 119 tests in total, including the new seven workflow tests and 20 model-gate tests; this sub-audit inspected the test source but did not rerun tests.
 
-### Residual — not every stored sidecar/receipt mutation has a direct test
+### Residual â€” not every stored sidecar/receipt mutation has a direct test
 
 The workflow rederives its manifests and compares stored receipts/artifacts during ingestion and final verification. Synthetic tamper coverage mutates representative A, C-initial, and C-adjudication envelopes; pair comparison, decision, root decision, handoff bytes, TRAIN bytes, authorization contents, registry bytes, source bytes, and current schema/validator/mapper files. The tests do not directly mutate every receipt or every packet/assignment and sidecar file. Add a compact table-driven test for at least one A/B ingest receipt, C receipt, A/B/C packet or assignment, handoff manifest, TRAIN export sidecar, and the frozen index/boundary after run creation. This is residual coverage work; the current code paths are already designed to revalidate these bindings.
 
@@ -71,3 +71,7 @@ The workflow rederives its manifests and compares stored receipts/artifacts duri
 The workflow binds reviewer and root identity strings, packet hashes, attestations, receipts, and downstream artifacts. It can detect stale or inconsistent artifacts under the expected filesystem workflow, but a self-reported identity/read attestation is not proof that a person or independent process read the sources. With reviewers and artifacts on a shared writable filesystem, the code cannot prove process isolation or prevent a reviewer from reading another role's files. Likewise, SHA-256 hashes and fields such as `issued_by: orchestrator` and `training_permitted: true` are integrity bindings, not a cryptographic authorization authority: anyone able to rewrite the whole mutable chain can recompute them. Keep the explicit external review/authorization step and describe results as AI-silver diagnostics.
 
 No tests were executed by this audit; the 119-test result above was reported by the root task, while this follow-up independently inspected the current synthetic test source and gates. No conclusion about source-content correctness, rights, or model accuracy follows from these metadata/workflow checks; the source-content audit was completed separately.
+
+## Root actual-pilot update, 2026-10-03
+
+Actual review exposed a status/finalization defect beyond the original synthetic audit: an early status call saved an eligible row while the batch awaited C, and later bindings made that immutable row stale. Root preserved the partial artifacts, reviewed the read-only status / complete-batch finalization repair, and reran 137 focused tests (all passed, including 11 workflow tests). The first two real TRAIN batches now have 16 accepted / 16 excluded rows, two explicitly authorized exports verified by the full provenance loader, and real preflights blocked by class support. No model or new evaluation prediction was produced. Earlier zero-acceptance statements describe the original audit checkpoint. See `structured_annotation_pilot.json` for current counts and hashes.

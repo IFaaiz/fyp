@@ -12,3 +12,5 @@ ai/src/models/optimization*.py -text whitespace=cr-at-eol
 ai/reports/optimization*.json -text whitespace=cr-at-eol
 ai/reports/ai_silver_model_optimization.md -text whitespace=cr-at-eol
 ai/config/*.json -text whitespace=cr-at-eol
+# Structured review packets bind exact validator/mapper bytes.
+ai/src/structured/*.py -text whitespace=cr-at-eol

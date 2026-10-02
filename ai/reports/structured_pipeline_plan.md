@@ -1,4 +1,4 @@
-# Structured project-information pipeline — execution plan
+# Structured project-information pipeline â€” execution plan
 
 Started: 2026-10-02. Starting checkpoint: `5533f3940fbb4a55024cf7efd0b68fb213e54df2`.
 
@@ -6,7 +6,7 @@ Started: 2026-10-02. Starting checkpoint: `5533f3940fbb4a55024cf7efd0b68fb213e54
 
 Closed Experiment V1 established diminishing returns from extensive flat-label search on 668 AI-silver records. Preserve its manifests, source hashes, registry, models, CLI, metrics and source error audit. Its inspected TEST is closed. The new architecture keeps the existing FYP outputs and desktop/offline deployment scope; public canonical email records are unchanged.
 
-The internal path is **scope → evidence-grounded acts/entities/events/relations → deterministic FYP label mapper**. A request, an action item, a due relation and a document mention are separate assertions. They do not become final labels merely because a source corpus uses a related name.
+The internal path is **scope â†’ evidence-grounded acts/entities/events/relations â†’ deterministic FYP label mapper**. A request, an action item, a due relation and a document mention are separate assertions. They do not become final labels merely because a source corpus uses a related name.
 
 ## Team and ownership
 
@@ -32,8 +32,8 @@ All delegated work uses GPT-6 Luna with xhigh reasoning. The orchestrator owns a
 | 3 | Global corpus identity index | Source aliases/Message-ID/thread identities plus exact/near/fragment fingerprints; training excludes protected components and unresolved same-family fragments |
 | 4 | Internal structured schema and mapper | Exact evidence slices, target references, uncertainty, taxonomy boundary tests; public canonical schema unchanged |
 | 5 | Independent annotation tooling | Reviewer A/B blind separation; third adjudication; high-risk orchestrator audit; immutable source and review hashes |
-| 6 | Semantic/diverse retrieval and source-read annotation | 3,000–5,000 screened candidates, actual accept/reject counts; natural primitive-support shortages reported |
-| 7 | Fresh evaluation boundary | Reserve independent candidate sources before training/prompt/DEV selection; double review/third adjudication; freeze 400–600 real emails if feasible, no label quota fabrication |
+| 6 | Semantic/diverse retrieval and source-read annotation | 3,000â€“5,000 screened candidates, actual accept/reject counts; natural primitive-support shortages reported |
+| 7 | Fresh evaluation boundary | Reserve independent candidate sources before training/prompt/DEV selection; double review/third adjudication; freeze 400â€“600 real emails if feasible, no label quota fabrication |
 | 8 | Primitive baselines and transfer | TRAIN-only fitting; source-overlap exclusion across every component, including NER/coreference/intent |
 | 9 | Temporal and thread components | Date-to-target relation labels; true thread evidence, not subject-derived reply truth |
 | 10 | Locked pipeline evaluation | Primitive P/R/F1, action exact/overlap spans, relation and thread metrics, then derived FYP metrics; challenge set reported separately |
@@ -48,16 +48,16 @@ A date alone is not a deadline. A request to approve a report is not a report re
 
 ## Evaluation and deployment constraints
 
-All new AI-adjudicated evaluations remain **AI-SILVER DIAGNOSTIC PERFORMANCE**, zero human gold claims. Source corpus annotations supervise their original auxiliary tasks; they are not human-reviewed FYP classifications. Need 30+ major primitive positives, ideally 20–30+ rare positives naturally available; report uncertainty and shortages. Reviewers/adjudicators are AI, so agreement does not remove shared annotation bias.
+All new AI-adjudicated evaluations remain **AI-SILVER DIAGNOSTIC PERFORMANCE**, zero human gold claims. Source corpus annotations supervise their original auxiliary tasks; they are not human-reviewed FYP classifications. Need 30+ major primitive positives, ideally 20â€“30+ rare positives naturally available; report uncertainty and shortages. Reviewers/adjudicators are AI, so agreement does not remove shared annotation bias.
 
 Keep a prevalence-oriented evaluation sample separate from a deliberately enriched challenge set. A compact trained local pipeline may later be exported; acquisition/research and AI annotation can use development tools, but the final desktop product receives no new web/cloud dependency or chatbot flow.
 
 ## Realistic milestone boundary
 
-The first session targets verified source integrations, overlap controls, a reviewed schema/mapper and the annotation workflow foundations. The 3,000–5,000 screened candidates, many source-read reviews, independent evaluation and training of temporal/thread components require sustained subsequent work. No model metric is claimed until those gates are met. No DAPT, large architecture search, attachment OCR or dashboard expansion is authorized in this milestone.
+The first session targets verified source integrations, overlap controls, a reviewed schema/mapper and the annotation workflow foundations. The 3,000â€“5,000 screened candidates, many source-read reviews, independent evaluation and training of temporal/thread components require sustained subsequent work. No model metric is claimed until those gates are met. No DAPT, large architecture search, attachment OCR or dashboard expansion is authorized in this milestone.
 
 ## Observed checkpoint
 
 Local parsing is complete for 711 Airspace messages, 744 RADAR action messages, 4,649 Parakweet sentences and the five pinned CEREC files. Independent raw-source checks cover every Airspace/RADAR/Parakweet prepared record. CEREC's main file contains 6,001 threads and 60,383 distinct per-document numeric coreference IDs; its rights remain unresolved. RADAR received a personal 50-record format/span audit. After the user approved brief private excerpts, the orchestrator audited 51 Airspace, 50 Parakweet and 50 CEREC examples on 2026-10-03. Airspace is approved for private original-task auxiliary use subject to global exclusions; Parakweet remains in identity quarantine and CEREC has unresolved rights/identity plus suspected annotation merges. See `auxiliary_source_audits.md`.
 
-The full Enron reservoir pass recovered 11,889 historically exposed identities. The reviewed global source index covers 28,129 records. After exclusions, 600 evaluation source candidates and 4,285 training-screen source candidates remain, with zero cross-partition component conflicts. These are source candidates: accepted structured annotations and new model fits remain zero. MailEx and Parakweet remain quarantined from training against the Enron evaluation while their original identities are unresolved. See `structured_pipeline_evaluation.md` for scope, limitations and the remaining acceptance gates.
+The full Enron reservoir pass recovered 11,889 historically exposed identities. The reviewed global source index covers 28,129 records. After exclusions, 600 evaluation source candidates and 4,285 training-screen source candidates remain, with zero cross-partition component conflicts. These are source candidates. On 2026-10-03, the first 32-source real review accepted 16 rows and excluded 16; two authorized private exports passed provenance and preflight but lacked class support. New model fits remain zero. A 78-source TRAIN seed is under independent review. MailEx and Parakweet remain quarantined from training against the Enron evaluation while their original identities are unresolved. See `structured_pipeline_evaluation.md` for scope, limitations and the remaining acceptance gates.
