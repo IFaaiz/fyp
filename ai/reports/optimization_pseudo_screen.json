@@ -1,0 +1,47 @@
+{
+  "metric_provenance": "AI/PSEUDO-SILVER; zero human/gold labels",
+  "benchmark_sha256": "5e2da2d089e3aaddd7cbe57bf569af00bcafdbe7ddac8f28b4bc7274e3bc202b",
+  "component_run_ids": [
+    "per_label_lexical_specialists_oof_thresholds",
+    "per_label_specialists",
+    "full_encoder_lr3e-05_focal2.0_head512"
+  ],
+  "pool_records": 8000,
+  "isolated_scored_records": 6777,
+  "accepted_records": 0,
+  "accepted_label_support": {},
+  "label_caps": {
+    "NON_PROJECT": 200,
+    "GENERAL_UPDATE": 200,
+    "MEETING": 150,
+    "DEADLINE": 100,
+    "ACTION_REQUEST": 150,
+    "REPORT_REQUEST": 50,
+    "APPROVAL": 50,
+    "FOLLOW_UP": 50,
+    "DEPARTMENTAL_INPUT": 50
+  },
+  "exclusion_counts": {
+    "previously_audited_or_benchmark": 246,
+    "too_short_or_empty": 444,
+    "protected_group_or_thread": 46,
+    "exact_normalized_duplicate": 466,
+    "nearcopy_cosine_ge_085": 21,
+    "committee_disagreement_or_empty": 3155,
+    "insufficient_absolute_score_margin_or_scope": 3622
+  },
+  "strict_project_score_floor": 0.75,
+  "strict_rare_score_floor": 0.85,
+  "NP_score_floor": 0.9,
+  "nearcopy_max_cosine": 0.85,
+  "protected_partitions": "allTRAIN/DEV/TEST groups, threads, exact/near copies excluded; labels/predictions not used for exclusion",
+  "test_predictions_inspected": false,
+  "source_pool_sha256": "3d7644a75e8c7170f353a2e8afff37b9f43368b677e47030839d4ed7c17a8755",
+  "group_sidecar_sha256": "2907b98b2ffffe68baa43387b90e2266fe82f1df45d8a9d2b148bded0f3634f7",
+  "pseudo_candidate_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "elapsed_seconds": 204.02804650000144,
+  "target_500_to_1000_met": false,
+  "added_to_frozen_benchmark": false,
+  "training_expansion_performed": false,
+  "interpretation": "screened candidates only; no lowered score thresholds or relaxed quotas to manufacture500 rows; no automatic merge into audited silver"
+}

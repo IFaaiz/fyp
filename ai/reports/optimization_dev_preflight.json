@@ -1,0 +1,42 @@
+{
+  "benchmark_sha256": "5e2da2d089e3aaddd7cbe57bf569af00bcafdbe7ddac8f28b4bc7274e3bc202b",
+  "primary_run_id": "ensemble_blend_1_0_3_0",
+  "candidates": [
+    {
+      "run_id": "reference_original_tfidf_train_oof",
+      "max_probability_reload_error": 0.0,
+      "decoded_DEV_labels_exactly_match": true,
+      "DEV_metrics_personally_recomputed": true,
+      "cold_load_inference_seconds_per_record": 0.0034906153846175304
+    },
+    {
+      "run_id": "per_label_lexical_specialists_oof_thresholds",
+      "max_probability_reload_error": 0.0,
+      "decoded_DEV_labels_exactly_match": true,
+      "DEV_metrics_personally_recomputed": true,
+      "cold_load_inference_seconds_per_record": 0.019946649038467094
+    },
+    {
+      "run_id": "per_label_specialists",
+      "max_probability_reload_error": 1.4901161193847656e-08,
+      "decoded_DEV_labels_exactly_match": true,
+      "DEV_metrics_personally_recomputed": true,
+      "cold_load_inference_seconds_per_record": 0.05983877788461401
+    },
+    {
+      "run_id": "full_encoder_lr3e-05_focal2.0_head512",
+      "max_probability_reload_error": 0.0,
+      "decoded_DEV_labels_exactly_match": true,
+      "DEV_metrics_personally_recomputed": true,
+      "cold_load_inference_seconds_per_record": 0.007000616346168989
+    },
+    {
+      "run_id": "ensemble_blend_1_0_3_0",
+      "max_probability_reload_error": 1.1175870895385742e-08,
+      "decoded_DEV_labels_exactly_match": true,
+      "DEV_metrics_personally_recomputed": true,
+      "cold_load_inference_seconds_per_record": 0.025148727884610568
+    }
+  ],
+  "selection_sha256": "ef6f86fa7b60fbf0d9ff7069d56de4c6df058ada4e444a995888dbb793e4c2c9"
+}

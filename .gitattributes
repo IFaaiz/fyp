@@ -6,3 +6,6 @@ ai/src/models/transfer_diagnostic.py -text whitespace=cr-at-eol
 ai/src/models/silver_classifier.py -text whitespace=cr-at-eol
 ai/scripts/train_silver_classifier.py -text whitespace=cr-at-eol
 ai/scripts/download_transfer_checkpoint.py -text whitespace=cr-at-eol
+ai/annotation/optimization* -text whitespace=cr-at-eol
+ai/scripts/*optimization*.py -text whitespace=cr-at-eol
+ai/src/models/optimization*.py -text whitespace=cr-at-eol

@@ -1,0 +1,544 @@
+{
+  "metric_provenance": "AI-SILVER DIAGNOSTIC PERFORMANCE; zero human labels",
+  "runs": [
+    {
+      "model": "original custom word+bigram TF-IDF OVR logistic regression",
+      "features": "separate subject/body token namespace; sublinear TF; smoothed IDF; L2 normalization",
+      "training_records": 462,
+      "dev_records": 104,
+      "seed": 20261004,
+      "hyperparameters": {
+        "C": 1,
+        "solver": "lbfgs",
+        "max_iter": 1000,
+        "tolerance": 1e-05
+      },
+      "loss": "binary cross entropy with L2",
+      "class_weighting": "none",
+      "training_seconds_including_oof": 35.232364399998914,
+      "inference_seconds_per_record": 0.00653288269229681,
+      "model_size_bytes": 21752605,
+      "model_path": "E:\\Projects\\FYP\\ai\\data\\models\\optimization\\reference\\model.json",
+      "model_sha256": "d88826e70853bc768605bc9e35c041fa95ceafaa582b85d1e2eba4cfd1c0ae1c",
+      "mode": "flat",
+      "fallback": false,
+      "dev_probabilities_path": "E:\\Projects\\FYP\\ai\\data\\experiments\\optimization_20261002\\reference\\dev.npy",
+      "train_oof_probabilities_path": "E:\\Projects\\FYP\\ai\\data\\experiments\\optimization_20261002\\reference\\train_oof.npy",
+      "benchmark_sha256": "5e2da2d089e3aaddd7cbe57bf569af00bcafdbe7ddac8f28b4bc7274e3bc202b",
+      "run_id": "reference_original_tfidf_fixed_05",
+      "threshold_method": "fixed_05",
+      "thresholds": [
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ],
+      "threshold_details": null,
+      "dev_metrics": {
+        "records": 104,
+        "micro_precision": 0.7792207792207793,
+        "micro_recall": 0.4195804195804196,
+        "micro_f1": 0.5454545454545454,
+        "macro_f1": 0.12416360380736971,
+        "subset_match_rate": 0.5769230769230769,
+        "hamming_loss": 0.10683760683760683,
+        "per_label": {
+          "MEETING": {
+            "support": 13,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "DEADLINE": {
+            "support": 13,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "REPORT_REQUEST": {
+            "support": 1,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "DEPARTMENTAL_INPUT": {
+            "support": 3,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "ACTION_REQUEST": {
+            "support": 19,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "FOLLOW_UP": {
+            "support": 2,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "APPROVAL": {
+            "support": 2,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "GENERAL_UPDATE": {
+            "support": 31,
+            "predicted": 5,
+            "precision": 1.0,
+            "recall": 0.16129032258064516,
+            "f1": 0.27777777777777773,
+            "unstable_support_below_20": false
+          },
+          "NON_PROJECT": {
+            "support": 59,
+            "predicted": 72,
+            "precision": 0.7638888888888888,
+            "recall": 0.9322033898305084,
+            "f1": 0.8396946564885496,
+            "unstable_support_below_20": false
+          }
+        },
+        "macro_precision": 0.19598765432098764,
+        "macro_recall": 0.12149930137901707,
+        "exact_set_accuracy": 0.5769230769230769,
+        "no_label_predictions": 27,
+        "no_label_expected": 0,
+        "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy.",
+        "scope_classification": {
+          "accuracy": 0.6153846153846154,
+          "project_precision": 1.0,
+          "project_recall": 0.1111111111111111,
+          "project_f1": 0.2,
+          "non_project_f1": 0.7468354430379747,
+          "unassigned_records": 27
+        }
+      }
+    },
+    {
+      "model": "original custom word+bigram TF-IDF OVR logistic regression",
+      "features": "separate subject/body token namespace; sublinear TF; smoothed IDF; L2 normalization",
+      "training_records": 462,
+      "dev_records": 104,
+      "seed": 20261004,
+      "hyperparameters": {
+        "C": 1,
+        "solver": "lbfgs",
+        "max_iter": 1000,
+        "tolerance": 1e-05
+      },
+      "loss": "binary cross entropy with L2",
+      "class_weighting": "none",
+      "training_seconds_including_oof": 35.232364399998914,
+      "inference_seconds_per_record": 0.00653288269229681,
+      "model_size_bytes": 21752605,
+      "model_path": "E:\\Projects\\FYP\\ai\\data\\models\\optimization\\reference\\model.json",
+      "model_sha256": "d88826e70853bc768605bc9e35c041fa95ceafaa582b85d1e2eba4cfd1c0ae1c",
+      "mode": "flat",
+      "fallback": false,
+      "dev_probabilities_path": "E:\\Projects\\FYP\\ai\\data\\experiments\\optimization_20261002\\reference\\dev.npy",
+      "train_oof_probabilities_path": "E:\\Projects\\FYP\\ai\\data\\experiments\\optimization_20261002\\reference\\train_oof.npy",
+      "benchmark_sha256": "5e2da2d089e3aaddd7cbe57bf569af00bcafdbe7ddac8f28b4bc7274e3bc202b",
+      "run_id": "reference_original_tfidf_train_oof",
+      "threshold_method": "train_oof",
+      "thresholds": [
+        0.14567053465925547,
+        0.08067361679161392,
+        0.016909615219290276,
+        0.028712509573191956,
+        0.1536165339850538,
+        0.018908082227171587,
+        0.025901515468104857,
+        0.34067541131664736,
+        0.48903233370665217
+      ],
+      "threshold_details": {
+        "MEETING": {
+          "threshold": 0.14567053465925547,
+          "tuning_positive_support": 61,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.7096774193548387,
+          "unstable_support_below_20": false
+        },
+        "DEADLINE": {
+          "threshold": 0.08067361679161392,
+          "tuning_positive_support": 33,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.4050632911392405,
+          "unstable_support_below_20": false
+        },
+        "REPORT_REQUEST": {
+          "threshold": 0.016909615219290276,
+          "tuning_positive_support": 7,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.05128205128205128,
+          "unstable_support_below_20": true
+        },
+        "DEPARTMENTAL_INPUT": {
+          "threshold": 0.028712509573191956,
+          "tuning_positive_support": 11,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.5,
+          "unstable_support_below_20": true
+        },
+        "ACTION_REQUEST": {
+          "threshold": 0.1536165339850538,
+          "tuning_positive_support": 69,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.44117647058823534,
+          "unstable_support_below_20": false
+        },
+        "FOLLOW_UP": {
+          "threshold": 0.018908082227171587,
+          "tuning_positive_support": 7,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.25,
+          "unstable_support_below_20": true
+        },
+        "APPROVAL": {
+          "threshold": 0.025901515468104857,
+          "tuning_positive_support": 8,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.4,
+          "unstable_support_below_20": true
+        },
+        "GENERAL_UPDATE": {
+          "threshold": 0.34067541131664736,
+          "tuning_positive_support": 141,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.689419795221843,
+          "unstable_support_below_20": false
+        },
+        "NON_PROJECT": {
+          "threshold": 0.48903233370665217,
+          "tuning_positive_support": 244,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.8312159709618875,
+          "unstable_support_below_20": false
+        }
+      },
+      "dev_metrics": {
+        "records": 104,
+        "micro_precision": 0.7404580152671756,
+        "micro_recall": 0.6783216783216783,
+        "micro_f1": 0.7080291970802919,
+        "macro_f1": 0.388695489336216,
+        "subset_match_rate": 0.6730769230769231,
+        "hamming_loss": 0.08547008547008547,
+        "per_label": {
+          "MEETING": {
+            "support": 13,
+            "predicted": 7,
+            "precision": 0.7142857142857143,
+            "recall": 0.38461538461538464,
+            "f1": 0.5,
+            "unstable_support_below_20": true
+          },
+          "DEADLINE": {
+            "support": 13,
+            "predicted": 10,
+            "precision": 0.5,
+            "recall": 0.38461538461538464,
+            "f1": 0.4347826086956522,
+            "unstable_support_below_20": true
+          },
+          "REPORT_REQUEST": {
+            "support": 1,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "DEPARTMENTAL_INPUT": {
+            "support": 3,
+            "predicted": 1,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5,
+            "unstable_support_below_20": true
+          },
+          "ACTION_REQUEST": {
+            "support": 19,
+            "predicted": 15,
+            "precision": 0.4666666666666667,
+            "recall": 0.3684210526315789,
+            "f1": 0.4117647058823529,
+            "unstable_support_below_20": true
+          },
+          "FOLLOW_UP": {
+            "support": 2,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "APPROVAL": {
+            "support": 2,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "GENERAL_UPDATE": {
+            "support": 31,
+            "predicted": 22,
+            "precision": 0.9545454545454546,
+            "recall": 0.6774193548387096,
+            "f1": 0.7924528301886793,
+            "unstable_support_below_20": false
+          },
+          "NON_PROJECT": {
+            "support": 59,
+            "predicted": 76,
+            "precision": 0.7631578947368421,
+            "recall": 0.9830508474576272,
+            "f1": 0.8592592592592594,
+            "unstable_support_below_20": false
+          }
+        },
+        "macro_precision": 0.48873952558163086,
+        "macro_recall": 0.3479394841657798,
+        "exact_set_accuracy": 0.6730769230769231,
+        "no_label_predictions": 2,
+        "no_label_expected": 0,
+        "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy.",
+        "scope_classification": {
+          "accuracy": 0.7980769230769231,
+          "project_precision": 0.9615384615384616,
+          "project_recall": 0.5555555555555556,
+          "project_f1": 0.704225352112676,
+          "non_project_f1": 0.8467153284671532,
+          "unassigned_records": 2
+        }
+      }
+    }
+  ],
+  "final_candidates": [
+    {
+      "model": "original custom word+bigram TF-IDF OVR logistic regression",
+      "features": "separate subject/body token namespace; sublinear TF; smoothed IDF; L2 normalization",
+      "training_records": 462,
+      "dev_records": 104,
+      "seed": 20261004,
+      "hyperparameters": {
+        "C": 1,
+        "solver": "lbfgs",
+        "max_iter": 1000,
+        "tolerance": 1e-05
+      },
+      "loss": "binary cross entropy with L2",
+      "class_weighting": "none",
+      "training_seconds_including_oof": 35.232364399998914,
+      "inference_seconds_per_record": 0.00653288269229681,
+      "model_size_bytes": 21752605,
+      "model_path": "E:\\Projects\\FYP\\ai\\data\\models\\optimization\\reference\\model.json",
+      "model_sha256": "d88826e70853bc768605bc9e35c041fa95ceafaa582b85d1e2eba4cfd1c0ae1c",
+      "mode": "flat",
+      "fallback": false,
+      "dev_probabilities_path": "E:\\Projects\\FYP\\ai\\data\\experiments\\optimization_20261002\\reference\\dev.npy",
+      "train_oof_probabilities_path": "E:\\Projects\\FYP\\ai\\data\\experiments\\optimization_20261002\\reference\\train_oof.npy",
+      "benchmark_sha256": "5e2da2d089e3aaddd7cbe57bf569af00bcafdbe7ddac8f28b4bc7274e3bc202b",
+      "run_id": "reference_original_tfidf_train_oof",
+      "threshold_method": "train_oof",
+      "thresholds": [
+        0.14567053465925547,
+        0.08067361679161392,
+        0.016909615219290276,
+        0.028712509573191956,
+        0.1536165339850538,
+        0.018908082227171587,
+        0.025901515468104857,
+        0.34067541131664736,
+        0.48903233370665217
+      ],
+      "threshold_details": {
+        "MEETING": {
+          "threshold": 0.14567053465925547,
+          "tuning_positive_support": 61,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.7096774193548387,
+          "unstable_support_below_20": false
+        },
+        "DEADLINE": {
+          "threshold": 0.08067361679161392,
+          "tuning_positive_support": 33,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.4050632911392405,
+          "unstable_support_below_20": false
+        },
+        "REPORT_REQUEST": {
+          "threshold": 0.016909615219290276,
+          "tuning_positive_support": 7,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.05128205128205128,
+          "unstable_support_below_20": true
+        },
+        "DEPARTMENTAL_INPUT": {
+          "threshold": 0.028712509573191956,
+          "tuning_positive_support": 11,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.5,
+          "unstable_support_below_20": true
+        },
+        "ACTION_REQUEST": {
+          "threshold": 0.1536165339850538,
+          "tuning_positive_support": 69,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.44117647058823534,
+          "unstable_support_below_20": false
+        },
+        "FOLLOW_UP": {
+          "threshold": 0.018908082227171587,
+          "tuning_positive_support": 7,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.25,
+          "unstable_support_below_20": true
+        },
+        "APPROVAL": {
+          "threshold": 0.025901515468104857,
+          "tuning_positive_support": 8,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.4,
+          "unstable_support_below_20": true
+        },
+        "GENERAL_UPDATE": {
+          "threshold": 0.34067541131664736,
+          "tuning_positive_support": 141,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.689419795221843,
+          "unstable_support_below_20": false
+        },
+        "NON_PROJECT": {
+          "threshold": 0.48903233370665217,
+          "tuning_positive_support": 244,
+          "tuning_records": 462,
+          "best_binary_f1_before_exclusivity": 0.8312159709618875,
+          "unstable_support_below_20": false
+        }
+      },
+      "dev_metrics": {
+        "records": 104,
+        "micro_precision": 0.7404580152671756,
+        "micro_recall": 0.6783216783216783,
+        "micro_f1": 0.7080291970802919,
+        "macro_f1": 0.388695489336216,
+        "subset_match_rate": 0.6730769230769231,
+        "hamming_loss": 0.08547008547008547,
+        "per_label": {
+          "MEETING": {
+            "support": 13,
+            "predicted": 7,
+            "precision": 0.7142857142857143,
+            "recall": 0.38461538461538464,
+            "f1": 0.5,
+            "unstable_support_below_20": true
+          },
+          "DEADLINE": {
+            "support": 13,
+            "predicted": 10,
+            "precision": 0.5,
+            "recall": 0.38461538461538464,
+            "f1": 0.4347826086956522,
+            "unstable_support_below_20": true
+          },
+          "REPORT_REQUEST": {
+            "support": 1,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "DEPARTMENTAL_INPUT": {
+            "support": 3,
+            "predicted": 1,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5,
+            "unstable_support_below_20": true
+          },
+          "ACTION_REQUEST": {
+            "support": 19,
+            "predicted": 15,
+            "precision": 0.4666666666666667,
+            "recall": 0.3684210526315789,
+            "f1": 0.4117647058823529,
+            "unstable_support_below_20": true
+          },
+          "FOLLOW_UP": {
+            "support": 2,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "APPROVAL": {
+            "support": 2,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "GENERAL_UPDATE": {
+            "support": 31,
+            "predicted": 22,
+            "precision": 0.9545454545454546,
+            "recall": 0.6774193548387096,
+            "f1": 0.7924528301886793,
+            "unstable_support_below_20": false
+          },
+          "NON_PROJECT": {
+            "support": 59,
+            "predicted": 76,
+            "precision": 0.7631578947368421,
+            "recall": 0.9830508474576272,
+            "f1": 0.8592592592592594,
+            "unstable_support_below_20": false
+          }
+        },
+        "macro_precision": 0.48873952558163086,
+        "macro_recall": 0.3479394841657798,
+        "exact_set_accuracy": 0.6730769230769231,
+        "no_label_predictions": 2,
+        "no_label_expected": 0,
+        "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy.",
+        "scope_classification": {
+          "accuracy": 0.7980769230769231,
+          "project_precision": 0.9615384615384616,
+          "project_recall": 0.5555555555555556,
+          "project_f1": 0.704225352112676,
+          "non_project_f1": 0.8467153284671532,
+          "unassigned_records": 2
+        }
+      }
+    }
+  ],
+  "reloaded_predictions_match": true
+}

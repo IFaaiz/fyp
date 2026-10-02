@@ -1,0 +1,15 @@
+{
+  "verified": true,
+  "benchmark_sha256": "5e2da2d089e3aaddd7cbe57bf569af00bcafdbe7ddac8f28b4bc7274e3bc202b",
+  "total_records": 668,
+  "partition_counts": {
+    "train": 462,
+    "dev": 104,
+    "test": 102
+  },
+  "known_nearcopy_pairs_checked": 41,
+  "all_known_pairs": 42,
+  "split_and_cv_reproduced": true,
+  "test_text_or_errors_displayed": false,
+  "development_test_guard_verified": true
+}
