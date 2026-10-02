@@ -1,0 +1,71 @@
+{
+  "index_sha256": "d864f94d4bc68bcca2d3f017fe7b5b7ef69bad5bcd41fde80f8b0905cfe2a0f1",
+  "records": 28129,
+  "components": 22434,
+  "text_views_indexed": 43701,
+  "link_reason_counts": {
+    "body_exact": 1278,
+    "body_tokens": 82,
+    "body_compact": 22,
+    "thread:mailex": 2436,
+    "long_body_shingle_containment": 202,
+    "substantial_ordered_text_containment": 1153,
+    "near_token_shingles": 102,
+    "derived_fragment_containment": 420
+  },
+  "dataset_record_counts": {
+    "airspace": 711,
+    "enron": 18089,
+    "mailex": 3936,
+    "parakweet": 4649,
+    "radar_action": 744
+  },
+  "unresolved_identity_counts": {
+    "mailex": 3936,
+    "parakweet": 4649,
+    "radar_action": 86
+  },
+  "cross_dataset_components": 464,
+  "source_files": [
+    {
+      "dataset_id": "enron",
+      "file_sha256": "32ce3779832850b6d8358edfda9c7e3f4d84adec46912bd8aad9470421758260",
+      "records": 11889
+    },
+    {
+      "dataset_id": "enron",
+      "file_sha256": "62e97bbc6634f9656314f76b3775a01491ac298f605ee4f59f422d093c8efd38",
+      "records": 1200
+    },
+    {
+      "dataset_id": "enron",
+      "file_sha256": "8956bb6e3753d700e245c6328f82a9b4bdf29239290ecb05ed30d74b8570d9f4",
+      "records": 5000
+    },
+    {
+      "dataset_id": "mailex",
+      "file_sha256": "29816b32caaca0e92356b4fb266e36ef6fe754a36eea89f2f2535b2b3f24484b",
+      "records": 3936
+    },
+    {
+      "dataset_id": "airspace",
+      "file_sha256": "ccf75ed2551c42eafd00da7c98215acbd9ff552deddb29b0f561979d4f64f980",
+      "records": 711
+    },
+    {
+      "dataset_id": "radar_action",
+      "file_sha256": "624cbfc5b8abcff3b1ee65e0cae189c2e11401a77bc9860897ba165e40360d5e",
+      "records": 744
+    },
+    {
+      "dataset_id": "parakweet",
+      "file_sha256": "89dea44e3f98c1f1f1bb2899edb007d2e3bd0f58288daa3e5a46aeee3513a8b7",
+      "records": 4649
+    }
+  ],
+  "scope": "All 11889 historical source IDs inventoried in prior annotation/candidate/model artifacts, all 6,200 newly sampled source candidates, plus all acquired Airspace/RADAR/Parakweet and existing MailEx prepared rows. CEREC and future new datasets must enter a new audited snapshot before use.",
+  "candidate_source_boundary": "600 reserved evaluation candidates and 4,285 TRAIN screening candidates; annotation gates remain pending",
+  "training_permission_established": false,
+  "evaluation_labels_created": false,
+  "limitation": "Full-corpus Enron streaming recovered all known historical IDs; not all 517,401 rows are in the global index. This snapshot covers declared development/evaluation inputs. Unresolved Enron-derived original identities cannot clear training by long-text similarity alone."
+}

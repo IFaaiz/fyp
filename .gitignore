@@ -10,3 +10,12 @@ ai/data/**
 
 # Downloaded pretrained checkpoints, including upstream README files.
 ai/data/cache/
+
+# Auxiliary corpus licenses/source text stay local, including archive READMEs.
+ai/data/raw/airspace/
+ai/data/raw/radar_action/
+ai/data/raw/parakweet/
+ai/data/raw/bc3/
+ai/data/raw/cerec/
+ai/data/raw/cspace/
+ai/data/raw/avocado/

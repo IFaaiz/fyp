@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fyp:structured-primitive-schema:2-alpha",
+  "title": "FYP internal structured primitive annotation",
+  "description": "Internal evidence-first v2-alpha contract. It does not replace or modify the public canonical email annotation schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "email_id", "current_source_id", "project_scope", "evidence",
+    "actors", "actions", "documents", "departments", "temporal_entities", "meetings",
+    "deadlines", "approvals", "status_updates", "thread_changes", "acts", "needs_review",
+    "uncertainty_reasons"
+  ],
+  "properties": {
+    "schema_version": {"const": "2-alpha"},
+    "email_id": {"type": "string", "minLength": 1},
+    "current_source_id": {"type": "string", "minLength": 1, "description": "Authentic source ID for this message; separate from a local email_id alias."},
+    "project_scope": {"$ref": "#/$defs/projectScope"},
+    "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+    "actors": {"type": "array", "items": {"$ref": "#/$defs/actor"}},
+    "actions": {"type": "array", "items": {"$ref": "#/$defs/action"}},
+    "documents": {"type": "array", "items": {"$ref": "#/$defs/document"}},
+    "departments": {"type": "array", "items": {"$ref": "#/$defs/department"}},
+    "temporal_entities": {"type": "array", "items": {"$ref": "#/$defs/temporalEntity"}},
+    "meetings": {"type": "array", "items": {"$ref": "#/$defs/meeting"}},
+    "deadlines": {"type": "array", "items": {"$ref": "#/$defs/deadline"}},
+    "approvals": {"type": "array", "items": {"$ref": "#/$defs/approval"}},
+    "status_updates": {"type": "array", "items": {"$ref": "#/$defs/statusUpdate"}},
+    "thread_changes": {"type": "array", "items": {"$ref": "#/$defs/threadChange"}},
+    "acts": {"type": "array", "items": {"$ref": "#/$defs/act"}},
+    "needs_review": {"type": "boolean"},
+    "uncertainty_reasons": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1},
+    "ids": {"type": "array", "items": {"$ref": "#/$defs/id"}, "uniqueItems": true},
+    "confidence": {"enum": ["supported", "uncertain"]},
+    "evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "source_id", "field", "start", "end", "text"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "source_id": {"$ref": "#/$defs/id"},
+        "field": {"enum": ["subject", "current_message"]},
+        "start": {"type": "integer", "minimum": 0, "description": "Inclusive Python Unicode code-point offset."},
+        "end": {"type": "integer", "minimum": 1, "description": "Exclusive Python Unicode code-point offset."},
+        "text": {"type": "string", "minLength": 1}
+      }
+    },
+    "projectScope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["value", "confidence", "evidence_ids"],
+      "properties": {
+        "value": {"enum": ["PROJECT", "NON_PROJECT", "UNCERTAIN"]},
+        "confidence": {"$ref": "#/$defs/confidence"},
+        "evidence_ids": {"$ref": "#/$defs/ids", "minItems": 1}
+      }
+    },
+    "actor": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "named", "name_evidence_ids", "evidence_ids", "confidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["PERSON", "GROUP", "DEPARTMENT", "ROLE", "UNKNOWN"]},
+        "named": {"type": "boolean"},
+        "name_evidence_ids": {"$ref": "#/$defs/ids"},
+        "evidence_ids": {"$ref": "#/$defs/ids", "minItems": 1},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "action": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "state", "category", "evidence_ids", "actor_id", "confidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "state": {"enum": ["requested", "assigned", "committed", "completed", "cancelled"]},
+        "category": {"enum": ["OPERATIONAL", "DOCUMENT_TRANSFER", "DEPARTMENTAL_CONTRIBUTION", "APPROVAL_TRANSACTION", "OTHER", "UNCERTAIN"]},
+        "evidence_ids": {"$ref": "#/$defs/ids", "minItems": 1},
+        "actor_id": {"anyOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "document": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "state", "document_type", "named", "name_evidence_ids", "evidence_ids", "confidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "state": {"enum": ["requested", "expected", "submitted", "delivered", "missing", "reviewed", "unknown"]},
+        "document_type": {"enum": ["PROJECT_DELIVERABLE", "OTHER", "UNCERTAIN"]},
+        "named": {"type": "boolean"},
+        "name_evidence_ids": {"$ref": "#/$defs/ids"},
+        "evidence_ids": {"$ref": "#/$defs/ids", "minItems": 1},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "department": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "role", "named", "name_evidence_ids", "evidence_ids", "confidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "role": {"enum": ["contributor", "owner", "recipient", "mention_only"]},
+        "named": {"type": "boolean"},
+        "name_evidence_ids": {"$ref": "#/$defs/ids"},
+        "evidence_ids": {"$ref": "#/$defs/ids", "minItems": 1},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "temporalEntity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "evidence_ids", "confidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["DATE", "TIME"]},
+        "evidence_ids": {"$ref": "#/$defs/ids", "minItems": 1},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "meeting": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "state", "evidence_ids", "date_ids", "time_ids", "participant_actor_ids", "confidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "state": {"enum": ["proposed", "scheduled", "rescheduled", "cancelled", "completed"]},
+        "evidence_ids": {"$ref": "#/$defs/ids", "minItems": 1},
+        "date_ids": {"$ref": "#/$defs/ids"},
+        "time_ids": {"$ref": "#/$defs/ids"},
+        "participant_actor_ids": {"$ref": "#/$defs/ids"},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "deadline": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "target_type", "target_id", "due_date_ids", "due_time_ids", "due_relation_evidence_ids", "confidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "target_type": {"enum": ["ACTION", "DOCUMENT"]},
+        "target_id": {"$ref": "#/$defs/id"},
+        "due_date_ids": {"$ref": "#/$defs/ids"},
+        "due_time_ids": {"$ref": "#/$defs/ids"},
+        "due_relation_evidence_ids": {"$ref": "#/$defs/ids", "minItems": 1},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "approval": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "state", "formality", "target_type", "target_id", "evidence_ids", "confidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "state": {"enum": ["requested", "granted", "rejected", "withheld", "conditional"]},
+        "formality": {"enum": ["FORMAL", "INFORMAL", "UNCERTAIN"]},
+        "target_type": {"enum": ["ACTION", "DOCUMENT", "PROJECT", "IMPLICIT"]},
+        "target_id": {"anyOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]},
+        "evidence_ids": {"$ref": "#/$defs/ids", "minItems": 1},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "statusUpdate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "evidence_ids", "confidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["progress", "completed", "blocker", "decision", "work_state_change", "other"]},
+        "evidence_ids": {"$ref": "#/$defs/ids", "minItems": 1},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "threadChange": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "target_type", "target_id", "prior_expectation", "context_evidence_ids", "evidence_ids", "confidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["current_chase", "escalation", "future_follow_up_instruction", "deadline_changed", "owner_changed", "document_missing", "document_delivered", "meeting_rescheduled", "meeting_cancelled", "other"]},
+        "target_type": {"enum": ["ACTION", "DOCUMENT", "DEPARTMENT", "MEETING", "APPROVAL", "IMPLICIT"]},
+        "target_id": {"anyOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]},
+        "prior_expectation": {"enum": ["explicit_current", "context", "unknown", "not_applicable"]},
+        "context_evidence_ids": {"$ref": "#/$defs/ids"},
+        "evidence_ids": {"$ref": "#/$defs/ids", "minItems": 1},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "act": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "speech_act", "target_type", "target_id", "target_formality", "evidence_ids", "confidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "speech_act": {"enum": ["REQUEST", "INFORM", "COMMIT", "APPROVE", "REJECT", "DELIVER", "PROPOSE", "REMIND", "SCHEDULE", "CANCEL", "RESCHEDULE"]},
+        "target_type": {"enum": ["ACTION", "DOCUMENT", "DEPARTMENT", "MEETING", "DEADLINE", "APPROVAL", "STATUS_UPDATE", "THREAD_CHANGE", "IMPLICIT", "NONE"]},
+        "target_id": {"anyOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]},
+        "target_formality": {"enum": ["PROJECT_DELIVERABLE", "OTHER", "UNCERTAIN", "NOT_APPLICABLE"], "description": "Only DOCUMENT_REQUEST with target_type IMPLICIT may use a value other than NOT_APPLICABLE; the value must be supported by its current evidence."},
+        "evidence_ids": {"$ref": "#/$defs/ids", "minItems": 1},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    }
+  },
+  "x-runtime-validation": [
+    "acts contain speech_act plus a typed target; they contain no final-label prediction/function field. The deterministic mapper derives labels from speech act, target type, primitive state, and source evidence.",
+    "All IDs are unique within their collection and all references resolve to the declared primitive type.",
+    "Evidence text must exactly equal the Python Unicode code-point source slice; end is exclusive.",
+    "current_source_id is explicit. Every current act and substantive current primitive cites current_message evidence from it.",
+    "The caller supplies sources as {source_id: {subject, current_message, authored_ranges?}}. If authored_ranges is omitted, current_message is asserted to contain only authored current text; no quote heuristics are applied. If supplied, current evidence must lie wholly inside one authored range.",
+    "Deadline relations require an action or document target plus an explicit due expression; meeting dates and testing windows cannot be targets.",
+    "ACTION_REQUEST requires REQUEST to target an operational action in requested/assigned state; document transfer, departmental contribution, approval transaction, and other action categories do not qualify.",
+    "REPORT_REQUEST requires REQUEST to target a requested PROJECT_DELIVERABLE, or an explicit implicit PROJECT_DELIVERABLE target. A document mention/state alone never maps.",
+    "DEPARTMENTAL_INPUT requires a department with contributor role; recipient and mention_only roles never qualify.",
+    "General update requires a known substantive status kind; other is review-only.",
+    "Context evidence can support a prior expectation but cannot substitute for evidence of a current act."
+  ]
+}

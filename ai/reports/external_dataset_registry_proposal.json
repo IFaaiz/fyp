@@ -1,0 +1,394 @@
+{
+  "proposal_version": 1,
+  "reviewed_on": "2026-10-02",
+  "raw_text_allowed_in_git": false,
+  "datasets": [
+    {
+      "dataset_name": "Airspace RADAR Conference Planning Email Corpus",
+      "version": "Airspace wargaming v1.0",
+      "official_source": "https://www.cs.cmu.edu/~airspace/",
+      "download_url": "https://www.cs.cmu.edu/~airspace/corpus/Airspace_wargaming_1.0.zip",
+      "origin_corpus": "CMU RADAR / Airspace synthetic conference-planning scenario",
+      "overlap_family": "AIRSPACE",
+      "license": "CMU source page says do not redistribute; no SPDX or permissive license identified",
+      "redistribution_allowed": false,
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "conference/event understanding",
+        "change/request auxiliary supervision",
+        "noise/scope auxiliary supervision",
+        "reply relation auxiliary supervision"
+      ],
+      "original_labels": {
+        "X-RADAR Label": [
+          "BRIEFING",
+          "CHANGE-ROOM",
+          "CHANGE-SESSION",
+          "CHANGE-SPEAKER",
+          "INFO-REQ",
+          "MISC-ACTION",
+          "WEB-VIO",
+          "WEB-WBE"
+        ],
+        "Noise": "boolean field; preserve independently",
+        "Replyto": "in-corpus message ID or 0, per syntax guide"
+      },
+      "mapping_policy": "Preserve exact source labels and fields. Do not automatically map INFO-REQ to REPORT_REQUEST or MISC-ACTION to ACTION_REQUEST. Any future crosswalk must be independently reviewed and auxiliary-only.",
+      "checksum": {
+        "algorithm": "SHA-256",
+        "value": "04f8c82dc96ca00d565b5598e73424e35dbac4692ffa4d98271fe0c54bcc31a7",
+        "bytes": 1063031,
+        "basis": "Downloaded ZIP bytes reported by Airspace integration agent; CRC check passed"
+      },
+      "download_date": "2026-10-02",
+      "local_path": "ai/data/raw/airspace/ (ignored local raw acquisition, integration-agent reported)",
+      "status": "downloaded_research_use_nonredistributable",
+      "counts": {
+        "source_cited": {
+          "messages": 711,
+          "source": "CMU Airspace project page"
+        },
+        "observed": {
+          "eml_records": 711,
+          "unique_source_ids": 711,
+          "labeled_messages": 580,
+          "unlabeled_messages": 131,
+          "messages_with_two_labels": 28,
+          "label_instances": 608,
+          "label_counts": {
+            "BRIEFING": 101,
+            "CHANGE-ROOM": 112,
+            "CHANGE-SESSION": 74,
+            "CHANGE-SPEAKER": 63,
+            "INFO-REQ": 63,
+            "MISC-ACTION": 63,
+            "WEB-VIO": 96,
+            "WEB-WBE": 36
+          },
+          "noise_false": 662,
+          "noise_true": 49,
+          "replyto_values": {
+            "0": 711
+          },
+          "observed_note": "Archive CRC passed. X-RADAR-Thread aggregation histogram remains under integration-agent reconciliation."
+        }
+      },
+      "source_urls": [
+        "https://www.cs.cmu.edu/~airspace/",
+        "https://www.cs.cmu.edu/~airspace/corpus/README_EmailSyntax_1.0.pdf"
+      ]
+    },
+    {
+      "dataset_name": "RADAR Action-Item Dataset",
+      "version": "CMU public TGZ release; version not stated",
+      "official_source": "https://www.cs.cmu.edu/~pbennett/action-item-dataset.html",
+      "download_url": "http://www.cs.cmu.edu/~pbennett/action-item-dataset.tgz",
+      "origin_corpus": "CMU RADAR project anonymized email corpus",
+      "overlap_family": "RADAR_ACTION",
+      "license": "No named open license found. CMU page says an IRB panel review found the anonymized data exempt and distributable for research purposes.",
+      "redistribution_allowed": "research-purpose distribution stated by CMU; broader redistribution rights not stated",
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "action presence auxiliary classification",
+        "action-item span extraction"
+      ],
+      "original_labels": {
+        "action_item_presence": [
+          "positive",
+          "negative"
+        ],
+        "action_item_span": "character offsets; source spans validated against full message text",
+        "additional_span_types": [
+          "ANIMAL",
+          "CARDINAL",
+          "CONTACT_INFO",
+          "DATE",
+          "DISEASE",
+          "EVENT",
+          "FAC",
+          "FAC_DESC",
+          "GAME",
+          "GPE",
+          "GPE_DESC",
+          "LANGUAGE",
+          "LAW",
+          "LOCATION",
+          "MONEY",
+          "NATIONALITY",
+          "ORDINAL",
+          "ORGANIZATION",
+          "ORG_DESC",
+          "PERCENT",
+          "PERSON",
+          "PER_DESC",
+          "PLANT",
+          "PRODUCT",
+          "PRODUCT_DESC",
+          "QUANTITY",
+          "SUBSTANCE",
+          "TIME",
+          "WORK_OF_ART",
+          "sentence"
+        ]
+      },
+      "mapping_policy": "Keep action-item presence and spans as source tasks. Do not map every action-item positive to FYP ACTION_REQUEST. Preserve the released anonymized text and never reverse token substitution.",
+      "checksum": {
+        "algorithm": "SHA-256",
+        "value": "1cee24880166b982ea25feaae0a0b23a04b7edf4de7b6c8ca098c390c5667e43",
+        "bytes": 428285,
+        "basis": "Downloaded TGZ bytes reported by RADAR Action-Item integration agent"
+      },
+      "download_date": "2026-10-02",
+      "local_path": null,
+      "status": "downloaded_research_distribution_statement_no_open_license",
+      "counts": {
+        "source_cited": {
+          "messages": 744,
+          "source": "CMU RADAR Action-Item dataset page"
+        },
+        "observed": {
+          "message_files": 744,
+          "judgment_rows": 744,
+          "positive_judgments": 328,
+          "negative_judgments": 416,
+          "action_item_spans": 416,
+          "message_annotation_mappings": 744,
+          "annotation_files": 744,
+          "additional_annotation_records": 20815,
+          "additional_annotation_types": 30
+        },
+        "observed_note": "Counts reported from an independent archive audit by the integration agent."
+      },
+      "source_urls": [
+        "https://www.cs.cmu.edu/~pbennett/action-item-dataset.html",
+        "http://www.cs.cmu.edu/~pbennett/action-item-dataset.tgz"
+      ]
+    },
+    {
+      "dataset_name": "Parakweet Email Intent Data Set",
+      "version": "ParakweetLabs EmailIntentDataSet repository master; no tagged release cited",
+      "official_source": "https://github.com/ParakweetLabs/EmailIntentDataSet",
+      "download_url": "https://raw.githubusercontent.com/ParakweetLabs/EmailIntentDataSet/master/src/resources/Ask0729-fixed.txt",
+      "origin_corpus": "Enron email corpus",
+      "overlap_family": "ENRON",
+      "license": "Apache License 2.0 is declared for the repository/data release; preserve Enron provenance and reassess embedded-source rights before redistribution outside the stated release.",
+      "redistribution_allowed": "Apache-2.0 terms are declared by the source repository; source-origin scope should be reviewed before republishing email text",
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "binary intent auxiliary supervision",
+        "speech-act representation learning"
+      ],
+      "original_labels": [
+        "Yes",
+        "No"
+      ],
+      "mapping_policy": "Treat Yes/No as the source binary intent task only. The positive class means primarily request/propose, with some commit examples containing a date/time. Never equate Yes with any single FYP label.",
+      "checksum": null,
+      "download_date": null,
+      "local_path": null,
+      "status": "public_author_repository_available_count_discrepancy_to_resolve",
+      "counts": {
+        "source_cited": {
+          "train_cases": 4213,
+          "train_positive": 1631,
+          "test_cases": 991,
+          "test_positive": 277,
+          "source": "ParakweetLabs author wiki"
+        },
+        "observed": null,
+        "web_file_metadata": {
+          "train_lines": 3657,
+          "train_size_kb": 340,
+          "test_lines": 992,
+          "test_size_kb": 93.4
+        },
+        "observed_note": "Current GitHub blob metadata line counts are not a local parsed example count; reconcile the train/test discrepancy during approved ingestion."
+      },
+      "source_urls": [
+        "https://github.com/ParakweetLabs/EmailIntentDataSet/wiki",
+        "https://raw.githubusercontent.com/ParakweetLabs/EmailIntentDataSet/master/src/resources/testSet-qualifiedBatch-fixed.txt",
+        "https://raw.githubusercontent.com/ParakweetLabs/EmailIntentDataSet/master/LICENSE"
+      ]
+    },
+    {
+      "dataset_name": "CEREC: Corpus for Entity Resolution in Email Conversations",
+      "version": "COLING 2020 author release; paper has updated author version",
+      "official_source": "https://github.com/paragdakle/emailcoref",
+      "download_url": "https://github.com/paragdakle/emailcoref/blob/master/data/COLING/cerec.zip",
+      "origin_corpus": "Enron email corpus",
+      "overlap_family": "ENRON",
+      "license": "Author repo identifies Apache-2.0; paper states CC BY 4.0. Scope for the Enron-derived message text embedded in corpus files is not explicit; treat message-bearing corpus redistribution rights as unresolved.",
+      "redistribution_allowed": null,
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "email entity mention and coreference auxiliary supervision",
+        "thread entity continuity"
+      ],
+      "original_labels": [
+        "PERSON",
+        "ORGANIZATION",
+        "LOCATION",
+        "DIGITAL",
+        "mention spans",
+        "coreference chains",
+        "message/section/speaker features where present"
+      ],
+      "mapping_policy": "Preserve source entity and chain annotations. Do not convert them into FYP labels. Enron overlap controls apply across MailEx, Parakweet, CEREC, and all FYP splits.",
+      "checksum": null,
+      "download_date": null,
+      "local_path": null,
+      "status": "author_archive_public_license_scope_review_required",
+      "counts": {
+        "source_cited": {
+          "threads": 6001,
+          "messages": 36448,
+          "coreference_chains_repository_and_coling_paper": 38996,
+          "coreference_chains_updated_author_arxiv": 60383
+        },
+        "observed": null,
+        "web_file_metadata": {
+          "archive_size_mb": 16.2
+        },
+        "observed_note": "No local archive parse. Chain count differs between the original paper/repo and updated author paper."
+      },
+      "source_urls": [
+        "https://github.com/paragdakle/emailcoref",
+        "https://aclanthology.org/2020.coling-main.30.pdf",
+        "https://arxiv.org/abs/2105.10606"
+      ]
+    },
+    {
+      "dataset_name": "BC3 (British Columbia Conversation Corpus)",
+      "version": "BC3 release; version not stated on current download page",
+      "official_source": "https://www.cs.ubc.ca/labs/lci/bc3/download.html",
+      "download_url": null,
+      "origin_corpus": "W3C mailing-list emails",
+      "overlap_family": "W3C",
+      "license": "Creative Commons Attribution-ShareAlike 3.0 Unported (corpus; stated by UBC). The separate BC3 annotation framework is MIT-licensed.",
+      "redistribution_allowed": "yes, subject to CC BY-SA 3.0 attribution and share-alike terms",
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "thread structure auxiliary evaluation",
+        "dialog-act/speech-act auxiliary evaluation",
+        "summary evidence experiments"
+      ],
+      "original_labels": [
+        "sentence-level dialogue acts/speech acts",
+        "extractive and abstractive summaries",
+        "subjectivity annotations",
+        "topic annotations in later release"
+      ],
+      "mapping_policy": "Preserve original BC3 layers. Use only as a small auxiliary/evaluation corpus; no automatic conversion to FYP labels.",
+      "checksum": null,
+      "download_date": null,
+      "local_path": null,
+      "status": "free_download_requires_user_information_form_not_submitted",
+      "counts": {
+        "source_cited": {
+          "threads": 40,
+          "sentences": 3222
+        },
+        "observed": null,
+        "observed_note": "No local acquisition; source paper reports corpus counts."
+      },
+      "source_urls": [
+        "https://www.cs.ubc.ca/labs/lci/bc3/download.html",
+        "https://aclanthology.org/D10-1.pdf"
+      ]
+    },
+    {
+      "dataset_name": "CSpace management-course email corpus",
+      "version": "Research-paper described corpus; no public release version found",
+      "official_source": "https://www.cs.cmu.edu/~vitor/publications/papers/carvalho06hltacts.pdf",
+      "download_url": null,
+      "origin_corpus": "CMU CSpace simulated management course",
+      "overlap_family": "CSPACE",
+      "license": "No public dataset license found. Author research states parts were accessible under group agreements; another author paper states privacy prevents corpus distribution.",
+      "redistribution_allowed": false,
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "speech-act auxiliary learning if access is later authorized"
+      ],
+      "original_labels": [
+        "Request",
+        "Deliver",
+        "Propose",
+        "Commit",
+        "Amend",
+        "Meeting",
+        "deliveredData (dData)"
+      ],
+      "mapping_policy": "Acquisition pending. If access is later authorized, preserve original verb/noun pairs; no automatic mapping to FYP classes.",
+      "checksum": null,
+      "download_date": null,
+      "local_path": null,
+      "status": "acquisition_pending_no_authorized_public_download",
+      "counts": {
+        "source_cited": {
+          "corpus_messages_approx": 15000,
+          "labeled_messages_in_one_study": 1716
+        },
+        "observed": null,
+        "observed_note": "Research-paper counts only; no release bytes inspected."
+      },
+      "source_urls": [
+        "https://www.cs.cmu.edu/~vitor/publications/papers/carvalho06hltacts.pdf",
+        "https://www.cs.cmu.edu/~einat/sigir-06.pdf"
+      ]
+    },
+    {
+      "dataset_name": "Avocado Research Email Collection",
+      "version": "LDC2015T03 v1.0.3 documentation",
+      "official_source": "https://catalog.ldc.upenn.edu/LDC2015T03",
+      "download_url": null,
+      "origin_corpus": "Avocado private organizational PST mailboxes",
+      "overlap_family": "AVOCADO",
+      "license": "Restricted LDC Avocado Collection Organizational License Agreement and End User Agreement; research/technology development only, controlled organization-limited access, no redistribution or public reproduction.",
+      "redistribution_allowed": false,
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "enterprise/Outlook language transfer",
+        "real email thread modeling",
+        "calendar/appointment/task auxiliary learning"
+      ],
+      "original_labels": [
+        "no manually assigned intent taxonomy stated",
+        "metadata/item types: email, attachment, extracted file, contact, appointment, task, schedule, report, journal, stickynote, other",
+        "reply_to and duplicate relationships in metadata"
+      ],
+      "mapping_policy": "Use only after institution signs both agreements, confirms quote/access, and approves PII handling. Keep raw files private and organization access controlled. Publish no source excerpts or raw-derived public content.",
+      "checksum": null,
+      "download_date": null,
+      "local_path": null,
+      "status": "access_pending_account_specific_fee_and_institutional_approval",
+      "counts": {
+        "source_cited": {
+          "source_pst_accounts": 282,
+          "processed_custodians": 279,
+          "total_items": 2033740,
+          "email_items_including_duplicates": 938035,
+          "nonduplicate_email_text_items": 614461
+        },
+        "observed": null,
+        "observed_note": "Counts are from LDC README v1.0.3, not a local acquisition."
+      },
+      "source_urls": [
+        "https://catalog.ldc.upenn.edu/LDC2015T03",
+        "https://catalog.ldc.upenn.edu/docs/LDC2015T03/README.txt",
+        "https://catalog.ldc.upenn.edu/license/Avocado%20Collection%20-%20Organization%20Agreement.pdf",
+        "https://catalog.ldc.upenn.edu/license/Avocado%20Collection%20-%20Individual%20Agreement.pdf",
+        "https://catalog.ldc.upenn.edu/LDC2026MNP"
+      ],
+      "access_notes": {
+        "current_cost": "No public amount shown. The LDC2015T03 page says login for the applicable fee.",
+        "bahria_university_ldc_membership": "Unknown; no public official evidence located.",
+        "membership_context": "Current 2026 LDC not-for-profit membership is intended for universities; specified datasets can incur extra charges."
+      }
+    }
+  ],
+  "proposal_status": "historical acquisition research proposal; superseded for current decisions by ai/config/dataset_registry.json",
+  "later_acquisition_reports": [
+    "parakweet_registry_proposal.json",
+    "cerec_registry_proposal.json"
+  ]
+}

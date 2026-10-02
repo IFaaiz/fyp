@@ -1,0 +1,174 @@
+{
+  "dataset": "cerec",
+  "source_family": "ENRON",
+  "repository_url": "https://github.com/paragdakle/emailcoref",
+  "pinned_commit": "d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9",
+  "archive_git_blob_sha": "4b86f155028285e93b50396a8bc5a4975875ed41",
+  "source_archive_sha256": "6719223815d6a2301c01a596892d76c0cf33a03fff0ac53f7b43de4b93bc830b",
+  "source_archive_bytes": 16994267,
+  "source_file_roles": {
+    "cerec.conll": "full_corpus",
+    "cerec.validation.14.conll": "validation_set_14",
+    "cerec.validation.20.conll": "validation_set_20",
+    "mention.corrected.94.conll": "mention_corrected_94",
+    "seed.conll": "seed_corpus"
+  },
+  "source_stated_counts": {
+    "threads": 6001,
+    "messages": 36448,
+    "coreference_chains_repository_and_2020_paper": 38996,
+    "coreference_chains_updated_author_paper": 60383
+  },
+  "observed_per_file": {
+    "cerec.conll": {
+      "source_file": "cerec.conll",
+      "source_file_role": "full_corpus",
+      "document_count": 6001,
+      "unique_thread_id_count": 6001,
+      "duplicate_document_block_count": 0,
+      "token_row_count": 6567125,
+      "message_id_feature_count_sum": 26409,
+      "section_id_feature_count_sum": 12451,
+      "speaker_feature_count_sum": 1,
+      "entity_annotation_row_count": 0,
+      "entity_type_annotation_token_counts": {},
+      "mention_annotation_row_count": 749368,
+      "distinct_mention_annotation_id_count": 6009,
+      "coreference_annotation_row_count": 665247,
+      "distinct_coreference_cluster_count": 60383,
+      "threads_with_coreference_annotations": 6001,
+      "antecedent_marker_count": 0,
+      "malformed_coreference_code_count": 0,
+      "observed_token_column_widths": {
+        "7": 6567125
+      }
+    },
+    "cerec.validation.14.conll": {
+      "source_file": "cerec.validation.14.conll",
+      "source_file_role": "validation_set_14",
+      "document_count": 14,
+      "unique_thread_id_count": 14,
+      "duplicate_document_block_count": 0,
+      "token_row_count": 13420,
+      "message_id_feature_count_sum": 85,
+      "section_id_feature_count_sum": 31,
+      "speaker_feature_count_sum": 49,
+      "entity_annotation_row_count": 0,
+      "entity_type_annotation_token_counts": {},
+      "mention_annotation_row_count": 1829,
+      "distinct_mention_annotation_id_count": 14,
+      "coreference_annotation_row_count": 1825,
+      "distinct_coreference_cluster_count": 306,
+      "threads_with_coreference_annotations": 14,
+      "antecedent_marker_count": 0,
+      "malformed_coreference_code_count": 0,
+      "observed_token_column_widths": {
+        "7": 13420
+      }
+    },
+    "cerec.validation.20.conll": {
+      "source_file": "cerec.validation.20.conll",
+      "source_file_role": "validation_set_20",
+      "document_count": 20,
+      "unique_thread_id_count": 20,
+      "duplicate_document_block_count": 0,
+      "token_row_count": 20510,
+      "message_id_feature_count_sum": 135,
+      "section_id_feature_count_sum": 43,
+      "speaker_feature_count_sum": 72,
+      "entity_annotation_row_count": 0,
+      "entity_type_annotation_token_counts": {},
+      "mention_annotation_row_count": 2786,
+      "distinct_mention_annotation_id_count": 20,
+      "coreference_annotation_row_count": 2782,
+      "distinct_coreference_cluster_count": 422,
+      "threads_with_coreference_annotations": 20,
+      "antecedent_marker_count": 0,
+      "malformed_coreference_code_count": 0,
+      "observed_token_column_widths": {
+        "7": 20510
+      }
+    },
+    "mention.corrected.94.conll": {
+      "source_file": "mention.corrected.94.conll",
+      "source_file_role": "mention_corrected_94",
+      "document_count": 94,
+      "unique_thread_id_count": 94,
+      "duplicate_document_block_count": 0,
+      "token_row_count": 92374,
+      "message_id_feature_count_sum": 403,
+      "section_id_feature_count_sum": 196,
+      "speaker_feature_count_sum": 0,
+      "entity_annotation_row_count": 0,
+      "entity_type_annotation_token_counts": {},
+      "mention_annotation_row_count": 13362,
+      "distinct_mention_annotation_id_count": 94,
+      "coreference_annotation_row_count": 0,
+      "distinct_coreference_cluster_count": 0,
+      "threads_with_coreference_annotations": 0,
+      "antecedent_marker_count": 0,
+      "malformed_coreference_code_count": 0,
+      "observed_token_column_widths": {
+        "7": 92374
+      }
+    },
+    "seed.conll": {
+      "source_file": "seed.conll",
+      "source_file_role": "seed_corpus",
+      "document_count": 43,
+      "unique_thread_id_count": 43,
+      "duplicate_document_block_count": 0,
+      "token_row_count": 42301,
+      "message_id_feature_count_sum": 228,
+      "section_id_feature_count_sum": 101,
+      "speaker_feature_count_sum": 152,
+      "entity_annotation_row_count": 5232,
+      "entity_type_annotation_token_counts": {
+        "DIGITAL": 300,
+        "LOCATION": 177,
+        "ORGANIZATION": 659,
+        "PERSON": 4125
+      },
+      "mention_annotation_row_count": 5232,
+      "distinct_mention_annotation_id_count": 45,
+      "coreference_annotation_row_count": 5232,
+      "distinct_coreference_cluster_count": 765,
+      "threads_with_coreference_annotations": 43,
+      "antecedent_marker_count": 0,
+      "malformed_coreference_code_count": 0,
+      "observed_token_column_widths": {
+        "7": 42301
+      }
+    }
+  },
+  "unique_thread_ids_union_across_files": 6172,
+  "file_overlap_counts_against_main_corpus": {
+    "cerec.validation.14.conll": {
+      "thread_ids_also_in_full_corpus_count": 0,
+      "thread_ids_not_in_full_corpus_count": 14
+    },
+    "cerec.validation.20.conll": {
+      "thread_ids_also_in_full_corpus_count": 0,
+      "thread_ids_not_in_full_corpus_count": 20
+    },
+    "mention.corrected.94.conll": {
+      "thread_ids_also_in_full_corpus_count": 0,
+      "thread_ids_not_in_full_corpus_count": 94
+    },
+    "seed.conll": {
+      "thread_ids_also_in_full_corpus_count": 0,
+      "thread_ids_not_in_full_corpus_count": 43
+    }
+  },
+  "observed_source_column_count": 7,
+  "readme_column_count_note": "README calls the CoNLL files eight-column once but enumerates seven columns; every token row in all five pinned files has exactly seven double-tab-separated columns.",
+  "thread_ids_preserved": true,
+  "reply_graph_inferred": false,
+  "message_text_rights": "UNRESOLVED; locally acquired for inspection only; training and redistribution are not authorized.",
+  "training_permitted": false,
+  "fyp_labels_generated": false,
+  "review_record_count": 50,
+  "review_sample_source_file": "cerec.conll",
+  "review_output": "ai/data/processed/cerec_review_50.jsonl",
+  "review_sample_has_coreference_annotations": true
+}

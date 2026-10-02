@@ -1,0 +1,321 @@
+{
+  "dataset_id": "radar_action",
+  "reviewed_on": "2026-10-02",
+  "reviewer_role": "orchestrator",
+  "reviewer_kind": "AI",
+  "examples_inspected": 50,
+  "method": "Root personally inspected 25 source-positive and 25 source-negative records using source subject/prefix, all action-item slices with surrounding context, and sampled DATE/PERSON/ORGANIZATION slices. Full source fidelity separately validated across all 744 messages.",
+  "limitations": [
+    "Anonymized token strings prevent semantic verification against normal English FYP taxonomy",
+    "This is source-format/span inspection, not human review or FYP gold"
+  ],
+  "observations": [
+    "Action positives preserve variable counts of full-file source spans",
+    "Blank From/To/Date header placeholders remain in full text but supply no thread truth",
+    "Supplementary annotation offsets also use full-file text coordinates",
+    "No mapping from presence-positive to FYP ACTION_REQUEST approved"
+  ],
+  "review_file_sha256": "bc7fa294019a5748ad50caa348d32d02474724561f79a029cc2aa484205db08c",
+  "records": [
+    {
+      "source_id": "RADAR_ACTION:msg-0.txt",
+      "text_sha256": "03bb029afc08c14d2356f46028c2516afe518158cdb8a4fe2b62b32f67f83285",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-2.txt",
+      "text_sha256": "9c801b973223420dab31544142b1a742f34b9203a96cc06663019dde6600d33f",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-1.txt",
+      "text_sha256": "5372cf84d10b5fbc0f63cf778d8a71e1befe27b9e6cafba343767508f5744ce2",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-3.txt",
+      "text_sha256": "73b19b7aebdb2b6868d245f6ffbc5888640e9873d1ca82ebca18a61d60bc4bc2",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-6.txt",
+      "text_sha256": "6f65ea007fb0757e53c0fa4e37f67f39cfc2ef0a62a41db7c63ff371c9795493",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-4.txt",
+      "text_sha256": "b159eba5d1caf7ddb31d01af7e0d8f66f2c6394606ae9d7785ab1233f39552dd",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-10.txt",
+      "text_sha256": "ab4f8570e278f22cec0f58d3fa2116140073af5020aef78d38e8ff19d817b8d9",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-5.txt",
+      "text_sha256": "3ebe11a06df549f8f843524e6ad6ea74dd0872cf260439d680b7956df30f808f",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-11.txt",
+      "text_sha256": "9d389871480eef3176865fd0822c0dd66ebb75bdb764ff91abad8627b0b68601",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-7.txt",
+      "text_sha256": "bc6847de7d60c1d7f7b7cfb94f4ce82753712de8a8f012601a36a5fb0179612a",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-12.txt",
+      "text_sha256": "d8ca6b87f68ad7be35d04f6e1f6562f0c0e9ba8edb3a25b14a53bc2cffb9963f",
+      "presence": true,
+      "action_span_count": 2
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-8.txt",
+      "text_sha256": "593e22e9ccefb48c0a03e169df64dbf38629bb2c619d85e6a747f0ab7055e923",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-15.txt",
+      "text_sha256": "b7c23c294ddedefd53c383176dfd553914aa29a82f7199d5d24863c54fdf2d43",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-9.txt",
+      "text_sha256": "fceef5993d8a3435f6a9cb8df2eb6a8ca2a9acec6a81b98ad6d6117d1a326ca2",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-16.txt",
+      "text_sha256": "80d5425b36b2a82433ddc8eb1a5dd0818f4ecab99e200dd17b1949e9972865b1",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-13.txt",
+      "text_sha256": "578a2dbe96e526ed4dad2d80f7370b2f05809f814ff02a5bd71b3cde3e6852bb",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-20.txt",
+      "text_sha256": "a35a22a55395b5f0e13be1372d8770352f989679bf24aab3b2182ae45f55a132",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-14.txt",
+      "text_sha256": "bbbae243af782c5dc5a82db577257333c838fcd6d9ebf59dd146c884a5826b65",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-25.txt",
+      "text_sha256": "e7fabad6598991889c07f07d9bcdf3ba6d510c8874e2f1256f0973cd524bc2e2",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-17.txt",
+      "text_sha256": "dcb9c00876a7474e619b8bfaf36fd9d6a3c66f9296bf1a842080a63424e302c6",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-27.txt",
+      "text_sha256": "09ada028bca49fcf3ab045b19ba8d7837af29b75bb65ab356f7a6175219c78d2",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-18.txt",
+      "text_sha256": "9898ab09ac9b53c60cc9a28d92cc42429f52ef03e14030b5f7e709b83f7ab95d",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-37.txt",
+      "text_sha256": "3e1dc5dc5d3941f0b654d07890f5f7da323bda14b2c87ef31c280c1febeced4d",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-19.txt",
+      "text_sha256": "903ff897f1a61ce830f0e82a8536f1ccb33ac3a63076616088cbd52d28e96a2a",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-38.txt",
+      "text_sha256": "49ab1e89b39e29d299659ed455b35c5e3fceb68b0f7ae805b57bcf2bea1f8133",
+      "presence": true,
+      "action_span_count": 2
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-21.txt",
+      "text_sha256": "3b439a7aa6e94eb20d7fbe869991d0f6e40b512487dbafeba2add37b77bd16a3",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-42.txt",
+      "text_sha256": "b2d35e7e98d30ec065123162c30c97d3f08816c758fb3daeb73c1bddfa2cdbab",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-22.txt",
+      "text_sha256": "c240e8ecb8e1f0f0dcb26d02c4fb10802868b3466bc1caec94dbc7cbda5a8b94",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-45.txt",
+      "text_sha256": "57009384ada4f64a113246cb2eb07cdba19f7da2a03c00c88be1dabf2fff4fa1",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-23.txt",
+      "text_sha256": "5b4c5bf64e62c34ed7a9a09d72036331d923dde3e0219f847160d571af3e2fc3",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-47.txt",
+      "text_sha256": "2a2e49bacea6be2ae43b88449e8866abce55146fd50962455015336a8851dff2",
+      "presence": true,
+      "action_span_count": 2
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-24.txt",
+      "text_sha256": "14fae1601598bb429b4db896c24c65fdea986f25865c1d0d9c8df95d39ebcce2",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-49.txt",
+      "text_sha256": "4952429697b52c78d6e232651c22e911fd5d3ced90822380c0c99cad5fddee2f",
+      "presence": true,
+      "action_span_count": 2
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-26.txt",
+      "text_sha256": "1771d6b6c3f0d35d58cebd21d8d9e529db7097c51b1a90c49ea845f152573ac3",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-50.txt",
+      "text_sha256": "209d613772d14a5ae503519bcfc4070f43be6cae0cfd127de1f7b48d9b993b4f",
+      "presence": true,
+      "action_span_count": 3
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-28.txt",
+      "text_sha256": "6cc86e2a6121957c59db65a6f83af53218cb7b6f129032977b00b2ab7eec123d",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-52.txt",
+      "text_sha256": "99a7b8590165c0ef716ab67e247e7cc270c58659528e962c95e93d41c5b929c4",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-29.txt",
+      "text_sha256": "10593ee48fe346dacf3c6b89e845c906a093e6f6a8e79984a5017cbba6c8b14d",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-53.txt",
+      "text_sha256": "903099d17ced40698217ea86ddab048c55da043472e4d315932dc7d30182830b",
+      "presence": true,
+      "action_span_count": 2
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-30.txt",
+      "text_sha256": "1352cf87b8d97cf3b747895191bdb985e1c1b6be1b41d73b8f073bfa551ba8af",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-54.txt",
+      "text_sha256": "7f06b278bdb49818ff9ba10b46302ed398b1c8a1ba74090f7c4ab8dac53fdb31",
+      "presence": true,
+      "action_span_count": 2
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-31.txt",
+      "text_sha256": "75b125da0c8cc12cf6bd96c4be14f1bb652c855b0fea631ccccdd36b84168293",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-57.txt",
+      "text_sha256": "82ea1b8b7fb1a98c0c008353f13e417276c7600f83cb08cf229791acb750379c",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-32.txt",
+      "text_sha256": "7e749a0077b20664867f4cd7e901f9134872cb7a824d76b9035e0ff2c9bc5a37",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-60.txt",
+      "text_sha256": "7ffa9693c07522d7734db8aaf1386de3800e3e5cb94a2a1422d5b7d60aac4bca",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-33.txt",
+      "text_sha256": "901c6e70d528627fa6c368a0c1d419252f6860f1e0afdf9e5ef04aaf0baf6385",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-62.txt",
+      "text_sha256": "32914b28c0e070c13b3e4ed44f9fa5d192a2d965be41fcbc1b5371b1aa1e3cba",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-34.txt",
+      "text_sha256": "567f0c94d3fa665ed10aa15b967282ecb8287f1aa172039448cb6a249e1f908a",
+      "presence": false,
+      "action_span_count": 0
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-63.txt",
+      "text_sha256": "b48eb0b48a995c6156e1f4f1812f2b00afef6126bf24becbea706510defa8dd5",
+      "presence": true,
+      "action_span_count": 1
+    },
+    {
+      "source_id": "RADAR_ACTION:msg-35.txt",
+      "text_sha256": "997bca9e5e22d59dc1684ccf1cf731376b863dd15ed480e5b80142ae42abe139",
+      "presence": false,
+      "action_span_count": 0
+    }
+  ]
+}

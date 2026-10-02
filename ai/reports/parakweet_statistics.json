@@ -1,0 +1,69 @@
+{
+  "dataset": "parakweet",
+  "source_family": "ENRON",
+  "repository_url": "https://github.com/ParakweetLabs/EmailIntentDataSet",
+  "pinned_commit": "055f62857b3214c1682a0b18a2c5fc2c9f0c00e6",
+  "source_file_sha256": {
+    "train": "1dafc1b367cf2fb1e8b4a944b67e14578bcb1085f2f02ea150be45c373fbe8cd",
+    "test": "1b5ebc45a80c1e7fdeed656b7db7cec8e50eb18f562daa20070f1e3187e01e4a"
+  },
+  "parsed_record_count": 4649,
+  "source_label_counts": {
+    "Yes": 2028,
+    "No": 2621
+  },
+  "split_counts": {
+    "train": {
+      "record_count": 3657,
+      "source_label_counts": {
+        "Yes": 1719,
+        "No": 1938
+      },
+      "unique_sentence_count": 3657,
+      "duplicate_sentence_record_count": 0
+    },
+    "test": {
+      "record_count": 992,
+      "source_label_counts": {
+        "Yes": 309,
+        "No": 683
+      },
+      "unique_sentence_count": 992,
+      "duplicate_sentence_record_count": 0
+    },
+    "train_test_exact_sentence_overlap_unique_count": 4
+  },
+  "line_ending_counts": {
+    "LF": 4647,
+    "none": 2
+  },
+  "fragment_count": 4649,
+  "identity_complete_count": 0,
+  "source_message_id_available": false,
+  "source_thread_id_available": false,
+  "source_scope": "one sentence-level row per released line; no full email/thread reconstruction",
+  "author_wiki_cited_counts": {
+    "train": {
+      "records": 4213,
+      "yes": 1631,
+      "no": 2582
+    },
+    "test": {
+      "records": 991,
+      "yes": 277,
+      "no": 714
+    }
+  },
+  "mapping_policy": "Preserve Yes/No; no fine-grained act or FYP label inferred.",
+  "review_record_count": 50,
+  "review_source_label_counts": {
+    "No": 25,
+    "Yes": 25
+  },
+  "review_split_counts": {
+    "test": 25,
+    "train": 25
+  },
+  "processed_jsonl": "ai/data/processed/parakweet.jsonl",
+  "review_jsonl": "ai/data/processed/parakweet_review_50.jsonl"
+}

@@ -1,0 +1,270 @@
+{
+  "dataset_id": "enron",
+  "reviewed_on": "2026-10-03",
+  "reviewer": "root AI orchestrator",
+  "examples_inspected": 50,
+  "method": "First50 TRAIN_SCREEN source-random records; subject<=80 and current-message<=220-character excerpts; source format/semantic relevance audit only",
+  "full_structured_annotation_claimed": false,
+  "human_gold_count": 0,
+  "source_file": "ai/data/experiments/structured_v2_candidates_20261002_v2/isolated_v2/train_screen_candidates.jsonl",
+  "source_file_sha256": "2daf0fbc6dd9bb4fcad6b5fbc04120c4bbe12cbdbc87021f48a5076704b02524",
+  "reviewed_records": [
+    {
+      "source_id_sha256": "f39901ec2ec98bffd0deec20e462c5c4cc32240d6828fea8fd39eb0e7dca038f",
+      "subject_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "current_message_sha256": "9ab01443fbda1f15db29fdd23726237a68e74211866c3c9810c15690dbaaf1e4"
+    },
+    {
+      "source_id_sha256": "ace8c6478dbbb32bda974c491a260028be35fbd67eb9f7784ac09906b12b119e",
+      "subject_sha256": "ac7c30d0efc3d7d61b240ed5f00ddb8989f8000accaf153aef46f026121fc0e5",
+      "current_message_sha256": "26c8bff22db489393fc2f46c287df66db24c68db14979b31beb4e086db478156"
+    },
+    {
+      "source_id_sha256": "489faa7429f56eb1103a8076a87e501afe989399461b4ad78555ce8d2aa0c6b2",
+      "subject_sha256": "5aef5948424f1da0766aa659e24aca012ac68a4a08f688805ab6eb5516885065",
+      "current_message_sha256": "75bef5792c08f48b88d955f9398ee3dcb5e243df3878862ee9ea4470b6288e69"
+    },
+    {
+      "source_id_sha256": "d5b613820e31b1af955f2a11eb441ef9e372c0647caecf105348d2770c304f35",
+      "subject_sha256": "4d38bd6352faab64671b075d57cdabdc359dfe3f6b1ee3bce04fbffc0d136919",
+      "current_message_sha256": "932dec3c4bbee68babd0e898dbaa29e4216e03f04f613840f42e531b74ed524f"
+    },
+    {
+      "source_id_sha256": "3c3eba7e78fe7bc00ed88ae30359a09733bfd99d9b324ad4aa71876997adb928",
+      "subject_sha256": "4af900de2979906ed1fda1ff9e5f025046545c81aa25641e76e71fec4b563aa6",
+      "current_message_sha256": "3ad6de959824eeb49b09d8d790d9ddf45dabcaa743b2686918433a427ba3e9ea"
+    },
+    {
+      "source_id_sha256": "6e6ef798ff5c231adf2adcbcf00a08addc1f4815dc2e391d31a457bf6bc128f1",
+      "subject_sha256": "fbc1e1cd78288cf7ff4776cd1fca4d17590965e10065dedd07a191b85c46dbf4",
+      "current_message_sha256": "949ad2a23b37fbfe1e4cfd5d640b16cb0ddc528207252e2ba040c1760bf04f9c"
+    },
+    {
+      "source_id_sha256": "0eac924b7ed76e21466b880eddb082d68d6062f7d633a67bc5847e9fb6d20247",
+      "subject_sha256": "32020afad9d1be8a76eae0f2d87eec975901b13baeec2967f1035cb7aad11d25",
+      "current_message_sha256": "c9f6d3fb93fe26e0323e22053589b8cb80e001d84d74a65a3993482d99551646"
+    },
+    {
+      "source_id_sha256": "d0f3ff45fa0d3c8d05fa9621faaab22f3900046dd0ea59dbb3f67cff49ee51eb",
+      "subject_sha256": "1d831bbe53cc57541242e6c57c53a463f039045386e2b2a6bbed14f0ce62a817",
+      "current_message_sha256": "94bcc5a0ec25685c7662542bca95e7888bd20729403bc21c45d8229cf52dedc0"
+    },
+    {
+      "source_id_sha256": "78880b51537d9bba29c5aae04eba5d2969d6585ecea6bdf68bb160c88f3a3d65",
+      "subject_sha256": "f7fe478d45314d810c7e3342f2c968806f51efa83530093b169ad75fb72475e9",
+      "current_message_sha256": "0d1a3cd9271a7c37fe123428afe270066482f79e3d85be9d0ad8d6c52265525b"
+    },
+    {
+      "source_id_sha256": "15f32fffb686ffeed2003341c957eca5e8389976656cd6e50691f4ae3ab06f86",
+      "subject_sha256": "1901d10c92bf00409be07d5df2e18323e768304e5381fea11a14d3deb4e2cdd4",
+      "current_message_sha256": "eb0ef1861490f31128bdc38b5864591fe511df3a1dbcc1e4bca41474b0bf65d7"
+    },
+    {
+      "source_id_sha256": "9e2a2a10aa55f40d5ca234454387b43e700410ec7dad183c2a1b86f0a183f39f",
+      "subject_sha256": "ef85049dd6a5d4c043dc9c045004925d8d0b0167a60d42597a1c71f50d8be0e2",
+      "current_message_sha256": "ee1190bf845bbe883c3b04c4a3828de1083489c1badd11052ef9982ab23d45b0"
+    },
+    {
+      "source_id_sha256": "c6dc8810be55bfb203647cb9657a6332fa720842d93efbf91e5ef0423f892d48",
+      "subject_sha256": "6cee41dbbe9b4b714f40a99d4af3f520e05e88c30be4c9eab898f0f3e04fd6e7",
+      "current_message_sha256": "bcaa76c9634e84967ade0d68b563851b28ce8b0c5c2cdcdc5327da23a27f3a5d"
+    },
+    {
+      "source_id_sha256": "005eea34737b0dfb46c2e32ce9b1e41b8407880974277eb67fd075bd198b0f0f",
+      "subject_sha256": "b46ce85963423e5feb28f16cb95956244cb3345121857222bca0e2c2d9f4fa20",
+      "current_message_sha256": "1c97d4abd02d6ddd2a5e788d5ed64c659f4333c5d354ad47618ec68ce5cdaf2e"
+    },
+    {
+      "source_id_sha256": "d947b3899c0e8ed186b827bd0af53dc8202133746072af7f20df76c114922861",
+      "subject_sha256": "722a9d86711fa20bc21f80a12be7cf616b679e8d1608f162c1876429d695cb93",
+      "current_message_sha256": "8893da69438097b44a7ceebce37a23399cfead238a493536c7fc5a700a75b11d"
+    },
+    {
+      "source_id_sha256": "7d25bb74d203aa2e48c8ebf5907418744cac6d0e8cc28ce76a9189b7e94126a9",
+      "subject_sha256": "9024c197d84940e47ff6aa631b7711c4cbff4e7fb2fe1a574a3592b662983a0d",
+      "current_message_sha256": "d2ad8f312eb7003a2742170874961738d24f76b329df4fd9af4570c20633f8e7"
+    },
+    {
+      "source_id_sha256": "499c690cdef74cb909bab47733a247a5ce66b519a63f4d17c90441f4bbb6743e",
+      "subject_sha256": "518bd199dcfa24f89dc5b076ba2d775ca5c93c701712b194319fb41a0a74bc60",
+      "current_message_sha256": "5b3bd4cefdd04df046be57bece87c7401e1929621f8a9c315ffd3ecc53f79470"
+    },
+    {
+      "source_id_sha256": "ee110ed4594487eb7bdedac941adb7e992ab981b1b6993cb05265cdacab2dc32",
+      "subject_sha256": "dd7ea0bbbfd113997d985fd414fda47317fd924bb0c54f87de234d4599d09c80",
+      "current_message_sha256": "673db14885be6c1f8bfbf2168771284025de7516f8e8143ec571afd530e4b0cc"
+    },
+    {
+      "source_id_sha256": "36043443cc56908955b8f26962ca88a1aaa9230388e9edb0b595ddb673127d22",
+      "subject_sha256": "6cbfe6591a73b9492b20fc22aa9f1af43b8f5b503618cb5b45fe260f8eeb98da",
+      "current_message_sha256": "f57ae21387a5dd450c828d88349927b7663df8c73b015fed279fabc8476b1543"
+    },
+    {
+      "source_id_sha256": "68314b5a6179bcd68b6ca04997941003657af2fe946c25eced4fdd5cd1600e99",
+      "subject_sha256": "2b6a52716fe23b6a72c42f6ac790fc1ec670fe1152c338b1b452de0118aacc1e",
+      "current_message_sha256": "d843d9ef28b992e7a355b23c00e1ea32789d6196421f02bab83ece94825b459b"
+    },
+    {
+      "source_id_sha256": "15f1f108bd2bc83038ee092e50225015f5e84ace4f6282130d7d6b76349e8f9b",
+      "subject_sha256": "27231b13fb1fb869eb047d711f5421d521fa43e8cb6aa18f3a74862109cd2530",
+      "current_message_sha256": "1eafa57a72a552d0d9d9bb411374956f774663c35d744a991ed25a3d0c516acd"
+    },
+    {
+      "source_id_sha256": "7aec0e8d86a65dfe16cc22a511bf6dcff76a0eadae77544ee87a8debe8f34dc4",
+      "subject_sha256": "9fec890ab278271dcd60e2333f0316e5028e36ff670e314c3c8c91581b144318",
+      "current_message_sha256": "3198d0af47f36b5faf450b1c4b157897ea61e4a575f2a3894273b7920888536e"
+    },
+    {
+      "source_id_sha256": "e570d08867bf7afbe8fb1ae8efbb04d5c55f493e03e1e2a066f18e11006bd349",
+      "subject_sha256": "95522c431a6ed60d9007f69b0ca4171255307c5e62c4bf96d984041675367133",
+      "current_message_sha256": "e5777aa7a9d402ba861be5a79136a6218b305bab003a395e87d51c332e326128"
+    },
+    {
+      "source_id_sha256": "da6791896bb7c7b5270d5b0dcadd9be2b4f61eed2a7fa371322a81c6c0ab1e85",
+      "subject_sha256": "dbf0002f3e9d8e59dc4c105586b00691dfac88ee31ce8b93532c40136c61f645",
+      "current_message_sha256": "1434b1608092f393f0b0c132f0d9ac94448ae8835ebbc4a759c78954e688f08b"
+    },
+    {
+      "source_id_sha256": "5543b424a6e60f860c9c33cdbd98c191c3f301eca309f8dd3b5a09c0bf859ca7",
+      "subject_sha256": "18193aebf5f968a98fc7b02501c149a2846e01950f056ddee4037c3bcdc872a0",
+      "current_message_sha256": "e2922d5a3e78b14188fbbbaa185eb3dd9e9f2ef18fe9975942b5e326da8208a7"
+    },
+    {
+      "source_id_sha256": "08c0fa3f4b45f7c0ae0d6bf1b90ee818136114338164dded00f19358bd9e21f0",
+      "subject_sha256": "d14738a3c8b5b2663b7ee265e5539553b3a8b602fbd641ccb6b946b1c99837d7",
+      "current_message_sha256": "40000bf941dea0a6d97c55f87cf1260263d9ddc15ea2aa4e523307dfb1ac6dea"
+    },
+    {
+      "source_id_sha256": "abab3e8acc8841dd7c41c61987698d2dc8c596bfce2495b7c52b6613344b8b42",
+      "subject_sha256": "a8dbb698395d7de3cf359602a1d3cb39a3ba1009374cabf4ab2f85ee954ec4b0",
+      "current_message_sha256": "40f506d598ff35ecb3b09a18e0334c2c3d40c6a203659961c32eebbaa57794de"
+    },
+    {
+      "source_id_sha256": "ef9990089e37a9f1ac15a3d007bdedb0fda8f51704ebcd32c0fa8798cbdd016b",
+      "subject_sha256": "887fb2a2fd843df935f0935a845a6e5c04ce6158433038ee8dcb1c41118dde65",
+      "current_message_sha256": "7edc435bb1f827ecbc21d388dffbbd2b0612e2888c911027e9bb127e1ce639fd"
+    },
+    {
+      "source_id_sha256": "85df81b9213b89eda49a5d3b177d06a562feea77b55356e35d42e21e07424525",
+      "subject_sha256": "6f9ae153675d98ebd72ae3aac58368874156bf8cfc6cc8ad398d9215e7630254",
+      "current_message_sha256": "4faf20884e242a8809b9970ce32f3f72a42922674b937bce84cac50879e6e871"
+    },
+    {
+      "source_id_sha256": "fab60f1459ba76314d936eea9f57fbe9adbc48444282ddb727d9fce2e0b62b15",
+      "subject_sha256": "516ae06cd7944a5a133ae157c0e6ec0518e9c018139776d01198854beed352bb",
+      "current_message_sha256": "95a51d9dc7be968aa116e19af4759ddac5e224142da9dddecb3f61068ab51437"
+    },
+    {
+      "source_id_sha256": "0182645e28247ed927f101bc430c0d293bf46bb0c1336ef6e249bf80d0042f3d",
+      "subject_sha256": "48a7774c0505773e1bcf530ca15fc35c15a7cb3a1d7a14c4b7d818f9d3225a60",
+      "current_message_sha256": "d8343ebbf2ad941235c42660730f73a1ee20a630e5bab33a0d5c0fdafce7e23f"
+    },
+    {
+      "source_id_sha256": "7be74ea6478fcdafe979ea35daca3a5e412edbdbf8c8d010d0371cae47dfc366",
+      "subject_sha256": "c611981fab983bc648368eb81240f5a5a1eff07f40aa4c9fd155600a98eeb6af",
+      "current_message_sha256": "e9060eed47369986a09802048a454db6c0d502074971ef053aeedf63689e420b"
+    },
+    {
+      "source_id_sha256": "dbf18b7bcd79b879e1930b0e87fde719f5834e18fb68bfccf49f1444dc4e2370",
+      "subject_sha256": "26ff4ce242996d6f6aacdac353a3835498f0d57c877c9ec2e53614d699a26bfc",
+      "current_message_sha256": "696d6156891524c702516ec945873711bd17238540405c43b3172c7132b6a801"
+    },
+    {
+      "source_id_sha256": "e59db0777f1432acc5bbea10afac2bb1b71d0d04441767d32e2b8b88c20f1028",
+      "subject_sha256": "8a27e49c5728a67d4a13b7365271989bba2e5dfc5313106f6ea723d820a1fa84",
+      "current_message_sha256": "e957eeaa40da2abb71b16f64a68a12811ebc0e8ad650f67c9a22c997b43b4a54"
+    },
+    {
+      "source_id_sha256": "8b3990fbbd0c3c8b5c81b4f7c7f03243c6cff380cb0d0aa5c4aa78110d094da6",
+      "subject_sha256": "ebd755577d0ded400b9689e4e110e716876c39b2070e319d37981d550fc4a949",
+      "current_message_sha256": "159e785eb959b4281417820d2ee538956f32abc3615e3513e0d7c990d9fae4e7"
+    },
+    {
+      "source_id_sha256": "a7fd1a7c0790ff53d337534c5a596b0657778f1fcf607e881432ca60ec3b44cb",
+      "subject_sha256": "8af57230aff774753e24f27c7694974c8c4748fa7d7af1d75bb32048f3b03192",
+      "current_message_sha256": "73c14df51ba619a4ad520c63d4999577de7fa092e600dbe4139453daab8e8d6a"
+    },
+    {
+      "source_id_sha256": "bd6b41070422be2b537b836415c0c959d542d2d2fe3b3f6b711a9fa3e55210d7",
+      "subject_sha256": "0d6b9e958cdd1d7dc9d3cb4a2ef0c18c6a138c85711ba343b85da7bdab68b4b2",
+      "current_message_sha256": "c36dd5f952aec5bd11e75b4c7163dcd2c3b9b78811c4a11b0ac054060156f8bb"
+    },
+    {
+      "source_id_sha256": "6464062bc1b59b77ef98d2ceab197c3aba1e0625c578b9f72f982de46600bab9",
+      "subject_sha256": "5d3f75bba652428a96e935a666987d25ec9a1f29566cea81c22d9242ee1a6faa",
+      "current_message_sha256": "64a6c023a63e4bea0f1c7bcbbf88a977943ef6ed0e42d789df78e2637c8ffb89"
+    },
+    {
+      "source_id_sha256": "e4df8943dbf0631e26a6f4b1f23deadad3b17b85bc96fbb39c65e4ceba00b661",
+      "subject_sha256": "7f9f78311b1b15e0c25fc38e9229b0f2451b6304b216f9aedff5ef1e8a71e2f1",
+      "current_message_sha256": "ff8dadeffa8442774e84169b9e9bcf25f10a0406538b4886548ceb59964f923b"
+    },
+    {
+      "source_id_sha256": "8d3c9b3934de32b39c1dd9dcc6c741cb1b411b7409d3fd16a65aefac554261c3",
+      "subject_sha256": "20918363aec2acb0a45d1e4b6721cbc262cbf577095aa93bc25a30dccc45d9e3",
+      "current_message_sha256": "92c54eeeefb7182ae00deafedc3f520c37b2ce0b2a526acf58f0e400980d9e74"
+    },
+    {
+      "source_id_sha256": "7c7f5227f610a9d82922fc6b4e2180e044ac3405ced40314c4aaaeebe89176c7",
+      "subject_sha256": "67a526126823de4319cc32f17dc97130c85120765300120434ed68d0aef6528f",
+      "current_message_sha256": "543eaec8befaab510557556449029ae3b3e0b11c5a6c025a56960db9f26f1bef"
+    },
+    {
+      "source_id_sha256": "5431ca5b341abaa2fa9bdede5ce8378c7e5828d95c257f14a265bb68c5472918",
+      "subject_sha256": "0d6b9e958cdd1d7dc9d3cb4a2ef0c18c6a138c85711ba343b85da7bdab68b4b2",
+      "current_message_sha256": "c36dd5f952aec5bd11e75b4c7163dcd2c3b9b78811c4a11b0ac054060156f8bb"
+    },
+    {
+      "source_id_sha256": "bdd2a33a7b195df97f5fc37150aac93dbd0e50b60f6b8a50f4080dd43fbe2e75",
+      "subject_sha256": "5fdf0b2bbe277cf410d7870cb17afcb341c538ac747437424e01b3593fb67d46",
+      "current_message_sha256": "c7a4f49158925f38790c4bc8eb5a3db18fce51cd36af390bb23f358cc593e485"
+    },
+    {
+      "source_id_sha256": "43190932061fb9b16b18ff4ed8941eda638b5931a2ab6f9aa532f272ecb0313c",
+      "subject_sha256": "6d4a2e4088e66339d71bdf840d914b1a614ca6a1e2de8e51d32d3462ff41d9b7",
+      "current_message_sha256": "7570212580cadd58ce5e28d2348a9a83aa1afe3333f6924996cfa81f8c61bea2"
+    },
+    {
+      "source_id_sha256": "92a644284912c1adc47513884e9ef17e990440924ba838c1a87e9d0f102b0334",
+      "subject_sha256": "0a7c6963d51c5fa4e6952515f746f6a3b40a37304860d98d9033b71a5522194c",
+      "current_message_sha256": "bdab7df2e6b00dc3781cd13e70fa13c3d79107a7c43dd34aa0f46b2533c2df9b"
+    },
+    {
+      "source_id_sha256": "21842a7caf909158e9989275b828968113de87bafc102663d48203ead997a8af",
+      "subject_sha256": "bb98a1741b91b8aba4ca23b4e66527761885e18d5750918e44fccec234e32adc",
+      "current_message_sha256": "3d87725129c6b824f0199c4d2fc3ddf481c4efcb95a7a08109d1ac5b1692f24c"
+    },
+    {
+      "source_id_sha256": "9b63943e7429fff0e0f55dd74a162f39e5baf12b856355fe3b69eb11654a852b",
+      "subject_sha256": "ec7d0db86bab1f8d2fc30940e53b86bf89b674f0dca8e516c06bacbc5fa2f749",
+      "current_message_sha256": "a4c0ddb366b1d12a6e274a0285282ea68c5a9508d761ccb85ee96f519a06ef8f"
+    },
+    {
+      "source_id_sha256": "64942f0feb729557b55c6d6f222017a7c3f6672afe5d8eb3617b1ad8ff04bfac",
+      "subject_sha256": "6c7530ccd1c1f6fa21de91db422e5f44794b018e08ad49356cb192b4cde99a6d",
+      "current_message_sha256": "334dd2e9f6e3f739ff7e23fc345761fdbf90646371dbcb62bc4793a6abd84e06"
+    },
+    {
+      "source_id_sha256": "b5554cc001bd69e6eea50bf23d94630499bda5eb1cbf609a9caa7b942e762105",
+      "subject_sha256": "98730a6051d3b2e9b80e4900a76f063367f941718280f709c0a47ffc884db35f",
+      "current_message_sha256": "9cd25a55a6f032e2f7b77cbec6d22de42db4e9ba8702e70e16bc5ec6364111c5"
+    },
+    {
+      "source_id_sha256": "dd8a960b1e9f0c12d09a1373004b10086758838fdddd5153db7613cb53b3e543",
+      "subject_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "current_message_sha256": "268a4baf8367d947ddd977854001d410f88fd69d8a0861c7782a4ed173bfb307"
+    },
+    {
+      "source_id_sha256": "7ffa3d6f82a0dd488001f4e40b3c7527f36f9955f961870eb29a4ccd0bf22790",
+      "subject_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "current_message_sha256": "698f6b1cd9c3294ebc6de4b133e61f93bdb0c31938a1a54e21a12267e8f788bf"
+    }
+  ],
+  "findings": [
+    "Routine business, newsletters, spam, social mail, automated scheduling logs and potentially project-oriented work coexist",
+    "Forwarded headers and quoted older content sometimes remain in derived current_message; reviewers must not treat them as authored current functions",
+    "No explicit earlier-source context is supplied in this reservoir; thread relations cannot be invented",
+    "An exact duplicate current message/subject occurs twice; baseline input preparation now deduplicates exact whitespace-normalized text and rejects conflicting targets",
+    "No prevalence, class support or full semantic label correctness inferred from short excerpts"
+  ]
+}

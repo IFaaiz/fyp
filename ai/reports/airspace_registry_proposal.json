@@ -1,0 +1,45 @@
+{
+  "acquired_at_utc": "2026-10-02T14:08:44.766776+00:00",
+  "archive_url": "https://www.cs.cmu.edu/~airspace/corpus/Airspace_wargaming_1.0.zip",
+  "dataset": "airspace",
+  "local_message_count_matches_cmu_page": true,
+  "official_source": "https://www.cs.cmu.edu/~airspace/",
+  "offset_policy": "source_text_offsets are Unicode character offsets in the parser's exact Subject/body view; they are not token or byte offsets in the original MIME file",
+  "original_labels": {
+    "BRIEFING": 101,
+    "CHANGE-ROOM": 112,
+    "CHANGE-SESSION": 74,
+    "CHANGE-SPEAKER": 63,
+    "INFO-REQ": 63,
+    "MISC-ACTION": 63,
+    "WEB-VIO": 96,
+    "WEB-WBE": 36
+  },
+  "processed_artifact": "ai/data/processed/airspace.jsonl",
+  "raw_archive_sha256": "04f8c82dc96ca00d565b5598e73424e35dbac4692ffa4d98271fe0c54bcc31a7",
+  "record_count": 711,
+  "redistribution_permitted": false,
+  "reply_metadata": {
+    "missing_is_unknown": true,
+    "reply_to_field": "X-RADAR-Replyto",
+    "thread_id_policy": "preserve raw source Thread as unverified metadata only; derive thread_id solely from in-corpus Replyto edges; isolated/unknown IDs remain null",
+    "zero_means_no_parent": true
+  },
+  "review_candidates_artifact": "ai/data/processed/airspace_review_candidates.jsonl",
+  "source_family": "AIRSPACE",
+  "stated_fabricated_content_share": ">90%",
+  "syntax_document_url": "https://www.cs.cmu.edu/~airspace/corpus/README_EmailSyntax_1.0.pdf",
+  "usage": {
+    "citation_required": [
+      "https://reports-archive.adm.cs.cmu.edu/anon/2006/abstracts/06-125.html",
+      "https://www.cs.cmu.edu/~airspace/"
+    ],
+    "map_to_fyp_labels": false,
+    "may_be_used_as_real_email_test": false,
+    "preserve_original_categories": true,
+    "report_source_version": true,
+    "role": "auxiliary supervision only",
+    "source_requires_publication_reference_to_author": "steinfeld@cmu.edu"
+  },
+  "version": "1.0"
+}

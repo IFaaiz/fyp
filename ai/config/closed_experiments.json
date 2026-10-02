@@ -1,0 +1,403 @@
+{
+  "version": 1,
+  "experiments": [
+    {
+      "experiment_id": "closed-flat-ai-silver-v1",
+      "status": "CLOSED",
+      "checkpoint": "5533f3940fbb4a55024cf7efd0b68fb213e54df2",
+      "metric_provenance": "AI-SILVER DIAGNOSTIC PERFORMANCE; zero human classification labels",
+      "test_policy": "Inspected and closed; no further optimization or evaluation. Future architecture claims require independent sources and a fresh frozen evaluation boundary.",
+      "files": [
+        {
+          "path": "ai/annotation/optimization_benchmark.json",
+          "sha256": "5e2da2d089e3aaddd7cbe57bf569af00bcafdbe7ddac8f28b4bc7274e3bc202b",
+          "local_only": false
+        },
+        {
+          "path": "ai/annotation/optimization_final_selection.json",
+          "sha256": "ef6f86fa7b60fbf0d9ff7069d56de4c6df058ada4e444a995888dbb793e4c2c9",
+          "local_only": false
+        },
+        {
+          "path": "ai/annotation/optimization_test_access.json",
+          "sha256": "5352b23ccd0eca68f5d87a3b437560ea64eb83ea862d1052d3275dfe93f36b82",
+          "local_only": false
+        },
+        {
+          "path": "ai/annotation/optimization_test_seal.json",
+          "sha256": "44fca84aad5ac0ea3a129f7b653fd11882fbdd76ee01c3c919ca0c6096171a31",
+          "local_only": false
+        },
+        {
+          "path": "ai/data/experiments/optimization_20261002/dev.jsonl",
+          "sha256": "5c1a3f2418206385c59e6f9e97d69a1e09c4fde8d64b75b0c98756ea22d797bf",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/experiments/optimization_20261002/test.jsonl",
+          "sha256": "0edfaf0b9c590b54fcceee57729258558310e8715665aa2d91d2c05b22bd2fa4",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/experiments/optimization_20261002/train.jsonl",
+          "sha256": "c2394aaab1721c61f664bcb41b2dd2a0b151cfd28c809427ac2425906214ffff",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/experiments/tonight_20261002/next_training_silver_snapshot.jsonl",
+          "sha256": "bf714f2fdf80f6b7f0c22b499878c52a3d648c0085d1bfcf03b592a19e77d40f",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/embeddings/bundles/per_label_specialists/bundle.json",
+          "sha256": "1f224e88a8e8bb45af77cde9a4444667d0a4b14f4b571a296d0e91d3728a43fa",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/embeddings/bundles/per_label_specialists/heads.joblib",
+          "sha256": "411bd03e008dfa08fc2d91687378519fb6974bf3881088b071921c9ac8495465",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/embeddings/encoders/minilm/1_Pooling/config.json",
+          "sha256": "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/embeddings/encoders/minilm/config.json",
+          "sha256": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/embeddings/encoders/minilm/config_sentence_transformers.json",
+          "sha256": "061ca9d39661d6c6d6de5ba27f79a1cd5770ea247f8d46412a68a498dc5ac9f3",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/embeddings/encoders/minilm/model.safetensors",
+          "sha256": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/embeddings/encoders/minilm/modules.json",
+          "sha256": "84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/embeddings/encoders/minilm/sentence_bert_config.json",
+          "sha256": "fc1993fde0a95c24ec6c022539d41cf6e2f7c9721e5415d6fb6897472a9cd4b7",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/embeddings/encoders/minilm/special_tokens_map.json",
+          "sha256": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/embeddings/encoders/minilm/tokenizer.json",
+          "sha256": "be50c3628f2bf5bb5e3a7f17b1f74611b2561a3a27eeab05e5aa30f411572037",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/embeddings/encoders/minilm/tokenizer_config.json",
+          "sha256": "acb92769e8195aabd29b7b2137a9e6d6e25c476a4f15aa4355c233426c61576b",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/embeddings/encoders/minilm/vocab.txt",
+          "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/ensemble/ensemble_blend_1_0_3_0.json",
+          "sha256": "b4879e8890a969054af80baa222afc7632badb1056bb01c8f3b6933bc8e4ca18",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/lexical/per_label_lexical_specialists_oof_thresholds.joblib",
+          "sha256": "7f2349346ec39f91ba402c59908a264fc62542d7fc2d059283b94ed7675d390c",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/reference/model.json",
+          "sha256": "d88826e70853bc768605bc9e35c041fa95ceafaa582b85d1e2eba4cfd1c0ae1c",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/transformer/flat_candidate/candidate.json",
+          "sha256": "2288085e0cff6061f03a6e4599156b66e8e3212432bdaba444bb9ce37f8319d2",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/transformer/flat_candidate/config.json",
+          "sha256": "50ed87979c2c1c66cee909809584018aa52125ded6932bd2514196165cadda66",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/transformer/flat_candidate/model.safetensors",
+          "sha256": "c1e8a1a25f9a16abf9b9454920c70e6fa08c9db35819556d95a1604de2050944",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/transformer/flat_candidate/special_tokens_map.json",
+          "sha256": "3c3507f36dff57bce437223db3b3081d1e2b52ec3e56ee55438193ecb2c94dd6",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/transformer/flat_candidate/tokenizer.json",
+          "sha256": "435667fab0c06c165b1283ecb422497c37124f2d6a35b2ac73dc876332fc9518",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/transformer/flat_candidate/tokenizer_config.json",
+          "sha256": "21c3bea73b6711617c657664adcd4d0b02ce20d2db4b2ebdd722a6da8da28bcd",
+          "local_only": true
+        },
+        {
+          "path": "ai/data/models/optimization/transformer/flat_candidate/vocab.txt",
+          "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+          "local_only": true
+        },
+        {
+          "path": "ai/reports/ai_silver_model_optimization.md",
+          "sha256": "c1253c109da702ad0f709720f5a4dc477e2edf73e37e353008eb077f425e40ed",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_benchmark_verification.json",
+          "sha256": "966be0469478e144788716ade3c32504f1a6f34344a159a0151c7a48fff01e07",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_dev_preflight.json",
+          "sha256": "42d5861d182f9e5949f3b2ec92238091888a466791bb9652b0c6602ddcdacecf",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_embeddings.json",
+          "sha256": "f3bdb4ac894d71fdaa99bc6a8d8a72e689b1030292421af4aec3de6343ab5eae",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_embeddings_frozen.json",
+          "sha256": "5856c4c48fe454f49fa84e7fed40e81a432b85b689534151576ba29db0b35599",
+          "local_only": false,
+          "canonical_lf_sha256": "11ea1cbb7efb934467a1ae7dae75223fdd5f86c3e1701d2dd408989603075511",
+          "format_policy": "Only LF/CRLF differences accepted for this historical text file; raw original SHA256 also retained. Data/model bytes remain exact."
+        },
+        {
+          "path": "ai/reports/optimization_ensemble.json",
+          "sha256": "222261794e31cc4542f5e28c5cb5056db456a9cd294c76a3261d2ab0d405f424",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_experiment_registry.json",
+          "sha256": "dce8fc522830d3b005d8caf70eb9c511d0b3d3e228fbca5c3f2906b4f1141508",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_final_test.json",
+          "sha256": "12ad23f579452268a517526f98c7cb230b01bc0aad35bf7f92b45c20f4beb2a7",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_final_verification.json",
+          "sha256": "5c004dbc2b8069812f72bb9929470134875fdec10af3303f1b9087995d082f1e",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_inference_smoke.json",
+          "sha256": "19d2a0522e091eb104efec03136447a578798d4745b4a31f4b79e54aa60b29cd",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_lexical.json",
+          "sha256": "f63d44ff3056f628bb58ea65fbd68f5902452669542d39fc097baa265a8faf53",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_pseudo_screen.json",
+          "sha256": "2beb02444d045b46efa4844c547f202119860213cdd18ed52c95d96b39907865",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_reference.json",
+          "sha256": "ae6c7201e8e087f7721339172d019259a4a45faa5ea204e099991769c3a7e9ea",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_test_error_audit_luna.json",
+          "sha256": "8bf5df6836a599fc1b5ac6c1aaea4d496044993c105d15f900fdef536fb25d91",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_test_error_audit_root.json",
+          "sha256": "b552e3de60e756550fd19bdf80b864e6401d45483ec60c0616ef0a58df82b241",
+          "local_only": false
+        },
+        {
+          "path": "ai/reports/optimization_transformer.json",
+          "sha256": "8a4051d299ec2b307a58e50b7e3eda7e5828cfb17b734d55dcd4463a00ee9ca8",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/add_optimization_embedding_ablation.py",
+          "sha256": "3b585309fc52d4f05e76bc7d242808f7a711a95eeca9fca44306af7ca07ce554",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/build_optimization_benchmark.py",
+          "sha256": "baf1ac092dffbabe1bd0f4bc6a28cf956021edee597f342e67b5b662e191dfa1",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/collect_optimization_candidates.py",
+          "sha256": "7cb2652bcf49ff1fa8f1fa4be1f443753dde8a503add6530f7643be067816ade",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/evaluate_optimization_final.py",
+          "sha256": "4b3191bcc55a3ebe46506028c2eb4d75ff91b9d9bd0f225bf284e9ad7b64198f",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/export_optimization_embedding_candidates.py",
+          "sha256": "7e4427bcc263cfdb5656faf2e4dc15b1b8d137aaf719625ff2e17d105ae5c07e",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/export_optimization_specialist_probabilities.py",
+          "sha256": "2affd29a85b72f5c21f5aab278f52c86010ead53b830e7296f3f0851f7e94818",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/export_optimization_transformer_candidates.py",
+          "sha256": "c3c3d83c5dae44896d0e4d0295e5245716d1b85a756db0e4cf0b465350a84aec",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/finalize_optimization_lexical.py",
+          "sha256": "b697ca7e0d4537ce03d217b93719bcb3d69a0ed09d1a9681ec02b3581f87f4a8",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/lock_optimization_selection.py",
+          "sha256": "8d403cdfe953d7f603b4a91d835a024825408673e6e6f30e360ca318dbdfd4de",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/predict_optimization_classifier.py",
+          "sha256": "869fa1cf0b334a3f2472899d4c18f4a75c6050e0af9a16dec4de3ed446f1f181",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/prefetch_optimization_embedding_checkpoints.py",
+          "sha256": "13d76c66ce0922225f1a59517df6702bf622268f96fd6e15caffb9fbf10ffca2",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/run_optimization_lexical.py",
+          "sha256": "75b506ee7986b32dba13676c45bfef627961d04b215615d62399aafbf5e42190",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/screen_optimization_pseudo.py",
+          "sha256": "099d34ed4c6d1bf19f78c69e2c6d8d4853cfc2102ca63bbf2f0da6b18573a0fc",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/summarize_optimization_results.py",
+          "sha256": "9276546f1a39777ee237141b94f2fe0b52d96ce3f9255276d29fbd81a0716e44",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/train_optimization_contrastive.py",
+          "sha256": "8ac8b1ae8b318adbcd7fbd7340621775f4bb487fa0a878c76b728bfe6c6a0ba4",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/train_optimization_embeddings.py",
+          "sha256": "2ba821cd3f6a363c50dfe13c7711d9ba9791d4cc75bf66d4d15fe7f87812cd59",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/train_optimization_ensemble.py",
+          "sha256": "48713a799fe0094878ab525d538322ae5998a94ef958dd26389d1d2198e55c51",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/train_optimization_reference.py",
+          "sha256": "c8a1c8d4612933522abae0921cf990259532baadcef86413695ebe934b0ecef5",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/train_optimization_transformer.py",
+          "sha256": "80c1473c459188812b95847e85d7e4cb433f3cc17009466ef7587c682e3e2a44",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/validate_optimization_embedding_candidates.py",
+          "sha256": "1900cf2a41df9d9630d30aee0d25c1abaa96151a2f61abb13aed7a86634d64cb",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/verify_optimization_benchmark.py",
+          "sha256": "79b518ebb66775bde735dcdd209cf36b6a66f2a9a94dfca0e24c26e5c50dd00e",
+          "local_only": false
+        },
+        {
+          "path": "ai/scripts/verify_optimization_final_metrics.py",
+          "sha256": "90b76f9434dc92e509ad515a0d88f98fe0a0239fcdf96ead676115bf9094e1be",
+          "local_only": false
+        },
+        {
+          "path": "ai/src/datasets/cleaning.py",
+          "sha256": "340d70cd3f94ef9209172bfd50dc74c437a823810eb5287359299fade73aebdb",
+          "local_only": false
+        },
+        {
+          "path": "ai/src/datasets/schemas.py",
+          "sha256": "07fdbc2b0f7e743e822cdbb29b3f1ff79a8ee5b26324127795e291ed12ae095c",
+          "local_only": false,
+          "canonical_lf_sha256": "3c2c6e56de3e023e1ae46a0e12c0d343de06e2054437b50938d58b9dda65742e",
+          "format_policy": "Only LF/CRLF differences accepted for this historical text file; raw original SHA256 also retained. Data/model bytes remain exact."
+        },
+        {
+          "path": "ai/src/models/optimization_benchmark.py",
+          "sha256": "cef8dbde0d18fb3d1d7133f6fa0584b196b7b4728a5ec185c1c13690ae2a00bf",
+          "local_only": false
+        },
+        {
+          "path": "ai/src/models/optimization_embeddings.py",
+          "sha256": "78ae55e0f36bce2bee4df28b74f3eb50d2aa31dcea8ffc13d9b41cc72c489683",
+          "local_only": false
+        },
+        {
+          "path": "ai/src/models/optimization_lexical.py",
+          "sha256": "18e8becbfab9ec865cfa27018ef12b821a61e62b7c7580f574f3bbc5ea3ba539",
+          "local_only": false
+        },
+        {
+          "path": "ai/src/models/optimization_runtime.py",
+          "sha256": "7ed7dcba12b816a56d5fd36454d235266d01e457ea89046e61c68b8b27e51d05",
+          "local_only": false
+        },
+        {
+          "path": "ai/src/models/optimization_transformer.py",
+          "sha256": "c4f9c0b557c6988872f8bc83ea77bc4996ba9b744c2c1ae43b4722cd6e433cb9",
+          "local_only": false
+        },
+        {
+          "path": "ai/src/models/silver_classifier.py",
+          "sha256": "a80c1b5af5c9400e6f676a5716779dc15acf227ad62213b2da1cbd68ad96d4b6",
+          "local_only": false
+        },
+        {
+          "path": "ai/src/models/transfer_diagnostic.py",
+          "sha256": "3c4a5e3461f084b02c1f46cc85d86e456dd698756c57959d630f81de915024ba",
+          "local_only": false
+        }
+      ]
+    }
+  ]
+}

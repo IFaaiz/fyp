@@ -1,0 +1,27 @@
+{
+  "index_sha256": "d864f94d4bc68bcca2d3f017fe7b5b7ef69bad5bcd41fde80f8b0905cfe2a0f1",
+  "indexed_records": 28129,
+  "historical_exposure_sources": 11889,
+  "original_reserved_candidates": 1200,
+  "reservation_sources_excluded_by_historical_overlap": 179,
+  "eligible_unique_reservation_components": 1012,
+  "evaluation_source_candidates_reserved": 600,
+  "evaluation_annotation_status": "pending independent A/B + third adjudication",
+  "screen_candidates_before_overlap_check": 5000,
+  "screen_candidates_excluded": 715,
+  "screen_candidates_retained": 4285,
+  "training_exclusion_reasons": {
+    "protected_component_overlap": 715
+  },
+  "auxiliary_training_exclusions_by_dataset": {
+    "mailex": 3936,
+    "parakweet": 4649
+  },
+  "training_performed": false,
+  "accepted_structured_annotations": 0,
+  "human_gold_labels": 0,
+  "primitive_support": "unknown until independent source-grounded annotation",
+  "prevalence_challenge_policy": "600 source-random reserved candidates; do not secretly enrich or tune this set. Any enriched challenge corpus needs separately reserved sources and its own sampling policy.",
+  "all_reserved_sources_protected": true,
+  "cross_partition_component_conflicts": 0
+}

@@ -1,0 +1,118 @@
+{
+  "dataset_name": "CEREC email thread coreference corpus",
+  "dataset_id": "cerec",
+  "version": "author repository commit d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9",
+  "official_source": "https://github.com/paragdakle/emailcoref",
+  "download_url": "https://raw.githubusercontent.com/paragdakle/emailcoref/d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9/data/COLING/cerec.zip",
+  "origin_corpus": "Enron-derived email threads",
+  "overlap_family": "ENRON",
+  "repository_license": "Apache-2.0 declared by repository metadata and pinned LICENSE",
+  "paper_license": "The COLING paper states CC BY 4.0.",
+  "message_text_rights": "Unresolved: available author materials do not clearly establish that repository or paper terms cover embedded Enron message text.",
+  "redistribution_allowed": false,
+  "raw_text_allowed_in_git": false,
+  "training_permitted": false,
+  "status": "locally acquired for structural and rights inspection; source-text audit pending",
+  "intended_component": [
+    "thread-level mention and coreference auxiliary research after rights and leakage review"
+  ],
+  "original_labels": {
+    "unit": "author CoNLL document/thread",
+    "columns_in_source_order": [
+      "token",
+      "message_id_feature",
+      "section_id_feature",
+      "speaker_feature",
+      "entity_type_annotation",
+      "mention_annotation",
+      "coreference_annotation"
+    ],
+    "entity_types_as_described_by_author": ["PERSON", "ORGANIZATION", "LOCATION", "DIGITAL"],
+    "mention_and_coreference": "Preserve original source cells and numeric annotation IDs; no FYP mapping."
+  },
+  "mapping_policy": {
+    "fyp_labels_generated": false,
+    "reply_graph_inferred": false,
+    "source_thread_id": "Preserve author document-header identifier.",
+    "source_message_id": null,
+    "overlap_identity_complete": false,
+    "note": "Message and section feature columns are preserved as source annotations, not treated as RFC Message-IDs or an inferred reply graph."
+  },
+  "checksum": {
+    "algorithm": "sha256",
+    "archive": {
+      "value": "6719223815d6a2301c01a596892d76c0cf33a03fff0ac53f7b43de4b93bc830b",
+      "bytes": 16994267,
+      "github_blob_sha": "4b86f155028285e93b50396a8bc5a4975875ed41"
+    },
+    "readme": {
+      "value": "647ebba111a2646b9ab480d373caf1ef1505eb72d891190abc69a765f4d6d910",
+      "bytes": 5447
+    },
+    "license": {
+      "value": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    }
+  },
+  "download_date": "2026-10-02",
+  "local_path": "ai/data/raw/cerec/d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9/",
+  "counts": {
+    "source_cited": {
+      "full_corpus_threads": 6001,
+      "messages": 36448,
+      "coreference_chains_2020_paper_and_readme": 38996,
+      "coreference_chains_updated_author_paper": 60383
+    },
+    "observed": {
+      "cerec.conll": {
+        "role": "full_corpus",
+        "documents": 6001,
+        "token_rows": 6567125,
+        "mention_annotated_rows": 749368,
+        "coreference_annotated_rows": 665247,
+        "distinct_per_document_numeric_coreference_ids": 60383
+      },
+      "cerec.validation.14.conll": {
+        "role": "validation_set_14",
+        "documents": 14,
+        "token_rows": 13420,
+        "mention_annotated_rows": 1829,
+        "coreference_annotated_rows": 1825,
+        "distinct_per_document_numeric_coreference_ids": 306
+      },
+      "cerec.validation.20.conll": {
+        "role": "validation_set_20",
+        "documents": 20,
+        "token_rows": 20510,
+        "mention_annotated_rows": 2786,
+        "coreference_annotated_rows": 2782,
+        "distinct_per_document_numeric_coreference_ids": 422
+      },
+      "mention.corrected.94.conll": {
+        "role": "mention_corrected_94",
+        "documents": 94,
+        "token_rows": 92374,
+        "mention_annotated_rows": 13362,
+        "coreference_annotated_rows": 0,
+        "distinct_per_document_numeric_coreference_ids": 0
+      },
+      "seed.conll": {
+        "role": "seed_corpus",
+        "documents": 43,
+        "token_rows": 42301,
+        "mention_annotated_rows": 5232,
+        "coreference_annotated_rows": 5232,
+        "distinct_per_document_numeric_coreference_ids": 765
+      }
+    },
+    "observed_note": "All token rows have seven source columns. The main-file chain count uses distinct numeric IDs in column seven counted within each document; it matches the updated-author count, while the README/2020 count differs. Document-ID overlap is zero across files, but this does not establish message/content non-overlap."
+  },
+  "source_urls": [
+    "https://github.com/paragdakle/emailcoref",
+    "https://raw.githubusercontent.com/paragdakle/emailcoref/d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9/data/COLING/cerec.zip",
+    "https://raw.githubusercontent.com/paragdakle/emailcoref/d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9/README.md",
+    "https://raw.githubusercontent.com/paragdakle/emailcoref/d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9/LICENSE",
+    "https://aclanthology.org/2020.coling-main.30.pdf",
+    "https://arxiv.org/abs/2105.10606"
+  ]
+}

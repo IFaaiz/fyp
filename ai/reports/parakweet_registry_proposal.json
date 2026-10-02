@@ -1,0 +1,81 @@
+{
+  "dataset_name": "Parakweet Email Intent Data Set",
+  "dataset_id": "parakweet",
+  "version": "author repository commit 055f62857b3214c1682a0b18a2c5fc2c9f0c00e6",
+  "official_source": "https://github.com/ParakweetLabs/EmailIntentDataSet",
+  "download_url": "https://raw.githubusercontent.com/ParakweetLabs/EmailIntentDataSet/055f62857b3214c1682a0b18a2c5fc2c9f0c00e6/src/resources/Ask0729-fixed.txt",
+  "origin_corpus": "Enron email corpus; sentence-level fragments",
+  "overlap_family": "ENRON",
+  "license": "Apache-2.0 declared by the pinned author README, LICENSE, and GitHub repository metadata. This project keeps Enron-derived message text local/private and uncommitted.",
+  "redistribution_allowed": null,
+  "raw_text_allowed_in_git": false,
+  "intended_component": [
+    "sentence-level binary email-intent auxiliary supervision"
+  ],
+  "original_labels": [
+    "Yes",
+    "No"
+  ],
+  "mapping_policy": {
+    "source_label_mapping": {
+      "Yes": "intent_present=true",
+      "No": "intent_present=false"
+    },
+    "fine_grained_act_inferred": false,
+    "fyp_labels_generated": false,
+    "note": "The author task is sentence-level binary email intent; no single FYP label is equivalent."
+  },
+  "checksum": {
+    "algorithm": "sha256",
+    "files": {
+      "src/resources/Ask0729-fixed.txt": {
+        "sha256": "1dafc1b367cf2fb1e8b4a944b67e14578bcb1085f2f02ea150be45c373fbe8cd",
+        "bytes": 347997
+      },
+      "src/resources/testSet-qualifiedBatch-fixed.txt": {
+        "sha256": "1b5ebc45a80c1e7fdeed656b7db7cec8e50eb18f562daa20070f1e3187e01e4a",
+        "bytes": 95679
+      },
+      "README.md": {
+        "sha256": "3c245e8439670e0f52c4997927144b35ee962d9487c09c7ba08fe621be838c05",
+        "bytes": 387
+      },
+      "LICENSE": {
+        "sha256": "1945e82c7c7425a814c790a1ea16964083da7042ffdfa8232cd04e575dd6ff88",
+        "bytes": 11351
+      }
+    }
+  },
+  "download_date": "2026-10-02",
+  "local_path": "ai/data/raw/parakweet/055f62857b3214c1682a0b18a2c5fc2c9f0c00e6/",
+  "status": "integrated_auxiliary_review_ready",
+  "training_permitted": false,
+  "counts": {
+    "author_wiki_cited": {
+      "train": {"records": 4213, "Yes": 1631, "No": 2582},
+      "test": {"records": 991, "Yes": 277, "No": 714}
+    },
+    "observed_from_pinned_files": {
+      "train": {"records": 3657, "Yes": 1719, "No": 1938},
+      "test": {"records": 992, "Yes": 309, "No": 683},
+      "total": {"records": 4649, "Yes": 2028, "No": 2621},
+      "train_test_exact_sentence_overlap_unique_count": 4
+    },
+    "count_note": "Current file counts and labels disagree with author wiki counts. Preserve both source-cited and locally observed figures; do not silently reconcile them."
+  },
+  "identity_policy": {
+    "record_unit": "sentence fragment",
+    "source_message_id_available": false,
+    "rfc_message_id": null,
+    "source_thread_id": null,
+    "fragment": true,
+    "overlap_identity_complete": false,
+    "row_number_is_message_id": false
+  },
+  "source_urls": [
+    "https://github.com/ParakweetLabs/EmailIntentDataSet",
+    "https://github.com/ParakweetLabs/EmailIntentDataSet/wiki",
+    "https://raw.githubusercontent.com/ParakweetLabs/EmailIntentDataSet/055f62857b3214c1682a0b18a2c5fc2c9f0c00e6/src/resources/Ask0729-fixed.txt",
+    "https://raw.githubusercontent.com/ParakweetLabs/EmailIntentDataSet/055f62857b3214c1682a0b18a2c5fc2c9f0c00e6/src/resources/testSet-qualifiedBatch-fixed.txt"
+  ]
+}

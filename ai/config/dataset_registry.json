@@ -1,0 +1,1425 @@
+{
+  "registry_version": "2-alpha",
+  "reviewed_on": "2026-10-03",
+  "owner": "orchestrator",
+  "all_raw_text_private": true,
+  "policy": "Registry permissions do not establish disjoint train/evaluation membership. Apply global leakage index and frozen evaluation manifest before all component training. Unknown rights/access or incomplete quality gates fail closed.",
+  "datasets": [
+    {
+      "dataset_name": "Airspace RADAR Conference Planning Email Corpus",
+      "version": "Airspace wargaming v1.0",
+      "official_source": "https://www.cs.cmu.edu/~airspace/",
+      "download_url": "https://www.cs.cmu.edu/~airspace/corpus/Airspace_wargaming_1.0.zip",
+      "origin_corpus": "CMU RADAR / Airspace synthetic conference-planning scenario",
+      "overlap_family": "AIRSPACE",
+      "license": "CMU source page says do not redistribute; no SPDX or permissive license identified",
+      "redistribution_allowed": false,
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "conference change/request auxiliary task",
+        "source noise auxiliary task"
+      ],
+      "original_labels": [
+        "BRIEFING",
+        "CHANGE-ROOM",
+        "CHANGE-SESSION",
+        "CHANGE-SPEAKER",
+        "INFO-REQ",
+        "MISC-ACTION",
+        "WEB-VIO",
+        "WEB-WBE"
+      ],
+      "mapping_policy": {
+        "fyp_labels_generated": false,
+        "role": "auxiliary source task only",
+        "policy": "Preserve exact source labels and fields. Do not automatically map INFO-REQ to REPORT_REQUEST or MISC-ACTION to ACTION_REQUEST. Any future crosswalk must be independently reviewed and auxiliary-only."
+      },
+      "checksum": {
+        "algorithm": "sha256",
+        "files": [
+          {
+            "path": "ai/data/raw/airspace/Airspace_wargaming_1.0.zip",
+            "sha256": "04f8c82dc96ca00d565b5598e73424e35dbac4692ffa4d98271fe0c54bcc31a7",
+            "bytes": 1063031
+          }
+        ],
+        "publisher_checksum_available": false
+      },
+      "download_date": "2026-10-02",
+      "local_path": "ai/data/raw/airspace/Airspace_wargaming_1.0.zip",
+      "status": "integrated_auxiliary",
+      "counts": {
+        "source_cited": {
+          "messages": 711,
+          "source": "CMU Airspace project page"
+        },
+        "observed": {
+          "acquired_at_utc": "2026-10-02T14:08:44.766776+00:00",
+          "archive_bytes": 1063031,
+          "archive_sha256": "04f8c82dc96ca00d565b5598e73424e35dbac4692ffa4d98271fe0c54bcc31a7",
+          "archive_url": "https://www.cs.cmu.edu/~airspace/corpus/Airspace_wargaming_1.0.zip",
+          "body_missing": 0,
+          "dataset": "airspace",
+          "derived_reply_component_count": 0,
+          "evidence_offsets_available": 711,
+          "explicit_no_parent_count": 711,
+          "fabricated_content_share_stated_by_cmu": ">90%",
+          "fyp_labels_emitted": false,
+          "label_counts": {
+            "BRIEFING": 101,
+            "CHANGE-ROOM": 112,
+            "CHANGE-SESSION": 74,
+            "CHANGE-SPEAKER": 63,
+            "INFO-REQ": 63,
+            "MISC-ACTION": 63,
+            "WEB-VIO": 96,
+            "WEB-WBE": 36
+          },
+          "label_multiplicity_counts": {
+            "0": 131,
+            "1": 552,
+            "2": 28
+          },
+          "message_count": 711,
+          "messages_with_labels": 580,
+          "messages_with_multiple_labels": 28,
+          "messages_without_labels": 131,
+          "noise_counts": {
+            "false": 662,
+            "true": 49
+          },
+          "redistribution_permitted": false,
+          "reply_edge_count": 0,
+          "reply_status_counts": {
+            "no_parent": 711
+          },
+          "reply_thread_size_histogram": {},
+          "reply_threaded_messages": 0,
+          "review_candidate_count": 100,
+          "schema_validation": "passed",
+          "source_family": "AIRSPACE",
+          "source_labels_preserved_without_fyp_mapping": true,
+          "source_text_offset_validation": "passed",
+          "source_thread_field_messages": 711,
+          "source_thread_group_count": 82,
+          "source_thread_group_size_histogram": {
+            "1": 77,
+            "137": 1,
+            "2": 2,
+            "448": 1,
+            "45": 1
+          },
+          "source_thread_nonzero_group_messages": 263,
+          "source_thread_zero_group_messages": 448,
+          "source_url": "https://www.cs.cmu.edu/~airspace/",
+          "subject_missing": 0,
+          "syntax_document_sha256": "a7471383aaf08455035b6e25fe48ca83b4c14708020bb4aa0033a092734922f2",
+          "unique_source_message_ids": 711,
+          "unknown_source_labels": [],
+          "version": "1.0"
+        }
+      },
+      "source_urls": [
+        "https://www.cs.cmu.edu/~airspace/",
+        "https://www.cs.cmu.edu/~airspace/corpus/README_EmailSyntax_1.0.pdf"
+      ],
+      "dataset_id": "airspace",
+      "source_annotation_inventory": {
+        "X-RADAR Label": [
+          "BRIEFING",
+          "CHANGE-ROOM",
+          "CHANGE-SESSION",
+          "CHANGE-SPEAKER",
+          "INFO-REQ",
+          "MISC-ACTION",
+          "WEB-VIO",
+          "WEB-WBE"
+        ],
+        "Noise": "boolean field; preserve independently",
+        "Replyto": "in-corpus message ID or 0, per syntax guide"
+      },
+      "training_permitted": true,
+      "quality_gates": {
+        "official_source_verified": true,
+        "usage_terms_documented": true,
+        "reproducible_acquisition": true,
+        "deterministic_parser": true,
+        "counts_documented": true,
+        "schema_validated": true,
+        "offsets_validated_or_not_applicable": true,
+        "tests_passed": true,
+        "orchestrator_source_audit": true
+      },
+      "processed_path": "ai/data/processed/airspace.jsonl",
+      "limitations": [
+        "More than 90% fabricated source text",
+        "No actual reply edges in acquired release",
+        "131 unlabelled messages are not source negative labels",
+        "Raw Thread metadata is not a verified reply thread"
+      ],
+      "source_audit_report": "ai/reports/auxiliary_source_audits.json",
+      "training_conditions": [
+        "Private research use of original source auxiliary tasks only",
+        "Source Noise is conference-relative; no direct FYP scope/label mapping",
+        "Global index, explicit partition assignment and protected-held-out exclusion required before actual training"
+      ]
+    },
+    {
+      "dataset_name": "RADAR Action-Item Dataset",
+      "version": "CMU public TGZ release; version not stated",
+      "official_source": "https://www.cs.cmu.edu/~pbennett/action-item-dataset.html",
+      "download_url": "http://www.cs.cmu.edu/~pbennett/action-item-dataset.tgz",
+      "origin_corpus": "CMU RADAR project anonymized email corpus",
+      "overlap_family": "RADAR_ACTION",
+      "license": "No named open license found. CMU page says an IRB panel review found the anonymized data exempt and distributable for research purposes.",
+      "redistribution_allowed": null,
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "action presence auxiliary classification",
+        "action-item span extraction"
+      ],
+      "original_labels": [
+        "positive",
+        "negative"
+      ],
+      "mapping_policy": {
+        "fyp_labels_generated": false,
+        "role": "auxiliary source task only",
+        "policy": "Keep action-item presence and spans as source tasks. Do not map every action-item positive to FYP ACTION_REQUEST. Preserve the released anonymized text and never reverse token substitution."
+      },
+      "checksum": {
+        "algorithm": "sha256",
+        "files": [
+          {
+            "path": "ai/data/raw/radar_action/action-item-dataset.tgz",
+            "sha256": "1cee24880166b982ea25feaae0a0b23a04b7edf4de7b6c8ca098c390c5667e43",
+            "bytes": 428285
+          }
+        ],
+        "publisher_checksum_available": false
+      },
+      "download_date": "2026-10-02",
+      "local_path": "ai/data/raw/radar_action/action-item-dataset.tgz",
+      "status": "integrated_auxiliary",
+      "counts": {
+        "source_cited": {
+          "messages": 744,
+          "source": "CMU RADAR Action-Item dataset page"
+        },
+        "observed": {
+          "dataset": "RADAR_ACTION",
+          "family": "RADAR_ACTION",
+          "source_archive_sha256": "1cee24880166b982ea25feaae0a0b23a04b7edf4de7b6c8ca098c390c5667e43",
+          "message_count": 744,
+          "judgment_presence_counts": {
+            "absent": 416,
+            "present": 328
+          },
+          "action_item_span_count": 416,
+          "messages_by_action_item_span_count": {
+            "0": 416,
+            "1": 259,
+            "2": 55,
+            "3": 11,
+            "4": 2,
+            "6": 1
+          },
+          "additional_annotation_record_count": 20815,
+          "additional_annotation_type_counts": {
+            "ANIMAL": 58,
+            "CARDINAL": 726,
+            "CONTACT_INFO": 1166,
+            "DATE": 1529,
+            "DISEASE": 47,
+            "EVENT": 41,
+            "FAC": 68,
+            "FAC_DESC": 245,
+            "GAME": 2,
+            "GPE": 524,
+            "GPE_DESC": 53,
+            "LANGUAGE": 4,
+            "LAW": 35,
+            "LOCATION": 83,
+            "MONEY": 395,
+            "NATIONALITY": 114,
+            "ORDINAL": 90,
+            "ORGANIZATION": 3437,
+            "ORG_DESC": 766,
+            "PERCENT": 33,
+            "PERSON": 2063,
+            "PER_DESC": 1837,
+            "PLANT": 4,
+            "PRODUCT": 222,
+            "PRODUCT_DESC": 87,
+            "QUANTITY": 20,
+            "SUBSTANCE": 80,
+            "TIME": 329,
+            "WORK_OF_ART": 449,
+            "sentence": 6308
+          },
+          "thread_id_available": false,
+          "fyp_label_mapping_applied": false,
+          "offset_basis": "complete original source message file",
+          "offset_unit": "Unicode code points, zero-based, end-exclusive",
+          "source_message_file_count": 744,
+          "judgment_row_count": 744,
+          "annotation_mapping_row_count": 744,
+          "source_annotation_file_count": 744,
+          "validated_action_item_span_count": 416,
+          "validated_additional_annotation_count": 20815,
+          "processed_jsonl": "ai/data/processed/radar_action.jsonl",
+          "review_jsonl": "ai/data/processed/radar_action_review_50.jsonl",
+          "review_record_count": 50
+        }
+      },
+      "source_urls": [
+        "https://www.cs.cmu.edu/~pbennett/action-item-dataset.html",
+        "http://www.cs.cmu.edu/~pbennett/action-item-dataset.tgz"
+      ],
+      "dataset_id": "radar_action",
+      "source_annotation_inventory": {
+        "action_item_presence": [
+          "positive",
+          "negative"
+        ],
+        "action_item_span": "character offsets; source spans validated against full message text",
+        "additional_span_types": [
+          "ANIMAL",
+          "CARDINAL",
+          "CONTACT_INFO",
+          "DATE",
+          "DISEASE",
+          "EVENT",
+          "FAC",
+          "FAC_DESC",
+          "GAME",
+          "GPE",
+          "GPE_DESC",
+          "LANGUAGE",
+          "LAW",
+          "LOCATION",
+          "MONEY",
+          "NATIONALITY",
+          "ORDINAL",
+          "ORGANIZATION",
+          "ORG_DESC",
+          "PERCENT",
+          "PERSON",
+          "PER_DESC",
+          "PLANT",
+          "PRODUCT",
+          "PRODUCT_DESC",
+          "QUANTITY",
+          "SUBSTANCE",
+          "TIME",
+          "WORK_OF_ART",
+          "sentence"
+        ]
+      },
+      "training_permitted": true,
+      "quality_gates": {
+        "official_source_verified": true,
+        "usage_terms_documented": true,
+        "reproducible_acquisition": true,
+        "deterministic_parser": true,
+        "counts_documented": true,
+        "schema_validated": true,
+        "offsets_validated_or_not_applicable": true,
+        "tests_passed": true,
+        "orchestrator_source_audit": true
+      },
+      "processed_path": "ai/data/processed/radar_action.jsonl",
+      "training_conditions": [
+        "Private research use only",
+        "No direct mapping to FYP ACTION_REQUEST",
+        "Global index and held-out exclusion required before actual training"
+      ],
+      "limitations": [
+        "Token randomization destroys ordinary lexical semantics",
+        "Additional NLP labels are source annotations, not human FYP NER gold",
+        "Reply headers removed and RFC Message-ID unavailable"
+      ]
+    },
+    {
+      "dataset_name": "Parakweet Email Intent Data Set",
+      "version": "author repository commit 055f62857b3214c1682a0b18a2c5fc2c9f0c00e6",
+      "official_source": "https://github.com/ParakweetLabs/EmailIntentDataSet",
+      "download_url": "https://raw.githubusercontent.com/ParakweetLabs/EmailIntentDataSet/055f62857b3214c1682a0b18a2c5fc2c9f0c00e6/src/resources/Ask0729-fixed.txt",
+      "origin_corpus": "Enron email corpus; sentence-level fragments",
+      "overlap_family": "ENRON",
+      "license": "Apache-2.0 declared by the pinned author README, LICENSE, and GitHub repository metadata. This project keeps Enron-derived message text local/private and uncommitted.",
+      "redistribution_allowed": null,
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "sentence-level binary email-intent auxiliary supervision"
+      ],
+      "original_labels": [
+        "Yes",
+        "No"
+      ],
+      "mapping_policy": {
+        "source_label_mapping": {
+          "Yes": "intent_present=true",
+          "No": "intent_present=false"
+        },
+        "fine_grained_act_inferred": false,
+        "fyp_labels_generated": false,
+        "note": "The author task is sentence-level binary email intent; no single FYP label is equivalent."
+      },
+      "checksum": {
+        "algorithm": "sha256",
+        "files": [
+          {
+            "path": "ai/data/raw/parakweet/055f62857b3214c1682a0b18a2c5fc2c9f0c00e6/Ask0729-fixed.txt",
+            "sha256": "1dafc1b367cf2fb1e8b4a944b67e14578bcb1085f2f02ea150be45c373fbe8cd",
+            "bytes": 347997
+          },
+          {
+            "path": "ai/data/raw/parakweet/055f62857b3214c1682a0b18a2c5fc2c9f0c00e6/LICENSE",
+            "sha256": "1945e82c7c7425a814c790a1ea16964083da7042ffdfa8232cd04e575dd6ff88",
+            "bytes": 11351
+          },
+          {
+            "path": "ai/data/raw/parakweet/055f62857b3214c1682a0b18a2c5fc2c9f0c00e6/README.md",
+            "sha256": "3c245e8439670e0f52c4997927144b35ee962d9487c09c7ba08fe621be838c05",
+            "bytes": 387
+          },
+          {
+            "path": "ai/data/raw/parakweet/055f62857b3214c1682a0b18a2c5fc2c9f0c00e6/testSet-qualifiedBatch-fixed.txt",
+            "sha256": "1b5ebc45a80c1e7fdeed656b7db7cec8e50eb18f562daa20070f1e3187e01e4a",
+            "bytes": 95679
+          }
+        ],
+        "publisher_checksum_available": false
+      },
+      "download_date": "2026-10-02",
+      "local_path": "ai/data/raw/parakweet/055f62857b3214c1682a0b18a2c5fc2c9f0c00e6/",
+      "status": "source_audited_identity_quarantine",
+      "counts": {
+        "author_wiki_cited": {
+          "train": {
+            "records": 4213,
+            "Yes": 1631,
+            "No": 2582
+          },
+          "test": {
+            "records": 991,
+            "Yes": 277,
+            "No": 714
+          }
+        },
+        "observed_from_pinned_files": {
+          "train": {
+            "records": 3657,
+            "Yes": 1719,
+            "No": 1938
+          },
+          "test": {
+            "records": 992,
+            "Yes": 309,
+            "No": 683
+          },
+          "total": {
+            "records": 4649,
+            "Yes": 2028,
+            "No": 2621
+          },
+          "train_test_exact_sentence_overlap_unique_count": 4
+        },
+        "count_note": "Current file counts and labels disagree with author wiki counts. Preserve both source-cited and locally observed figures; do not silently reconcile them."
+      },
+      "source_urls": [
+        "https://github.com/ParakweetLabs/EmailIntentDataSet",
+        "https://github.com/ParakweetLabs/EmailIntentDataSet/wiki",
+        "https://raw.githubusercontent.com/ParakweetLabs/EmailIntentDataSet/055f62857b3214c1682a0b18a2c5fc2c9f0c00e6/src/resources/Ask0729-fixed.txt",
+        "https://raw.githubusercontent.com/ParakweetLabs/EmailIntentDataSet/055f62857b3214c1682a0b18a2c5fc2c9f0c00e6/src/resources/testSet-qualifiedBatch-fixed.txt"
+      ],
+      "dataset_id": "parakweet",
+      "source_annotation_inventory": [
+        "Yes",
+        "No"
+      ],
+      "training_permitted": false,
+      "quality_gates": {
+        "official_source_verified": true,
+        "usage_terms_documented": true,
+        "reproducible_acquisition": true,
+        "deterministic_parser": true,
+        "counts_documented": true,
+        "schema_validated": true,
+        "offsets_validated_or_not_applicable": true,
+        "tests_passed": true,
+        "orchestrator_source_audit": true
+      },
+      "identity_policy": {
+        "record_unit": "sentence fragment",
+        "source_message_id_available": false,
+        "rfc_message_id": null,
+        "source_thread_id": null,
+        "fragment": true,
+        "overlap_identity_complete": false,
+        "row_number_is_message_id": false
+      },
+      "processed_path": "ai/data/processed/parakweet.jsonl",
+      "limitations": [
+        "Source line IDs cannot establish original email identity",
+        "All fragments unresolved in ENRON family: quarantine from training when protected evaluation is ENRON",
+        "Four exact source sentences cross original train/test boundary"
+      ],
+      "source_audit_report": "ai/reports/auxiliary_source_audits.json"
+    },
+    {
+      "dataset_name": "CEREC: Corpus for Entity Resolution in Email Conversations",
+      "version": "author repository commit d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9",
+      "official_source": "https://github.com/paragdakle/emailcoref",
+      "download_url": "https://raw.githubusercontent.com/paragdakle/emailcoref/d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9/data/COLING/cerec.zip",
+      "origin_corpus": "Enron email corpus",
+      "overlap_family": "ENRON",
+      "license": "Author repo identifies Apache-2.0; paper states CC BY 4.0. Scope for the Enron-derived message text embedded in corpus files is not explicit; treat message-bearing corpus redistribution rights as unresolved.",
+      "redistribution_allowed": false,
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "email entity mention and coreference auxiliary supervision",
+        "thread entity continuity"
+      ],
+      "original_labels": [
+        "PERSON",
+        "ORGANIZATION",
+        "LOCATION",
+        "DIGITAL",
+        "mention spans",
+        "coreference chains",
+        "message/section/speaker features where present"
+      ],
+      "mapping_policy": {
+        "fyp_labels_generated": false,
+        "role": "auxiliary source task only",
+        "policy": "Preserve source entity and chain annotations. Do not convert them into FYP labels. Enron overlap controls apply across MailEx, Parakweet, CEREC, and all FYP splits.",
+        "reply_graph_inferred": false,
+        "source_thread_id": "Preserve author document-header identifier.",
+        "source_message_id": null,
+        "overlap_identity_complete": false,
+        "note": "Message and section feature columns are preserved as source annotations, not treated as RFC Message-IDs or an inferred reply graph."
+      },
+      "checksum": {
+        "algorithm": "sha256",
+        "publisher_checksum_available": false,
+        "files": [
+          {
+            "path": "ai/data/raw/cerec/d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9/cerec.zip",
+            "sha256": "6719223815d6a2301c01a596892d76c0cf33a03fff0ac53f7b43de4b93bc830b",
+            "bytes": 16994267
+          }
+        ]
+      },
+      "download_date": "2026-10-02",
+      "local_path": "ai/data/raw/cerec/d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9/",
+      "status": "inspection_only_rights_identity_annotation_quality_pending",
+      "counts": {
+        "source_cited": {
+          "full_corpus_threads": 6001,
+          "messages": 36448,
+          "coreference_chains_2020_paper_and_readme": 38996,
+          "coreference_chains_updated_author_paper": 60383
+        },
+        "observed": {
+          "cerec.conll": {
+            "source_file": "cerec.conll",
+            "source_file_role": "full_corpus",
+            "document_count": 6001,
+            "unique_thread_id_count": 6001,
+            "duplicate_document_block_count": 0,
+            "token_row_count": 6567125,
+            "message_id_feature_count_sum": 26409,
+            "section_id_feature_count_sum": 12451,
+            "speaker_feature_count_sum": 1,
+            "entity_annotation_row_count": 0,
+            "entity_type_annotation_token_counts": {},
+            "mention_annotation_row_count": 749368,
+            "distinct_mention_annotation_id_count": 6009,
+            "coreference_annotation_row_count": 665247,
+            "distinct_coreference_cluster_count": 60383,
+            "threads_with_coreference_annotations": 6001,
+            "antecedent_marker_count": 0,
+            "malformed_coreference_code_count": 0,
+            "observed_token_column_widths": {
+              "7": 6567125
+            }
+          },
+          "cerec.validation.14.conll": {
+            "source_file": "cerec.validation.14.conll",
+            "source_file_role": "validation_set_14",
+            "document_count": 14,
+            "unique_thread_id_count": 14,
+            "duplicate_document_block_count": 0,
+            "token_row_count": 13420,
+            "message_id_feature_count_sum": 85,
+            "section_id_feature_count_sum": 31,
+            "speaker_feature_count_sum": 49,
+            "entity_annotation_row_count": 0,
+            "entity_type_annotation_token_counts": {},
+            "mention_annotation_row_count": 1829,
+            "distinct_mention_annotation_id_count": 14,
+            "coreference_annotation_row_count": 1825,
+            "distinct_coreference_cluster_count": 306,
+            "threads_with_coreference_annotations": 14,
+            "antecedent_marker_count": 0,
+            "malformed_coreference_code_count": 0,
+            "observed_token_column_widths": {
+              "7": 13420
+            }
+          },
+          "cerec.validation.20.conll": {
+            "source_file": "cerec.validation.20.conll",
+            "source_file_role": "validation_set_20",
+            "document_count": 20,
+            "unique_thread_id_count": 20,
+            "duplicate_document_block_count": 0,
+            "token_row_count": 20510,
+            "message_id_feature_count_sum": 135,
+            "section_id_feature_count_sum": 43,
+            "speaker_feature_count_sum": 72,
+            "entity_annotation_row_count": 0,
+            "entity_type_annotation_token_counts": {},
+            "mention_annotation_row_count": 2786,
+            "distinct_mention_annotation_id_count": 20,
+            "coreference_annotation_row_count": 2782,
+            "distinct_coreference_cluster_count": 422,
+            "threads_with_coreference_annotations": 20,
+            "antecedent_marker_count": 0,
+            "malformed_coreference_code_count": 0,
+            "observed_token_column_widths": {
+              "7": 20510
+            }
+          },
+          "mention.corrected.94.conll": {
+            "source_file": "mention.corrected.94.conll",
+            "source_file_role": "mention_corrected_94",
+            "document_count": 94,
+            "unique_thread_id_count": 94,
+            "duplicate_document_block_count": 0,
+            "token_row_count": 92374,
+            "message_id_feature_count_sum": 403,
+            "section_id_feature_count_sum": 196,
+            "speaker_feature_count_sum": 0,
+            "entity_annotation_row_count": 0,
+            "entity_type_annotation_token_counts": {},
+            "mention_annotation_row_count": 13362,
+            "distinct_mention_annotation_id_count": 94,
+            "coreference_annotation_row_count": 0,
+            "distinct_coreference_cluster_count": 0,
+            "threads_with_coreference_annotations": 0,
+            "antecedent_marker_count": 0,
+            "malformed_coreference_code_count": 0,
+            "observed_token_column_widths": {
+              "7": 92374
+            }
+          },
+          "seed.conll": {
+            "source_file": "seed.conll",
+            "source_file_role": "seed_corpus",
+            "document_count": 43,
+            "unique_thread_id_count": 43,
+            "duplicate_document_block_count": 0,
+            "token_row_count": 42301,
+            "message_id_feature_count_sum": 228,
+            "section_id_feature_count_sum": 101,
+            "speaker_feature_count_sum": 152,
+            "entity_annotation_row_count": 5232,
+            "entity_type_annotation_token_counts": {
+              "DIGITAL": 300,
+              "LOCATION": 177,
+              "ORGANIZATION": 659,
+              "PERSON": 4125
+            },
+            "mention_annotation_row_count": 5232,
+            "distinct_mention_annotation_id_count": 45,
+            "coreference_annotation_row_count": 5232,
+            "distinct_coreference_cluster_count": 765,
+            "threads_with_coreference_annotations": 43,
+            "antecedent_marker_count": 0,
+            "malformed_coreference_code_count": 0,
+            "observed_token_column_widths": {
+              "7": 42301
+            }
+          }
+        },
+        "observed_note": "All token rows have seven source columns. The main-file chain count uses distinct numeric IDs in column seven counted within each document; it matches the updated-author count, while the README/2020 count differs. Document-ID overlap is zero across files, but this does not establish message/content non-overlap."
+      },
+      "source_urls": [
+        "https://github.com/paragdakle/emailcoref",
+        "https://raw.githubusercontent.com/paragdakle/emailcoref/d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9/data/COLING/cerec.zip",
+        "https://raw.githubusercontent.com/paragdakle/emailcoref/d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9/README.md",
+        "https://raw.githubusercontent.com/paragdakle/emailcoref/d86bdcdf963b4181aa7d6a3e3ca761c971ab27d9/LICENSE",
+        "https://aclanthology.org/2020.coling-main.30.pdf",
+        "https://arxiv.org/abs/2105.10606"
+      ],
+      "dataset_id": "cerec",
+      "source_annotation_inventory": [
+        "PERSON",
+        "ORGANIZATION",
+        "LOCATION",
+        "DIGITAL",
+        "mention spans",
+        "coreference chains",
+        "message/section/speaker features where present"
+      ],
+      "training_permitted": false,
+      "quality_gates": {
+        "official_source_verified": true,
+        "usage_terms_documented": true,
+        "reproducible_acquisition": true,
+        "deterministic_parser": true,
+        "counts_documented": true,
+        "schema_validated": true,
+        "offsets_validated_or_not_applicable": true,
+        "tests_passed": true,
+        "orchestrator_source_audit": true
+      },
+      "source_audit_report": "ai/reports/auxiliary_source_audits.json",
+      "limitations": [
+        "Seven sampled documents have suspected cross-entity cluster merges requiring full-context review; no corpus error rate established",
+        "Personal sample covers one custodian group; not representative",
+        "Global index integration and original-message identity unresolved"
+      ]
+    },
+    {
+      "dataset_name": "BC3 (British Columbia Conversation Corpus)",
+      "version": "BC3 release; version not stated on current download page",
+      "official_source": "https://www.cs.ubc.ca/labs/lci/bc3/download.html",
+      "download_url": null,
+      "origin_corpus": "W3C mailing-list emails",
+      "overlap_family": "W3C",
+      "license": "Creative Commons Attribution-ShareAlike 3.0 Unported (corpus; stated by UBC). The separate BC3 annotation framework is MIT-licensed.",
+      "redistribution_allowed": true,
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "thread structure auxiliary evaluation",
+        "dialog-act/speech-act auxiliary evaluation",
+        "summary evidence experiments"
+      ],
+      "original_labels": [
+        "sentence-level dialogue acts/speech acts",
+        "extractive and abstractive summaries",
+        "subjectivity annotations",
+        "topic annotations in later release"
+      ],
+      "mapping_policy": {
+        "fyp_labels_generated": false,
+        "role": "auxiliary source task only",
+        "policy": "Preserve original BC3 layers. Use only as a small auxiliary/evaluation corpus; no automatic conversion to FYP labels."
+      },
+      "checksum": null,
+      "download_date": null,
+      "local_path": null,
+      "status": "access_pending_registration_details",
+      "counts": {
+        "source_cited": {
+          "threads": 40,
+          "sentences": 3222
+        },
+        "observed": null,
+        "observed_note": "No local acquisition; source paper reports corpus counts."
+      },
+      "source_urls": [
+        "https://www.cs.ubc.ca/labs/lci/bc3/download.html",
+        "https://aclanthology.org/D10-1.pdf"
+      ],
+      "dataset_id": "bc3",
+      "source_annotation_inventory": [
+        "sentence-level dialogue acts/speech acts",
+        "extractive and abstractive summaries",
+        "subjectivity annotations",
+        "topic annotations in later release"
+      ],
+      "training_permitted": false,
+      "quality_gates": {
+        "official_source_verified": true,
+        "usage_terms_documented": true,
+        "reproducible_acquisition": false,
+        "deterministic_parser": false,
+        "counts_documented": false,
+        "schema_validated": false,
+        "offsets_validated_or_not_applicable": false,
+        "tests_passed": false,
+        "orchestrator_source_audit": false
+      }
+    },
+    {
+      "dataset_name": "CSpace management-course email corpus",
+      "version": "Research-paper described corpus; no public release version found",
+      "official_source": "https://www.cs.cmu.edu/~vitor/publications/papers/carvalho06hltacts.pdf",
+      "download_url": null,
+      "origin_corpus": "CMU CSpace simulated management course",
+      "overlap_family": "CSPACE",
+      "license": "No public dataset license found. Author research states parts were accessible under group agreements; another author paper states privacy prevents corpus distribution.",
+      "redistribution_allowed": false,
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "speech-act auxiliary learning if access is later authorized"
+      ],
+      "original_labels": [
+        "Request",
+        "Deliver",
+        "Propose",
+        "Commit",
+        "Amend",
+        "Meeting",
+        "deliveredData (dData)"
+      ],
+      "mapping_policy": {
+        "fyp_labels_generated": false,
+        "role": "auxiliary source task only",
+        "policy": "Acquisition pending. If access is later authorized, preserve original verb/noun pairs; no automatic mapping to FYP classes."
+      },
+      "checksum": null,
+      "download_date": null,
+      "local_path": null,
+      "status": "acquisition_pending_no_authorized_public_download",
+      "counts": {
+        "source_cited": {
+          "corpus_messages_approx": 15000,
+          "labeled_messages_in_one_study": 1716
+        },
+        "observed": null,
+        "observed_note": "Research-paper counts only; no release bytes inspected."
+      },
+      "source_urls": [
+        "https://www.cs.cmu.edu/~vitor/publications/papers/carvalho06hltacts.pdf",
+        "https://www.cs.cmu.edu/~einat/sigir-06.pdf"
+      ],
+      "dataset_id": "cspace",
+      "source_annotation_inventory": [
+        "Request",
+        "Deliver",
+        "Propose",
+        "Commit",
+        "Amend",
+        "Meeting",
+        "deliveredData (dData)"
+      ],
+      "training_permitted": false,
+      "quality_gates": {
+        "official_source_verified": true,
+        "usage_terms_documented": true,
+        "reproducible_acquisition": false,
+        "deterministic_parser": false,
+        "counts_documented": false,
+        "schema_validated": false,
+        "offsets_validated_or_not_applicable": false,
+        "tests_passed": false,
+        "orchestrator_source_audit": false
+      }
+    },
+    {
+      "dataset_name": "Avocado Research Email Collection",
+      "version": "LDC2015T03 v1.0.3 documentation",
+      "official_source": "https://catalog.ldc.upenn.edu/LDC2015T03",
+      "download_url": null,
+      "origin_corpus": "Avocado private organizational PST mailboxes",
+      "overlap_family": "AVOCADO",
+      "license": "Restricted LDC Avocado Collection Organizational License Agreement and End User Agreement; research/technology development only, controlled organization-limited access, no redistribution or public reproduction.",
+      "redistribution_allowed": false,
+      "raw_text_allowed_in_git": false,
+      "intended_component": [
+        "enterprise/Outlook language transfer",
+        "real email thread modeling",
+        "calendar/appointment/task auxiliary learning"
+      ],
+      "original_labels": [
+        "no manually assigned intent taxonomy stated",
+        "metadata/item types: email, attachment, extracted file, contact, appointment, task, schedule, report, journal, stickynote, other",
+        "reply_to and duplicate relationships in metadata"
+      ],
+      "mapping_policy": {
+        "fyp_labels_generated": false,
+        "role": "auxiliary source task only",
+        "policy": "Use only after institution signs both agreements, confirms quote/access, and approves PII handling. Keep raw files private and organization access controlled. Publish no source excerpts or raw-derived public content."
+      },
+      "checksum": null,
+      "download_date": null,
+      "local_path": null,
+      "status": "licensed_access_pending",
+      "counts": {
+        "source_cited": {
+          "source_pst_accounts": 282,
+          "processed_custodians": 279,
+          "total_items": 2033740,
+          "email_items_including_duplicates": 938035,
+          "nonduplicate_email_text_items": 614461
+        },
+        "observed": null,
+        "observed_note": "Counts are from LDC README v1.0.3, not a local acquisition."
+      },
+      "source_urls": [
+        "https://catalog.ldc.upenn.edu/LDC2015T03",
+        "https://catalog.ldc.upenn.edu/docs/LDC2015T03/README.txt",
+        "https://catalog.ldc.upenn.edu/license/Avocado%20Collection%20-%20Organization%20Agreement.pdf",
+        "https://catalog.ldc.upenn.edu/license/Avocado%20Collection%20-%20Individual%20Agreement.pdf",
+        "https://catalog.ldc.upenn.edu/LDC2026MNP"
+      ],
+      "access_notes": {
+        "current_cost": "No public amount shown. The LDC2015T03 page says login for the applicable fee.",
+        "bahria_university_ldc_membership": "Unknown; no public official evidence located.",
+        "membership_context": "Current 2026 LDC not-for-profit membership is intended for universities; specified datasets can incur extra charges."
+      },
+      "dataset_id": "avocado",
+      "source_annotation_inventory": [
+        "no manually assigned intent taxonomy stated",
+        "metadata/item types: email, attachment, extracted file, contact, appointment, task, schedule, report, journal, stickynote, other",
+        "reply_to and duplicate relationships in metadata"
+      ],
+      "training_permitted": false,
+      "quality_gates": {
+        "official_source_verified": true,
+        "usage_terms_documented": true,
+        "reproducible_acquisition": false,
+        "deterministic_parser": false,
+        "counts_documented": false,
+        "schema_validated": false,
+        "offsets_validated_or_not_applicable": false,
+        "tests_passed": false,
+        "orchestrator_source_audit": false
+      }
+    },
+    {
+      "redistribution_allowed": null,
+      "raw_text_allowed_in_git": false,
+      "training_permitted": false,
+      "quality_gates": {
+        "official_source_verified": true,
+        "usage_terms_documented": true,
+        "reproducible_acquisition": true,
+        "deterministic_parser": true,
+        "counts_documented": true,
+        "schema_validated": true,
+        "offsets_validated_or_not_applicable": true,
+        "tests_passed": true,
+        "orchestrator_source_audit": true
+      },
+      "status": "source_audited_v2_annotation_training_review_pending",
+      "mapping_policy": {
+        "fyp_labels_generated": false,
+        "role": "unlabelled source or original auxiliary annotations; final classification needs independent review"
+      },
+      "dataset_id": "enron",
+      "dataset_name": "CMU CALO Enron Email Dataset",
+      "version": "May 7, 2015",
+      "official_source": "https://www.cs.cmu.edu/~enron/",
+      "download_url": "https://www.cs.cmu.edu/~enron/enron_mail_20150507.tar.gz",
+      "origin_corpus": "CMU CALO Enron",
+      "overlap_family": "ENRON",
+      "license": "Public CMU research resource; no standard open license stated; respect source privacy caveat",
+      "intended_component": [
+        "corporate email candidate discovery",
+        "AI structured annotation",
+        "hard negatives"
+      ],
+      "original_labels": [],
+      "checksum": {
+        "algorithm": "sha256",
+        "files": [
+          {
+            "path": "ai/data/raw/enron/enron_mail_20150507.tar.gz",
+            "sha256": "b3da1b3fe0369ec3140bb4fbce94702c33b7da810ec15d718b3fadf5cd748ca7",
+            "bytes": 443254787
+          }
+        ],
+        "publisher_checksum_available": false
+      },
+      "download_date": null,
+      "download_date_note": "Acquired in prior work; exact download timestamp not recorded in archive manifest",
+      "local_path": "ai/data/raw/enron/enron_mail_20150507.tar.gz",
+      "processed_path": "ai/data/interim/enron_full.jsonl",
+      "counts": {
+        "observed": {
+          "source_files": 517401
+        }
+      },
+      "source_provenance_report": "ai/data/raw/enron/README.md",
+      "source_audit_report": "ai/reports/enron_v2_source_audit.json",
+      "source_validation_report": "ai/reports/enron_full_stats.json",
+      "limitations": [
+        "CMU offers research use with a privacy caveat; no standard open content license is inferred",
+        "Derived current_message can retain forwarded headers/older content; source-grounded current-function review is required",
+        "No actual References/In-Reply-To links in prepared release; singleton grouping is not true conversation structure",
+        "New structured annotation/export approval still required; no permission for training from unlabelled source candidates"
+      ]
+    },
+    {
+      "redistribution_allowed": true,
+      "raw_text_allowed_in_git": false,
+      "training_permitted": false,
+      "quality_gates": {
+        "official_source_verified": false,
+        "usage_terms_documented": false,
+        "reproducible_acquisition": false,
+        "deterministic_parser": false,
+        "counts_documented": false,
+        "schema_validated": false,
+        "offsets_validated_or_not_applicable": false,
+        "tests_passed": false,
+        "orchestrator_source_audit": false
+      },
+      "status": "existing_prepared_v2_training_review_pending",
+      "mapping_policy": {
+        "fyp_labels_generated": false,
+        "role": "unlabelled source or original auxiliary annotations; final classification needs independent review"
+      },
+      "dataset_id": "mailex",
+      "dataset_name": "MailEx: Email Event and Argument Extraction",
+      "version": "EMNLP 2023 author archive acquired 2026-09-24",
+      "official_source": "https://github.com/salokr/Email-Event-Extraction",
+      "download_url": "https://drive.google.com/file/d/1a336g4-wlEwsVbXLPB9wPQnBDRE933mb/view",
+      "origin_corpus": "Enron",
+      "overlap_family": "ENRON",
+      "license": "Author repository declares CC BY-SA 4.0; preserve attribution and source provenance",
+      "intended_component": [
+        "event extraction",
+        "entity/event evidence",
+        "authentic source sequence auxiliary research"
+      ],
+      "original_labels": [
+        "Amend_Action_Data",
+        "Amend_Data",
+        "Amend_Meeting_Data",
+        "Deliver_Action_Data",
+        "Deliver_Data",
+        "Deliver_Meeting_Data",
+        "Request_Action",
+        "Request_Action_Data",
+        "Request_Data",
+        "Request_Meeting",
+        "Request_Meeting_Data"
+      ],
+      "checksum": {
+        "algorithm": "sha256",
+        "files": [
+          {
+            "path": "ai/data/raw/mailex/data.zip",
+            "sha256": "dda3ce5da5ffc3452dd9e5a58cd69e19e68bd655eafe1deec48e87204f6c37b4",
+            "bytes": 5476134
+          }
+        ]
+      },
+      "download_date": "2026-09-24",
+      "local_path": "ai/data/raw/mailex/data.zip",
+      "processed_path": "ai/data/processed/mailex.jsonl",
+      "counts": {
+        "observed": {
+          "threads": 1500,
+          "messages": 3936,
+          "usable_messages": 3609,
+          "empty_messages": 327,
+          "non_event_messages": 772,
+          "source_event_count": 8392,
+          "non_event_marker_turns": 776,
+          "source_o_marker_turns": 776,
+          "source_o_only_turns": 772,
+          "source_o_with_event_turns": 4,
+          "malformed_bio_argument_spans": 184,
+          "bare_pronoun_participant_spans": 624,
+          "source_argument_spans": 18099,
+          "mapped_argument_spans": 2979,
+          "duplicate_canonical_spans_before": 57,
+          "duplicate_canonical_spans_after": 0,
+          "ambiguous_argument_spans": 13928,
+          "unmapped_argument_spans": 1192,
+          "mapped_event_count": 2125,
+          "unmapped_event_count": 6267,
+          "events_by_type": {
+            "Amend_Action_Data": 3,
+            "Amend_Data": 193,
+            "Amend_Meeting_Data": 55,
+            "Deliver_Action_Data": 3195,
+            "Deliver_Data": 1820,
+            "Deliver_Meeting_Data": 487,
+            "Request_Action": 1376,
+            "Request_Action_Data": 233,
+            "Request_Data": 721,
+            "Request_Meeting": 259,
+            "Request_Meeting_Data": 50
+          },
+          "events_by_mapping": {
+            "Amend_Action_Data": {
+              "total": 3,
+              "unmapped": 3
+            },
+            "Amend_Data": {
+              "total": 193,
+              "unmapped": 193
+            },
+            "Amend_Meeting_Data": {
+              "mapped": 50,
+              "total": 55,
+              "unmapped": 5
+            },
+            "Deliver_Action_Data": {
+              "total": 3195,
+              "unmapped": 3195
+            },
+            "Deliver_Data": {
+              "total": 1820,
+              "unmapped": 1820
+            },
+            "Deliver_Meeting_Data": {
+              "mapped": 436,
+              "total": 487,
+              "unmapped": 51
+            },
+            "Request_Action": {
+              "mapped": 1370,
+              "total": 1376,
+              "unmapped": 6
+            },
+            "Request_Action_Data": {
+              "total": 233,
+              "unmapped": 233
+            },
+            "Request_Data": {
+              "total": 721,
+              "unmapped": 721
+            },
+            "Request_Meeting": {
+              "mapped": 237,
+              "total": 259,
+              "unmapped": 22
+            },
+            "Request_Meeting_Data": {
+              "mapped": 32,
+              "total": 50,
+              "unmapped": 18
+            }
+          },
+          "source_argument_roles": {
+            "Action Date": 771,
+            "Action Description": 4895,
+            "Action Members": 4097,
+            "Action Time": 118,
+            "Amend Date": 17,
+            "Amend Members": 123,
+            "Amend Time": 5,
+            "Data Owner": 15,
+            "Data Type": 38,
+            "Data Value": 1562,
+            "Data idString": 2635,
+            "Deliver Date": 26,
+            "Deliver Members": 182,
+            "Deliver Time": 8,
+            "Deliver members": 447,
+            "Meeting Agenda": 372,
+            "Meeting Date": 391,
+            "Meeting Location": 182,
+            "Meeting Members": 1235,
+            "Meeting Name": 210,
+            "Meeting Time": 242,
+            "Request Date": 29,
+            "Request Members": 90,
+            "Request Time": 10,
+            "Request members": 399
+          },
+          "extraction_label_counts": {
+            "ACTION_ITEM": 1380,
+            "AGENDA": 367,
+            "MEETING_DATE": 389,
+            "MEETING_TIME": 240,
+            "PARTICIPANT": 603
+          },
+          "classification_policy": "No FYP classification labels are inferred from MailEx events.",
+          "annotation_status_counts": {
+            "unlabelled": 3936
+          },
+          "metadata_alignment": {
+            "raw_thread_files": 1506,
+            "threads_aligned": 1457,
+            "messages_with_verified_header_alignment": 3824,
+            "threads_missing_raw_file": 2,
+            "threads_with_turn_count_mismatch": 38,
+            "threads_with_low_body_alignment": 3,
+            "alignment_threshold": 0.75,
+            "field_value_counts": {
+              "recipients": 2904,
+              "sender": 3819,
+              "sent_at": 13,
+              "subject": 3723
+            }
+          },
+          "empty_examples": [
+            "bass-e_inbox195:turn_2",
+            "bass-e_inbox290:turn_1",
+            "bass-e_inbox39:turn_4",
+            "bass-e_inbox88:turn_1",
+            "bass-e_inbox89:turn_1",
+            "bass-e_inbox89:turn_2",
+            "beck-s_inbox232:turn_1",
+            "beck-s_inbox272:turn_2",
+            "beck-s_inbox5:turn_2",
+            "blair-l_inbox268:turn_1",
+            "blair-l_inbox_284:turn_3",
+            "blair-l_inbox_30:turn_0",
+            "blair-l_inbox_30:turn_1",
+            "buy-r_inbox1023:turn_2",
+            "buy-r_inbox1074:turn_1",
+            "buy-r_inbox1202:turn_1",
+            "buy-r_inbox265:turn_0",
+            "buy-r_inbox265:turn_2",
+            "buy-r_inbox598:turn_3",
+            "buy-r_inbox785:turn_1",
+            "buy-r_inbox891:turn_2",
+            "campbell-l_inbox1109:turn_1",
+            "campbell-l_inbox26:turn_1",
+            "campbell-l_inbox26:turn_2",
+            "campbell-l_inbox26:turn_3",
+            "campbell-l_inbox438:turn_1",
+            "campbell-l_inbox592:turn_1",
+            "campbell-l_inbox832:turn_1",
+            "campbell-l_inbox_146:turn_2",
+            "campbell-l_inbox_146:turn_3"
+          ],
+          "malformed_examples": [
+            {
+              "email_id": "mailex:bass-e_inbox290:turn_0",
+              "warning": "Request_Meeting[0]: I tag without matching preceding role at token 91"
+            },
+            {
+              "email_id": "mailex:bass-e_inbox290:turn_0",
+              "warning": "Request_Meeting[0]: I tag without matching preceding role at token 92"
+            },
+            {
+              "email_id": "mailex:beck-s_inbox36:turn_0",
+              "warning": "Request_Data[0]: I tag without matching preceding role at token 23"
+            },
+            {
+              "email_id": "mailex:beck-s_inbox36:turn_0",
+              "warning": "Request_Data[0]: I tag without matching preceding role at token 24"
+            },
+            {
+              "email_id": "mailex:blair-l_inbox143:turn_0",
+              "warning": "Request_Action[0]: I tag without matching preceding role at token 32"
+            },
+            {
+              "email_id": "mailex:blair-l_inbox164:turn_1",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 94"
+            },
+            {
+              "email_id": "mailex:blair-l_inbox164:turn_1",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 95"
+            },
+            {
+              "email_id": "mailex:blair-l_inbox204:turn_0",
+              "warning": "Request_Action[0]: I tag without matching preceding role at token 126"
+            },
+            {
+              "email_id": "mailex:blair-l_inbox278:turn_2",
+              "warning": "Deliver_Data[0]: I tag without matching preceding role at token 115"
+            },
+            {
+              "email_id": "mailex:blair-l_inbox278:turn_2",
+              "warning": "Deliver_Data[0]: I tag without matching preceding role at token 116"
+            },
+            {
+              "email_id": "mailex:blair-l_inbox287:turn_0",
+              "warning": "Deliver_Action_Data[3]: I tag without matching preceding role at token 3"
+            },
+            {
+              "email_id": "mailex:blair-l_inbox39:turn_0",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 75"
+            },
+            {
+              "email_id": "mailex:blair-l_inbox39:turn_0",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 76"
+            },
+            {
+              "email_id": "mailex:blair-l_inbox39:turn_0",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 77"
+            },
+            {
+              "email_id": "mailex:blair-l_inbox87:turn_1",
+              "warning": "Deliver_Data[0]: I tag without matching preceding role at token 32"
+            },
+            {
+              "email_id": "mailex:blair-l_inbox_279:turn_0",
+              "warning": "Deliver_Action_Data[7]: I tag without matching preceding role at token 211"
+            },
+            {
+              "email_id": "mailex:buy-r_inbox1083:turn_0",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 7"
+            },
+            {
+              "email_id": "mailex:buy-r_inbox1083:turn_0",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 8"
+            },
+            {
+              "email_id": "mailex:buy-r_inbox396:turn_0",
+              "warning": "Deliver_Data[0]: I tag without matching preceding role at token 69"
+            },
+            {
+              "email_id": "mailex:buy-r_inbox396:turn_0",
+              "warning": "Deliver_Data[0]: I tag without matching preceding role at token 70"
+            },
+            {
+              "email_id": "mailex:buy-r_inbox636:turn_0",
+              "warning": "Deliver_Meeting_Data[0]: I tag without matching preceding role at token 9"
+            },
+            {
+              "email_id": "mailex:buy-r_inbox90:turn_1",
+              "warning": "Request_Meeting[0]: I tag without matching preceding role at token 5"
+            },
+            {
+              "email_id": "mailex:buy-r_inbox925:turn_0",
+              "warning": "Deliver_Action_Data[1]: I tag without matching preceding role at token 17"
+            },
+            {
+              "email_id": "mailex:buy-r_inbox925:turn_0",
+              "warning": "Deliver_Action_Data[1]: I tag without matching preceding role at token 19"
+            },
+            {
+              "email_id": "mailex:campbell-l_inbox1277:turn_3",
+              "warning": "Deliver_Action_Data[3]: I tag without matching preceding role at token 64"
+            },
+            {
+              "email_id": "mailex:campbell-l_inbox1277:turn_3",
+              "warning": "Deliver_Action_Data[3]: I tag without matching preceding role at token 65"
+            },
+            {
+              "email_id": "mailex:campbell-l_inbox281:turn_0",
+              "warning": "Amend_Data[0]: I tag without matching preceding role at token 37"
+            },
+            {
+              "email_id": "mailex:campbell-l_inbox281:turn_0",
+              "warning": "Amend_Data[0]: I tag without matching preceding role at token 38"
+            },
+            {
+              "email_id": "mailex:cash-m_inbox305:turn_0",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 47"
+            },
+            {
+              "email_id": "mailex:corman-s_inbox_measurement1:turn_0",
+              "warning": "Deliver_Action_Data[4]: I tag without matching preceding role at token 1"
+            },
+            {
+              "email_id": "mailex:crandell-s_inbox64:turn_1",
+              "warning": "Deliver_Action_Data[2]: I tag without matching preceding role at token 84"
+            },
+            {
+              "email_id": "mailex:crandell-s_inbox_bankruptcy9:turn_0",
+              "warning": "Deliver_Meeting_Data[0]: I tag without matching preceding role at token 2"
+            },
+            {
+              "email_id": "mailex:dasovich-j_inbox372:turn_0",
+              "warning": "Amend_Data[1]: I tag without matching preceding role at token 76"
+            },
+            {
+              "email_id": "mailex:dasovich-j_inbox659:turn_0",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 25"
+            },
+            {
+              "email_id": "mailex:derrick-j_inbox150:turn_0",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 11"
+            },
+            {
+              "email_id": "mailex:derrick-j_inbox234:turn_1",
+              "warning": "Request_Action[1]: I tag without matching preceding role at token 168"
+            },
+            {
+              "email_id": "mailex:derrick-j_inbox32:turn_2",
+              "warning": "Deliver_Meeting_Data[0]: I tag without matching preceding role at token 27"
+            },
+            {
+              "email_id": "mailex:derrick-j_inbox99:turn_0",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 18"
+            },
+            {
+              "email_id": "mailex:derrick-j_inbox99:turn_0",
+              "warning": "Deliver_Action_Data[1]: I tag without matching preceding role at token 46"
+            },
+            {
+              "email_id": "mailex:derrick-j_inbox_18:turn_0",
+              "warning": "Deliver_Meeting_Data[1]: I tag without matching preceding role at token 33"
+            },
+            {
+              "email_id": "mailex:donoho-l_inbox221:turn_0",
+              "warning": "Deliver_Data[0]: I tag without matching preceding role at token 22"
+            },
+            {
+              "email_id": "mailex:donoho-l_inbox47:turn_0",
+              "warning": "Request_Meeting[0]: I tag without matching preceding role at token 24"
+            },
+            {
+              "email_id": "mailex:donoho-l_inbox57:turn_0",
+              "warning": "Request_Action[0]: I tag without matching preceding role at token 13"
+            },
+            {
+              "email_id": "mailex:donoho-l_inbox_junk_file331:turn_0",
+              "warning": "Deliver_Action_Data[1]: I tag without matching preceding role at token 10"
+            },
+            {
+              "email_id": "mailex:donoho-l_inbox_junk_file332:turn_1",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 0"
+            },
+            {
+              "email_id": "mailex:geaccone-t_inbox237:turn_0",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 4"
+            },
+            {
+              "email_id": "mailex:germany-c_inbox204:turn_0",
+              "warning": "Deliver_Meeting_Data[0]: I tag without matching preceding role at token 18"
+            },
+            {
+              "email_id": "mailex:germany-c_inbox258:turn_0",
+              "warning": "Deliver_Data[0]: I tag without matching preceding role at token 26"
+            },
+            {
+              "email_id": "mailex:germany-c_inbox258:turn_0",
+              "warning": "Deliver_Data[0]: I tag without matching preceding role at token 27"
+            },
+            {
+              "email_id": "mailex:germany-c_inbox262:turn_1",
+              "warning": "Deliver_Action_Data[0]: I tag without matching preceding role at token 19"
+            }
+          ],
+          "source_file_errors": [],
+          "dataset": "MailEx",
+          "input_dir": "ai/data/raw/mailex/extracted/data/full_data",
+          "mapping_version": "1.1.0",
+          "duplicate_nonempty_message_copies": 242,
+          "duplicate_nonempty_message_groups": 159,
+          "paper_reported_non_event_messages": 776,
+          "manual_inspection_samples": [
+            "blair-l_inbox143:turn_1 (business meeting date and time)",
+            "beck-s_inbox5:turn_1 (integration testing actions)",
+            "bass-e_inbox100:turn_0 (social lunch example; illustrates project-scope review need)"
+          ],
+          "limitations": [
+            "Canonical message text is reconstructed by joining MailEx tokens with spaces; original RFC822 messages are not present in the annotation JSON.",
+            "Only aligned plain-text raw_threads headers can populate sender, recipients, cc, subject, or sent_at. Other metadata stays empty or null.",
+            "Canonical labels stay empty and annotation status stays unlabelled; MailEx events are not FYP email classification gold.",
+            "Direct spans are provisional, weak source argument proposals mapped to FYP extraction labels. They are not gold and require human review for FYP project scope; source role/event provenance remains attached.",
+            "Standalone pronouns and generic pronoun phrases in Meeting Members arguments are retained as source annotations and suppressed from canonical PARTICIPANT spans.",
+            "The paper/repository describe 10 event types, while the downloaded archive contains 11 observed non-O event keys including Amend_Action_Data.",
+            "The archive has 776 O markers; 4 co-occur with non-O event triggers, leaving 772 O-only turns. The parser reports both counts separately."
+          ],
+          "output_file": "ai/data/processed/mailex.jsonl",
+          "stats_file": "ai/reports/mailex_stats.json",
+          "canonical_label_count": 0,
+          "canonical_span_count": 2922,
+          "canonical_extraction_label_counts": {
+            "ACTION_ITEM": 1380,
+            "AGENDA": 356,
+            "MEETING_DATE": 367,
+            "MEETING_TIME": 226,
+            "PARTICIPANT": 593
+          },
+          "processed_record_count": 3936,
+          "source_file_count": 1500
+        }
+      },
+      "source_provenance_report": "ai/reports/mailex_source.md",
+      "limitations": [
+        "Token-joined reconstruction is not the original RFC email",
+        "Provisional entity crosswalk is not final FYP classification gold",
+        "Existing V1 helper is preserved; fresh V2 split requires new global index"
+      ]
+    }
+  ]
+}

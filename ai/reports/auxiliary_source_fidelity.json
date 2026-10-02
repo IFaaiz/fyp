@@ -1,0 +1,29 @@
+{
+  "method": "independent raw-byte comparison; no text exported",
+  "human_gold_claimed": false,
+  "sources": [
+    {
+      "dataset_id": "airspace",
+      "records": 711,
+      "archive_sha256": "04f8c82dc96ca00d565b5598e73424e35dbac4692ffa4d98271fe0c54bcc31a7",
+      "processed_sha256": "ccf75ed2551c42eafd00da7c98215acbd9ff552deddb29b0f561979d4f64f980",
+      "all_source_views_and_offsets_equal": true,
+      "semantic_source_audit_report": "ai/reports/auxiliary_source_audits.json"
+    },
+    {
+      "dataset_id": "radar_action",
+      "records": 744,
+      "validated_source_slices": 21231,
+      "archive_sha256": "1cee24880166b982ea25feaae0a0b23a04b7edf4de7b6c8ca098c390c5667e43",
+      "processed_sha256": "624cbfc5b8abcff3b1ee65e0cae189c2e11401a77bc9860897ba165e40360d5e",
+      "all_source_views_and_offsets_equal": true
+    },
+    {
+      "dataset_id": "parakweet",
+      "records": 4649,
+      "all_source_views_and_labels_equal": true,
+      "processed_sha256": "89dea44e3f98c1f1f1bb2899edb007d2e3bd0f58288daa3e5a46aeee3513a8b7",
+      "semantic_source_audit_report": "ai/reports/auxiliary_source_audits.json"
+    }
+  ]
+}

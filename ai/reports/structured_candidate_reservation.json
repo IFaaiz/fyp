@@ -1,0 +1,35 @@
+{
+  "version": "2-alpha",
+  "seed": 20261002,
+  "status": "reserved_candidates_pending_global_audit_and_reviews",
+  "source_sha256": "e0bd76e603769d0bf3d29f1bff9442c600d0554150c03fe70bfa19734de5bfe7",
+  "source_bytes": 2918125901,
+  "previously_exposed_ids_excluded": 11889,
+  "source_scan": {
+    "source_rows_scanned": 517401,
+    "eligible_unseen_rows": 403103,
+    "excluded_exposed_rows": 11889,
+    "historical_ids_missing_from_full_source": 0
+  },
+  "reserved_candidates": {
+    "count": 1200,
+    "sha256": "62e97bbc6634f9656314f76b3775a01491ac298f605ee4f59f422d093c8efd38"
+  },
+  "train_screen_candidates": {
+    "count": 5000,
+    "sha256": "8956bb6e3753d700e245c6328f82a9b4bdf29239290ecb05ed30d74b8570d9f4"
+  },
+  "historical_exposure_source_views": {
+    "count": 11889,
+    "sha256": "32ce3779832850b6d8358edfda9c7e3f4d84adec46912bd8aad9470421758260"
+  },
+  "annotations_accepted": 0,
+  "human_reviewed_labels": 0,
+  "models_trained": 0,
+  "policy": "Reserved candidates must not enter semantic TRAIN retrieval, prompt development, DEV selection or fitting. They are not an evaluation set until global isolation, double AI review and third adjudication pass. Split prevalence/challenge only under a predeclared source-selection policy.",
+  "limitations": [
+    "Exclusion matches known historical source IDs; aliases, near copies and quoted copies require a shared global leakage snapshot",
+    "Future discovered exposure may invalidate reserved candidates",
+    "No primitive-positive support established by unlabelled sampling"
+  ]
+}

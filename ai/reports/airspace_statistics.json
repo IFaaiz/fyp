@@ -1,0 +1,65 @@
+{
+  "acquired_at_utc": "2026-10-02T14:08:44.766776+00:00",
+  "archive_bytes": 1063031,
+  "archive_sha256": "04f8c82dc96ca00d565b5598e73424e35dbac4692ffa4d98271fe0c54bcc31a7",
+  "archive_url": "https://www.cs.cmu.edu/~airspace/corpus/Airspace_wargaming_1.0.zip",
+  "body_missing": 0,
+  "dataset": "airspace",
+  "derived_reply_component_count": 0,
+  "evidence_offsets_available": 711,
+  "explicit_no_parent_count": 711,
+  "fabricated_content_share_stated_by_cmu": ">90%",
+  "fyp_labels_emitted": false,
+  "label_counts": {
+    "BRIEFING": 101,
+    "CHANGE-ROOM": 112,
+    "CHANGE-SESSION": 74,
+    "CHANGE-SPEAKER": 63,
+    "INFO-REQ": 63,
+    "MISC-ACTION": 63,
+    "WEB-VIO": 96,
+    "WEB-WBE": 36
+  },
+  "label_multiplicity_counts": {
+    "0": 131,
+    "1": 552,
+    "2": 28
+  },
+  "message_count": 711,
+  "messages_with_labels": 580,
+  "messages_with_multiple_labels": 28,
+  "messages_without_labels": 131,
+  "noise_counts": {
+    "false": 662,
+    "true": 49
+  },
+  "redistribution_permitted": false,
+  "reply_edge_count": 0,
+  "reply_status_counts": {
+    "no_parent": 711
+  },
+  "reply_thread_size_histogram": {},
+  "reply_threaded_messages": 0,
+  "review_candidate_count": 100,
+  "schema_validation": "passed",
+  "source_family": "AIRSPACE",
+  "source_labels_preserved_without_fyp_mapping": true,
+  "source_text_offset_validation": "passed",
+  "source_thread_field_messages": 711,
+  "source_thread_group_count": 82,
+  "source_thread_group_size_histogram": {
+    "1": 77,
+    "137": 1,
+    "2": 2,
+    "448": 1,
+    "45": 1
+  },
+  "source_thread_nonzero_group_messages": 263,
+  "source_thread_zero_group_messages": 448,
+  "source_url": "https://www.cs.cmu.edu/~airspace/",
+  "subject_missing": 0,
+  "syntax_document_sha256": "a7471383aaf08455035b6e25fe48ca83b4c14708020bb4aa0033a092734922f2",
+  "unique_source_message_ids": 711,
+  "unknown_source_labels": [],
+  "version": "1.0"
+}
