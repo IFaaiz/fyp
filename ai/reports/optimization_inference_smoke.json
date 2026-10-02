@@ -1,0 +1,18 @@
+{
+  "metric_provenance": "AI-silver diagnostic; zero human validation",
+  "records": 1,
+  "run_id": "ensemble_blend_1_0_3_0",
+  "saved_inference_cli_completed": true,
+  "output_id_label_schema_and_nine_finite_scores_verified": true,
+  "output_labels": [
+    "ACTION_REQUEST",
+    "FOLLOW_UP",
+    "GENERAL_UPDATE"
+  ],
+  "synthetic_interface_only_example": true,
+  "added_to_training_or_evaluation": false,
+  "classification_correctness_claimed": false,
+  "input_sha256": "314e868ab488495a0c876d13ee0788a033036e64d580fc771861205925076521",
+  "output_sha256": "c984bcb048eae6ef29a5c35317e764adeab6b8047127835a29b3ef4aff850f66",
+  "selection_sha256": "ef6f86fa7b60fbf0d9ff7069d56de4c6df058ada4e444a995888dbb793e4c2c9"
+}

@@ -1,0 +1,14 @@
+{
+  "selection_sha256": "ef6f86fa7b60fbf0d9ff7069d56de4c6df058ada4e444a995888dbb793e4c2c9",
+  "benchmark_sha256": "5e2da2d089e3aaddd7cbe57bf569af00bcafdbe7ddac8f28b4bc7274e3bc202b",
+  "test_sha256": "0edfaf0b9c590b54fcceee57729258558310e8715665aa2d91d2c05b22bd2fa4",
+  "status": "completed; no subsequent tuning allowed",
+  "candidate_ids": [
+    "reference_original_tfidf_train_oof",
+    "per_label_lexical_specialists_oof_thresholds",
+    "per_label_specialists",
+    "full_encoder_lr3e-05_focal2.0_head512",
+    "ensemble_blend_1_0_3_0"
+  ],
+  "result_sha256": "12ad23f579452268a517526f98c7cb230b01bc0aad35bf7f92b45c20f4beb2a7"
+}

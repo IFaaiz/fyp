@@ -1,0 +1,375 @@
+{
+  "metric_provenance": "AI-SILVER (zero human/gold; error audit is not gold accuracy)",
+  "reviewer": "Luna xhigh",
+  "all_assigned_sources_read": true,
+  "records": 22,
+  "category_counts": {
+    "meeting_deadline_confusion": 1,
+    "missed_action_and_spurious_deadline": 1,
+    "missed_action_and_spurious_meeting": 1,
+    "missed_action_request": 2,
+    "missed_deadline": 1,
+    "missed_deadline_and_status": 1,
+    "missed_general_update": 2,
+    "missed_meeting_and_spurious_action": 1,
+    "missed_meeting_and_spurious_deadline": 1,
+    "scope_false_negative": 9,
+    "spurious_action_and_update_on_meeting": 1,
+    "spurious_deadline_and_action_on_status": 1
+  },
+  "frozen_references_or_models_changed": false,
+  "audits": [
+    {
+      "email_id": "enron-5375a0ad61ba69a337462376",
+      "expected_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "NON_PROJECT"
+      ],
+      "error_category": "scope_false_negative",
+      "paraphrased_cause": "The current message reports a named project financing decision and continued risk monitoring; the model treated this project-specific status as unrelated political or commercial discussion.",
+      "reference_ambiguity": false,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "4d5ed7279299b6a4ac626f83f3d66958da6f23d9a5c3fbc6926443392c8f1e7b",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-61a2ea88e9efb7e80de09896",
+      "expected_labels": [
+        "MEETING"
+      ],
+      "predicted_labels": [
+        "NON_PROJECT"
+      ],
+      "error_category": "scope_false_negative",
+      "paraphrased_cause": "The reminder invites recipients to a roundtable about an agreement and implementation responsibilities; the model lost the project meeting cue and rejected the message as unrelated.",
+      "reference_ambiguity": false,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "36b0761d69cb4b5cc699f662d3ae12915865a01efb0acd2bcdce6995224ab0b1",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-64eefa87d933d11f68553eda",
+      "expected_labels": [
+        "MEETING",
+        "ACTION_REQUEST"
+      ],
+      "predicted_labels": [
+        "MEETING"
+      ],
+      "error_category": "missed_action_request",
+      "paraphrased_cause": "After classifying the scheduled project call, the model omitted the separate request for a scheduling-conflict response and a working callback number.",
+      "reference_ambiguity": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "74e784be4484d0651745b46da2018d17d85a726b1e0c9b0c40cfb1890240ddfd",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-6f083e6ba31d684681267149",
+      "expected_labels": [
+        "MEETING",
+        "DEADLINE",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "MEETING",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "missed_deadline",
+      "paraphrased_cause": "The message states when the project proposal is expected and says progress will be monitored for delay; the model retained meeting and status but omitted the due-date function.",
+      "reference_ambiguity": false,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "7d2c37c39aa28f65bf9a3fa929972c2a8d695dab1f99fd2d0b5c4d395780ede1",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-74ca6bf54966a2f0d9961cc4",
+      "expected_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "DEADLINE",
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "spurious_deadline_and_action_on_status",
+      "paraphrased_cause": "The message provides cost status and announces an audit window; the model inferred a due date and recipient task from the planned review and generic closing invitation. Whether the scheduled audit is itself a meeting is borderline.",
+      "reference_ambiguity": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "ab4aca83c33eae73bbad87109d2d017a60b977678b81bd7ff298dfa1c055fab4",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-9111a589fe1b74cfcc1b5ba9",
+      "expected_labels": [
+        "MEETING",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "MEETING"
+      ],
+      "error_category": "missed_general_update",
+      "paraphrased_cause": "The message reports project staffing and management decisions alongside a scheduled call; the model recognized the call but dropped the substantive change in project state.",
+      "reference_ambiguity": false,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "d63bb4de68ac4a7ed0019def4f93e712342ee550350fa9b5922f2a61cc1edb09",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-94c647492b80f2f9832105b6",
+      "expected_labels": [
+        "MEETING",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "missed_meeting_and_spurious_action",
+      "paraphrased_cause": "The revised project document is due for committee consideration at a specific special meeting, while no recipient task is requested; the model omitted the meeting and added an unsupported action request.",
+      "reference_ambiguity": false,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "93d7714242e92a8344a18170ebca9e2cb1c415a748e9c7dd2748525ec4ca54b0",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-a6fd1a5f77541ad71a9966e3",
+      "expected_labels": [
+        "ACTION_REQUEST"
+      ],
+      "predicted_labels": [
+        "MEETING"
+      ],
+      "error_category": "missed_action_and_spurious_meeting",
+      "paraphrased_cause": "The message asks whether the sender should pursue a project-risk inquiry, with no meeting in the body; the action offer is borderline as a concrete task, while the meeting prediction appears unsupported.",
+      "reference_ambiguity": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "82adc8aa2777752c7b95ed2d5c34574a6eb9e126e68548e8ca7f5496358317dd",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-b9a4e29c0c2a9bb914cae598",
+      "expected_labels": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "NON_PROJECT"
+      ],
+      "error_category": "scope_false_negative",
+      "paraphrased_cause": "The message describes a named project contract approval and signature process and asks for guidance on the next step; the model treated this in-scope transaction discussion as unrelated. Whether the guidance request is a concrete action is less certain than the project relevance.",
+      "reference_ambiguity": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "2134ce1de83ef58d0cdf6077711e67d7e06e9fd4bd0d7fd92149cda1d721ec1b",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-bbbec776ffde3977c7e449a6",
+      "expected_labels": [
+        "MEETING",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "DEADLINE",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "meeting_deadline_confusion",
+      "paraphrased_cause": "A project status note invites a call to discuss the site, but gives no deliverable due date; the model read general schedule language as a deadline and missed the call coordination. An unscheduled call may sit near the meeting boundary.",
+      "reference_ambiguity": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "77014e1ec6b3dc532819ff7c3dd54dc11582bc52af8e329f18bb344fdb7a444c",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-cd4518145e5b8b5707837a81",
+      "expected_labels": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "missed_action_request",
+      "paraphrased_cause": "The project testing update contains a direct request to review meeting notes and report discrepancies; the model preserved status but missed that assigned review task.",
+      "reference_ambiguity": false,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "69f0d53aa173d13b2f341d8dd6d5a6d0ce0ebb848666a86e9539fcad05fedd23",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-ce516ab190108cf2ada2016a",
+      "expected_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "NON_PROJECT"
+      ],
+      "error_category": "scope_false_negative",
+      "paraphrased_cause": "The notice reports a postponement and current service state for a named migration initiative; the model treated this broad rollout update as unrelated. The boundary between project status and an enterprise service notice is somewhat uncertain.",
+      "reference_ambiguity": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "8021ced4e45f626874f5965a88a85166bf2209e9573207a9368c5cfa0cb27f49",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-d9b5bb22682791c3a2cf217a",
+      "expected_labels": [
+        "MEETING",
+        "ACTION_REQUEST"
+      ],
+      "predicted_labels": [
+        "NON_PROJECT"
+      ],
+      "error_category": "scope_false_negative",
+      "paraphrased_cause": "The message schedules a meeting and asks for time with participants on a corporate-sponsored project; the model rejected the concrete project coordination as unrelated visitor information.",
+      "reference_ambiguity": false,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "4c700c2e3a0c0f53ade9bf1e6b13d7d2e66d181af7af08de8e66a1491af7377f",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-dc996db1c455defbdacc8f99",
+      "expected_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "NON_PROJECT"
+      ],
+      "error_category": "scope_false_negative",
+      "paraphrased_cause": "The message reports implementation timing and account-access changes for a named enterprise rollout; the model treated the broad employee notice as unrelated. Whether a general rollout bulletin is project status is a scope-boundary question.",
+      "reference_ambiguity": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "831b9b27eba9e76480d8ab5f22f21d8c85e02eb8e42d0b477b8954196d6bbdb7",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-e481ace74637a7820f347bdf",
+      "expected_labels": [
+        "MEETING"
+      ],
+      "predicted_labels": [
+        "NON_PROJECT"
+      ],
+      "error_category": "scope_false_negative",
+      "paraphrased_cause": "The current reply proposes alternate times for project contract calls and asks the group to confirm; the model classified this explicit meeting coordination as unrelated.",
+      "reference_ambiguity": false,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "3aa9a2b65eefdacfe14a29e5b31c2971e2718d2be14e5a6d44021fce2d74dcde",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-e5d6835b85472a7d8591ce75",
+      "expected_labels": [
+        "MEETING",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "NON_PROJECT"
+      ],
+      "error_category": "scope_false_negative",
+      "paraphrased_cause": "The message reports preliminary project testing results and references a specific next-day meeting; the model rejected both the update and meeting as unrelated. The short message provides limited project context beyond its report subject.",
+      "reference_ambiguity": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "e43d0c18affd394b850bc9c9c8a6804b515adfaad9b2d181b2027055b7a994fe",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-ec00342d15d2b5ff8bdcea4c",
+      "expected_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [],
+      "error_category": "missed_general_update",
+      "paraphrased_cause": "The change-order note states that prior items remain and cleanup is still needed, which is a clear project-document status; the model returned no labels.",
+      "reference_ambiguity": false,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "72d309f975b007f314d54426232763dbcbec13c7a075dfccb80dda86e2ac1113",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-f25a596ad6dec2e25575247b",
+      "expected_labels": [
+        "DEADLINE",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [],
+      "error_category": "missed_deadline_and_status",
+      "paraphrased_cause": "The message reports that project evaluation materials were sent and that figures are needed by a stated weekday; the model returned no labels despite the status and due-date cues.",
+      "reference_ambiguity": false,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "654d719e4447263902543357d8b36147ab07716121c10b2dd986d09ecd938fd0",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-f63b664fb833914bb16002a2",
+      "expected_labels": [
+        "DEADLINE",
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "NON_PROJECT"
+      ],
+      "error_category": "scope_false_negative",
+      "paraphrased_cause": "The migration update gives a completion point, required data-transfer steps, and a cutoff; the model rejected the project rollout notice as unrelated and lost the associated action and deadline.",
+      "reference_ambiguity": false,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "7363c1ecd787b91f189c65637b7e343c9f8e6cd6fa6a3dea0e955a7253d7ba17",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-fa61a5e2c6d500830df2b930",
+      "expected_labels": [
+        "MEETING"
+      ],
+      "predicted_labels": [
+        "MEETING",
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "spurious_action_and_update_on_meeting",
+      "paraphrased_cause": "The message is a scheduled implementation call with a discussion agenda; the model added an action from a generic contact-if-needed line and treated meeting logistics as a separate progress update.",
+      "reference_ambiguity": false,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "62696de7d4a3c5d1eb711dacd9d7628744a787818157273b2c516a2f7918c9a8",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-fe76482f6a7941ce1c7ac055",
+      "expected_labels": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "DEADLINE",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "missed_action_and_spurious_deadline",
+      "paraphrased_cause": "The project update proposes an assessment task and reports a planned follow-up call; the model missed the task proposal and treated the future call timing as a due date. A suggestion phrased as a recommendation and a self-committed call are borderline action/deadline cases.",
+      "reference_ambiguity": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "e6d041b0ebda3edd2c5eb2228f00d276d958471eb3176f94d55652e89e8a8f7e",
+      "reference_preserved_without_relabeling": true
+    },
+    {
+      "email_id": "enron-ffad64661c5b9f4ba9644ade",
+      "expected_labels": [
+        "MEETING",
+        "DEPARTMENTAL_INPUT",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "DEADLINE",
+        "DEPARTMENTAL_INPUT",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "missed_meeting_and_spurious_deadline",
+      "paraphrased_cause": "The message relays project facts from a specific meeting and describes future work with a group; the model omitted the meeting and interpreted a work-period reference as a deadline without a due deliverable.",
+      "reference_ambiguity": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "62935b74a0fbd391553982e1ad06af7f086b929765f4c8a7c38ddee5deadd65e",
+      "reference_preserved_without_relabeling": true
+    }
+  ]
+}

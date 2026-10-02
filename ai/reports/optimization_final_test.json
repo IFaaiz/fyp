@@ -1,0 +1,606 @@
+{
+  "metric_provenance": "AI-SILVER DIAGNOSTIC PERFORMANCE; ZERO human classification labels",
+  "selection_sha256": "ef6f86fa7b60fbf0d9ff7069d56de4c6df058ada4e444a995888dbb793e4c2c9",
+  "benchmark_sha256": "5e2da2d089e3aaddd7cbe57bf569af00bcafdbe7ddac8f28b4bc7274e3bc202b",
+  "test_sha256": "0edfaf0b9c590b54fcceee57729258558310e8715665aa2d91d2c05b22bd2fa4",
+  "test_records": 102,
+  "evaluation_policy": "exactly one evaluation per prelocked candidate; no TEST-based retuning or label changes",
+  "dev_selected_primary_run_id": "ensemble_blend_1_0_3_0",
+  "results": [
+    {
+      "run_id": "reference_original_tfidf_train_oof",
+      "kind": "reference",
+      "test_metrics": {
+        "records": 102,
+        "micro_precision": 0.7218045112781954,
+        "micro_recall": 0.676056338028169,
+        "micro_f1": 0.6981818181818181,
+        "macro_f1": 0.40328033296454346,
+        "subset_match_rate": 0.5784313725490197,
+        "hamming_loss": 0.09041394335511982,
+        "per_label": {
+          "MEETING": {
+            "support": 17,
+            "predicted": 8,
+            "precision": 0.75,
+            "recall": 0.35294117647058826,
+            "f1": 0.48,
+            "unstable_support_below_20": true
+          },
+          "DEADLINE": {
+            "support": 10,
+            "predicted": 9,
+            "precision": 0.5555555555555556,
+            "recall": 0.5,
+            "f1": 0.5263157894736842,
+            "unstable_support_below_20": true
+          },
+          "REPORT_REQUEST": {
+            "support": 1,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "DEPARTMENTAL_INPUT": {
+            "support": 3,
+            "predicted": 1,
+            "precision": 1.0,
+            "recall": 0.3333333333333333,
+            "f1": 0.5,
+            "unstable_support_below_20": true
+          },
+          "ACTION_REQUEST": {
+            "support": 17,
+            "predicted": 20,
+            "precision": 0.5,
+            "recall": 0.5882352941176471,
+            "f1": 0.5405405405405405,
+            "unstable_support_below_20": true
+          },
+          "FOLLOW_UP": {
+            "support": 1,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "APPROVAL": {
+            "support": 3,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "GENERAL_UPDATE": {
+            "support": 36,
+            "predicted": 24,
+            "precision": 0.9583333333333334,
+            "recall": 0.6388888888888888,
+            "f1": 0.7666666666666666,
+            "unstable_support_below_20": false
+          },
+          "NON_PROJECT": {
+            "support": 54,
+            "predicted": 71,
+            "precision": 0.7183098591549296,
+            "recall": 0.9444444444444444,
+            "f1": 0.816,
+            "unstable_support_below_20": false
+          }
+        },
+        "macro_precision": 0.49802208311597984,
+        "macro_recall": 0.3730936819172113,
+        "exact_set_accuracy": 0.5784313725490197,
+        "no_label_predictions": 1,
+        "no_label_expected": 0,
+        "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy.",
+        "scope_classification": {
+          "definition": "binary scope gate for hierarchy/scope_gated; NON_PROJECT versus otherwise decoded output for flat",
+          "accuracy": 0.7745098039215687,
+          "project_precision": 0.9032258064516129,
+          "project_recall": 0.5833333333333334,
+          "project_f1": 0.7088607594936709,
+          "non_project_f1": 0.816,
+          "unassigned_records": 1
+        },
+        "project_function_macro_f1": 0.35169037458511143,
+        "specific_function_macro_f1": 0.29240804714488927
+      },
+      "inference_seconds_with_cold_model_load": 0.369503199999599,
+      "inference_seconds_per_record_with_cold_load": 0.0036225803921529315,
+      "thresholds": [
+        0.14567053465925547,
+        0.08067361679161392,
+        0.016909615219290276,
+        0.028712509573191956,
+        0.1536165339850538,
+        0.018908082227171587,
+        0.025901515468104857,
+        0.34067541131664736,
+        0.48903233370665217
+      ],
+      "mode": "flat",
+      "prediction_sha256": "9619906a59958bd3b30b143b69a27f62365c9b6ea09ea1db010af522a638a00c"
+    },
+    {
+      "run_id": "per_label_lexical_specialists_oof_thresholds",
+      "kind": "lexical",
+      "test_metrics": {
+        "records": 102,
+        "micro_precision": 0.6071428571428571,
+        "micro_recall": 0.5985915492957746,
+        "micro_f1": 0.6028368794326241,
+        "macro_f1": 0.3092304416618025,
+        "subset_match_rate": 0.5294117647058824,
+        "hamming_loss": 0.12200435729847495,
+        "per_label": {
+          "MEETING": {
+            "support": 17,
+            "predicted": 10,
+            "precision": 0.7,
+            "recall": 0.4117647058823529,
+            "f1": 0.5185185185185185,
+            "unstable_support_below_20": true
+          },
+          "DEADLINE": {
+            "support": 10,
+            "predicted": 6,
+            "precision": 0.3333333333333333,
+            "recall": 0.2,
+            "f1": 0.25,
+            "unstable_support_below_20": true
+          },
+          "REPORT_REQUEST": {
+            "support": 1,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "DEPARTMENTAL_INPUT": {
+            "support": 3,
+            "predicted": 3,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "ACTION_REQUEST": {
+            "support": 17,
+            "predicted": 21,
+            "precision": 0.38095238095238093,
+            "recall": 0.47058823529411764,
+            "f1": 0.42105263157894735,
+            "unstable_support_below_20": true
+          },
+          "FOLLOW_UP": {
+            "support": 1,
+            "predicted": 11,
+            "precision": 0.09090909090909091,
+            "recall": 1.0,
+            "f1": 0.16666666666666669,
+            "unstable_support_below_20": true
+          },
+          "APPROVAL": {
+            "support": 3,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "GENERAL_UPDATE": {
+            "support": 36,
+            "predicted": 23,
+            "precision": 0.782608695652174,
+            "recall": 0.5,
+            "f1": 0.6101694915254238,
+            "unstable_support_below_20": false
+          },
+          "NON_PROJECT": {
+            "support": 54,
+            "predicted": 66,
+            "precision": 0.7424242424242424,
+            "recall": 0.9074074074074074,
+            "f1": 0.8166666666666667,
+            "unstable_support_below_20": false
+          }
+        },
+        "macro_precision": 0.3366919714745802,
+        "macro_recall": 0.38775114984265313,
+        "exact_set_accuracy": 0.5294117647058824,
+        "no_label_predictions": 0,
+        "no_label_expected": 0,
+        "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy.",
+        "scope_classification": {
+          "definition": "binary scope gate for hierarchy/scope_gated; NON_PROJECT versus otherwise decoded output for flat",
+          "accuracy": 0.7843137254901961,
+          "project_precision": 0.8611111111111112,
+          "project_recall": 0.6458333333333334,
+          "project_f1": 0.7380952380952381,
+          "non_project_f1": 0.8166666666666667,
+          "unassigned_records": 0
+        },
+        "project_function_macro_f1": 0.24580091353619454,
+        "specific_function_macro_f1": 0.1937482595377332
+      },
+      "inference_seconds_with_cold_model_load": 1.9954932999989978,
+      "inference_seconds_per_record_with_cold_load": 0.019563659803911743,
+      "thresholds": [
+        0.21280715900067831,
+        0.0620631270228487,
+        0.07491685952246836,
+        0.02114617090460044,
+        0.08532312016082845,
+        0.060704773470598904,
+        0.07575081521373067,
+        0.38018604493486113,
+        0.4100441096299222
+      ],
+      "mode": "flat",
+      "prediction_sha256": "53d5961393edef324c09e62afbfa446114277757864d8e56580fae9a91fa58e5"
+    },
+    {
+      "run_id": "per_label_specialists",
+      "kind": "embeddings",
+      "test_metrics": {
+        "records": 102,
+        "micro_precision": 0.43577981651376146,
+        "micro_recall": 0.6690140845070423,
+        "micro_f1": 0.5277777777777778,
+        "macro_f1": 0.39825015760391524,
+        "subset_match_rate": 0.45098039215686275,
+        "hamming_loss": 0.18518518518518517,
+        "per_label": {
+          "MEETING": {
+            "support": 17,
+            "predicted": 12,
+            "precision": 0.5833333333333334,
+            "recall": 0.4117647058823529,
+            "f1": 0.4827586206896552,
+            "unstable_support_below_20": true
+          },
+          "DEADLINE": {
+            "support": 10,
+            "predicted": 15,
+            "precision": 0.26666666666666666,
+            "recall": 0.4,
+            "f1": 0.32,
+            "unstable_support_below_20": true
+          },
+          "REPORT_REQUEST": {
+            "support": 1,
+            "predicted": 45,
+            "precision": 0.022222222222222223,
+            "recall": 1.0,
+            "f1": 0.04347826086956522,
+            "unstable_support_below_20": true
+          },
+          "DEPARTMENTAL_INPUT": {
+            "support": 3,
+            "predicted": 1,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "ACTION_REQUEST": {
+            "support": 17,
+            "predicted": 45,
+            "precision": 0.26666666666666666,
+            "recall": 0.7058823529411765,
+            "f1": 0.3870967741935483,
+            "unstable_support_below_20": true
+          },
+          "FOLLOW_UP": {
+            "support": 1,
+            "predicted": 3,
+            "precision": 0.3333333333333333,
+            "recall": 1.0,
+            "f1": 0.5,
+            "unstable_support_below_20": true
+          },
+          "APPROVAL": {
+            "support": 3,
+            "predicted": 8,
+            "precision": 0.25,
+            "recall": 0.6666666666666666,
+            "f1": 0.36363636363636365,
+            "unstable_support_below_20": true
+          },
+          "GENERAL_UPDATE": {
+            "support": 36,
+            "predicted": 32,
+            "precision": 0.71875,
+            "recall": 0.6388888888888888,
+            "f1": 0.676470588235294,
+            "unstable_support_below_20": false
+          },
+          "NON_PROJECT": {
+            "support": 54,
+            "predicted": 57,
+            "precision": 0.7894736842105263,
+            "recall": 0.8333333333333334,
+            "f1": 0.8108108108108109,
+            "unstable_support_below_20": false
+          }
+        },
+        "macro_precision": 0.3589384340480832,
+        "macro_recall": 0.6285039941902687,
+        "exact_set_accuracy": 0.45098039215686275,
+        "no_label_predictions": 0,
+        "no_label_expected": 0,
+        "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy.",
+        "scope_classification": {
+          "definition": "binary scope gate for hierarchy/scope_gated; NON_PROJECT versus otherwise decoded output for flat",
+          "accuracy": 0.7941176470588235,
+          "project_precision": 0.8,
+          "project_recall": 0.75,
+          "project_f1": 0.7741935483870968,
+          "non_project_f1": 0.8108108108108109,
+          "unassigned_records": 0
+        },
+        "project_function_macro_f1": 0.3466800759530533,
+        "specific_function_macro_f1": 0.2995671456270189
+      },
+      "inference_seconds_with_cold_model_load": 5.315972899999906,
+      "inference_seconds_per_record_with_cold_load": 0.0521173813725481,
+      "thresholds": [
+        0.20303985476493835,
+        0.09217513352632523,
+        0.013476584106683731,
+        0.04494617506861687,
+        0.34921011328697205,
+        0.019279196858406067,
+        0.01981186494231224,
+        0.5039700865745544,
+        0.5017703175544739
+      ],
+      "mode": "flat",
+      "prediction_sha256": "61c444ffb353b0c610cf072e5fac89bcfc34614b5cc6a9da8659b9f1d82ebe5a"
+    },
+    {
+      "run_id": "full_encoder_lr3e-05_focal2.0_head512",
+      "kind": "transformer",
+      "test_metrics": {
+        "records": 102,
+        "micro_precision": 0.5614973262032086,
+        "micro_recall": 0.7394366197183099,
+        "micro_f1": 0.6382978723404255,
+        "macro_f1": 0.4001013154010668,
+        "subset_match_rate": 0.5392156862745098,
+        "hamming_loss": 0.12962962962962962,
+        "per_label": {
+          "MEETING": {
+            "support": 17,
+            "predicted": 23,
+            "precision": 0.6086956521739131,
+            "recall": 0.8235294117647058,
+            "f1": 0.7,
+            "unstable_support_below_20": true
+          },
+          "DEADLINE": {
+            "support": 10,
+            "predicted": 13,
+            "precision": 0.46153846153846156,
+            "recall": 0.6,
+            "f1": 0.5217391304347826,
+            "unstable_support_below_20": true
+          },
+          "REPORT_REQUEST": {
+            "support": 1,
+            "predicted": 30,
+            "precision": 0.03333333333333333,
+            "recall": 1.0,
+            "f1": 0.06451612903225806,
+            "unstable_support_below_20": true
+          },
+          "DEPARTMENTAL_INPUT": {
+            "support": 3,
+            "predicted": 2,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "ACTION_REQUEST": {
+            "support": 17,
+            "predicted": 28,
+            "precision": 0.39285714285714285,
+            "recall": 0.6470588235294118,
+            "f1": 0.4888888888888888,
+            "unstable_support_below_20": true
+          },
+          "FOLLOW_UP": {
+            "support": 1,
+            "predicted": 11,
+            "precision": 0.09090909090909091,
+            "recall": 1.0,
+            "f1": 0.16666666666666669,
+            "unstable_support_below_20": true
+          },
+          "APPROVAL": {
+            "support": 3,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "GENERAL_UPDATE": {
+            "support": 36,
+            "predicted": 27,
+            "precision": 0.8888888888888888,
+            "recall": 0.6666666666666666,
+            "f1": 0.761904761904762,
+            "unstable_support_below_20": false
+          },
+          "NON_PROJECT": {
+            "support": 54,
+            "predicted": 53,
+            "precision": 0.9056603773584906,
+            "recall": 0.8888888888888888,
+            "f1": 0.897196261682243,
+            "unstable_support_below_20": false
+          }
+        },
+        "macro_precision": 0.37576477189548013,
+        "macro_recall": 0.6251270878721858,
+        "exact_set_accuracy": 0.5392156862745098,
+        "no_label_predictions": 2,
+        "no_label_expected": 0,
+        "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy.",
+        "scope_classification": {
+          "definition": "binary scope gate for hierarchy/scope_gated; NON_PROJECT versus otherwise decoded output for flat",
+          "accuracy": 0.8921568627450981,
+          "project_precision": 0.8775510204081632,
+          "project_recall": 0.8958333333333334,
+          "project_f1": 0.8865979381443299,
+          "non_project_f1": 0.897196261682243,
+          "unassigned_records": 2
+        },
+        "project_function_macro_f1": 0.3379644471159198,
+        "specific_function_macro_f1": 0.277401545003228
+      },
+      "inference_seconds_with_cold_model_load": 0.7116710000009334,
+      "inference_seconds_per_record_with_cold_load": 0.006977166666675818,
+      "thresholds": [
+        0.29219120740890503,
+        0.36455127596855164,
+        0.14294825494289398,
+        0.2927974760532379,
+        0.29900285601615906,
+        0.17356818914413452,
+        0.3637598752975464,
+        0.55,
+        0.450933575630188
+      ],
+      "mode": "flat",
+      "prediction_sha256": "7dd44b4cb5b03adc0d8f658b5fe72b75f3bc5b66c0ee75044c14594e41851c91"
+    },
+    {
+      "run_id": "ensemble_blend_1_0_3_0",
+      "kind": "ensemble",
+      "test_metrics": {
+        "records": 102,
+        "micro_precision": 0.6716417910447762,
+        "micro_recall": 0.6338028169014085,
+        "micro_f1": 0.6521739130434784,
+        "macro_f1": 0.4116956862952286,
+        "subset_match_rate": 0.5490196078431373,
+        "hamming_loss": 0.10457516339869281,
+        "per_label": {
+          "MEETING": {
+            "support": 17,
+            "predicted": 11,
+            "precision": 0.7272727272727273,
+            "recall": 0.47058823529411764,
+            "f1": 0.5714285714285714,
+            "unstable_support_below_20": true
+          },
+          "DEADLINE": {
+            "support": 10,
+            "predicted": 9,
+            "precision": 0.4444444444444444,
+            "recall": 0.4,
+            "f1": 0.4210526315789474,
+            "unstable_support_below_20": true
+          },
+          "REPORT_REQUEST": {
+            "support": 1,
+            "predicted": 0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "unstable_support_below_20": true
+          },
+          "DEPARTMENTAL_INPUT": {
+            "support": 3,
+            "predicted": 7,
+            "precision": 0.2857142857142857,
+            "recall": 0.6666666666666666,
+            "f1": 0.4,
+            "unstable_support_below_20": true
+          },
+          "ACTION_REQUEST": {
+            "support": 17,
+            "predicted": 7,
+            "precision": 0.14285714285714285,
+            "recall": 0.058823529411764705,
+            "f1": 0.08333333333333333,
+            "unstable_support_below_20": true
+          },
+          "FOLLOW_UP": {
+            "support": 1,
+            "predicted": 7,
+            "precision": 0.14285714285714285,
+            "recall": 1.0,
+            "f1": 0.25,
+            "unstable_support_below_20": true
+          },
+          "APPROVAL": {
+            "support": 3,
+            "predicted": 2,
+            "precision": 0.5,
+            "recall": 0.3333333333333333,
+            "f1": 0.4,
+            "unstable_support_below_20": true
+          },
+          "GENERAL_UPDATE": {
+            "support": 36,
+            "predicted": 30,
+            "precision": 0.8,
+            "recall": 0.6666666666666666,
+            "f1": 0.7272727272727272,
+            "unstable_support_below_20": false
+          },
+          "NON_PROJECT": {
+            "support": 54,
+            "predicted": 61,
+            "precision": 0.8032786885245902,
+            "recall": 0.9074074074074074,
+            "f1": 0.8521739130434782,
+            "unstable_support_below_20": false
+          }
+        },
+        "macro_precision": 0.4273804924078148,
+        "macro_recall": 0.5003873154199951,
+        "exact_set_accuracy": 0.5490196078431373,
+        "no_label_predictions": 2,
+        "no_label_expected": 0,
+        "scope": "AI-silver diagnostic metrics; not gold, final, or production accuracy.",
+        "scope_classification": {
+          "definition": "binary scope gate for hierarchy/scope_gated; NON_PROJECT versus otherwise decoded output for flat",
+          "accuracy": 0.8333333333333334,
+          "project_precision": 0.8780487804878049,
+          "project_recall": 0.75,
+          "project_f1": 0.8089887640449438,
+          "non_project_f1": 0.8521739130434782,
+          "unassigned_records": 2
+        },
+        "project_function_macro_f1": 0.3566359079516974,
+        "specific_function_macro_f1": 0.30368779090583603
+      },
+      "inference_seconds_with_cold_model_load": 2.3886820999996417,
+      "inference_seconds_per_record_with_cold_load": 0.023418451960780802,
+      "thresholds": [
+        0.19164386020649654,
+        0.09420206421372376,
+        0.030727233130486437,
+        0.03365611049799375,
+        0.36616018390625216,
+        0.027850402334885106,
+        0.033240950530608486,
+        0.4485610484778311,
+        0.5016504665480297
+      ],
+      "mode": "flat",
+      "prediction_sha256": "b8c1dc8995b05b1841a5d29ca87f9fbb9d6c0106f68c90d623a4484a473a8ea1"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "verified_with_independent_sklearn_metrics": [
+    "reference_original_tfidf_train_oof",
+    "per_label_lexical_specialists_oof_thresholds",
+    "per_label_specialists",
+    "full_encoder_lr3e-05_focal2.0_head512",
+    "ensemble_blend_1_0_3_0"
+  ],
+  "test_records": 102,
+  "test_group_count": 102,
+  "per_label_precision_recall_f1_support_predicted_verified": true,
+  "primary_dev_selected_run_id": "ensemble_blend_1_0_3_0",
+  "reference_run_id": "reference_original_tfidf_train_oof",
+  "paired_bootstrap": {
+    "resamples": 2000,
+    "seed": 20261004,
+    "unit": "record; all102 TEST rows have distinct frozen thread/leakage components",
+    "fixed_9_label_macro_with_absent_resampled_support_zero_f1": true,
+    "delta_micro_f1_95_percentile_interval": [
+      -0.11974238774788093,
+      0.024710307817363882
+    ],
+    "delta_macro_f1_95_percentile_interval": [
+      -0.0989314226040565,
+      0.12296176369632533
+    ],
+    "limitation": "small AI-silver TEST and1-3 rare positives; this bootstrap does not measure human accuracy or annotation bias"
+  },
+  "no_test_based_model_changes": true
+}

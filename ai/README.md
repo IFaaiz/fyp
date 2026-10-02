@@ -4,9 +4,19 @@ This directory prepares English Outlook-style project emails for a future multi-
 
 ## Current measured prototype — 2 October 2026
 
-[Actual audit, TF-IDF/DistilBERT results and tomorrow's decision](reports/tonight_training_comparison.md): 674 frozen AI-silver records; shared fit/tuning/validation 426/110/138; 50 source-read transformer errors; 180-row blind human calibration queue. Tuned TF-IDF is stronger across the nine labels than the current transformer. All reported scores are AI-silver diagnostics, not gold or production accuracy. Six further uncertain references are excluded from the [668-row next-training manifest](annotation/tonight_next_training_manifest.jsonl).
+[Completed model optimization and measured results](reports/ai_silver_model_optimization.md): **668 AI-silver records**, frozen TRAIN/DEV/TEST **462/104/102**, 293 recorded development configurations/calibration stages, five locked candidates evaluated once, and all 46 primary-model errors source-read. On the same TEST, the DEV-selected ensemble scores **0.652 micro / 0.412 macro F1**, versus the freshly trained original TF-IDF reference **0.698 / 0.403**. The requested large improvement was not achieved. There are **zero human classification labels**; these are AI-silver diagnostic results. Model selection, thresholds and TEST labels remain frozen.
 
-Launch the prepared calibration queue from the repository root:
+The saved local ensemble runs on JSONL emails containing `email_id`, `subject` and `body` (or `current_message`/`authored_message`):
+
+```powershell
+ai\.venv\Scripts\python.exe ai\scripts\predict_optimization_classifier.py --input emails.jsonl --output predictions.jsonl
+```
+
+The inference CLI has been smoke-checked against its saved bundle. Predictions are a diagnostic prototype; scores are not calibrated confidence. Full email data and model/encoder bundles stay local under ignored `ai/data/**`; a fresh clone requires those local artifacts. The [experiment registry](reports/optimization_experiment_registry.json) and [final metrics](reports/optimization_final_test.json) preserve the measured evidence. This TEST has now been inspected; another optimization cycle needs a new independent test.
+
+### Historical experiment and deferred human calibration
+
+[Earlier audit and TF-IDF/DistilBERT comparison](reports/tonight_training_comparison.md): 674 frozen AI-silver records; fit/tuning/validation 426/110/138; 50 source-read transformer errors; 180-row calibration queue. Its scores are from a different split and are not comparable head-to-head with the completed sprint. Six uncertain references were excluded in the [668-row next-training manifest](annotation/tonight_next_training_manifest.jsonl). Human annotation remains deferred at the user's request. When it is resumed, launch the prepared queue from the repository root:
 
 ```powershell
 ai\.venv\Scripts\python.exe ai\annotation\simple_annotator\app.py --reviewer faaiz --seed-path ai\data\annotated\human\transfer_calibration\canonical_seed.jsonl --output-dir ai\data\annotated\human\transfer_calibration\reviewers

@@ -9,3 +9,4 @@ ai/scripts/download_transfer_checkpoint.py -text whitespace=cr-at-eol
 ai/annotation/optimization* -text whitespace=cr-at-eol
 ai/scripts/*optimization*.py -text whitespace=cr-at-eol
 ai/src/models/optimization*.py -text whitespace=cr-at-eol
+ai/reports/optimization*.json -text whitespace=cr-at-eol

@@ -1,0 +1,434 @@
+{
+  "metric_provenance": "AI-SILVER error analysis; not human/gold accuracy",
+  "reviewer": "root supervisor",
+  "all_assigned_sources_read": true,
+  "records": 24,
+  "rare_difference_records": 15,
+  "category_counts": {
+    "scope_false_positive": 5,
+    "missed_document_and_action_request": 1,
+    "missed_approval": 1,
+    "task_vs_department_confusion": 3,
+    "missed_multiple_project_functions": 1,
+    "spurious_follow_up": 1,
+    "subject_driven_spurious_approval": 1,
+    "task_vs_follow_up_confusion": 1,
+    "spurious_request_on_status": 2,
+    "task_vs_department_and_time_confusion": 1,
+    "missed_deadline_spurious_follow_up": 1,
+    "spurious_follow_up_and_update": 1,
+    "missed_coordination_task_and_department_input": 1,
+    "scope_false_negative": 2,
+    "missed_action_request": 1,
+    "scope_false_negative_mixed_content": 1
+  },
+  "frozen_references_or_models_changed": false,
+  "audits": [
+    {
+      "email_id": "enron-1607483d481d983bf2e14cbb",
+      "expected_labels": [
+        "NON_PROJECT"
+      ],
+      "predicted_labels": [
+        "ACTION_REQUEST",
+        "FOLLOW_UP"
+      ],
+      "error_category": "scope_false_positive",
+      "paraphrased_cause": "Commercial meeting postponement lacks a discrete project anchor in the current message; request language incorrectly activated project functions.",
+      "reference_ambiguity": true,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "a2262976780c240ea7eba493b377e79a1359fda7cc8c3e80a19a5a832c7d402e"
+    },
+    {
+      "email_id": "enron-2e2db154d7bc44289f6aa356",
+      "expected_labels": [
+        "DEADLINE",
+        "REPORT_REQUEST",
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "DEADLINE",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "missed_document_and_action_request",
+      "paraphrased_cause": "Explicit project form review and separate memorandum finalization/delivery were missed despite correct due-date and status predictions.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "62ab7b11a85c38aeabc78ee80ed28caa32e7879634bcce188efe9b9e823e777c"
+    },
+    {
+      "email_id": "enron-33ffdc48314c40b8490d27f8",
+      "expected_labels": [
+        "DEADLINE",
+        "DEPARTMENTAL_INPUT",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "DEADLINE",
+        "DEPARTMENTAL_INPUT",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "missed_approval",
+      "paraphrased_cause": "Long cross-department reporting implementation includes a concrete review/sign-off requirement; approval was missed.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "d7aca5fda1a9376a47386758d27120c5952adac049feb92c199dd9c0764d383f"
+    },
+    {
+      "email_id": "enron-3bd556e0f745d49140c20420",
+      "expected_labels": [
+        "MEETING",
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "MEETING",
+        "DEPARTMENTAL_INPUT",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "task_vs_department_confusion",
+      "paraphrased_cause": "Named project task owners and work assignments were replaced with a departmental-input label; department mentions alone are insufficient.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "f8b38116309fb077ebcdcf3d6889e73af82bc59836415c186f85133b669fd62c"
+    },
+    {
+      "email_id": "enron-65640669755faea92cad65fa",
+      "expected_labels": [
+        "MEETING",
+        "DEADLINE",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "missed_multiple_project_functions",
+      "paraphrased_cause": "Project remediation status includes received approval, a scheduled meeting and deliverable due dates, but output collapsed to update.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "aa5f8e79b3190a28162952303c8c00d3438b75d738f626011e27d61a374d508d"
+    },
+    {
+      "email_id": "enron-742fab92fbdcfd3f542f2121",
+      "expected_labels": [
+        "ACTION_REQUEST"
+      ],
+      "predicted_labels": [
+        "ACTION_REQUEST",
+        "FOLLOW_UP"
+      ],
+      "error_category": "spurious_follow_up",
+      "paraphrased_cause": "A new project review/modification instruction was correctly classified as action but incorrectly marked as an outstanding-request follow-up.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "63c2d62f4a7067df702e612f233df07ddaf867e57d7e630477d1fa95614472f0"
+    },
+    {
+      "email_id": "enron-886bc0ecfefc3e34ca0a0570",
+      "expected_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "subject_driven_spurious_approval",
+      "paraphrased_cause": "Document transmission acknowledgment conveys project status, not a formal approval; an agreement-themed subject is insufficient.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "73c3ec93fe4940e52f2fc06b6bc870555187d3b3ea164a11b843a4c12bb19cd6"
+    },
+    {
+      "email_id": "enron-897371da1298eb56d8154c4a",
+      "expected_labels": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "DEPARTMENTAL_INPUT",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "task_vs_department_confusion",
+      "paraphrased_cause": "Software testing update includes an individual confirmation request; model substituted departmental input from surrounding feedback/team language.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "7006c1d55bbc59db029ef801908f8f18faad12f73bcac0385274b2a4c01d93cb"
+    },
+    {
+      "email_id": "enron-8baaedc0274460161b64d9e5",
+      "expected_labels": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "FOLLOW_UP",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "task_vs_follow_up_confusion",
+      "paraphrased_cause": "Current software review/call requests were missed and a follow-up added without evidence of an outstanding prior request.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "310afc1546df8b9ca8436cbbc8c7fc3900929c857fb7994827f7bb2769d0e226"
+    },
+    {
+      "email_id": "enron-907b2d6ca5560154f6c98107",
+      "expected_labels": [
+        "DEADLINE",
+        "ACTION_REQUEST",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "DEADLINE",
+        "DEPARTMENTAL_INPUT",
+        "APPROVAL",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "task_vs_department_confusion",
+      "paraphrased_cause": "Project sale approval/deadline and assigned demonstrations include concrete tasks; organization mentions caused departmental input instead.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "80c69ab62dc73abb769ef14c595e0922540108b35697da045a9d8387749078b6"
+    },
+    {
+      "email_id": "enron-b78f0f5100296bdb0b265cd5",
+      "expected_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "DEPARTMENTAL_INPUT",
+        "ACTION_REQUEST"
+      ],
+      "error_category": "spurious_request_on_status",
+      "paraphrased_cause": "Implementation reprioritization and postponement are declarative status, not a recipient task or departmental-input request.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "1f0bf9053c0ecfbf2482a1e333f6753f67b334ae1f3bee410c0ab4c516763c36"
+    },
+    {
+      "email_id": "enron-cd2d3ce1cc551e6cd4dc287c",
+      "expected_labels": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "DEADLINE",
+        "DEPARTMENTAL_INPUT",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "task_vs_department_and_time_confusion",
+      "paraphrased_cause": "Testing participation/review requests were missed; test-session time windows were treated as deadline and team terminology as departmental input.",
+      "reference_ambiguity": true,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "14561fcef7ad340023e8cf133054757eb74a5b82fd8967cc0f44a359ddc90b91"
+    },
+    {
+      "email_id": "enron-f06f913be9773fae2f003fa6",
+      "expected_labels": [
+        "DEADLINE",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "FOLLOW_UP",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "missed_deadline_spurious_follow_up",
+      "paraphrased_cause": "An explicit latest delivery day was missed; a progress message was incorrectly treated as an outstanding-request follow-up.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "e8608bfe050c0e5455a5742584e85be1866154f4cb019d4c732448fb2a2daee5"
+    },
+    {
+      "email_id": "enron-f14174f7476d9cc113b60579",
+      "expected_labels": [
+        "MEETING"
+      ],
+      "predicted_labels": [
+        "MEETING",
+        "FOLLOW_UP",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "spurious_follow_up_and_update",
+      "paraphrased_cause": "A bare project meeting logistics message acquired extra follow-up and progress labels; contact-if-problems wording is not an outstanding request.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "ce076519b54a1568c78ccf72f095e28eff02975b7878b68712bf391a700e08f6"
+    },
+    {
+      "email_id": "enron-faaff68f29a136c3f18549b2",
+      "expected_labels": [
+        "DEPARTMENTAL_INPUT",
+        "ACTION_REQUEST"
+      ],
+      "predicted_labels": [
+        "FOLLOW_UP",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "missed_coordination_task_and_department_input",
+      "paraphrased_cause": "A short software upgrade testing coordination instruction names customer teams but both relevant functions were missed.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "e30cace98962ed6709e22498e46bba68328eb66b1b79efd50c66174dadf7c3fa"
+    },
+    {
+      "email_id": "enron-082eff1b3121f9c2f61b1c20",
+      "expected_labels": [
+        "NON_PROJECT"
+      ],
+      "predicted_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "scope_false_positive",
+      "paraphrased_cause": "General IT staffing/organization news was treated as project progress despite lacking a discrete project-management transaction.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "57b1fa9ee2a01e2fba90a028e5670adbdeb95c70fe997244bfd443d4f076fe5c"
+    },
+    {
+      "email_id": "enron-08baf97984806e344f05cc3f",
+      "expected_labels": [
+        "NON_PROJECT"
+      ],
+      "predicted_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "scope_false_positive",
+      "paraphrased_cause": "A generic industry research-report copy request lacks a project anchor and was misclassified as project status.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "b7b786369a41122826ab2950176d267bc4864a7e3767962cf0964f00c99c9030"
+    },
+    {
+      "email_id": "enron-0d8d6fc875f9ce9aa2cac5c3",
+      "expected_labels": [
+        "MEETING"
+      ],
+      "predicted_labels": [
+        "NON_PROJECT"
+      ],
+      "error_category": "scope_false_negative",
+      "paraphrased_cause": "A named initiative/event-planning meeting request was suppressed as unrelated mail despite concrete scheduling and initiative context.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "90db309df4d6b28c9bbd0241ce5dd9d088f5d1aff04869f1371dec9012f4748c"
+    },
+    {
+      "email_id": "enron-0d963bd9982588504b5610bd",
+      "expected_labels": [
+        "NON_PROJECT"
+      ],
+      "predicted_labels": [
+        "MEETING",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "scope_false_positive",
+      "paraphrased_cause": "Commercial training promotion uses project vocabulary and event dates, which should not establish participation in an active project.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "fe95ec579da3fe49032cc9c953335ff78a75b454720520aac2ae1ae077dbbed3"
+    },
+    {
+      "email_id": "enron-1dd6b1da5a09f2820cb557ae",
+      "expected_labels": [
+        "DEADLINE",
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "NON_PROJECT"
+      ],
+      "error_category": "scope_false_negative",
+      "paraphrased_cause": "Construction-linked office relocation contains concrete packing help and a due date, but the project functions were suppressed.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "cfa777ea76e0c6a861bdf86cb979d39be11008e57650e10adb17824a00c8586b"
+    },
+    {
+      "email_id": "enron-33987f79ffecd5093b6a7da6",
+      "expected_labels": [
+        "NON_PROJECT"
+      ],
+      "predicted_labels": [
+        "MEETING"
+      ],
+      "error_category": "scope_false_positive",
+      "paraphrased_cause": "A business operations agenda was detected as a meeting, but the narrow reference scheme requires a discrete project anchor; this boundary is uncertain.",
+      "reference_ambiguity": true,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "ac581b9e7601ed1db00e4b0fb9b54d4347c285eb3d006a97dcc024993ff416b9"
+    },
+    {
+      "email_id": "enron-3a0b3fd928efe7a4bb899a33",
+      "expected_labels": [
+        "DEADLINE",
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "DEADLINE",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "missed_action_request",
+      "paraphrased_cause": "Transaction closing status includes a separate immediate review/update task that was missed.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "f20df0cf6452c15026a2c34c3bb8110e09da589687d7db5fac3bb7ecc6b62784"
+    },
+    {
+      "email_id": "enron-3a345025d82c357d7f294a10",
+      "expected_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "ACTION_REQUEST",
+        "GENERAL_UPDATE"
+      ],
+      "error_category": "spurious_request_on_status",
+      "paraphrased_cause": "A corrected project estimate is provided as status without asking the recipient to perform work.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "41f87331dd5133ec45f4d203593a68f3ee063a30a6f20e41536d6dfe35ebd904"
+    },
+    {
+      "email_id": "enron-4b9b315362fa12533971e785",
+      "expected_labels": [
+        "GENERAL_UPDATE"
+      ],
+      "predicted_labels": [
+        "NON_PROJECT"
+      ],
+      "error_category": "scope_false_negative_mixed_content",
+      "paraphrased_cause": "Project application review status is mixed with a personal aside; the in-scope update was suppressed.",
+      "reference_ambiguity": false,
+      "reference_preserved_without_relabeling": true,
+      "source_read": "full authored_message and subject after all locked TEST evaluations",
+      "source_sha256": "539d4ba6f7c8bf1eba59b273e28587a5211a1b5c66127f7cfb63540ef89cd587"
+    }
+  ]
+}
