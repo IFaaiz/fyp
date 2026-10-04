@@ -1,5 +1,14 @@
 # AI email dataset foundation
 
+## Active workstream — 4 October 2026
+
+[Native MailEx extraction reviewer handoff](reports/mailex_extraction_reviewer_status.md)
+is the entry point for the current benchmark: actual compact training and DEV
+results, GLiNER Small fitting status, native ontology/evaluator, error audits,
+runtime measurements, and the outstanding committed selection/TEST gate.
+This sprint preserves the historical classifier and V2 artifacts below.
+The progress checkpoint is not a final model selection or TEST result.
+
 This directory prepares English Outlook-style project emails for a future multi-label classifier and information extractor. V1 uses subject, body, thread context, Outlook metadata, and attachment filenames. It does not read attachment contents. The 22-page *FYP Proposal Report* controls this V1 scope; the 10-page revised proposal describes later attachment extraction.
 
 ## Current measured prototype — 2 October 2026

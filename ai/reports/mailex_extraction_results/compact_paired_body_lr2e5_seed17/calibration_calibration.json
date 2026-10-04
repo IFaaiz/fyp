@@ -1,0 +1,42 @@
+{
+  "dev_sha256": "d4508085efc66e24d06c020153d17c46523a848c2bd0200bf16a0c4ac5477438",
+  "weight_sha256": "8476cc54066e119f87fcd6979dc51d49aef562682e5a28c1810edd1038c25f66",
+  "grid_declared_before_execution": [
+    0.3,
+    0.5,
+    0.7,
+    0.9
+  ],
+  "selection_metric": "argument_records.role_exact.micro.f1",
+  "runs": [
+    {
+      "threshold": 0.3,
+      "argument_role_exact_f1": 0.30575482225410494,
+      "event_record_partial_f1": 0.4542263494037397,
+      "event_record_exact_f1": 0.1652598844957797,
+      "prediction_sha256": "c41ef755ee7e7b85bee0c808907c7847f79789b3fbc6075a09f2242300fb38f0"
+    },
+    {
+      "threshold": 0.5,
+      "argument_role_exact_f1": 0.31751451007169684,
+      "event_record_partial_f1": 0.4618441772580213,
+      "event_record_exact_f1": 0.16606170598911071,
+      "prediction_sha256": "e8be87a937ba8da571d63c115e17fad87e17f3ea65c1be1a90c863f25f3e451c"
+    },
+    {
+      "threshold": 0.7,
+      "argument_role_exact_f1": 0.3366424001764835,
+      "event_record_partial_f1": 0.49005715783482284,
+      "event_record_exact_f1": 0.18402961396086728,
+      "prediction_sha256": "d8cfef0467cb5505da33f4426d15f7f49c2e9d9d557ca931363428818bc36e8f"
+    },
+    {
+      "threshold": 0.9,
+      "argument_role_exact_f1": 0.3193069306930693,
+      "event_record_partial_f1": 0.45815429815870684,
+      "event_record_exact_f1": 0.16842105263157894,
+      "prediction_sha256": "ed82b9d32bd050adfcd67a9a8790f25d158a25aa6b5c0c15b5a2c397335a72e9"
+    }
+  ],
+  "selected_threshold": 0.7
+}

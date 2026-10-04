@@ -14,3 +14,19 @@ ai/reports/ai_silver_model_optimization.md -text whitespace=cr-at-eol
 ai/config/*.json -text whitespace=cr-at-eol
 # Structured review packets bind exact validator/mapper bytes.
 ai/src/structured/*.py -text whitespace=cr-at-eol
+# Native MailEx benchmark manifests freeze exact implementation bytes.
+ai/src/mailex_extraction/** -text whitespace=cr-at-eol
+ai/src/datasets/mailex_native.py -text whitespace=cr-at-eol
+ai/scripts/benchmark_mailex_compact_runtime.py -text whitespace=cr-at-eol
+ai/scripts/build_mailex_fyp_safe_views.py -text whitespace=cr-at-eol
+ai/scripts/calibrate_mailex_compact.py -text whitespace=cr-at-eol
+ai/scripts/evaluate_mailex_extraction.py -text whitespace=cr-at-eol
+ai/scripts/export_mailex_benchmark_metadata.py -text whitespace=cr-at-eol
+ai/scripts/predict_mailex_compact.py -text whitespace=cr-at-eol
+ai/scripts/prepare_mailex_native.py -text whitespace=cr-at-eol
+ai/scripts/prepare_mailex_subject_ablation.py -text whitespace=cr-at-eol
+ai/scripts/run_mailex_compact.py -text whitespace=cr-at-eol
+ai/scripts/run_mailex_gliner.py -text whitespace=cr-at-eol
+ai/reports/mailex_extraction_results/** -text whitespace=cr-at-eol
+ai/tests/test_mailex_extraction_metrics.py -text whitespace=cr-at-eol
+ai/tests/test_mailex_native.py -text whitespace=cr-at-eol

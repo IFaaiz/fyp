@@ -1,0 +1,250 @@
+{
+  "train": "data\\experiments\\mailex_extraction_v1\\train_fyp_safe.jsonl",
+  "dev": "data\\experiments\\mailex_extraction_v1\\dev_fyp_safe.jsonl",
+  "encoder": "data\\cache\\distilbert-base-uncased",
+  "output": "data\\experiments\\mailex_extraction_v1\\compact_categorical_lr1e5_seed17",
+  "epochs": 8,
+  "lr": 1e-05,
+  "head_lr": 0.001,
+  "seed": 17,
+  "batch_size": 8,
+  "patience": 2,
+  "device": "cuda",
+  "threshold": 0.5,
+  "event_types": [
+    "Amend_Action_Data",
+    "Amend_Data",
+    "Amend_Meeting_Data",
+    "Deliver_Action_Data",
+    "Deliver_Data",
+    "Deliver_Meeting_Data",
+    "Request_Action",
+    "Request_Action_Data",
+    "Request_Data",
+    "Request_Meeting",
+    "Request_Meeting_Data"
+  ],
+  "role_keys": [
+    [
+      "Action Date",
+      ""
+    ],
+    [
+      "Action Date",
+      "context"
+    ],
+    [
+      "Action Description",
+      ""
+    ],
+    [
+      "Action Description",
+      "context"
+    ],
+    [
+      "Action Members",
+      ""
+    ],
+    [
+      "Action Members",
+      "context"
+    ],
+    [
+      "Action Members",
+      "revision"
+    ],
+    [
+      "Action Time",
+      ""
+    ],
+    [
+      "Action Time",
+      "context"
+    ],
+    [
+      "Action Time",
+      "revision"
+    ],
+    [
+      "Amend Date",
+      "context"
+    ],
+    [
+      "Amend Members",
+      "context"
+    ],
+    [
+      "Amend Time",
+      "context"
+    ],
+    [
+      "Data Owner",
+      ""
+    ],
+    [
+      "Data Owner",
+      "context"
+    ],
+    [
+      "Data Type",
+      ""
+    ],
+    [
+      "Data Type",
+      "context"
+    ],
+    [
+      "Data Value",
+      ""
+    ],
+    [
+      "Data Value",
+      "context"
+    ],
+    [
+      "Data Value",
+      "revision"
+    ],
+    [
+      "Data idString",
+      ""
+    ],
+    [
+      "Data idString",
+      "context"
+    ],
+    [
+      "Data idString",
+      "revision"
+    ],
+    [
+      "Deliver Date",
+      ""
+    ],
+    [
+      "Deliver Members",
+      ""
+    ],
+    [
+      "Deliver Time",
+      ""
+    ],
+    [
+      "Deliver members",
+      ""
+    ],
+    [
+      "Meeting Agenda",
+      ""
+    ],
+    [
+      "Meeting Agenda",
+      "context"
+    ],
+    [
+      "Meeting Agenda",
+      "revision"
+    ],
+    [
+      "Meeting Date",
+      ""
+    ],
+    [
+      "Meeting Date",
+      "context"
+    ],
+    [
+      "Meeting Date",
+      "revision"
+    ],
+    [
+      "Meeting Location",
+      ""
+    ],
+    [
+      "Meeting Location",
+      "context"
+    ],
+    [
+      "Meeting Location",
+      "revision"
+    ],
+    [
+      "Meeting Members",
+      ""
+    ],
+    [
+      "Meeting Members",
+      "context"
+    ],
+    [
+      "Meeting Members",
+      "revision"
+    ],
+    [
+      "Meeting Name",
+      ""
+    ],
+    [
+      "Meeting Name",
+      "context"
+    ],
+    [
+      "Meeting Time",
+      ""
+    ],
+    [
+      "Meeting Time",
+      "context"
+    ],
+    [
+      "Meeting Time",
+      "revision"
+    ],
+    [
+      "Request Date",
+      "context"
+    ],
+    [
+      "Request Members",
+      ""
+    ],
+    [
+      "Request Members",
+      "context"
+    ],
+    [
+      "Request Time",
+      ""
+    ],
+    [
+      "Request Time",
+      "context"
+    ],
+    [
+      "Request members",
+      "context"
+    ]
+  ],
+  "train_sha256": "9672bcd3c2ee4453cf8919735647616204136e0324c36cc49a399bbabee4f333",
+  "dev_sha256": "fdab07806e641b916975db4324395cde8a30b6942cf775ef38b575f39c9b677d",
+  "encoder_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+  "max_length": 512,
+  "stride": 128,
+  "positive_weight_cap": 50,
+  "selection_metric": "argument_records.role_exact.micro.f1",
+  "complete_message_windows": true,
+  "empty_token_policy": "remove zero-width tokens from model view only; retain exact reconstructed text",
+  "torch_cpu_threads": 4,
+  "cuda_training_autocast": "bfloat16",
+  "loss_family": "categorical_bio",
+  "class_weight_policy": "sqrt TRAIN negative/positive ratio, original ratio capped50; Oweight1",
+  "trigger_conditioning_dropout": 0.2,
+  "relative_distance_embedding": "signed log2 buckets, plus no-trigger bucket",
+  "same_type_trigger_target_collision": "B precedence, full native gold retained",
+  "categorical_decode": "argmax including O, then probability threshold",
+  "decoder_bio_conflict_policy": "choose larger B/I score before applying threshold; B wins exact ties",
+  "decoder_orphan_i_policy": "start_span",
+  "discontinuous_trigger_grouping": "not_supported",
+  "gold_type_oracle": "one slot per gold instance, type supplied, zero trigger vector"
+}

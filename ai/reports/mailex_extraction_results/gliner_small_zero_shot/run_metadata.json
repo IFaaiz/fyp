@@ -1,0 +1,94 @@
+{
+  "model_id": "fastino/gliner2.5-small-v1",
+  "model_revision": "7132dc4561c3f94563c6147e75ffa8ef34c4964a",
+  "train_sha256": "9672bcd3c2ee4453cf8919735647616204136e0324c36cc49a399bbabee4f333",
+  "dev_sha256": "fdab07806e641b916975db4324395cde8a30b6942cf775ef38b575f39c9b677d",
+  "threshold": 0.5,
+  "inference_device": "cuda",
+  "batch_size": 1,
+  "encoder_max_positions": 512,
+  "schema_prompt_budget_subwords": 320,
+  "schema_groups": [
+    {
+      "event_types": [
+        "Amend_Action_Data",
+        "Amend_Data"
+      ],
+      "schema_subwords": 292
+    },
+    {
+      "event_types": [
+        "Amend_Meeting_Data"
+      ],
+      "schema_subwords": 266
+    },
+    {
+      "event_types": [
+        "Deliver_Action_Data",
+        "Deliver_Data"
+      ],
+      "schema_subwords": 289
+    },
+    {
+      "event_types": [
+        "Deliver_Meeting_Data",
+        "Request_Action"
+      ],
+      "schema_subwords": 254
+    },
+    {
+      "event_types": [
+        "Request_Action_Data",
+        "Request_Data"
+      ],
+      "schema_subwords": 311
+    },
+    {
+      "event_types": [
+        "Request_Meeting"
+      ],
+      "schema_subwords": 160
+    },
+    {
+      "event_types": [
+        "Request_Meeting_Data"
+      ],
+      "schema_subwords": 166
+    }
+  ],
+  "diagnostics": {
+    "schema_group_runs": 2527,
+    "schema_subwords_total": 627418,
+    "windows_total": 2520,
+    "messages_with_multiple_windows": 114,
+    "max_encoder_sequence_subwords": 512,
+    "body_word_tokens_total": 159320,
+    "body_word_tokens_covered": 159320
+  },
+  "prediction_diagnostics": {
+    "records": 28,
+    "grounded_trigger_segments": 28,
+    "grounded_argument_segments": 0,
+    "ungrounded_segments": 0,
+    "events_without_grounded_trigger": 0,
+    "messages": 361,
+    "events_by_type": 28,
+    "event_type:Amend_Meeting_Data": 8,
+    "event_type:Request_Meeting": 9,
+    "event_type:Request_Meeting_Data": 8,
+    "event_type:Deliver_Action_Data": 1,
+    "event_type:Request_Action": 1,
+    "event_type:Request_Data": 1
+  },
+  "package_versions": {
+    "gliner2": "2.0.0",
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.6",
+    "pydantic": "2.13.5",
+    "peft": "0.17.1",
+    "accelerate": "1.10.1",
+    "protobuf": "6.33.5"
+  },
+  "prediction_sha256": "005669c3852e23c57887b8f3dbabfaea23883066c869498b8dd5b43acda2b9ab",
+  "normalization_note": "Initial zero-shot pass used upstream punctuation normalization; corrected native preprocessing is used for fitting and will be compared separately"
+}

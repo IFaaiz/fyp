@@ -1,0 +1,1636 @@
+{
+  "schema_version": 1,
+  "split": "dev",
+  "matching": {
+    "primary_record_assignment": "maximum-weight one-to-one assignment restricted to exact event type and role-agnostic attached argument overlap; when neither side has argument geometry, same-type records are paired in stable order",
+    "diagnostic_event_assignment": "after primary pairs are fixed, residual events are aligned by trigger IoU and role-agnostic argument IoU to report type confusion, misses, and spurious events",
+    "trigger_assignment": "independent maximum-weight one-to-one trigger-span assignment at character IoU >= 0.50",
+    "span_overlap": "character interval IoU after merging overlapping segments within each discontinuous span",
+    "partial_threshold": 0.5,
+    "offset_convention": "half-open Python character offsets into message text",
+    "text_recovery": "none; supplied text is checked against text[start:end] and never relocated"
+  },
+  "messages": {
+    "gold": 352,
+    "prediction_rows": 352,
+    "evaluated_union": 352,
+    "prediction_only_rows": 0,
+    "with_predictions": 285,
+    "without_predictions": 67,
+    "without_gold_events": 63,
+    "empty_prediction_rate": 0.1903409090909091
+  },
+  "events": {
+    "gold": 810,
+    "predicted": 1048,
+    "aligned": 685,
+    "unaligned_gold": 125,
+    "unaligned_prediction": 363,
+    "type_identification": {
+      "micro": {
+        "precision": 0.5763358778625954,
+        "recall": 0.745679012345679,
+        "f1": 0.6501614639397202,
+        "true_positive_credit": 604,
+        "predicted": 1048,
+        "support": 810
+      },
+      "macro_over_gold_supported_labels": {
+        "precision": 0.45805125871192254,
+        "recall": 0.5552576516856875,
+        "f1": 0.4839791433670675
+      },
+      "by_label": {
+        "Amend_Action_Data": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Amend_Data": {
+          "precision": 0.5,
+          "recall": 0.36363636363636365,
+          "f1": 0.4210526315789474,
+          "true_positive_credit": 8,
+          "predicted": 16,
+          "support": 22
+        },
+        "Amend_Meeting_Data": {
+          "precision": 0.5,
+          "recall": 0.4,
+          "f1": 0.4444444444444445,
+          "true_positive_credit": 2,
+          "predicted": 4,
+          "support": 5
+        },
+        "Deliver_Action_Data": {
+          "precision": 0.6786632390745502,
+          "recall": 0.8024316109422492,
+          "f1": 0.7353760445682452,
+          "true_positive_credit": 264,
+          "predicted": 389,
+          "support": 329
+        },
+        "Deliver_Data": {
+          "precision": 0.5224489795918368,
+          "recall": 0.8258064516129032,
+          "f1": 0.6400000000000001,
+          "true_positive_credit": 128,
+          "predicted": 245,
+          "support": 155
+        },
+        "Deliver_Meeting_Data": {
+          "precision": 0.4117647058823529,
+          "recall": 0.875,
+          "f1": 0.56,
+          "true_positive_credit": 42,
+          "predicted": 102,
+          "support": 48
+        },
+        "Request_Action": {
+          "precision": 0.6062992125984252,
+          "recall": 0.616,
+          "f1": 0.6111111111111112,
+          "true_positive_credit": 77,
+          "predicted": 127,
+          "support": 125
+        },
+        "Request_Action_Data": {
+          "precision": 0.38461538461538464,
+          "recall": 0.8333333333333334,
+          "f1": 0.5263157894736842,
+          "true_positive_credit": 20,
+          "predicted": 52,
+          "support": 24
+        },
+        "Request_Data": {
+          "precision": 0.550561797752809,
+          "recall": 0.7101449275362319,
+          "f1": 0.620253164556962,
+          "true_positive_credit": 49,
+          "predicted": 89,
+          "support": 69
+        },
+        "Request_Meeting": {
+          "precision": 0.6842105263157895,
+          "recall": 0.48148148148148145,
+          "f1": 0.5652173913043478,
+          "true_positive_credit": 13,
+          "predicted": 19,
+          "support": 27
+        },
+        "Request_Meeting_Data": {
+          "precision": 0.2,
+          "recall": 0.2,
+          "f1": 0.20000000000000004,
+          "true_positive_credit": 1,
+          "predicted": 5,
+          "support": 5
+        }
+      },
+      "confusion_pairs": [
+        {
+          "gold": "Amend_Action_Data",
+          "predicted": "Deliver_Meeting_Data",
+          "count": 1
+        },
+        {
+          "gold": "Amend_Data",
+          "predicted": "Deliver_Action_Data",
+          "count": 7
+        },
+        {
+          "gold": "Amend_Data",
+          "predicted": "Deliver_Data",
+          "count": 1
+        },
+        {
+          "gold": "Amend_Data",
+          "predicted": "Request_Action_Data",
+          "count": 1
+        },
+        {
+          "gold": "Amend_Meeting_Data",
+          "predicted": "Deliver_Action_Data",
+          "count": 1
+        },
+        {
+          "gold": "Deliver_Action_Data",
+          "predicted": "Deliver_Data",
+          "count": 7
+        },
+        {
+          "gold": "Deliver_Action_Data",
+          "predicted": "Deliver_Meeting_Data",
+          "count": 3
+        },
+        {
+          "gold": "Deliver_Action_Data",
+          "predicted": "Request_Action",
+          "count": 2
+        },
+        {
+          "gold": "Deliver_Data",
+          "predicted": "Deliver_Action_Data",
+          "count": 2
+        },
+        {
+          "gold": "Deliver_Data",
+          "predicted": "Deliver_Meeting_Data",
+          "count": 3
+        },
+        {
+          "gold": "Deliver_Meeting_Data",
+          "predicted": "Deliver_Action_Data",
+          "count": 1
+        },
+        {
+          "gold": "Deliver_Meeting_Data",
+          "predicted": "Request_Meeting",
+          "count": 2
+        },
+        {
+          "gold": "Request_Action",
+          "predicted": "Amend_Data",
+          "count": 1
+        },
+        {
+          "gold": "Request_Action",
+          "predicted": "Deliver_Action_Data",
+          "count": 4
+        },
+        {
+          "gold": "Request_Action",
+          "predicted": "Deliver_Data",
+          "count": 6
+        },
+        {
+          "gold": "Request_Action",
+          "predicted": "Deliver_Meeting_Data",
+          "count": 1
+        },
+        {
+          "gold": "Request_Action",
+          "predicted": "Request_Action_Data",
+          "count": 1
+        },
+        {
+          "gold": "Request_Action",
+          "predicted": "Request_Data",
+          "count": 5
+        },
+        {
+          "gold": "Request_Action_Data",
+          "predicted": "Request_Data",
+          "count": 2
+        },
+        {
+          "gold": "Request_Data",
+          "predicted": "Deliver_Action_Data",
+          "count": 2
+        },
+        {
+          "gold": "Request_Data",
+          "predicted": "Deliver_Data",
+          "count": 1
+        },
+        {
+          "gold": "Request_Data",
+          "predicted": "Request_Action",
+          "count": 6
+        },
+        {
+          "gold": "Request_Data",
+          "predicted": "Request_Action_Data",
+          "count": 6
+        },
+        {
+          "gold": "Request_Meeting",
+          "predicted": "Deliver_Action_Data",
+          "count": 2
+        },
+        {
+          "gold": "Request_Meeting",
+          "predicted": "Deliver_Data",
+          "count": 2
+        },
+        {
+          "gold": "Request_Meeting",
+          "predicted": "Deliver_Meeting_Data",
+          "count": 3
+        },
+        {
+          "gold": "Request_Meeting",
+          "predicted": "Request_Action",
+          "count": 4
+        },
+        {
+          "gold": "Request_Meeting_Data",
+          "predicted": "Deliver_Action_Data",
+          "count": 1
+        },
+        {
+          "gold": "Request_Meeting_Data",
+          "predicted": "Request_Action",
+          "count": 1
+        },
+        {
+          "gold": "Request_Meeting_Data",
+          "predicted": "Request_Action_Data",
+          "count": 2
+        }
+      ]
+    },
+    "record_exact": {
+      "precision": 0.16412213740458015,
+      "recall": 0.2123456790123457,
+      "f1": 0.18514531754574812,
+      "true_positive_credit": 172,
+      "predicted": 1048,
+      "support": 810,
+      "definition": "exact event type and exact multiset of attached (role, qualifier, merged segment-offset) arguments; trigger excluded"
+    },
+    "record_partial": {
+      "precision": 0.41437501747616295,
+      "recall": 0.5988594944150503,
+      "gold_events": 810,
+      "predicted_events": 1048,
+      "threshold": 0.5,
+      "definition": "event type must be exact; attached argument role+qualifier matches use character IoU >= 0.50; trigger is excluded",
+      "f1": 0.4898222682936913,
+      "alignment_rate": 0.6536259541984732
+    },
+    "record_exact_with_trigger": {
+      "precision": 0.12309160305343511,
+      "recall": 0.15925925925925927,
+      "f1": 0.1388589881593111,
+      "true_positive_credit": 129,
+      "predicted": 1048,
+      "support": 810,
+      "definition": "primary exact event record and exact trigger when gold has a trigger; triggerless direct records omit trigger"
+    },
+    "record_partial_with_trigger": {
+      "precision": 0.4149435176629772,
+      "recall": 0.5682301143103536,
+      "gold_events": 810,
+      "predicted_events": 1048,
+      "threshold": 0.5,
+      "definition": "primary partial event-record score plus trigger IoU averaged for events with an annotated gold trigger; triggerless direct records omit trigger",
+      "f1": 0.47963735968128474
+    },
+    "error_categories": {
+      "missed_event": 125,
+      "spurious_event": 363,
+      "wrong_event_type": 81
+    }
+  },
+  "triggers": {
+    "gold_triggered_events": 810,
+    "gold_triggerless_events": 0,
+    "predicted_trigger_candidates": 1048,
+    "exact": {
+      "precision": 0.36259541984732824,
+      "recall": 0.4691358024691358,
+      "f1": 0.40904198062432723,
+      "true_positive_credit": 380,
+      "predicted": 1048,
+      "support": 810
+    },
+    "partial": {
+      "precision": 0.47041984732824427,
+      "recall": 0.608641975308642,
+      "f1": 0.5306781485468245,
+      "true_positive_credit": 493,
+      "predicted": 1048,
+      "support": 810,
+      "iou_credit_sum": 455.2519318066536,
+      "threshold": 0.5
+    },
+    "event_type_identification": {
+      "micro": {
+        "precision": 0.4446564885496183,
+        "recall": 0.5753086419753086,
+        "f1": 0.5016146393972013,
+        "true_positive_credit": 466,
+        "predicted": 1048,
+        "support": 810
+      },
+      "macro_over_gold_supported_labels": {
+        "precision": 0.3325121564378037,
+        "recall": 0.42078159493854206,
+        "f1": 0.35873677105240703
+      },
+      "by_label": {
+        "Amend_Action_Data": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Amend_Data": {
+          "precision": 0.25,
+          "recall": 0.18181818181818182,
+          "f1": 0.2105263157894737,
+          "true_positive_credit": 4,
+          "predicted": 16,
+          "support": 22
+        },
+        "Amend_Meeting_Data": {
+          "precision": 0.5,
+          "recall": 0.4,
+          "f1": 0.4444444444444445,
+          "true_positive_credit": 2,
+          "predicted": 4,
+          "support": 5
+        },
+        "Deliver_Action_Data": {
+          "precision": 0.5784061696658098,
+          "recall": 0.6838905775075987,
+          "f1": 0.626740947075209,
+          "true_positive_credit": 225,
+          "predicted": 389,
+          "support": 329
+        },
+        "Deliver_Data": {
+          "precision": 0.34285714285714286,
+          "recall": 0.5419354838709678,
+          "f1": 0.42,
+          "true_positive_credit": 84,
+          "predicted": 245,
+          "support": 155
+        },
+        "Deliver_Meeting_Data": {
+          "precision": 0.35294117647058826,
+          "recall": 0.75,
+          "f1": 0.48,
+          "true_positive_credit": 36,
+          "predicted": 102,
+          "support": 48
+        },
+        "Request_Action": {
+          "precision": 0.4645669291338583,
+          "recall": 0.472,
+          "f1": 0.4682539682539682,
+          "true_positive_credit": 59,
+          "predicted": 127,
+          "support": 125
+        },
+        "Request_Action_Data": {
+          "precision": 0.34615384615384615,
+          "recall": 0.75,
+          "f1": 0.4736842105263157,
+          "true_positive_credit": 18,
+          "predicted": 52,
+          "support": 24
+        },
+        "Request_Data": {
+          "precision": 0.3595505617977528,
+          "recall": 0.463768115942029,
+          "f1": 0.40506329113924044,
+          "true_positive_credit": 32,
+          "predicted": 89,
+          "support": 69
+        },
+        "Request_Meeting": {
+          "precision": 0.2631578947368421,
+          "recall": 0.18518518518518517,
+          "f1": 0.21739130434782608,
+          "true_positive_credit": 5,
+          "predicted": 19,
+          "support": 27
+        },
+        "Request_Meeting_Data": {
+          "precision": 0.2,
+          "recall": 0.2,
+          "f1": 0.20000000000000004,
+          "true_positive_credit": 1,
+          "predicted": 5,
+          "support": 5
+        }
+      },
+      "confusion_pairs": [
+        {
+          "gold": "Amend_Data",
+          "predicted": "Deliver_Action_Data",
+          "count": 1
+        },
+        {
+          "gold": "Amend_Data",
+          "predicted": "Request_Action_Data",
+          "count": 1
+        },
+        {
+          "gold": "Deliver_Action_Data",
+          "predicted": "Deliver_Data",
+          "count": 1
+        },
+        {
+          "gold": "Deliver_Action_Data",
+          "predicted": "Deliver_Meeting_Data",
+          "count": 2
+        },
+        {
+          "gold": "Deliver_Action_Data",
+          "predicted": "Request_Action",
+          "count": 1
+        },
+        {
+          "gold": "Deliver_Data",
+          "predicted": "Deliver_Meeting_Data",
+          "count": 1
+        },
+        {
+          "gold": "Deliver_Meeting_Data",
+          "predicted": "Deliver_Action_Data",
+          "count": 1
+        },
+        {
+          "gold": "Deliver_Meeting_Data",
+          "predicted": "Request_Meeting",
+          "count": 1
+        },
+        {
+          "gold": "Request_Action",
+          "predicted": "Deliver_Action_Data",
+          "count": 1
+        },
+        {
+          "gold": "Request_Action",
+          "predicted": "Deliver_Data",
+          "count": 3
+        },
+        {
+          "gold": "Request_Action",
+          "predicted": "Request_Action_Data",
+          "count": 1
+        },
+        {
+          "gold": "Request_Action",
+          "predicted": "Request_Data",
+          "count": 2
+        },
+        {
+          "gold": "Request_Data",
+          "predicted": "Request_Action",
+          "count": 2
+        },
+        {
+          "gold": "Request_Data",
+          "predicted": "Request_Action_Data",
+          "count": 2
+        },
+        {
+          "gold": "Request_Meeting",
+          "predicted": "Deliver_Meeting_Data",
+          "count": 2
+        },
+        {
+          "gold": "Request_Meeting",
+          "predicted": "Request_Action",
+          "count": 3
+        },
+        {
+          "gold": "Request_Meeting_Data",
+          "predicted": "Request_Action_Data",
+          "count": 2
+        }
+      ]
+    },
+    "error_categories": {
+      "missed_trigger": 317,
+      "spurious_trigger": 555
+    },
+    "not_applicable_event_types": []
+  },
+  "argument_records": {
+    "gold": 1730,
+    "predicted": 2747,
+    "exact": {
+      "precision": 0.2806698216235894,
+      "recall": 0.4456647398843931,
+      "f1": 0.344427071699799,
+      "true_positive_credit": 771,
+      "predicted": 2747,
+      "support": 1730,
+      "definition": "exact attached (role, qualifier, merged segment-offset) argument record"
+    },
+    "partial": {
+      "precision": 0.3618492901346924,
+      "recall": 0.5745664739884393,
+      "f1": 0.44404735313826227,
+      "true_positive_credit": 994,
+      "predicted": 2747,
+      "support": 1730,
+      "definition": "one-to-one attached argument record match with exact role and qualifier and character IoU >= 0.50; unspanned records match only when both spans are empty"
+    },
+    "span_exact": {
+      "precision": 0.28431015653440117,
+      "recall": 0.45144508670520234,
+      "f1": 0.3488943488943489,
+      "true_positive_credit": 781,
+      "predicted": 2747,
+      "support": 1730,
+      "definition": "one-to-one exact source extent match independent of role and qualifier"
+    },
+    "span_overlap": {
+      "precision": 0.3676738259919913,
+      "recall": 0.5838150289017341,
+      "f1": 0.4511949966495421,
+      "true_positive_credit": 1010,
+      "predicted": 2747,
+      "support": 1730,
+      "definition": "one-to-one character IoU >= 0.50 match independent of role and qualifier"
+    },
+    "span_group_matches_iou_threshold": 1010,
+    "role_accuracy_on_span_matches": 0.9841584158415841,
+    "qualifier_accuracy_on_span_matches": 0.998019801980198,
+    "role_exact": {
+      "micro": {
+        "precision": 0.2806698216235894,
+        "recall": 0.4456647398843931,
+        "f1": 0.344427071699799,
+        "true_positive_credit": 771,
+        "predicted": 2747,
+        "support": 1730
+      },
+      "macro_over_gold_supported_labels": {
+        "precision": 0.2174709874130345,
+        "recall": 0.2623591048983846,
+        "f1": 0.21868666802506762
+      },
+      "by_label": {
+        "Action Date": {
+          "precision": 0.2857142857142857,
+          "recall": 0.3125,
+          "f1": 0.29850746268656714,
+          "true_positive_credit": 20,
+          "predicted": 70,
+          "support": 64
+        },
+        "Action Description": {
+          "precision": 0.2344139650872818,
+          "recall": 0.3860369609856263,
+          "f1": 0.29169899146625294,
+          "true_positive_credit": 188,
+          "predicted": 802,
+          "support": 487
+        },
+        "Action Members": {
+          "precision": 0.5281954887218046,
+          "recall": 0.6706443914081146,
+          "f1": 0.590956887486856,
+          "true_positive_credit": 281,
+          "predicted": 532,
+          "support": 419
+        },
+        "Action Time": {
+          "precision": 0.3333333333333333,
+          "recall": 0.14285714285714285,
+          "f1": 0.2,
+          "true_positive_credit": 1,
+          "predicted": 3,
+          "support": 7
+        },
+        "Amend Date": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "true_positive_credit": 1,
+          "predicted": 1,
+          "support": 2
+        },
+        "Amend Members": {
+          "precision": 0.4,
+          "recall": 0.125,
+          "f1": 0.19047619047619047,
+          "true_positive_credit": 2,
+          "predicted": 5,
+          "support": 16
+        },
+        "Data Owner": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 2
+        },
+        "Data Type": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 2
+        },
+        "Data Value": {
+          "precision": 0.14361702127659576,
+          "recall": 0.391304347826087,
+          "f1": 0.21011673151750973,
+          "true_positive_credit": 54,
+          "predicted": 376,
+          "support": 138
+        },
+        "Data idString": {
+          "precision": 0.2033096926713948,
+          "recall": 0.3706896551724138,
+          "f1": 0.26259541984732826,
+          "true_positive_credit": 86,
+          "predicted": 423,
+          "support": 232
+        },
+        "Deliver Date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 4
+        },
+        "Deliver Members": {
+          "precision": 0.12903225806451613,
+          "recall": 0.21052631578947367,
+          "f1": 0.15999999999999998,
+          "true_positive_credit": 4,
+          "predicted": 31,
+          "support": 19
+        },
+        "Deliver Time": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Deliver members": {
+          "precision": 0.30303030303030304,
+          "recall": 0.625,
+          "f1": 0.40816326530612246,
+          "true_positive_credit": 20,
+          "predicted": 66,
+          "support": 32
+        },
+        "Meeting Agenda": {
+          "precision": 0.18518518518518517,
+          "recall": 0.2631578947368421,
+          "f1": 0.21739130434782608,
+          "true_positive_credit": 10,
+          "predicted": 54,
+          "support": 38
+        },
+        "Meeting Date": {
+          "precision": 0.15151515151515152,
+          "recall": 0.2564102564102564,
+          "f1": 0.1904761904761905,
+          "true_positive_credit": 10,
+          "predicted": 66,
+          "support": 39
+        },
+        "Meeting Location": {
+          "precision": 0.125,
+          "recall": 0.1111111111111111,
+          "f1": 0.11764705882352941,
+          "true_positive_credit": 2,
+          "predicted": 16,
+          "support": 18
+        },
+        "Meeting Members": {
+          "precision": 0.3575418994413408,
+          "recall": 0.49612403100775193,
+          "f1": 0.41558441558441556,
+          "true_positive_credit": 64,
+          "predicted": 179,
+          "support": 129
+        },
+        "Meeting Name": {
+          "precision": 0.1875,
+          "recall": 0.25,
+          "f1": 0.21428571428571427,
+          "true_positive_credit": 6,
+          "predicted": 32,
+          "support": 24
+        },
+        "Meeting Time": {
+          "precision": 0.21739130434782608,
+          "recall": 0.20833333333333334,
+          "f1": 0.2127659574468085,
+          "true_positive_credit": 5,
+          "predicted": 23,
+          "support": 24
+        },
+        "Request Date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Request Members": {
+          "precision": 0.16666666666666666,
+          "recall": 0.4,
+          "f1": 0.23529411764705882,
+          "true_positive_credit": 2,
+          "predicted": 12,
+          "support": 5
+        },
+        "Request Time": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Request members": {
+          "precision": 0.26785714285714285,
+          "recall": 0.5769230769230769,
+          "f1": 0.36585365853658536,
+          "true_positive_credit": 15,
+          "predicted": 56,
+          "support": 26
+        }
+      }
+    },
+    "role_partial": {
+      "micro": {
+        "precision": 0.3618492901346924,
+        "recall": 0.5745664739884393,
+        "f1": 0.44404735313826227,
+        "true_positive_credit": 994,
+        "predicted": 2747,
+        "support": 1730
+      },
+      "macro_over_gold_supported_labels": {
+        "precision": 0.26275066243110073,
+        "recall": 0.3165351522453482,
+        "f1": 0.26442418721013156
+      },
+      "by_label": {
+        "Action Date": {
+          "precision": 0.35714285714285715,
+          "recall": 0.390625,
+          "f1": 0.3731343283582089,
+          "true_positive_credit": 25,
+          "predicted": 70,
+          "support": 64
+        },
+        "Action Description": {
+          "precision": 0.3865336658354115,
+          "recall": 0.6365503080082136,
+          "f1": 0.4809930178432894,
+          "true_positive_credit": 310,
+          "predicted": 802,
+          "support": 487
+        },
+        "Action Members": {
+          "precision": 0.5451127819548872,
+          "recall": 0.6921241050119332,
+          "f1": 0.6098843322818087,
+          "true_positive_credit": 290,
+          "predicted": 532,
+          "support": 419
+        },
+        "Action Time": {
+          "precision": 0.6666666666666666,
+          "recall": 0.2857142857142857,
+          "f1": 0.4,
+          "true_positive_credit": 2,
+          "predicted": 3,
+          "support": 7
+        },
+        "Amend Date": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "true_positive_credit": 1,
+          "predicted": 1,
+          "support": 2
+        },
+        "Amend Members": {
+          "precision": 0.4,
+          "recall": 0.125,
+          "f1": 0.19047619047619047,
+          "true_positive_credit": 2,
+          "predicted": 5,
+          "support": 16
+        },
+        "Data Owner": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 2
+        },
+        "Data Type": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 2
+        },
+        "Data Value": {
+          "precision": 0.19414893617021275,
+          "recall": 0.5289855072463768,
+          "f1": 0.2840466926070039,
+          "true_positive_credit": 73,
+          "predicted": 376,
+          "support": 138
+        },
+        "Data idString": {
+          "precision": 0.31678486997635935,
+          "recall": 0.5775862068965517,
+          "f1": 0.40916030534351144,
+          "true_positive_credit": 134,
+          "predicted": 423,
+          "support": 232
+        },
+        "Deliver Date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 4
+        },
+        "Deliver Members": {
+          "precision": 0.12903225806451613,
+          "recall": 0.21052631578947367,
+          "f1": 0.15999999999999998,
+          "true_positive_credit": 4,
+          "predicted": 31,
+          "support": 19
+        },
+        "Deliver Time": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Deliver members": {
+          "precision": 0.30303030303030304,
+          "recall": 0.625,
+          "f1": 0.40816326530612246,
+          "true_positive_credit": 20,
+          "predicted": 66,
+          "support": 32
+        },
+        "Meeting Agenda": {
+          "precision": 0.25925925925925924,
+          "recall": 0.3684210526315789,
+          "f1": 0.30434782608695654,
+          "true_positive_credit": 14,
+          "predicted": 54,
+          "support": 38
+        },
+        "Meeting Date": {
+          "precision": 0.21212121212121213,
+          "recall": 0.358974358974359,
+          "f1": 0.26666666666666666,
+          "true_positive_credit": 14,
+          "predicted": 66,
+          "support": 39
+        },
+        "Meeting Location": {
+          "precision": 0.125,
+          "recall": 0.1111111111111111,
+          "f1": 0.11764705882352941,
+          "true_positive_credit": 2,
+          "predicted": 16,
+          "support": 18
+        },
+        "Meeting Members": {
+          "precision": 0.39106145251396646,
+          "recall": 0.5426356589147286,
+          "f1": 0.45454545454545453,
+          "true_positive_credit": 70,
+          "predicted": 179,
+          "support": 129
+        },
+        "Meeting Name": {
+          "precision": 0.28125,
+          "recall": 0.375,
+          "f1": 0.32142857142857145,
+          "true_positive_credit": 9,
+          "predicted": 32,
+          "support": 24
+        },
+        "Meeting Time": {
+          "precision": 0.30434782608695654,
+          "recall": 0.2916666666666667,
+          "f1": 0.2978723404255319,
+          "true_positive_credit": 7,
+          "predicted": 23,
+          "support": 24
+        },
+        "Request Date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Request Members": {
+          "precision": 0.16666666666666666,
+          "recall": 0.4,
+          "f1": 0.23529411764705882,
+          "true_positive_credit": 2,
+          "predicted": 12,
+          "support": 5
+        },
+        "Request Time": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Request members": {
+          "precision": 0.26785714285714285,
+          "recall": 0.5769230769230769,
+          "f1": 0.36585365853658536,
+          "true_positive_credit": 15,
+          "predicted": 56,
+          "support": 26
+        }
+      }
+    },
+    "role_qualifier_exact": {
+      "precision": 0.2806698216235894,
+      "recall": 0.4456647398843931,
+      "f1": 0.344427071699799,
+      "true_positive_credit": 771,
+      "predicted": 2747,
+      "support": 1730
+    },
+    "qualifier": {
+      "micro": {
+        "precision": 0.28394612304332,
+        "recall": 0.4508670520231214,
+        "f1": 0.3484476211748939,
+        "true_positive_credit": 780,
+        "predicted": 2747,
+        "support": 1730
+      },
+      "macro_over_gold_supported_labels": {
+        "precision": 0.25200932283297256,
+        "recall": 0.28928064511097595,
+        "f1": 0.2465646258503401
+      },
+      "by_label": {
+        "<none>": {
+          "precision": 0.293124742692466,
+          "recall": 0.47753185781354796,
+          "f1": 0.3632653061224489,
+          "true_positive_credit": 712,
+          "predicted": 2429,
+          "support": 1491
+        },
+        "context": {
+          "precision": 0.2129032258064516,
+          "recall": 0.30697674418604654,
+          "f1": 0.25142857142857145,
+          "true_positive_credit": 66,
+          "predicted": 310,
+          "support": 215
+        },
+        "revision": {
+          "precision": 0.25,
+          "recall": 0.08333333333333333,
+          "f1": 0.125,
+          "true_positive_credit": 2,
+          "predicted": 8,
+          "support": 24
+        }
+      }
+    },
+    "qualifier_partial": {
+      "micro": {
+        "precision": 0.3669457590098289,
+        "recall": 0.5826589595375723,
+        "f1": 0.4503015412106321,
+        "true_positive_credit": 1008,
+        "predicted": 2747,
+        "support": 1730
+      },
+      "macro_over_gold_supported_labels": {
+        "precision": 0.4803709212605745,
+        "recall": 0.43869963969865705,
+        "f1": 0.4042857142857143
+      },
+      "by_label": {
+        "<none>": {
+          "precision": 0.37175792507204614,
+          "recall": 0.6056338028169014,
+          "f1": 0.46071428571428574,
+          "true_positive_credit": 903,
+          "predicted": 2429,
+          "support": 1491
+        },
+        "context": {
+          "precision": 0.3193548387096774,
+          "recall": 0.4604651162790698,
+          "f1": 0.3771428571428571,
+          "true_positive_credit": 99,
+          "predicted": 310,
+          "support": 215
+        },
+        "revision": {
+          "precision": 0.75,
+          "recall": 0.25,
+          "f1": 0.375,
+          "true_positive_credit": 6,
+          "predicted": 8,
+          "support": 24
+        }
+      }
+    },
+    "event_type_and_role_partial": {
+      "micro": {
+        "precision": 0.3618492901346924,
+        "recall": 0.5745664739884393,
+        "f1": 0.44404735313826227,
+        "true_positive_credit": 994,
+        "predicted": 2747,
+        "support": 1730
+      },
+      "macro_over_gold_supported_labels": {
+        "precision": 0.23695857401343168,
+        "recall": 0.2622617263669259,
+        "f1": 0.22008349603120253
+      },
+      "by_label": {
+        "Amend_Action_Data::Action Date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 2
+        },
+        "Amend_Data::Action Members": {
+          "precision": 0.0,
+          "recall": null,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 1,
+          "support": 0
+        },
+        "Amend_Data::Amend Date": {
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666,
+          "true_positive_credit": 1,
+          "predicted": 1,
+          "support": 2
+        },
+        "Amend_Data::Amend Members": {
+          "precision": 0.4,
+          "recall": 0.125,
+          "f1": 0.19047619047619047,
+          "true_positive_credit": 2,
+          "predicted": 5,
+          "support": 16
+        },
+        "Amend_Data::Data Value": {
+          "precision": 0.75,
+          "recall": 0.15789473684210525,
+          "f1": 0.2608695652173913,
+          "true_positive_credit": 3,
+          "predicted": 4,
+          "support": 19
+        },
+        "Amend_Data::Data idString": {
+          "precision": 0.3333333333333333,
+          "recall": 0.23529411764705882,
+          "f1": 0.27586206896551724,
+          "true_positive_credit": 4,
+          "predicted": 12,
+          "support": 17
+        },
+        "Amend_Meeting_Data::Meeting Agenda": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Amend_Meeting_Data::Meeting Date": {
+          "precision": 0.5,
+          "recall": 0.16666666666666666,
+          "f1": 0.25,
+          "true_positive_credit": 1,
+          "predicted": 2,
+          "support": 6
+        },
+        "Amend_Meeting_Data::Meeting Location": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Amend_Meeting_Data::Meeting Members": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 2
+        },
+        "Amend_Meeting_Data::Meeting Name": {
+          "precision": 1.0,
+          "recall": 0.25,
+          "f1": 0.4,
+          "true_positive_credit": 1,
+          "predicted": 1,
+          "support": 4
+        },
+        "Amend_Meeting_Data::Meeting Time": {
+          "precision": 1.0,
+          "recall": 0.4,
+          "f1": 0.5714285714285715,
+          "true_positive_credit": 2,
+          "predicted": 2,
+          "support": 5
+        },
+        "Deliver_Action_Data::Action Date": {
+          "precision": 0.3673469387755102,
+          "recall": 0.4,
+          "f1": 0.3829787234042553,
+          "true_positive_credit": 18,
+          "predicted": 49,
+          "support": 45
+        },
+        "Deliver_Action_Data::Action Description": {
+          "precision": 0.44216417910447764,
+          "recall": 0.7011834319526628,
+          "f1": 0.54233409610984,
+          "true_positive_credit": 237,
+          "predicted": 536,
+          "support": 338
+        },
+        "Deliver_Action_Data::Action Members": {
+          "precision": 0.5587529976019184,
+          "recall": 0.7540453074433657,
+          "f1": 0.6418732782369146,
+          "true_positive_credit": 233,
+          "predicted": 417,
+          "support": 309
+        },
+        "Deliver_Action_Data::Action Time": {
+          "precision": 0.6666666666666666,
+          "recall": 0.5,
+          "f1": 0.5714285714285715,
+          "true_positive_credit": 2,
+          "predicted": 3,
+          "support": 4
+        },
+        "Deliver_Action_Data::Deliver Date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Deliver_Action_Data::Deliver Members": {
+          "precision": 0.13333333333333333,
+          "recall": 0.2857142857142857,
+          "f1": 0.18181818181818182,
+          "true_positive_credit": 4,
+          "predicted": 30,
+          "support": 14
+        },
+        "Deliver_Data::Action Description": {
+          "precision": 0.0,
+          "recall": null,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 1,
+          "support": 0
+        },
+        "Deliver_Data::Data Owner": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 2
+        },
+        "Deliver_Data::Data Type": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 2
+        },
+        "Deliver_Data::Data Value": {
+          "precision": 0.1881720430107527,
+          "recall": 0.5882352941176471,
+          "f1": 0.28513238289205706,
+          "true_positive_credit": 70,
+          "predicted": 372,
+          "support": 119
+        },
+        "Deliver_Data::Data idString": {
+          "precision": 0.3041958041958042,
+          "recall": 0.6,
+          "f1": 0.4037122969837587,
+          "true_positive_credit": 87,
+          "predicted": 286,
+          "support": 145
+        },
+        "Deliver_Data::Deliver Date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 3
+        },
+        "Deliver_Data::Deliver Members": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 4
+        },
+        "Deliver_Data::Deliver Time": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Deliver_Data::Deliver members": {
+          "precision": 0.30303030303030304,
+          "recall": 0.625,
+          "f1": 0.40816326530612246,
+          "true_positive_credit": 20,
+          "predicted": 66,
+          "support": 32
+        },
+        "Deliver_Meeting_Data::Action Date": {
+          "precision": 0.0,
+          "recall": null,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 1,
+          "support": 0
+        },
+        "Deliver_Meeting_Data::Action Description": {
+          "precision": 0.0,
+          "recall": null,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 2,
+          "support": 0
+        },
+        "Deliver_Meeting_Data::Deliver Members": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 1,
+          "support": 1
+        },
+        "Deliver_Meeting_Data::Meeting Agenda": {
+          "precision": 0.25,
+          "recall": 0.6428571428571429,
+          "f1": 0.36,
+          "true_positive_credit": 9,
+          "predicted": 36,
+          "support": 14
+        },
+        "Deliver_Meeting_Data::Meeting Date": {
+          "precision": 0.22,
+          "recall": 0.55,
+          "f1": 0.3142857142857143,
+          "true_positive_credit": 11,
+          "predicted": 50,
+          "support": 20
+        },
+        "Deliver_Meeting_Data::Meeting Location": {
+          "precision": 0.14285714285714285,
+          "recall": 0.2222222222222222,
+          "f1": 0.17391304347826086,
+          "true_positive_credit": 2,
+          "predicted": 14,
+          "support": 9
+        },
+        "Deliver_Meeting_Data::Meeting Members": {
+          "precision": 0.38095238095238093,
+          "recall": 0.7368421052631579,
+          "f1": 0.5022421524663676,
+          "true_positive_credit": 56,
+          "predicted": 147,
+          "support": 76
+        },
+        "Deliver_Meeting_Data::Meeting Name": {
+          "precision": 0.25925925925925924,
+          "recall": 0.4666666666666667,
+          "f1": 0.33333333333333337,
+          "true_positive_credit": 7,
+          "predicted": 27,
+          "support": 15
+        },
+        "Deliver_Meeting_Data::Meeting Time": {
+          "precision": 0.25,
+          "recall": 0.3333333333333333,
+          "f1": 0.28571428571428575,
+          "true_positive_credit": 5,
+          "predicted": 20,
+          "support": 15
+        },
+        "Request_Action::Action Date": {
+          "precision": 0.35,
+          "recall": 0.4375,
+          "f1": 0.38888888888888884,
+          "true_positive_credit": 7,
+          "predicted": 20,
+          "support": 16
+        },
+        "Request_Action::Action Description": {
+          "precision": 0.30319148936170215,
+          "recall": 0.456,
+          "f1": 0.36421725239616615,
+          "true_positive_credit": 57,
+          "predicted": 188,
+          "support": 125
+        },
+        "Request_Action::Action Members": {
+          "precision": 0.5060240963855421,
+          "recall": 0.47191011235955055,
+          "f1": 0.4883720930232558,
+          "true_positive_credit": 42,
+          "predicted": 83,
+          "support": 89
+        },
+        "Request_Action::Action Time": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 2
+        },
+        "Request_Action::Request Members": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Request_Action_Data::Action Date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Request_Action_Data::Action Description": {
+          "precision": 0.24242424242424243,
+          "recall": 0.6666666666666666,
+          "f1": 0.3555555555555555,
+          "true_positive_credit": 16,
+          "predicted": 66,
+          "support": 24
+        },
+        "Request_Action_Data::Action Members": {
+          "precision": 0.4838709677419355,
+          "recall": 0.7142857142857143,
+          "f1": 0.5769230769230769,
+          "true_positive_credit": 15,
+          "predicted": 31,
+          "support": 21
+        },
+        "Request_Action_Data::Action Time": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Request_Action_Data::Request Members": {
+          "precision": 0.2,
+          "recall": 0.5,
+          "f1": 0.28571428571428575,
+          "true_positive_credit": 2,
+          "predicted": 10,
+          "support": 4
+        },
+        "Request_Data::Action Description": {
+          "precision": 0.0,
+          "recall": null,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 9,
+          "support": 0
+        },
+        "Request_Data::Data idString": {
+          "precision": 0.344,
+          "recall": 0.6142857142857143,
+          "f1": 0.441025641025641,
+          "true_positive_credit": 43,
+          "predicted": 125,
+          "support": 70
+        },
+        "Request_Data::Request Date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Request_Data::Request Members": {
+          "precision": 0.0,
+          "recall": null,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 1,
+          "support": 0
+        },
+        "Request_Data::Request Time": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Request_Data::Request members": {
+          "precision": 0.26785714285714285,
+          "recall": 0.5769230769230769,
+          "f1": 0.36585365853658536,
+          "true_positive_credit": 15,
+          "predicted": 56,
+          "support": 26
+        },
+        "Request_Meeting::Meeting Agenda": {
+          "precision": 0.2777777777777778,
+          "recall": 0.25,
+          "f1": 0.2631578947368421,
+          "true_positive_credit": 5,
+          "predicted": 18,
+          "support": 20
+        },
+        "Request_Meeting::Meeting Date": {
+          "precision": 0.14285714285714285,
+          "recall": 0.16666666666666666,
+          "f1": 0.15384615384615383,
+          "true_positive_credit": 2,
+          "predicted": 14,
+          "support": 12
+        },
+        "Request_Meeting::Meeting Location": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 2,
+          "support": 8
+        },
+        "Request_Meeting::Meeting Members": {
+          "precision": 0.45161290322580644,
+          "recall": 0.34146341463414637,
+          "f1": 0.3888888888888889,
+          "true_positive_credit": 14,
+          "predicted": 31,
+          "support": 41
+        },
+        "Request_Meeting::Meeting Name": {
+          "precision": 0.25,
+          "recall": 0.25,
+          "f1": 0.25,
+          "true_positive_credit": 1,
+          "predicted": 4,
+          "support": 4
+        },
+        "Request_Meeting::Meeting Time": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 1,
+          "support": 4
+        },
+        "Request_Meeting_Data::Meeting Agenda": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 3
+        },
+        "Request_Meeting_Data::Meeting Date": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Request_Meeting_Data::Meeting Members": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 1,
+          "support": 10
+        },
+        "Request_Meeting_Data::Meeting Name": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 0,
+          "support": 1
+        },
+        "Request_Meeting_Data::Request Members": {
+          "precision": 0.0,
+          "recall": null,
+          "f1": 0.0,
+          "true_positive_credit": 0,
+          "predicted": 1,
+          "support": 0
+        }
+      }
+    },
+    "error_categories": {
+      "unmatched_gold_arguments_in_primary_pairs": 274,
+      "unmatched_predicted_arguments_in_primary_pairs": 544,
+      "wrong_qualifier": 24,
+      "wrong_role": 69
+    }
+  },
+  "source_validation": {
+    "flagged_gold_arguments": 23,
+    "flagged_gold_events": 42,
+    "flagged_prediction_arguments": 0,
+    "flagged_prediction_events": 0,
+    "non_source_prediction_segments": 0,
+    "gold_policy": "malformed offsets or source-text disagreement raise EvaluationDataError; event/argument flags are counted and retained as diagnostics, never silently repaired or excluded",
+    "prediction_policy": "invalid offsets and text/offset disagreement are counted; invalid segments cannot earn span overlap credit"
+  }
+}
