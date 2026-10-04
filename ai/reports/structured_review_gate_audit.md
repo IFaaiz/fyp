@@ -1,6 +1,6 @@
 # Structured review and baseline gate audit
 
-Date: 2026-10-03
+Historical audit date: 2026-10-03. Current training update: 2026-10-04.
 Scope: read-only review of the structured pipeline plan, schema, runbook, evaluation report, current review workflow, baseline gate, synthetic test source, and metadata for the frozen V2 boundary. No annotation, fitting, TEST access, commits, or test execution was performed. Candidate JSONL bytes were hashed and only record IDs were extracted for membership checks; no source text or excerpts were emitted or inspected.
 
 ## Result
@@ -30,7 +30,7 @@ The actual index at `ai/data/processed/structured_v2_expanded_leakage_index_v2.j
 
 Protection is correctly separate from partition assignment: the 600 unused reserve sources are protected without being promoted into a held-out partition. The code's component-level TRAIN exclusion includes protected global IDs, so reserves may share components with selected evaluation or historical records without requiring a fabricated partition for each reserve. The current boundary's native/global protected-ID namespace mapping also matches.
 
-The current reports say there are zero accepted structured annotations, zero human-gold labels, and no training authorization. The 4,285 rows are screening sources; they are not 4,285 project examples or usable training labels.
+At the original audit checkpoint, reports recorded zero accepted structured annotations and no training authorization. The 2026-10-04 milestone now has 47 accepted current TRAIN rows, one scope fit and zero human-gold labels; root and a separate subagent passed the direct public provenance/preflight checks. The historical gate findings below remain separate from those actual annotations. The 4,285 rows are screening sources; they are not 4,285 project examples or usable training labels.
 
 ## Workflow gates present in code
 

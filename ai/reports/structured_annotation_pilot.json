@@ -1,109 +1,238 @@
 {
-  "reviewed_on": "2026-10-03",
-  "provenance": "AI-only source-grounded structured training pilot; no human gold or accuracy claim",
-  "scope": "first two completed source-random TRAIN batches; enriched seed078 pending",
-  "assigned_unique_sources": 32,
-  "accepted_unique_sources": 16,
-  "rejected_sources": 16,
+  "reviewed_on": "2026-10-04",
+  "provenance": "AI-only source-grounded structured TRAIN review; zero human gold and no predictive performance claim",
+  "scope": "fresh 78-source review replaces the overlapping first32 pilot for current fitting; historical exports are not added",
+  "assigned_unique_sources": 78,
+  "accepted_unique_sources": 47,
+  "rejected_sources": 31,
   "review_required_sources": 0,
   "scope_support": {
-    "NON_PROJECT": 15,
-    "PROJECT": 1
+    "NON_PROJECT": 24,
+    "PROJECT": 23
   },
   "derived_label_support": {
-    "NON_PROJECT": 15,
-    "DEADLINE": 1,
-    "ACTION_REQUEST": 1
+    "NON_PROJECT": 24,
+    "MEETING": 8,
+    "DEADLINE": 3,
+    "ACTION_REQUEST": 12,
+    "GENERAL_UPDATE": 11,
+    "REPORT_REQUEST": 1,
+    "DEPARTMENTAL_INPUT": 0,
+    "APPROVAL": 0,
+    "FOLLOW_UP": 0
   },
-  "speech_act_support_project_only": {
-    "DELIVER": 1,
-    "REQUEST": 1
+  "speech_act_support_project_only_all_accepted": {
+    "REQUEST": 15,
+    "COMMIT": 5,
+    "DELIVER": 6,
+    "INFORM": 14,
+    "PROPOSE": 5,
+    "SCHEDULE": 3,
+    "APPROVE": 0,
+    "REJECT": 0,
+    "REMIND": 0,
+    "CANCEL": 0,
+    "RESCHEDULE": 0
+  },
+  "model_preflight": {
+    "minimum_per_class": 20,
+    "scope_rows": 47,
+    "project_rows_for_speech_acts": 19,
+    "counts": {
+      "scope": {
+        "PROJECT": 23,
+        "NON_PROJECT": 24
+      },
+      "speech_act_project_rows": 19,
+      "speech_history_quarantined_rows": 4,
+      "speech_acts": {
+        "REQUEST": {
+          "positive": 13,
+          "negative": 6
+        },
+        "INFORM": {
+          "positive": 11,
+          "negative": 8
+        },
+        "COMMIT": {
+          "positive": 4,
+          "negative": 15
+        },
+        "APPROVE": {
+          "positive": 0,
+          "negative": 19
+        },
+        "REJECT": {
+          "positive": 0,
+          "negative": 19
+        },
+        "DELIVER": {
+          "positive": 5,
+          "negative": 14
+        },
+        "PROPOSE": {
+          "positive": 2,
+          "negative": 17
+        },
+        "REMIND": {
+          "positive": 0,
+          "negative": 19
+        },
+        "SCHEDULE": {
+          "positive": 3,
+          "negative": 16
+        },
+        "CANCEL": {
+          "positive": 0,
+          "negative": 19
+        },
+        "RESCHEDULE": {
+          "positive": 0,
+          "negative": 19
+        }
+      }
+    },
+    "shortages": [],
+    "supported_speech_acts": [],
+    "unsupported_speech_acts": {
+      "REQUEST": "positive=13<20; negative=6<20",
+      "INFORM": "positive=11<20; negative=8<20",
+      "COMMIT": "positive=4<20; negative=15<20",
+      "APPROVE": "positive=0<20; negative=19<20",
+      "REJECT": "positive=0<20; negative=19<20",
+      "DELIVER": "positive=5<20; negative=14<20",
+      "PROPOSE": "positive=2<20; negative=17<20",
+      "REMIND": "positive=0<20; negative=19<20",
+      "SCHEDULE": "positive=3<20; negative=16<20",
+      "CANCEL": "positive=0<20; negative=19<20",
+      "RESCHEDULE": "positive=0<20; negative=19<20"
+    },
+    "ready": true
   },
   "human_gold_count": 0,
-  "models_trained": 0,
+  "models_trained": 1,
+  "trained_speech_acts": [],
   "evaluation_annotations_accepted": 0,
   "new_evaluation_predictions": 0,
   "frozen_evaluation_sources": 600,
   "minimum_unique_examples_per_scope_class": 20,
-  "runs": [
-    {
-      "run_id": "v2_train_batch001_mapper2_20261003",
-      "assigned_sources": 16,
-      "counts": {
-        "accepted": 8,
-        "rejected": 8,
-        "review_required": 0
-      },
-      "scope_support": {
-        "PROJECT": 0,
-        "NON_PROJECT": 8
-      },
-      "export_sha256": "495c7d23eddd497b23a256a012a3485c6129d1b48e6cb408b7258eebfa3a5b92",
-      "authorization_sha256": "a1edf026471f409270d828195ecb6358b30162845b6f8f4c74f132dec32f30bb",
-      "decision_manifest_sha256": "852bb47469e236510b87ce734a2dd746fe564ee53f3139dab13a485fafa52503",
-      "full_provenance_verification_passed": true,
-      "preflight_ready": false,
-      "shortages": [
-        "scope:PROJECT=0<20",
-        "scope:NON_PROJECT=8<20"
-      ],
-      "primitive_evidence_disagreements": 16,
-      "derived_label_set_agreements": 14
+  "current_run": {
+    "run_id": "v2_train_seed078_resumed_20261004",
+    "selected_policy": "32 source-random TRAIN rows plus 46 lexical-recall candidates; keywords generate no labels",
+    "review_model": "gpt-6-luna",
+    "reasoning": "xhigh",
+    "source_bundle_sha256": "7d872463bbf6dc8fa1f38767eb49ce93f5ad1bdc17c494fcda91d38c11396466",
+    "root_full_sources_read": 78,
+    "blind_A_full_sources_read": 78,
+    "blind_B_full_sources_read": 78,
+    "blind_C_full_sources_read": 78,
+    "actual_C_initial_frozen_subset": 77,
+    "phase2_sources_reread": 77,
+    "primitive_evidence_disagreements": 77,
+    "derived_label_set_agreements": 63,
+    "third_adjudication_resolutions": {
+      "select_a": 40,
+      "select_b": 10,
+      "amend": 22,
+      "reject": 5
     },
-    {
-      "run_id": "v2_train_batch002_mapper2_20261003",
-      "assigned_sources": 16,
-      "counts": {
-        "accepted": 8,
-        "rejected": 8,
-        "review_required": 0
+    "root_decisions": {
+      "approve": 47,
+      "reject": 26
+    },
+    "exclusion_categories": {
+      "uncertain_scope": 20,
+      "current_mapper_coverage": 6,
+      "third_source_rejection": 5
+    },
+    "full_provenance_verification_passed": true,
+    "export_sha256": "333575dfdf6a57d6b11e8c10075d7f65b707c6cecb84955a8089d701227a3872",
+    "authorization_sha256": "943320c2ca3a88a7e7037365efe1be4dd30a0fd060e94d6a0b19a6bdc32ab81f",
+    "decision_manifest_sha256": "41265fd4122921bd9d26b47d4bb72ed7d5d39ced4415cbc9e8a3083487876991",
+    "C_initial_envelope_sha256": "b31465a9769075b7d32bbba090929fe65142f326a091b4b63a9d4fcdac460d4c",
+    "C_adjudication_envelope_sha256": "c9da9d14f54e9fcada921bbc82039179c0e15547b2e5c806a5cfea0d7808b4e5"
+  },
+  "baseline_artifacts": {
+    "private_directory": "ai/data/models/structured_scope_seed078_20261004",
+    "model_artifact_sha256": {
+      "scope_baseline.joblib": "c057cdfdaaa220f3af556a59936e5e92f8d5a8ba461aa21b64f89a61cdc02a06"
+    },
+    "training_metadata_sha256": "076ab05f18999f417f5cdad9ee9f2a120aaa8bdf8651784baa013e5e5a439863",
+    "evaluation_performed": false
+  },
+  "historical_overlapping_first32_pilot": {
+    "reviewed_on": "2026-10-03",
+    "assigned_unique_sources": 32,
+    "accepted_unique_sources": 16,
+    "rejected_sources": 16,
+    "scope_support": {
+      "NON_PROJECT": 15,
+      "PROJECT": 1
+    },
+    "runs": [
+      {
+        "run_id": "v2_train_batch001_mapper2_20261003",
+        "assigned_sources": 16,
+        "counts": {
+          "accepted": 8,
+          "rejected": 8,
+          "review_required": 0
+        },
+        "scope_support": {
+          "PROJECT": 0,
+          "NON_PROJECT": 8
+        },
+        "export_sha256": "495c7d23eddd497b23a256a012a3485c6129d1b48e6cb408b7258eebfa3a5b92",
+        "authorization_sha256": "a1edf026471f409270d828195ecb6358b30162845b6f8f4c74f132dec32f30bb",
+        "decision_manifest_sha256": "852bb47469e236510b87ce734a2dd746fe564ee53f3139dab13a485fafa52503",
+        "full_provenance_verification_passed": true,
+        "preflight_ready": false,
+        "shortages": [
+          "scope:PROJECT=0<20",
+          "scope:NON_PROJECT=8<20"
+        ],
+        "primitive_evidence_disagreements": 16,
+        "derived_label_set_agreements": 14
       },
-      "scope_support": {
-        "PROJECT": 1,
-        "NON_PROJECT": 7
-      },
-      "export_sha256": "6ec81703bb433d0a0b7d78081271de48be3735ba1a56ff52ad2a12ff1d465900",
-      "authorization_sha256": "8e548b14537fa143f27016b8ffc725fd16dcc56e55d89fba567bb0840e364e98",
-      "decision_manifest_sha256": "b12bb9db665f0c3ab3ddecf15416d6d02c5f0f39522434509529ddc30996b54a",
-      "full_provenance_verification_passed": true,
-      "preflight_ready": false,
-      "shortages": [
-        "scope:PROJECT=1<20",
-        "scope:NON_PROJECT=7<20"
-      ],
-      "primitive_evidence_disagreements": 15,
-      "derived_label_set_agreements": 14
-    }
-  ],
-  "root_additional_rejections": {
-    "scope_not_established": 2,
-    "omitted_current_delivery_act": 1,
-    "forwarded_headers_without_authored_current": 1
+      {
+        "run_id": "v2_train_batch002_mapper2_20261003",
+        "assigned_sources": 16,
+        "counts": {
+          "accepted": 8,
+          "rejected": 8,
+          "review_required": 0
+        },
+        "scope_support": {
+          "PROJECT": 1,
+          "NON_PROJECT": 7
+        },
+        "export_sha256": "6ec81703bb433d0a0b7d78081271de48be3735ba1a56ff52ad2a12ff1d465900",
+        "authorization_sha256": "8e548b14537fa143f27016b8ffc725fd16dcc56e55d89fba567bb0840e364e98",
+        "decision_manifest_sha256": "b12bb9db665f0c3ab3ddecf15416d6d02c5f0f39522434509529ddc30996b54a",
+        "full_provenance_verification_passed": true,
+        "preflight_ready": false,
+        "shortages": [
+          "scope:PROJECT=1<20",
+          "scope:NON_PROJECT=7<20"
+        ],
+        "primitive_evidence_disagreements": 15,
+        "derived_label_set_agreements": 14
+      }
+    ]
   },
   "source_policy": "Raw text, evidence strings, annotations, source IDs, exports and model assets remain private under ignored ai/data. Public report contains aggregates and artifact hashes only.",
   "review_integrity_limit": "Distinct identities and attestations operate in a shared filesystem; they are not cryptographic proof of reviewer independence.",
-  "pipeline_fixes": [
-    "DEADLINE derives from supported current due relation without redundant target-DEADLINE act",
-    "status is read-only; complete batch required before final decisions are persisted",
-    "explicit ordered indices bind to the original full source file and frozen boundary"
-  ],
   "verification": {
-    "focused_tests_passed": 137,
+    "prior_focused_suite_passed": 137,
+    "latest_model_gate_tests_passed": 26,
     "closed_V1_files_intact": 77,
     "closed_V1_changed_files": 0,
-    "old_TEST_inference_performed": false
-  },
-  "pending_seed": {
-    "run_id": "v2_train_seed078_resumed_20261004",
-    "sources": 78,
-    "selected_policy": "32 source-random TRAIN rows plus 46 lexical-recall candidates from TRAIN only; keywords generate no labels",
-    "model": "gpt-6-luna",
-    "reasoning": "xhigh",
-    "accepted_claimed": 0,
-    "resumed_on": "2026-10-04",
-    "prior_interrupted_run": "v2_train_seed078_20261003",
-    "prior_interrupted_run_completed_envelopes": 0,
-    "sources_unchanged_on_resume": true
+    "old_TEST_inference_performed": false,
+    "independent_export_preflight_audit_sha256": "d845057b54507d131a8f35be7741f4c9562a7de5f1d7e663d24b63be1f1a2cc0",
+    "independent_immutable_snapshot_files": 164,
+    "independent_immutable_files_unchanged": true,
+    "saved_model_runtime_load_passed": true,
+    "saved_model_artifact_hashes_verified": true
   },
   "semantic_train_screening": {
     "sources_computationally_screened": 4285,
@@ -111,5 +240,13 @@
     "source_read_annotations_claimed": 0,
     "evaluation_consumed": false,
     "report": "structured_semantic_screening.json"
-  }
+  },
+  "limitations": [
+    "Selection enriched for lexical recall; support is not population prevalence.",
+    "Agreement is not accuracy; shared AI reviewer bias remains.",
+    "Six supported project records lack an accepted current mapper function and are excluded, including pure delivery and request-only meeting semantics.",
+    "Four retained-history PROJECT rows are quarantined from speech fitting; scope features may retain contextual history.",
+    "No speech-act head reaches 20 positive and 20 negative eligible examples.",
+    "No independent evaluation annotations or predictions; baseline fit is a training milestone only."
+  ]
 }

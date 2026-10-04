@@ -28,19 +28,27 @@ Commands run from `ai/`:
 .\.venv\Scripts\python.exe -m unittest tests.test_structured_model_gates -v
 ```
 
-Results: 11 workflow tests passed; 21 model-gate tests passed. These synthetic tests establish workflow contracts only. They are not annotations, source-content audits, training data, model fits, or evaluation results.
+Prior checkpoint: 11 workflow tests passed; 21 model-gate tests passed. Latest model-gate suite: 26 passed on 2026-10-04. These synthetic tests establish workflow contracts only. They are not annotations, source-content audits, training data, model fits, or evaluation results.
 
-## Current annotation status
+## Historical first 32 pilot
 
 Two real 16-source TRAIN batches completed the independent A/B, frozen source-only C initial, post-blind adjudication and root checks. Of 32 sources, **16 were accepted and 16 excluded**. Accepted support is 15 NON_PROJECT and 1 PROJECT. Two private, explicitly authorized `accepted_train.jsonl` exports (8 rows each) passed full provenance verification and the actual model preflight. Both fail the predeclared minimum of 20 unique examples per scope class; no model was fitted.
 
 Human-gold labels: **0**. Accepted EVAL annotations and new evaluation predictions: **0**. This is a source-grounded AI-silver seed, not an accuracy result. Exact evidence/primitive disagreements affected 31/32 initial A/B pairs; derived-label sets agreed on 28/32 after the deadline fix. Agreement is a review-process diagnostic, not correctness.
 
-Root excluded four additional rows after C: two insufficient scope judgments, one omitted current delivery act, and one forwarded-header-only current view. Original proposals remain private and preserved. A new 78-source TRAIN-only seed assignment combines the first 32 random candidates and 46 lexical-recall candidates with fresh independent reviewers. Recall words generate no labels. Its acceptance remains pending; it is not counted in the 16 accepted rows.
+Root excluded four additional rows after C: two insufficient scope judgments, one omitted current delivery act, and one forwarded-header-only current view. Original proposals remain private and preserved. A new 78-source TRAIN-only seed assignment combines the first 32 random candidates and 46 lexical-recall candidates with fresh independent reviewers. Recall words generate no labels. At that checkpoint its acceptance remained pending; its later completion is reported below.
 
 The 78-source review was interrupted before any complete A/B/C preview envelope was saved. On 2026-10-04, root prepared `v2_train_seed078_resumed_20261004` with the actual new reviewer identities and verified identical source order, hashes and bundle. Prior drafts remain preserved; the resumed reviewers must independently read the full assigned sources. Incomplete drafts and read-progress notes cannot be ingested or counted as acceptance.
 
-Details and hashes: `structured_annotation_pilot.json`.
+## Completed fresh 78 review and training milestone
+
+On 2026-10-04, fresh Luna/xhigh reviewers A and B each read all 78 assigned sources independently. C independently read all 78 before any A/B reveal; root verified its unchanged 77-row subset and froze that actual C initial envelope before phase two. C reread all 77 disputed sources after reveal. Primitive/evidence disagreements were 77/78; derived-label sets agreed on 63/78. These are agreement counts, not accuracy.
+
+Final outcomes: **47 accepted, 31 excluded, 0 pending**. Root read all 78 sources, inspected the selected annotations and amendments, and recorded 47 exact-hash approvals plus 26 rejections; C separately rejected 5. Exclusions comprise 20 uncertain-scope cases, 6 current-mapper coverage gaps, and 5 source rejections. Pure delivery and a request-only meeting remain coverage exclusions; no false status or action was added to force acceptance.
+
+The authorized export passed root and independent subagent public provenance checks and contains **23 PROJECT / 24 NON_PROJECT** unique scope inputs. The public CLI fitted **one scope baseline** with the unchanged preregistered method and count floor. Four PROJECT rows with retained history are quarantined from speech fitting. None of the 11 speech heads has 20 positives and 20 negatives, so all remain untrained. Saved-model hashes, classes, dimensions and runtime loading passed root checks; no evaluation was run.
+
+The 47-row export overlaps the earlier first 32 pilot, so the historical 16 accepted rows are not added. Current fitting uses only the new export. Human gold, accepted EVAL annotations and new evaluation predictions remain **zero**. This is a training milestone, with AI-silver and selection-bias limits. Details and hashes: `structured_annotation_pilot.json`.
 
 ## Semantic TRAIN retrieval
 
@@ -52,7 +60,7 @@ Root verified source, boundary, global-index, score and encoder hashes and all r
 
 All **137 focused tests** passed, including 53 mapper, 11 workflow, 21 model-gate and 12 preserved Enron parser tests. The 77-file closed-V1 integrity check passed with no changed or missing files, and no old TEST inference or training was performed.
 
-The subsequent 2026-10-04 model-input safeguards passed all 26 model-gate tests. Known unbounded body history, including retained Outlook address/subject headers without a forwarding separator, is quarantined from speech fitting; speech features exclude subjects and count repeated authored bodies once even across different subjects. Scope retains subject context. Regressions cover history markers, exact authored offsets, forwarded subjects and conflicting body targets. Both earlier real exports passed the updated provenance loader/preflight with unchanged class shortages. No model fit followed these checks.
+The subsequent 2026-10-04 model-input safeguards passed all 26 model-gate tests. Known unbounded body history, including retained Outlook address/subject headers without a forwarding separator, is quarantined from speech fitting; speech features exclude subjects and count repeated authored bodies once even across different subjects. Scope retains subject context. Regressions cover history markers, exact authored offsets, forwarded subjects and conflicting body targets. Both earlier real exports passed the updated provenance loader/preflight with unchanged class shortages. Those safeguard checks were followed by the newly authorized 47-row scope fit described above.
 
 Actual source review exposed two defects. DEADLINE previously needed a redundant speech act targeting the due relation; the mapper now derives it from a validated current date/target relation. Status previously called incremental finalization and wrote a provisional decision before C was complete; status is now read-only and finalization requires the complete batch. Thirteen partial artifacts from the affected second run were preserved in a private recovery directory; no training export existed at that recovery point. The repaired run subsequently finalized and exported successfully.
 

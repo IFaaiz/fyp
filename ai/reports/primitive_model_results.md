@@ -1,12 +1,16 @@
 # Structured primitive baseline harness
 
-Status: two real accepted-export preflights completed; both blocked by class support. No model fit performed.
+Status: first structured V2 scope baseline fitted locally on an authorized, fully reviewed 47-row TRAIN export. Speech heads remain below support; no evaluation performed.
 
 ## Result
 
-As of 2026-10-03, two private orchestrator-authorized exports (8 accepted rows each) passed the full real-data provenance loader and preflight. The first contains 0 PROJECT / 8 NON_PROJECT; the second 1 PROJECT / 7 NON_PROJECT. Both fail the predeclared 20-per-class minimum. **Models trained: 0. Evaluation performed: no.** There are no model scores, predictions or accuracy claims. A 78-source enriched TRAIN seed is being independently reviewed; none of its rows is yet claimed accepted.
+On 2026-10-04, the fresh 78-source TRAIN review finalized **47 accepted / 31 excluded / 0 pending**. Its actual export contains **23 PROJECT / 24 NON_PROJECT**, with 47 unique normalized scope inputs, and passed both root and independent subagent public-provenance/preflight checks. The preregistered TF-IDF unigram logistic-regression scope baseline was fitted through the public CLI. **Models trained: 1. Evaluation performed: no.** No model scores, evaluation predictions or accuracy claims are available.
 
-The local runtime reports Python 3.12.14 and scikit-learn 1.9.1. No model artifact was created.
+The earlier two 8-row exports remain preserved as historical pilot artifacts. The fresh assignment includes their first 32 sources; those exports were not added to the new training set. C made 22 post-blind amendments after its initial verdict was frozen. Root personally read all 78 sources and approved every accepted annotation by its exact hash. Review identities/attestations are not proof against shared AI bias.
+
+The local runtime reports Python 3.12.14 and scikit-learn 1.9.1. Private artifacts are `ai/data/models/structured_scope_seed078_20261004/scope_baseline.joblib` and `training_metadata.json`. Root verified saved-model hashes, source/export bindings, classes and feature dimensions, and successfully loaded the artifact without computing predictions.
+
+Of 23 accepted PROJECT rows, 4 with retained history are quarantined from speech fitting; 19 remain eligible. REQUEST has 13 positives and 6 negatives; INFORM has 11/8; COMMIT 4/15; DELIVER 5/14; PROPOSE 2/17; SCHEDULE 3/16. APPROVE, REJECT, REMIND, CANCEL and RESCHEDULE each have 0/19. No head meets 20 positives and 20 negatives, so no speech model was saved. This small, recall-enriched scope seed is usable for baseline fitting but is not a representative or evaluated production classifier.
 
 ## Preregistered baselines
 
@@ -39,7 +43,7 @@ Before preparing targets, the loader:
 
 Fitting is opt-in with `--fit`. Artifacts can be saved only to a new directory below `ai/data/`; the default run is preflight-only. No corpus candidates, review handoffs, or other partitions are discovered or loaded by this script.
 
-If a later authorized run fits models, its private `training_metadata.json` will include the verified authorization, export, run, decision, source, registry, index, partition and frozen-boundary hashes, plus SHA-256 digests for every saved model artifact. No fit has been performed for this report.
+The actual fit's private `training_metadata.json` includes the verified authorization, export, run, decision, source, registry, index, partition and frozen-boundary hashes, plus SHA-256 digests for every saved model artifact. The actual scope fit metadata and saved artifact hashes are summarized in `structured_annotation_pilot.json`.
 
 ## Files and verification
 
@@ -53,6 +57,6 @@ Focused command from `ai/`:
 .\.venv\Scripts\python.exe -m unittest tests.test_structured_model_gates
 ```
 
-The suite exercises authorization and hash failures, protected paths, review-handoff rejection, uncertainty and partition gates, source-evidence validation, authored-range feature preparation, project-only speech targets, per-head support selection, and minimum-count enforcement. It also builds a complete synthetic review-to-export chain, passes it through the real public provenance verifier and model preflight, then confirms that changing the immutable decision manifest blocks loading. These synthetic tests do not fit models. The two actual preflights above separately verified the accepted exports and reported insufficient support.
+The suite exercises authorization and hash failures, protected paths, review-handoff rejection, uncertainty and partition gates, source-evidence validation, authored-range feature preparation, project-only speech targets, per-head support selection, and minimum-count enforcement. It also builds a complete synthetic review-to-export chain, passes it through the real public provenance verifier and model preflight, then confirms that changing the immutable decision manifest blocks loading. These synthetic tests do not fit models. The historical two actual preflights separately verified their exports and reported insufficient support. The new 47-row preflight passed scope support; root separately verified its saved artifact. No additional broad test run was required for this report-only milestone.
 
 Latest focused results: `tests.test_structured_model_gates` - 26 passed on 2026-10-04, including forwarded-subject exclusion, retained Outlook reply headers, authored-range recovery and body-only support deduplication; `tests.test_structured_review_workflow` - 11 passed at the prior checkpoint. Both suites use synthetic records only.
