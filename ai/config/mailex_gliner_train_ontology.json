@@ -1,0 +1,612 @@
+{
+  "schema_version": 1,
+  "source_split": "train",
+  "train_sha256": "9672bcd3c2ee4453cf8919735647616204136e0324c36cc49a399bbabee4f333",
+  "model_id": "fastino/gliner2.5-small-v1",
+  "model_revision": "7132dc4561c3f94563c6147e75ffa8ef34c4964a",
+  "runtime_versions": {
+    "accelerate": "1.10.1",
+    "gliner2": "2.0.0",
+    "peft": "0.17.1",
+    "protobuf": "6.33.5",
+    "pydantic": "2.13.5",
+    "torch": "2.11.0+cu128",
+    "transformers": "4.57.6"
+  },
+  "event_types": [
+    "Amend_Action_Data",
+    "Amend_Data",
+    "Amend_Meeting_Data",
+    "Deliver_Action_Data",
+    "Deliver_Data",
+    "Deliver_Meeting_Data",
+    "Request_Action",
+    "Request_Action_Data",
+    "Request_Data",
+    "Request_Meeting",
+    "Request_Meeting_Data"
+  ],
+  "fields_by_event": {
+    "Amend_Action_Data": [
+      {
+        "field_name": "arg_000",
+        "role": "Action Date",
+        "qualifier": "context",
+        "description": "Source text argument for role Action Date; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_001",
+        "role": "Action Description",
+        "qualifier": "context",
+        "description": "Source text argument for role Action Description; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_002",
+        "role": "Action Members",
+        "qualifier": "context",
+        "description": "Source text argument for role Action Members; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_003",
+        "role": "Action Members",
+        "qualifier": "revision",
+        "description": "Source text argument for role Action Members; qualifier revision.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_004",
+        "role": "Action Time",
+        "qualifier": "revision",
+        "description": "Source text argument for role Action Time; qualifier revision.",
+        "cardinality": "zero_or_more"
+      }
+    ],
+    "Amend_Data": [
+      {
+        "field_name": "arg_000",
+        "role": "Amend Date",
+        "qualifier": "context",
+        "description": "Source text argument for role Amend Date; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_001",
+        "role": "Amend Members",
+        "qualifier": "context",
+        "description": "Source text argument for role Amend Members; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_002",
+        "role": "Amend Time",
+        "qualifier": "context",
+        "description": "Source text argument for role Amend Time; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_003",
+        "role": "Data idString",
+        "qualifier": "context",
+        "description": "Source text argument for role Data idString; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_004",
+        "role": "Data idString",
+        "qualifier": "revision",
+        "description": "Source text argument for role Data idString; qualifier revision.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_005",
+        "role": "Data Value",
+        "qualifier": "context",
+        "description": "Source text argument for role Data Value; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_006",
+        "role": "Data Value",
+        "qualifier": "revision",
+        "description": "Source text argument for role Data Value; qualifier revision.",
+        "cardinality": "zero_or_more"
+      }
+    ],
+    "Amend_Meeting_Data": [
+      {
+        "field_name": "arg_000",
+        "role": "Amend Members",
+        "qualifier": "context",
+        "description": "Source text argument for role Amend Members; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_001",
+        "role": "Meeting Agenda",
+        "qualifier": "context",
+        "description": "Source text argument for role Meeting Agenda; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_002",
+        "role": "Meeting Agenda",
+        "qualifier": "revision",
+        "description": "Source text argument for role Meeting Agenda; qualifier revision.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_003",
+        "role": "Meeting Date",
+        "qualifier": "context",
+        "description": "Source text argument for role Meeting Date; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_004",
+        "role": "Meeting Date",
+        "qualifier": "revision",
+        "description": "Source text argument for role Meeting Date; qualifier revision.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_005",
+        "role": "Meeting Location",
+        "qualifier": "context",
+        "description": "Source text argument for role Meeting Location; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_006",
+        "role": "Meeting Location",
+        "qualifier": "revision",
+        "description": "Source text argument for role Meeting Location; qualifier revision.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_007",
+        "role": "Meeting Members",
+        "qualifier": "context",
+        "description": "Source text argument for role Meeting Members; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_008",
+        "role": "Meeting Members",
+        "qualifier": "revision",
+        "description": "Source text argument for role Meeting Members; qualifier revision.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_009",
+        "role": "Meeting Name",
+        "qualifier": "context",
+        "description": "Source text argument for role Meeting Name; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_010",
+        "role": "Meeting Time",
+        "qualifier": "context",
+        "description": "Source text argument for role Meeting Time; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_011",
+        "role": "Meeting Time",
+        "qualifier": "revision",
+        "description": "Source text argument for role Meeting Time; qualifier revision.",
+        "cardinality": "zero_or_more"
+      }
+    ],
+    "Deliver_Action_Data": [
+      {
+        "field_name": "arg_000",
+        "role": "Action Date",
+        "qualifier": null,
+        "description": "Source text argument for role Action Date.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_001",
+        "role": "Action Description",
+        "qualifier": null,
+        "description": "Source text argument for role Action Description.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_002",
+        "role": "Action Members",
+        "qualifier": null,
+        "description": "Source text argument for role Action Members.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_003",
+        "role": "Action Time",
+        "qualifier": null,
+        "description": "Source text argument for role Action Time.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_004",
+        "role": "Deliver Date",
+        "qualifier": null,
+        "description": "Source text argument for role Deliver Date.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_005",
+        "role": "Deliver Members",
+        "qualifier": null,
+        "description": "Source text argument for role Deliver Members.",
+        "cardinality": "zero_or_more"
+      }
+    ],
+    "Deliver_Data": [
+      {
+        "field_name": "arg_000",
+        "role": "Data idString",
+        "qualifier": null,
+        "description": "Source text argument for role Data idString.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_001",
+        "role": "Data Owner",
+        "qualifier": null,
+        "description": "Source text argument for role Data Owner.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_002",
+        "role": "Data Type",
+        "qualifier": null,
+        "description": "Source text argument for role Data Type.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_003",
+        "role": "Data Value",
+        "qualifier": null,
+        "description": "Source text argument for role Data Value.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_004",
+        "role": "Deliver Date",
+        "qualifier": null,
+        "description": "Source text argument for role Deliver Date.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_005",
+        "role": "Deliver Members",
+        "qualifier": null,
+        "description": "Source text argument for role Deliver Members.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_006",
+        "role": "Deliver members",
+        "qualifier": null,
+        "description": "Source text argument for role Deliver members.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_007",
+        "role": "Deliver Time",
+        "qualifier": null,
+        "description": "Source text argument for role Deliver Time.",
+        "cardinality": "zero_or_more"
+      }
+    ],
+    "Deliver_Meeting_Data": [
+      {
+        "field_name": "arg_000",
+        "role": "Deliver Members",
+        "qualifier": null,
+        "description": "Source text argument for role Deliver Members.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_001",
+        "role": "Meeting Agenda",
+        "qualifier": null,
+        "description": "Source text argument for role Meeting Agenda.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_002",
+        "role": "Meeting Date",
+        "qualifier": null,
+        "description": "Source text argument for role Meeting Date.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_003",
+        "role": "Meeting Location",
+        "qualifier": null,
+        "description": "Source text argument for role Meeting Location.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_004",
+        "role": "Meeting Members",
+        "qualifier": null,
+        "description": "Source text argument for role Meeting Members.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_005",
+        "role": "Meeting Name",
+        "qualifier": null,
+        "description": "Source text argument for role Meeting Name.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_006",
+        "role": "Meeting Time",
+        "qualifier": null,
+        "description": "Source text argument for role Meeting Time.",
+        "cardinality": "zero_or_more"
+      }
+    ],
+    "Request_Action": [
+      {
+        "field_name": "arg_000",
+        "role": "Action Date",
+        "qualifier": null,
+        "description": "Source text argument for role Action Date.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_001",
+        "role": "Action Description",
+        "qualifier": null,
+        "description": "Source text argument for role Action Description.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_002",
+        "role": "Action Members",
+        "qualifier": null,
+        "description": "Source text argument for role Action Members.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_003",
+        "role": "Action Time",
+        "qualifier": null,
+        "description": "Source text argument for role Action Time.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_004",
+        "role": "Request Members",
+        "qualifier": null,
+        "description": "Source text argument for role Request Members.",
+        "cardinality": "zero_or_more"
+      }
+    ],
+    "Request_Action_Data": [
+      {
+        "field_name": "arg_000",
+        "role": "Action Date",
+        "qualifier": "context",
+        "description": "Source text argument for role Action Date; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_001",
+        "role": "Action Description",
+        "qualifier": "context",
+        "description": "Source text argument for role Action Description; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_002",
+        "role": "Action Members",
+        "qualifier": "context",
+        "description": "Source text argument for role Action Members; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_003",
+        "role": "Action Time",
+        "qualifier": "context",
+        "description": "Source text argument for role Action Time; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_004",
+        "role": "Request Members",
+        "qualifier": "context",
+        "description": "Source text argument for role Request Members; qualifier context.",
+        "cardinality": "zero_or_more"
+      }
+    ],
+    "Request_Data": [
+      {
+        "field_name": "arg_000",
+        "role": "Data idString",
+        "qualifier": "context",
+        "description": "Source text argument for role Data idString; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_001",
+        "role": "Data Owner",
+        "qualifier": "context",
+        "description": "Source text argument for role Data Owner; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_002",
+        "role": "Data Type",
+        "qualifier": "context",
+        "description": "Source text argument for role Data Type; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_003",
+        "role": "Data Value",
+        "qualifier": "context",
+        "description": "Source text argument for role Data Value; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_004",
+        "role": "Request Date",
+        "qualifier": "context",
+        "description": "Source text argument for role Request Date; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_005",
+        "role": "Request Members",
+        "qualifier": "context",
+        "description": "Source text argument for role Request Members; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_006",
+        "role": "Request members",
+        "qualifier": "context",
+        "description": "Source text argument for role Request members; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_007",
+        "role": "Request Time",
+        "qualifier": "context",
+        "description": "Source text argument for role Request Time; qualifier context.",
+        "cardinality": "zero_or_more"
+      }
+    ],
+    "Request_Meeting": [
+      {
+        "field_name": "arg_000",
+        "role": "Meeting Agenda",
+        "qualifier": null,
+        "description": "Source text argument for role Meeting Agenda.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_001",
+        "role": "Meeting Date",
+        "qualifier": null,
+        "description": "Source text argument for role Meeting Date.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_002",
+        "role": "Meeting Location",
+        "qualifier": null,
+        "description": "Source text argument for role Meeting Location.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_003",
+        "role": "Meeting Members",
+        "qualifier": null,
+        "description": "Source text argument for role Meeting Members.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_004",
+        "role": "Meeting Name",
+        "qualifier": null,
+        "description": "Source text argument for role Meeting Name.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_005",
+        "role": "Meeting Time",
+        "qualifier": null,
+        "description": "Source text argument for role Meeting Time.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_006",
+        "role": "Request Members",
+        "qualifier": null,
+        "description": "Source text argument for role Request Members.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_007",
+        "role": "Request Time",
+        "qualifier": null,
+        "description": "Source text argument for role Request Time.",
+        "cardinality": "zero_or_more"
+      }
+    ],
+    "Request_Meeting_Data": [
+      {
+        "field_name": "arg_000",
+        "role": "Meeting Agenda",
+        "qualifier": "context",
+        "description": "Source text argument for role Meeting Agenda; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_001",
+        "role": "Meeting Date",
+        "qualifier": "context",
+        "description": "Source text argument for role Meeting Date; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_002",
+        "role": "Meeting Location",
+        "qualifier": "context",
+        "description": "Source text argument for role Meeting Location; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_003",
+        "role": "Meeting Members",
+        "qualifier": "context",
+        "description": "Source text argument for role Meeting Members; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_004",
+        "role": "Meeting Name",
+        "qualifier": "context",
+        "description": "Source text argument for role Meeting Name; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_005",
+        "role": "Meeting Time",
+        "qualifier": "context",
+        "description": "Source text argument for role Meeting Time; qualifier context.",
+        "cardinality": "zero_or_more"
+      },
+      {
+        "field_name": "arg_006",
+        "role": "Request Members",
+        "qualifier": "context",
+        "description": "Source text argument for role Request Members; qualifier context.",
+        "cardinality": "zero_or_more"
+      }
+    ]
+  },
+  "trigger": {
+    "field_name": "trigger",
+    "description": "A source text segment that identifies the event trigger.",
+    "cardinality": "required_one",
+    "anchor": "trigger",
+    "mode": "natural",
+    "occurrence_policy": "all"
+  },
+  "packing": {
+    "schema_groups": 7,
+    "prompt_budget_subwords": 320,
+    "encoder_max_positions": 512
+  }
+}

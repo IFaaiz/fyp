@@ -18,6 +18,8 @@ The recipe is the shared DistilBERT categorical BIO extractor with encoder learn
 
 The first seed 23 attempt was interrupted before checkpoint hashing, oracle output, and DEV calibration finished. Its partial local output is preserved and excluded from all three-seed calculations. The fresh completed run uses a separate output directory. The first seed 41 attempt ran out of CUDA memory during its first optimizer step while another GPU fit was active; that incomplete directory is preserved and has no model checkpoint. Seed 41 will be retried separately after the GPU is released, without changing the recipe.
 
+The seed41 retry output directory is `compact_categorical_lr2e5_seed41_resumed_20261004`. After it finishes, run `scripts/export_mailex_compact_seed_summary.py` from `ai/`; it validates that all seeds used the same TRAIN/DEV hashes and exports per-seed threshold results plus mean and sample standard deviation to `reports/mailex_extraction_results/compact_seed_robustness_2e5.json`. The exporter reads only aggregate run metadata, never JSONL rows.
+
 ## Privacy and scope
 
 This report contains aggregate metrics and hashes only. It contains no source email text, message IDs, or thread IDs. The benchmark is the named FYP-safe variant, not the untouched official MailEx split and not proof of original Enron identity separation. Model choice and any later TEST evaluation remain governed by the separate pre-TEST selection process.

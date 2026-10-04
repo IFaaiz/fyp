@@ -55,6 +55,7 @@ def main():
           'ai/scripts/predict_mailex_compact.py','ai/scripts/run_mailex_compact.py']
     preprocessing=['ai/src/datasets/mailex_native.py','ai/scripts/build_mailex_fyp_safe_views.py',
                    'ai/scripts/prepare_mailex_native.py','ai/config/mailex_extraction_environment.json',
+                   'ai/data/experiments/mailex_extraction_v1/fyp_safe_manifest.json',
                    checkpoint/'config.json',*token_files]
     finalists=[{'run_id':'compact_selected','architecture':'Shared DistilBERT categorical BIO triggers and event-conditioned argument BIO',
                 'config':config,'thresholds':{'bio':a.compact_threshold},'inference_device':'cuda',
@@ -63,6 +64,7 @@ def main():
                 'preprocessing':artifact_map(preprocessing),'evaluator':evaluator,'schema':artifact_map([schema])}]
     if a.gliner_checkpoint:
         if not a.gliner_schema or a.gliner_threshold is None: p.error('GLiNER finalist needs its frozen TRAIN schema and threshold')
+        if not 0<a.gliner_threshold<=1: p.error('GLiNER record threshold must be in (0,1]')
         directory=(ROOT/a.gliner_checkpoint).resolve()
         weights=[directory/name for name in ('model.safetensors','pytorch_model.bin','model.pt') if (directory/name).is_file()]
         if not weights: raise ValueError('GLiNER checkpoint has no supported model weight file')
@@ -80,7 +82,10 @@ def main():
                          'thresholds':{'record':a.gliner_threshold},'inference_device':'cuda',
                          'expected_output_path':'ai/data/experiments/mailex_extraction_v1/private_test/gliner_small_selected_predictions.jsonl',
                          'model_weights':artifact_map(weights),'code':artifact_map(gliner_code),
-                         'preprocessing':artifact_map(gliner_pre+['ai/config/mailex_extraction_environment.json']),
+                         'preprocessing':artifact_map(gliner_pre+['ai/config/mailex_extraction_environment.json',
+                             'ai/data/experiments/mailex_extraction_v1/fyp_safe_manifest.json',
+                             'ai/src/datasets/mailex_native.py','ai/scripts/build_mailex_fyp_safe_views.py',
+                             'ai/scripts/prepare_mailex_native.py']),
                          'evaluator':evaluator,'schema':artifact_map([a.gliner_schema])})
     gold=ROOT/'ai/data/experiments/mailex_extraction_v1/test_fyp_safe.jsonl'
     manifest={'schema_version':1,'status':'locked','split':'test','created_utc':datetime.now(timezone.utc).isoformat(),

@@ -76,6 +76,27 @@ needed multiple windows, at most three. Subject enrichment, runtime results,
 model selection and TEST results are recorded in the dedicated reports as
 measured. TEST inference requires a committed selection lock.
 
+## Finalist selection rule (declared before TEST)
+
+The compact final recipe retains encoder LR 2e-5 and body-only input. Complete
+seeds 17, 23 and 41 use the same TRAIN/DEV hashes and four-threshold grid.
+Choose the completed seed/threshold pair with the highest native DEV exact
+argument-role micro F1; ties prefer the lower threshold, then smaller seed.
+Report the three-seed mean and sample standard deviation separately. There
+is no seed ensemble.
+
+GLiNER's bounded fit selects its saved checkpoint by minimum trainer-DEV loss;
+its native full-gold DEV record threshold is selected by exact argument-role
+micro F1. This checkpoint criterion differs from the compact model and is a
+limitation of the bounded comparison. The complete native DEV evaluator
+includes records omitted from GLiNER's trainer-validation representation.
+
+Base is considered only if Small shows useful learning and competitive native
+role/record extraction. Prefer Small unless Base improves role or partial
+record F1 by at least two absolute points, with CPU median latency and peak
+working set no more than twice Small's on the same cohort. No Base result
+will be estimated if that experiment is not justified.
+
 ## Measured initial results (DEV only)
 
 The first independent-BCE trial was rejected after actual predictions showed

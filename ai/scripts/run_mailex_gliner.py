@@ -31,6 +31,7 @@ from mailex_extraction.gliner_backend import (  # noqa: E402
     CHECKPOINT_REVISION,
     DATA_DIR,
     DEV_SHA256,
+    GLINER2_SOURCE_COMMIT,
     PRIVATE_ROOT,
     TRAIN_SHA256,
     MailExOntology,
@@ -42,6 +43,7 @@ from mailex_extraction.gliner_backend import (  # noqa: E402
     load_extractor,
     prediction_row,
     private_package_versions,
+    private_package_versions,
     sha256_file,
     verify_sha256,
 )
@@ -51,6 +53,7 @@ MAX_ENCODER_POSITIONS = 512
 MAX_SCHEMA_SUBWORDS = 320
 MAX_WORDS_PER_CHUNK = 240
 CHUNK_OVERLAP_WORDS = 24
+FROZEN_SCHEMA_PATH = ROOT / "ai" / "config" / "mailex_gliner_train_ontology.json"
 
 
 def _internal_schema(model: Any, ontology: MailExOntology, event_types: Sequence[str]):
@@ -276,8 +279,11 @@ def run_zero_shot(threshold: float) -> Path:
     # Preserve the first run, which used upstream's synthetic-period collator.
     # This is the corrected source-byte-exact no-append pass.
     output_path = output_dir / "zero_shot_gliner2_5_small_native_text_dev.jsonl"
+    metadata_path = output_dir / "zero_shot_gliner2_5_small_native_text_dev.metadata.json"
+    if output_path.exists() or metadata_path.exists():
+        raise FileExistsError("corrected zero-shot artifacts already exist; use a new run name")
     counts = Counter()
-    with output_path.open("w", encoding="utf-8", newline="\n") as handle:
+    with output_path.open("x", encoding="utf-8", newline="\n") as handle:
         for source, prediction in zip(dev_rows, combined_outputs):
             row, row_counts = prediction_row(source, prediction, ontology)
             counts.update(row_counts)
@@ -289,6 +295,8 @@ def run_zero_shot(threshold: float) -> Path:
     report = {
         "model_id": "fastino/gliner2.5-small-v1",
         "model_revision": CHECKPOINT_REVISION,
+        "gliner2_source_commit": GLINER2_SOURCE_COMMIT,
+        "runtime_versions": private_package_versions(),
         "checkpoint_dir": str(CHECKPOINT_DIR),
         "train_sha256": train_hash,
         "dev_sha256": dev_hash,
@@ -308,9 +316,8 @@ def run_zero_shot(threshold: float) -> Path:
         "package_versions": private_package_versions(),
         "prediction_sha256": sha256_file(output_path),
     }
-    (output_dir / "zero_shot_gliner2_5_small_dev.metadata.json").write_text(
-        json.dumps(report, indent=2), encoding="utf-8"
-    )
+    with metadata_path.open("x", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(report, indent=2) + "\n")
     print(json.dumps({
         "prediction_path": str(output_path),
         "prediction_sha256": report["prediction_sha256"],
@@ -390,6 +397,76 @@ def run_preflight() -> dict[str, Any]:
     }
     print(json.dumps(result_info, indent=2))
     return result_info
+
+
+def write_frozen_train_ontology() -> Path:
+    """Export the source-free schema frozen from the approved TRAIN view."""
+    train_path = DATA_DIR / "train_fyp_safe.jsonl"
+    verify_sha256(train_path, TRAIN_SHA256)
+    ontology = derive_ontology(train_path, verify_fingerprint=False)
+    payload = {
+        "schema_version": 1,
+        "source_split": "train",
+        "train_sha256": TRAIN_SHA256,
+        "model_id": "fastino/gliner2.5-small-v1",
+        "model_revision": CHECKPOINT_REVISION,
+        "runtime_versions": private_package_versions(),
+        "event_types": list(ontology.event_types),
+        "fields_by_event": {
+            event_type: [
+                {
+                    "field_name": binding.field_name,
+                    "role": binding.role,
+                    "qualifier": binding.qualifier,
+                    "description": (
+                        f"Source text argument for role {binding.role}"
+                        + (f"; qualifier {binding.qualifier}" if binding.qualifier else "")
+                        + "."
+                    ),
+                    "cardinality": "zero_or_more",
+                }
+                for binding in ontology.fields_by_event[event_type]
+            ]
+            for event_type in ontology.event_types
+        },
+        "trigger": {
+            "field_name": "trigger",
+            "description": "A source text segment that identifies the event trigger.",
+            "cardinality": "required_one",
+            "anchor": "trigger",
+            "mode": "natural",
+            "occurrence_policy": "all",
+        },
+        "packing": {
+            "schema_groups": 7,
+            "prompt_budget_subwords": MAX_SCHEMA_SUBWORDS,
+            "encoder_max_positions": MAX_ENCODER_POSITIONS,
+        },
+    }
+    FROZEN_SCHEMA_PATH.parent.mkdir(parents=True, exist_ok=True)
+    encoded = json.dumps(payload, indent=2, ensure_ascii=False) + "\n"
+    if FROZEN_SCHEMA_PATH.exists():
+        existing = FROZEN_SCHEMA_PATH.read_text(encoding="utf-8")
+        existing_payload = json.loads(existing)
+        if existing_payload != payload:
+            changed = sorted(
+                key for key in set(existing_payload) | set(payload)
+                if existing_payload.get(key) != payload.get(key)
+            )
+            raise FileExistsError(
+                f"Refusing to replace an existing frozen ontology; differing sections: {changed}"
+            )
+    else:
+        with FROZEN_SCHEMA_PATH.open("x", encoding="utf-8", newline="\n") as handle:
+            handle.write(encoded)
+    print(json.dumps({
+        "schema_path": str(FROZEN_SCHEMA_PATH),
+        "schema_sha256": sha256_file(FROZEN_SCHEMA_PATH),
+        "event_types": len(ontology.event_types),
+        "role_qualifier_fields": sum(len(v) for v in ontology.fields_by_event.values()),
+        "train_sha256": TRAIN_SHA256,
+    }, indent=2))
+    return FROZEN_SCHEMA_PATH
 
 
 def run_train() -> None:
@@ -611,15 +688,17 @@ def _build_training_examples(
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("preflight", "zero-shot", "train"))
+    parser.add_argument("command", choices=("preflight", "zero-shot", "train", "freeze-schema"))
     parser.add_argument("--threshold", type=float, default=0.5)
     args = parser.parse_args()
     if args.command == "preflight":
         run_preflight()
     elif args.command == "zero-shot":
         run_zero_shot(args.threshold)
-    else:
+    elif args.command == "train":
         run_train()
+    else:
+        write_frozen_train_ontology()
 
 
 if __name__ == "__main__":

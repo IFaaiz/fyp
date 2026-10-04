@@ -23,6 +23,7 @@ Read these first:
 8. [GLiNER zero-shot evidence](mailex_extraction_zero_shot.md) and
    [fine-tuning status](mailex_extraction_training.md).
 9. [Measured runtime](mailex_extraction_runtime.md).
+10. [Review and reproduction commands](mailex_extraction_reproduction.md).
 
 Machine-readable aggregate compact configs, metrics, calibration results and
 weight hashes are in [mailex_extraction_results](mailex_extraction_results/).
@@ -106,7 +107,8 @@ to all FYP primitives yet.
   retains exact occurrences and original text. A repeated-text two-event fixture
   passed finite forward/backward checks. The first full trainer attempt failed
   before optimization; a corrected batch-2 run passed real optimizer steps.
-  Batch/runtime adjustment is being measured before the final bounded fit.
+  The stable batch-4 fit has completed two epochs and is finishing its third;
+  full native DEV quality is still pending.
 - GLiNER full TRAIN model view covers 98.31% of events and 97.80% of argument
   segments. Missing triggers and records that cannot fit intact in any bounded
   window are explicitly counted. Final DEV evaluation uses the entire native
@@ -143,8 +145,21 @@ boundary/index metadata. Subsequent progress and final results will be pushed
 as separate commits; this checkpoint should not be mistaken for completed
 GLiNER training or a frozen final experiment.
 
-The additional CPU GLiNER measurement is complete: 1.094 s for a 39-word
-message through all seven schema packs, with a 1.471 GB peak working set.
-Its current long-message sample is the 144-word DEV p90, so it is not directly
-comparable to the compact model's 721-word maximum. A shared-cohort runtime
-comparison and final-checkpoint measurements are pending.
+The matched-cohort CPU GLiNER measurement is complete: 1.130 s for the same
+39-word message and 8.583 s for the same 721-word maximum used by the compact
+benchmark. The long email needs 31 GLiNER schema-window runs. Its eight-email
+cohort takes 16.259 s; peak working set is 1.468 GB. These measurements use the
+pretrained checkpoint. Final fitted-checkpoint CPU/GPU measurements remain
+pending; host contention and operating-system caching limit timing comparisons.
+
+The supervisor additionally inspected 100 frozen seed-23 DEV error cases from
+80 messages. The separate audit preserves native gold labels and records
+fragmented actions, wrong-event arguments, duplicate records and plausible
+unannotated facts. Residual event-alignment samples include same-type and
+unrelated pairs, so they are not automatically confirmed classification errors.
+
+The GLiNER batch-4 run has completed two epochs and saved actual fitted
+weights. Extraction quality is still pending full native DEV scoring. Its
+first-epoch weight SHA-256 is
+`e7e45d29c1f1a7161371dd16763ec478fad113e2ba07cecd0e34c8deae5b03d4`;
+this first-epoch intermediate checkpoint is not a frozen TEST finalist.

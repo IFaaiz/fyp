@@ -53,6 +53,8 @@ Each reviewed sample case received one primary category, so these counts sum to 
 
 The sample also had overlapping error tags. Eleven cases had a trigger boundary problem, 14 had a missed argument, 14 had an argument boundary or fragmentation problem, two had role confusion, three had a clear pronoun-participant error, one involved a repeated shared mention, two showed context/revision confusion, one showed a current/context distinction, and three were duplicate event predictions. Six missed records were clear request, action, or deadline-like events. Two unmatched event examples showed social or fictional content being emitted as events. These overlapping observations are recorded as such and are not added to the primary-category counts.
 
+A separate seed 23 follow-up review is summarized below. Its residual event-alignment stratum is diagnostic rather than a set of confirmed type errors; manual review found same-type and unrelated event pairs in that stratum.
+
 ## Error sources and limits
 
 - **Model errors:** missed clear requests and actions, excess event triggers, duplicate records, and participants copied from nearby clauses. The low-threshold regime overproduced events; raising the threshold to `0.7` reduced predicted events from 1,391 to 1,034 in the same DEV split.
@@ -61,3 +63,27 @@ The sample also had overlapping error tags. Eleven cases had a trigger boundary 
 - **Long messages:** one reviewed message exceeded 512 native tokens. The encoder creates overlapping windows and checks that every source token is represented, so the observed long-span errors are under-extraction or over-extension rather than silent right truncation.
 
 The primary event score is type-sensitive and associates arguments within their event records. The separate trigger score uses its own one-to-one trigger matching. Exact span equality requires the same segment-boundary set; equal union geometry alone is partial overlap, not exact credit.
+
+## Follow-up audit: seed 23 candidate
+
+The supervisor also reviewed all 100 full-source cases for the seed 23 candidate at threshold `0.7`, covering 80 unique messages. This follow-up is separate from the historical seed 17 audit above. The 100 cases were sampled 25 per diagnostic stratum, so the category counts below describe the reviewed sample and are not DEV error-rate estimates. The native gold data was not changed.
+
+| Primary category | Cases |
+|---|---:|
+| Event missed | 25 |
+| Event type wrong | 25 |
+| Trigger boundary | 0 |
+| Argument missed | 5 |
+| Argument boundary | 9 |
+| Argument assigned to wrong event | 12 |
+| Argument role confusion | 1 |
+| Shared argument | 0 |
+| Context/revision confusion | 1 |
+| Long text/truncation | 0 |
+| Duplicate event | 6 |
+| Pronoun participant | 1 |
+| Date role confusion | 1 |
+| Current-vs-context confusion | 1 |
+| Other | 13 |
+
+The 25 event-type cases consist of 22 confirmed residual event-type confusions and three unmatched predictions that were manually judged to have a real type confusion. Residual matching itself is only a diagnostic alignment: its sampled pairs included one same-type event with missed arguments, categorized as `Argument missed`, and two unrelated events, categorized as `Other`. Some other predictions looked plausible from the message but were absent from the native annotation; those were also categorized as `Other`, and the gold labels were retained. The supervisor additionally read the surrounding native events for unmatched predictions and revisited three contexts omitted by output truncation. These manual labels apply only to the reviewed seed 23 sample.

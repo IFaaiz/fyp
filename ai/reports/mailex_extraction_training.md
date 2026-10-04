@@ -18,19 +18,29 @@ forward/backward probe on a 512-token positive window passed in 2.28 seconds
 for eight copies of the sample (3.51 examples/second), with a 4,510 MiB peak
 allocation. The negative-window probe also passed.
 
-The full batch-8 run then reached approximately 1,111 of 7,005 updates in its
-first epoch. Total shared GPU use reached 11,655 MiB of 12,227 MiB, above the
+The full batch-8 run then reached approximately 1,111 of 7,005 scheduled total
+updates (2,335 scheduled updates per epoch), during its first epoch. Total
+shared GPU use reached 11,655 MiB of 12,227 MiB, above the
 10 GiB team limit, so the run was stopped before the epoch finished. It wrote
 no model checkpoint and is not selected. Its configuration and an aggregate
 attempt-status record are preserved privately under
 `ai/data/cache/mailex_gliner/checkpoints/`.
 
-A fresh bounded three-epoch batch-4 fit is now running from the pinned
-pretrained checkpoint in a separate output directory. It uses the TRAIN-only
-ontology, all seven schema packs, 1e-5 encoder learning rate, 2e-5 task-head
-learning rate, seed 42, four CPU threads, and early stopping patience 2. No
-DEV model-selection claim is available until a checkpoint completes and the
-independent full-gold DEV evaluator scores it.
+A fresh bounded three-epoch batch-4 fit is running from the pinned pretrained
+checkpoint in a separate output directory. It uses the TRAIN-only ontology,
+all seven schema packs, 1e-5 encoder learning rate, 2e-5 task-head learning
+rate, seed 42, four CPU threads, and early stopping patience 2. The first
+epoch has completed and its checkpoint is saved; the best-checkpoint and
+epoch-one weight files currently have SHA-256
+`e7e45d29c1f1a7161371dd16763ec478fad113e2ba07cecd0e34c8deae5b03d4`. At the
+latest progress check the run was at 11,211 / 14,010 total updates (epoch 2.4),
+about 34m19s elapsed, with approximately 6.1 updates/second and 6.7 GiB VRAM
+use. GLiNER2 retains trainer-DEV epoch losses in its returned history; the
+training summary is written after the fit returns. If that history has no
+epoch-mean training loss, the report will leave that value unavailable rather
+than infer it from sampled batch losses.
+Checkpoint selection and benchmark quality remain pending the independent
+full-gold DEV evaluator.
 
 ## Prepared supervision and representability
 
@@ -58,6 +68,12 @@ metrics use the full gold set. Whitespace-only message bodies create no model
 examples; they contain no gold events or argument segments in these safe views.
 The largest prepared example has 21 event records, below the boundary model's
 32-record query capacity.
+
+When a source event fits more than one overlapping window, training assigns it
+to the first intact window only. Another overlapping window can also contain
+that event's trigger while carrying no positive target for it. The current
+adapter has no masked-label representation, so these windows create a known
+false-negative supervision risk.
 
 Every example includes the same inference schema pack, including event types
 with no gold record, so those types receive negative supervision. Schema

@@ -8,6 +8,7 @@
     "compact_categorical_seed17": {
       "parameter_count": 66601862,
       "weight_bytes": 266443579,
+      "sample_selection": "same canonical safe DEV min/median/max row indices and batch-eight cohort as GLiNER",
       "cpu": {
         "cold_model_load_seconds": 1.0879718,
         "short_words": 1,
@@ -45,37 +46,40 @@
       "weight_bytes": 295567700,
       "schema_pack_count": 7,
       "cpu": {
-        "cold_model_load_seconds": 11.770725,
-        "process_start_to_loaded_seconds": 41.825323,
-        "short_percentile": "p10",
-        "short_words": 6,
-        "short_median_seconds": 0.9269276,
-        "median_percentile": "p50",
+        "cold_model_load_seconds": 6.7933692,
+        "process_start_to_loaded_seconds": 69.1590027,
+        "short_words": 1,
+        "short_median_seconds": 0.9249908,
         "median_words": 39,
-        "median_median_seconds": 1.0940456,
-        "long_percentile": "p90",
-        "long_words": 144,
-        "long_median_seconds": 1.6069519,
+        "median_median_seconds": 1.1301228,
+        "long_words": 721,
+        "long_windows_across_schema_packs": 31,
+        "long_max_encoder_subwords": 511,
+        "long_median_seconds": 8.58315755,
         "batch_size": 8,
         "batch_order": "sequential",
-        "batch_word_count_min": 6,
-        "batch_word_count_max": 144,
-        "batch_median_seconds": 9.5048551,
-        "batch_emails_per_second": 0.8416751,
-        "peak_process_ram_bytes": 1471385600,
+        "batch_sample_selection": "same eight canonical safe DEV row indices as the compact benchmark",
+        "batch_word_count_min": 1,
+        "batch_word_count_max": 721,
+        "batch_windows_across_schema_packs": 80,
+        "batch_median_seconds": 16.2594756,
+        "batch_emails_per_second": 0.4920208,
+        "peak_process_ram_bytes": 1467899904,
         "repetitions_per_single_message": 2,
         "silently_truncated_messages": 0
       },
       "cuda_rtx_5070": {
         "status": "not_measured",
-        "reason": "Awaiting availability of shared GPU for an isolated timing run."
+        "reason": "The isolated GPU timing slot is reserved for the final selected checkpoint; no zero-shot GPU latency was inferred."
       }
     }
   },
   "timing_notes": {
     "gliner_message_timing_includes": "window selection, all seven schema passes, extraction, and overlap-record merge",
-    "gliner_warmup": "one excluded full p50 inference pass",
-    "filesystem_cache_flushed": false,
-    "runtime_report": "mailex_extraction_runtime.md"
+    "gliner_warmup": "one excluded full median inference pass",
+    "same_message_indices": true,
+    "longest_safe_dev_message_included": true,
+    "gliner_inference_windows_include_all_seven_packs": true,
+    "filesystem_cache_flushed": false
   }
 }

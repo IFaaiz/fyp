@@ -25,6 +25,7 @@ AI_ROOT = REPO_ROOT / "ai"
 PRIVATE_ROOT = AI_ROOT / "data" / "cache" / "mailex_gliner"
 VENDOR_ROOT = PRIVATE_ROOT / "vendor"
 CHECKPOINT_REVISION = "7132dc4561c3f94563c6147e75ffa8ef34c4964a"
+GLINER2_SOURCE_COMMIT = "3c913c7369301133d3b7699252074c4303ada50e"
 CHECKPOINT_DIR = (
     PRIVATE_ROOT
     / "checkpoints"
@@ -448,6 +449,9 @@ def build_training_record(
 
 
 def private_package_versions() -> dict[str, str]:
+    vendor = str(VENDOR_ROOT)
+    if vendor not in sys.path:
+        sys.path.insert(0, vendor)
     from importlib.metadata import PackageNotFoundError, version
     names = ("gliner2", "torch", "transformers", "pydantic", "peft", "accelerate", "protobuf")
     out = {}

@@ -20,9 +20,9 @@ not evidence of useful extraction quality.
 That pass used the upstream GLiNER2.0 collator, which appends a period to text
 that lacks terminal punctuation. Its original output and metadata remain
 preserved for audit. A strict adapter now keeps the source body byte-exact and
-skips whitespace-only bodies. The corrected DEV pass is being rerun to a new
-output filename; the first result is not being overwritten or treated as the
-final source-exact result.
+skips whitespace-only bodies. The corrected zero-shot pass has not been run:
+the shared GPU is allocated to the bounded fine-tune, and the initial metrics
+are retained as provisional. They are not treated as a source-exact result.
 
 ## Run identity
 
