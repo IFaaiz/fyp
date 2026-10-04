@@ -484,6 +484,27 @@ class StructuredModelGateTests(unittest.TestCase):
         self.assertEqual(len(prepared.speech_texts), 1)
         self.assertEqual(len(SPEECH_ACTS), 11)
 
+    def test_unbounded_quoted_history_cannot_supervise_current_speech_acts(self):
+        for history in ("\n> Previously: cancel the meeting.",
+                        "\n-----Original Message-----\nPlease approve the old request.",
+                        "\n---------------- Forwarded by Someone ----------------\nOld request.",
+                        "\nOn Tuesday Someone wrote:\nOld request."):
+            with self.subTest(history=history):
+                prepared = prepare_training_examples([_row(text="Please send the plan." + history)])
+                self.assertEqual(prepared.scope_targets, ("PROJECT",))
+                self.assertEqual(prepared.speech_texts, ())
+                self.assertEqual(prepared.speech_targets, ())
+                self.assertEqual(prepared.speech_history_quarantined_rows, 1)
+                report = count_and_check_classes(prepared, PREDECLARED_MINIMUM_PER_CLASS)
+                self.assertEqual(report.counts["speech_acts"]["REQUEST"]["positive"], 0)
+
+    def test_explicit_authored_range_recovers_current_act_without_history(self):
+        text = "Please send the plan.\n-----Original Message-----\nPlease approve the old request."
+        prepared = prepare_training_examples([_row(text=text, authored_ranges=[{"start": 0, "end": 21}])])
+        self.assertEqual(prepared.speech_targets, (("REQUEST",),))
+        self.assertEqual(prepared.speech_history_quarantined_rows, 0)
+        self.assertNotIn("Original Message", prepared.speech_texts[0])
+
     def test_duplicate_model_inputs_cannot_inflate_support_or_hide_conflicting_targets(self):
         rows = [_row(f"copy-{index}") for index in range(25)]
         prepared = prepare_training_examples(rows)

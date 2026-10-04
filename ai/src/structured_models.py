@@ -64,6 +64,7 @@ class PreparedExamples:
     scope_targets: tuple[str, ...]
     speech_texts: tuple[str, ...]
     speech_targets: tuple[tuple[str, ...], ...]
+    speech_history_quarantined_rows: int = 0
 
 
 @dataclass(frozen=True)
@@ -228,6 +229,21 @@ def _source_message_text(row: Mapping[str, Any]) -> str:
             previous_end = end
         authored = " ".join(parts)
     return f"{subject}\n{authored}".strip()
+
+
+def _unbounded_speech_history(row: Mapping[str, Any]) -> bool:
+    """Known retained-history markers require explicit authored boundaries.
+
+    This conservative screen is not a complete quoted-text parser. Scope may
+    use contextual text; current-act targets must not supervise old requests.
+    """
+    current = row["sources"][row["current_source_id"]]
+    if current.get("authored_ranges") is not None:
+        return False  # offsets were validated by _source_message_text
+    message = current["current_message"]
+    return bool(re.search(
+        r"(?im)^\s*(?:>\s*\S|[-_]{2,}\s*(?:original message|forwarded by|forwarded message)|"
+        r"begin forwarded message:|on .+wrote:\s*$|from:\s*\S)", message))
 
 
 def _has_uncertain_primitive_state(annotation: Mapping[str, Any]) -> bool:
@@ -424,6 +440,7 @@ def prepare_training_examples(rows: Sequence[Mapping[str, Any]]) -> PreparedExam
     scope_targets: list[str] = []
     speech_texts: list[str] = []
     speech_targets: list[tuple[str, ...]] = []
+    speech_history_quarantined_rows = 0
     seen_inputs: dict[str, tuple[str, tuple[str, ...]]] = {}
     for index, row in enumerate(rows):
         if not isinstance(row, Mapping):
@@ -454,9 +471,13 @@ def prepare_training_examples(rows: Sequence[Mapping[str, Any]]) -> PreparedExam
         scope_texts.append(text)
         scope_targets.append(scope)
         if scope == "PROJECT":
-            speech_texts.append(text)
-            speech_targets.append(target[1])
-    return PreparedExamples(tuple(scope_texts), tuple(scope_targets), tuple(speech_texts), tuple(speech_targets))
+            if _unbounded_speech_history(row):
+                speech_history_quarantined_rows += 1
+            else:
+                speech_texts.append(text)
+                speech_targets.append(target[1])
+    return PreparedExamples(tuple(scope_texts), tuple(scope_targets), tuple(speech_texts), tuple(speech_targets),
+                            speech_history_quarantined_rows)
 
 
 def count_and_check_classes(prepared: PreparedExamples, minimum_per_class: int) -> Preflight:
@@ -495,6 +516,7 @@ def count_and_check_classes(prepared: PreparedExamples, minimum_per_class: int) 
         counts={
             "scope": scope_counts,
             "speech_act_project_rows": len(prepared.speech_texts),
+            "speech_history_quarantined_rows": prepared.speech_history_quarantined_rows,
             "speech_acts": act_counts,
         },
         shortages=tuple(shortages),
@@ -574,6 +596,7 @@ def fit_and_save_baselines(
     }
     metadata = {
         "model_version": "structured-baselines-2-alpha",
+        "training_code_sha256": sha256_file(Path(__file__)),
         "features": "word-level TF-IDF unigram",
         "classifier": "LogisticRegression; OneVsRest for speech acts",
         "training_source_partition": "TRAIN_SCREEN only",
@@ -583,6 +606,7 @@ def fit_and_save_baselines(
         "authorized_export_rows": len(authorized_export.rows),
         "duplicate_input_policy": "count whitespace-normalized subject/authored-message input once; conflicting targets fail closed",
         "speech_act_rows": len(preflight.prepared.speech_texts),
+        "speech_history_policy": "exclude known retained-history markers without explicit authored_ranges; heuristic is not exhaustive",
         "trained_speech_acts": list(preflight.supported_speech_acts),
         "untrained_speech_acts": dict(preflight.unsupported_speech_acts),
         "class_counts": dict(preflight.counts),
