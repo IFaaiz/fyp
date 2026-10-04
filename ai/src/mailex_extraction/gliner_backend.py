@@ -214,18 +214,16 @@ def prediction_row(
             diagnostics["records"] += 1
             trigger: dict[str, list[dict[str, Any]]] = {"segments": []}
             raw_trigger = record.get("trigger")
+            has_grounded_trigger = False
             for raw_span in _flatten_field_value(raw_trigger):
                 span, grounded = _span_from_model(raw_span, text)
                 trigger["segments"].append(span)
                 if grounded:
+                    has_grounded_trigger = True
                     diagnostics["grounded_trigger_segments"] += 1
                 else:
                     diagnostics["ungrounded_segments"] += 1
-            if not any(
-                isinstance(segment.get("start"), int)
-                and isinstance(segment.get("end"), int)
-                for segment in trigger["segments"]
-            ):
+            if not has_grounded_trigger:
                 diagnostics["events_without_grounded_trigger"] += 1
             arguments: list[dict[str, Any]] = []
             for binding in ontology.fields_by_event[event_type]:

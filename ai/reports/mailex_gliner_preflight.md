@@ -16,6 +16,11 @@
   existing `torch==2.11.0+cu128` and `transformers==4.57.6` environment.
   The shared environment was not upgraded. Inference can load from the private
   local checkpoint without hosted APIs.
+- The installed distribution metadata identifies `gliner2==2.0.0`; upstream
+  release `v2.0.0` points to source commit
+  [`3c913c7369301133d3b7699252074c4303ada50e`](https://github.com/fastino-ai/GLiNER2/commit/3c913c7369301133d3b7699252074c4303ada50e).
+  The private vendored Python source files are individually hash-frozen in the
+  eventual selection manifest.
 - Current native record mode uses one natural structure per event type, with a
   required trigger anchor, all trigger occurrences, and role/qualifier fields
   derived from the safe TRAIN view. Event schemas are packed into seven prompts
@@ -43,6 +48,16 @@ the bounded fit. An eight-item 512-token forward/backward probe passed, with a
 10 GiB ceiling and was stopped before producing a checkpoint. The active
 batch-4 fit and its eventual runtime are documented separately in
 [`mailex_extraction_training.md`](mailex_extraction_training.md).
+
+Transformers 4.57.6 prints a generic Mistral-regex warning while loading the
+checkpoint tokenizer. A compatibility comparison against the pinned
+pretrained tokenizer found identical pre-tokenizer, normalizer, added-token,
+decoder, and post-processor settings; token strings matched across the 128k
+vocabulary, with serialized unigram scores differing by at most `3.55e-15`.
+All 361 safe DEV message bodies produced identical token IDs and offsets in
+both versions. The tokenizer was kept unchanged. The model also falls back
+from configured SDPA to eager attention because this DeBERTa-v2 implementation
+does not support the SDPA path; training and extraction use the same fallback.
 
 The prediction adapter accepts only model-emitted source offsets whose
 surface exactly matches the body slice. It does not search for a replacement

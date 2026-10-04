@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "split": "fyp_safe_dev",
+  "safe_dev_sha256": "fdab07806e641b916975db4324395cde8a30b6942cf775ef38b575f39c9b677d",
+  "messages": 361,
+  "gold_events": 828,
+  "model": "GLiNER2.5 Small fine-tuned, best epoch 3",
+  "thresholds": {
+    "0.20": {
+      "predicted_events": 1486,
+      "predicted_argument_spans": 1329,
+      "event_type_micro_f1": 0.449438202247191,
+      "event_record_exact_f1": 0.03889369057908384,
+      "event_record_partial_f1": 0.1836572295420874,
+      "argument_role_exact_micro_f1": 0.22351797862001946,
+      "argument_role_partial_micro_f1": 0.2377712989957888,
+      "argument_span_exact_f1": 0.22740524781341107,
+      "argument_span_overlap_f1": 0.2429543245869777,
+      "trigger_exact_f1": 0.37683664649956783,
+      "trigger_partial_f1": 0.42350907519446845,
+      "empty_prediction_rate": 0.20221606648199447,
+      "non_source_prediction_segments": 0,
+      "prediction_sha256": "fdff0962e74d609e4f114d2303f17af76f0646afd51561e28c4f3db60bc900d9"
+    },
+    "0.50": {
+      "predicted_events": 504,
+      "predicted_argument_spans": 296,
+      "event_type_micro_f1": 0.478978978978979,
+      "event_record_exact_f1": 0.01951951951951952,
+      "event_record_partial_f1": 0.12992428811008883,
+      "argument_role_exact_micro_f1": 0.14995131450827653,
+      "argument_role_partial_micro_f1": 0.1518987341772152,
+      "argument_span_exact_f1": 0.15092502434274588,
+      "argument_span_overlap_f1": 0.15384615384615383,
+      "trigger_exact_f1": 0.4324324324324324,
+      "trigger_partial_f1": 0.46546546546546547,
+      "empty_prediction_rate": 0.39335180055401664,
+      "non_source_prediction_segments": 0,
+      "prediction_sha256": "e45e491c1362a0ec97d2dd9235d68c52dfcd0595dd323d99479e7ae1ec5607d3"
+    }
+  },
+  "independent_scoring": {
+    "evaluator": "native MailEx message-level evaluator",
+    "prediction_hashes_stable_during_export": true,
+    "test_rows_read": false,
+    "export_contains_source_text_or_message_ids": false,
+    "absolute_checkpoint_path_included": false
+  }
+}

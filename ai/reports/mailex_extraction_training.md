@@ -2,7 +2,7 @@
 
 ## Current status
 
-Fine-tuning is not yet complete. The first trainer launch stopped before any
+The bounded fine-tune is complete. The first trainer launch stopped before any
 optimizer update because GLiNER2.0's default collator appended synthetic
 punctuation, which invalidated the explicit source-offset word map. The
 private processor now preserves input bytes, rejects implicit truncation and
@@ -26,21 +26,42 @@ no model checkpoint and is not selected. Its configuration and an aggregate
 attempt-status record are preserved privately under
 `ai/data/cache/mailex_gliner/checkpoints/`.
 
-A fresh bounded three-epoch batch-4 fit is running from the pinned pretrained
-checkpoint in a separate output directory. It uses the TRAIN-only ontology,
-all seven schema packs, 1e-5 encoder learning rate, 2e-5 task-head learning
-rate, seed 42, four CPU threads, and early stopping patience 2. The first
-epoch has completed and its checkpoint is saved; the best-checkpoint and
-epoch-one weight files currently have SHA-256
-`e7e45d29c1f1a7161371dd16763ec478fad113e2ba07cecd0e34c8deae5b03d4`. At the
-latest progress check the run was at 11,211 / 14,010 total updates (epoch 2.4),
-about 34m19s elapsed, with approximately 6.1 updates/second and 6.7 GiB VRAM
-use. GLiNER2 retains trainer-DEV epoch losses in its returned history; the
-training summary is written after the fit returns. If that history has no
-epoch-mean training loss, the report will leave that value unavailable rather
-than infer it from sampled batch losses.
-Checkpoint selection and benchmark quality remain pending the independent
-full-gold DEV evaluator.
+A bounded three-epoch batch-4 fine-tune completed 14,010 optimizer updates in
+43m03s from the pinned pretrained checkpoint. It used the TRAIN-only ontology,
+all seven schema packs, encoder learning rate `1e-5`, task-head learning rate
+`2e-5`, seed 42, gradient accumulation 1, four CPU threads, and BF16. Peak
+observed shared GPU use was about 6.8 GiB. The trainer saved the best
+checkpoint at step 14,010 / epoch 3, with logged best trainer-DEV loss
+`56.1443` (rounded to four decimals). The best and epoch-3 weights are
+295,567,700 bytes; SHA-256
+`907904ef8c171c9ca9aa61f33856ce2819882bccd5d077c44ce4343b4fe437a4`.
+
+The runner then raised while serializing its report because this installed
+`TrainingConfig` has no `to_dict()` method. Checkpoint files are complete, but
+the returned train/eval histories were not saved before the process ended.
+The serializer now uses `dataclasses.asdict` with supported fallbacks. The
+mean TRAIN loss is unavailable and is not estimated from individual batch
+losses. The observed best DEV loss and completed optimizer steps above come
+from the trainer's terminal output.
+
+The independent evaluator scored the full safe DEV gold at two global record
+thresholds. Threshold `0.2` is the better GLiNER operating point on exact
+argument-role F1; its role and event-record scores remain below the selected
+compact baseline.
+
+| GLiNER checkpoint | Record threshold | Predicted records | Grounded trigger spans | Grounded argument spans | Exact role F1 | Record partial F1 |
+|---|---:|---:|---:|---:|---:|---:|
+| Best epoch 3 | 0.5 | 504 | 504 | 296 | 0.14995 | 0.12992 |
+| Best epoch 3 | 0.2 | 1,486 | 1,486 | 1,329 | 0.22352 | 0.18366 |
+
+The compact selected DEV result was exact role F1 `0.34512` and record partial
+F1 `0.50090`. The GLiNER threshold `0.2` checkpoint is retained for the
+architecture comparison; no GLiNER Base run was started.
+
+Private prediction artifacts (full safe DEV):
+
+- Threshold `0.5`: `predictions/gliner_small_seed42_batch4_best_dev_record_threshold_050.jsonl`, SHA-256 `e45e491c1362a0ec97d2dd9235d68c52dfcd0595dd323d99479e7ae1ec5607d3`.
+- Threshold `0.2`: `predictions/gliner_small_seed42_batch4_best_dev_record_threshold_020.jsonl`, SHA-256 `fdff0962e74d609e4f114d2303f17af76f0646afd51561e28c4f3db60bc900d9`.
 
 ## Prepared supervision and representability
 
@@ -88,7 +109,9 @@ at 320 subwords; input windows are verified at no more than 512 encoded tokens.
 - Initial checkpoint: `fastino/gliner2.5-small-v1`, revision `7132dc4561c3f94563c6147e75ffa8ef34c4964a`
 - Weight SHA-256: `4ee982787ace270d4bf15dbcb28ced38e0aa201372347114ceedd6336055de2b`
 - Parameters: 73,881,879; architecture: boundary DeBERTa-v2
-- Runtime: `gliner2==2.0.0`, shared `torch==2.11.0+cu128`, `transformers==4.57.6`; CPU threads capped at 4
+- Runtime: `gliner2==2.0.0` (upstream release source commit
+  [`3c913c7369301133d3b7699252074c4303ada50e`](https://github.com/fastino-ai/GLiNER2/commit/3c913c7369301133d3b7699252074c4303ada50e)),
+  shared `torch==2.11.0+cu128`, `transformers==4.57.6`; CPU threads capped at 4
 - Trainer: GLiNER2 `ExtractorTrainer` / `TrainingConfig`, with a private
   `SchemaTransformer` offset-target override because the public surface-search
   converter labels every repeated occurrence instead of the annotated one.
@@ -98,5 +121,6 @@ The official training and natural-record interfaces are documented in
 [tutorial 8](https://github.com/fastino-ai/GLiNER2/blob/main/tutorial/8-train_data.md),
 and [tutorial 9](https://github.com/fastino-ai/GLiNER2/blob/main/tutorial/9-training.md).
 
-No TEST rows or TEST predictions have been read or generated. A result is not
-selected until the full native DEV evaluator scores a saved checkpoint.
+No TEST rows or TEST predictions have been read or generated at this stage.
+The full native DEV evaluator selects threshold `0.2` for the best epoch-three
+checkpoint. The committed finalist lock and one-time TEST comparison follow.

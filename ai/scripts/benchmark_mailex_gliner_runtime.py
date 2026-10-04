@@ -32,6 +32,7 @@ from mailex_extraction.gliner_backend import (  # noqa: E402
     derive_ontology,
     iter_jsonl,
     load_extractor,
+    prediction_row,
     sha256_file,
     verify_sha256,
 )
@@ -67,32 +68,61 @@ def memory_info() -> dict[str, int | None]:
     }
 
 
-def infer_all_packs(model, packs, text: str, threshold: float) -> tuple[int, int]:
+def infer_native_row(
+    model, packs, row, ontology, threshold: float
+) -> tuple[int, int, dict[str, int]]:
+    """Run the production schema passes and construct/ground a native row.
+
+    Prediction rows are intentionally discarded after conversion. This makes
+    the timing include field-to-role mapping and strict source-offset checks,
+    while this benchmark still writes aggregate metadata only.
+    """
+    text = str(row.get("text", ""))
     windows = 0
     max_subwords = 0
+    combined_output = {}
     for event_types, schema, _schema_subwords in packs:
-        _output, chunk_count, encoded_max, _chunks = _infer_one_group(
+        output, chunk_count, encoded_max, _chunks = _infer_one_group(
             model, text, schema, event_types, threshold
         )
+        combined_output.update(output)
         windows += chunk_count
         max_subwords = max(max_subwords, encoded_max)
-    return windows, max_subwords
+    _native_row, conversion_diagnostics = prediction_row(row, combined_output, ontology)
+    return windows, max_subwords, conversion_diagnostics
 
 
-def timed_infer(model, packs, text: str, threshold: float, device: str) -> tuple[float, int, int]:
+def timed_infer(
+    model, packs, row, ontology, threshold: float, device: str
+) -> tuple[float, int, int, dict[str, int]]:
     if device == "cuda":
         torch.cuda.synchronize()
     started = time.perf_counter()
-    windows, max_subwords = infer_all_packs(model, packs, text, threshold)
+    windows, max_subwords, diagnostics = infer_native_row(
+        model, packs, row, ontology, threshold
+    )
     if device == "cuda":
         torch.cuda.synchronize()
-    return time.perf_counter() - started, windows, max_subwords
+    return time.perf_counter() - started, windows, max_subwords, diagnostics
+
+
+def add_diagnostics(target: dict[str, int], values: dict[str, int]) -> None:
+    for key, value in values.items():
+        target[key] = target.get(key, 0) + value
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--device", choices=("cpu", "cuda"), required=True)
     parser.add_argument("--output", required=True, help="Aggregate JSON output path")
+    parser.add_argument(
+        "--checkpoint", type=Path, default=CHECKPOINT_DIR,
+        help="Local model checkpoint directory (defaults to the pinned base model)",
+    )
+    parser.add_argument(
+        "--model-label", default=None,
+        help="Source-free label for the selected checkpoint in the aggregate output",
+    )
     parser.add_argument("--threshold", type=float, default=0.5)
     parser.add_argument("--repetitions", type=int, default=2)
     parser.add_argument("--batch-size", type=int, default=8)
@@ -120,8 +150,9 @@ def main() -> None:
     batch_selected = [ordered[int((len(ordered) - 1) * index / 7)] for index in range(args.batch_size)]
 
     load_started = time.perf_counter()
-    model = load_extractor(device=args.device)
+    model = load_extractor(device=args.device, checkpoint=args.checkpoint)
     load_seconds = time.perf_counter() - load_started
+    model_loaded_seconds = time.perf_counter() - PROCESS_STARTED
     if args.device == "cuda":
         torch.cuda.synchronize()
         torch.cuda.reset_peak_memory_stats()
@@ -131,21 +162,24 @@ def main() -> None:
     schema_prepare_seconds = time.perf_counter() - schema_started
     if len(packs) != 7:
         raise RuntimeError(f"Expected 7 production schema packs, found {len(packs)}")
+    schemas_ready_seconds = time.perf_counter() - PROCESS_STARTED
 
     # One complete p50 pass warms model kernels/caches and is excluded.
-    timed_infer(model, packs, rows[selected[1][1]]["text"], args.threshold, args.device)
+    timed_infer(model, packs, rows[selected[1][1]], ontology, args.threshold, args.device)
     single = []
     for group_name, row_index, source_words in selected:
         repetitions = []
         total_windows = 0
         max_subwords = 0
+        conversion_diagnostics = {}
         for _ in range(args.repetitions):
-            seconds, windows, encoded_max = timed_infer(
-                model, packs, rows[row_index]["text"], args.threshold, args.device
+            seconds, windows, encoded_max, row_diagnostics = timed_infer(
+                model, packs, rows[row_index], ontology, args.threshold, args.device
             )
             repetitions.append(seconds)
             total_windows = windows
             max_subwords = max(max_subwords, encoded_max)
+            conversion_diagnostics = row_diagnostics
         single.append({
             "length_group": group_name,
             "source_word_count": source_words,
@@ -154,27 +188,37 @@ def main() -> None:
             "schema_packs": len(packs),
             "windows_across_schema_packs": total_windows,
             "max_encoder_subwords": max_subwords,
+            "native_conversion_diagnostics": conversion_diagnostics,
         })
 
     batch_seconds_samples = []
     batch_windows = []
+    batch_conversion_diagnostics = {}
     for _ in range(args.repetitions):
         if args.device == "cuda":
             torch.cuda.synchronize()
         started = time.perf_counter()
         windows = 0
+        conversion_diagnostics = {}
         for row_index, _word_count in batch_selected:
-            row_windows, _ = infer_all_packs(model, packs, rows[row_index]["text"], args.threshold)
+            row_windows, _max_subwords, row_diagnostics = infer_native_row(
+                model, packs, rows[row_index], ontology, args.threshold
+            )
             windows += row_windows
+            add_diagnostics(conversion_diagnostics, row_diagnostics)
         if args.device == "cuda":
             torch.cuda.synchronize()
         batch_seconds_samples.append(time.perf_counter() - started)
         batch_windows.append(windows)
+        batch_conversion_diagnostics = conversion_diagnostics
     batch_median = statistics.median(batch_seconds_samples)
-    weights_path = CHECKPOINT_DIR / "model.safetensors"
+    weights_path = args.checkpoint / "model.safetensors"
+    if not weights_path.is_file():
+        raise FileNotFoundError(f"checkpoint has no model.safetensors: {args.checkpoint}")
     result = {
-        "schema_version": 1,
+        "schema_version": 2,
         "model": "fastino/gliner2.5-small-v1",
+        "model_label": args.model_label or args.checkpoint.name,
         "revision": "7132dc4561c3f94563c6147e75ffa8ef34c4964a",
         "device": args.device,
         "platform": platform.platform(),
@@ -188,10 +232,13 @@ def main() -> None:
         "weight_bytes": weights_path.stat().st_size,
         "parameter_count": sum(parameter.numel() for parameter in model.parameters()),
         "cold_model_load_seconds": load_seconds,
-        "process_import_to_loaded_seconds": time.perf_counter() - PROCESS_STARTED,
+        "process_start_to_model_loaded_seconds": model_loaded_seconds,
+        "process_start_to_schemas_ready_seconds": schemas_ready_seconds,
         "schema_prepare_seconds": schema_prepare_seconds,
         "schema_pack_count": len(packs),
-        "timing_includes": "per-message schema-specific window building, all 7 schema passes, model extraction, and overlap record merge",
+        "native_prediction_row_conversion_included": True,
+        "prediction_rows_retained": False,
+        "timing_includes": "per-message schema-specific window building, all 7 schema passes, model extraction, overlap record merge, native event/argument mapping, and strict source-offset grounding checks",
         "warmup_policy": "one excluded full median inference pass; filesystem cache not flushed",
         "threshold": args.threshold,
         "single_email": single,
@@ -200,6 +247,7 @@ def main() -> None:
         "batch_median_seconds": batch_median,
         "batch_emails_per_second": args.batch_size / batch_median,
         "batch_window_counts": batch_windows,
+        "batch_native_conversion_diagnostics": batch_conversion_diagnostics,
         "batch_word_count_min": min(word_count for _, word_count in batch_selected),
         "batch_word_count_max": max(word_count for _, word_count in batch_selected),
         "sample_selection": "same min/median/max and evenly spaced batch-eight indices as the compact benchmark over canonical safe DEV rows",

@@ -44,6 +44,7 @@ individual event records; no flattening into entity bags or FYP labels occurs.
 | Paired body-only ablation | 0.3366 | 0.4901 | 0.1840 | Epoch 8; threshold 0.7 |
 | Paired subject+body ablation | 0.3444 | 0.4898 | 0.1851 | Epoch 8; threshold 0.7 |
 | GLiNER2.5 Small zero-shot, first completed pass | 0.0000 | 0.0000 | 0.0000 | Threshold 0.5; 28 predicted events, no arguments |
+| GLiNER2.5 Small fine-tuned, best epoch 3 | 0.223518 | 0.183657 | 0.038894 | Threshold 0.2; independently scored full native DEV |
 
 The paired ablations use 352 DEV messages, not the main benchmark's 361;
 compare them only to each other. Subject added 0.78 absolute role-F1 points
@@ -96,24 +97,27 @@ roles. The task ontology is not a complete FYP project-management schema.
 Current accuracy does not justify unattended Outlook actions or adaptation
 to all FYP primitives yet.
 
-## Still running / not completed
+## Completion status before TEST
 
 - Compact robustness seed 41, using the retained LR 2e-5 recipe.
   Seeds 17 and 23 are complete. Seed 41 ran out of GPU memory during its first
   optimizer step while GLiNER was active; its incomplete output is preserved.
   Fits now run one at a time. No three-seed conclusion is claimed yet.
-- Correct GLiNER Small fine-tuning. Its public trainer matches repeated text
+- GLiNER Small fine-tuning is complete. Its public trainer matches repeated text
   by surface string and appends punctuation. A narrow native processor override
   retains exact occurrences and original text. A repeated-text two-event fixture
   passed finite forward/backward checks. The first full trainer attempt failed
   before optimization; a corrected batch-2 run passed real optimizer steps.
-  The stable batch-4 fit has completed two epochs and is finishing its third;
-  full native DEV quality is still pending.
+  The stable batch-4 fit completed three epochs and 14,010 optimizer updates.
+  Both declared native DEV thresholds are independently scored. The selected
+  0.2 threshold trails the compact baseline substantially. The runner failed
+  only while serializing the returned training history; actual weights were
+  saved, and unavailable epoch losses are not estimated.
 - GLiNER full TRAIN model view covers 98.31% of events and 97.80% of argument
   segments. Missing triggers and records that cannot fit intact in any bounded
   window are explicitly counted. Final DEV evaluation uses the entire native
   gold split, including unsupported examples and unseen role/qualifier pairs.
-- GLiNER GPU runtime, calibrated fine-tuned DEV quality, and final error
+- Final fitted-checkpoint CPU/GPU runtime and final error
   audit if the selected checkpoint changes.
 - Final architecture choice, source-free selection manifest, committed TEST
   lock, and one-time TEST inference for each finalist.
@@ -121,10 +125,10 @@ to all FYP primitives yet.
 **There is no committed selection lock and no model inference on native TEST
 at this progress checkpoint. No final winner or production-readiness claim.**
 
-GLiNER Base is not trained. It will be considered only if Small becomes a
-working, promising extractor; the pre-TEST preference is Small unless Base
-gains at least two absolute points in role or record F1 at acceptable CPU/RAM
-cost. Large annotation expansion, V1 TEST reuse, V2 speech heads, thread-state
+GLiNER Base is not trained: Small's measured native DEV quality is clearly
+below the compact baseline, so a larger GLiNER fit is not justified. The
+pre-TEST quality/runtime preference is recorded in the benchmark report.
+Large annotation expansion, V1 TEST reuse, V2 speech heads, thread-state
 models, dashboard integration, DAPT, OCR and new datasets are outside this sprint.
 
 ## How to review this commit
@@ -142,8 +146,8 @@ Git. The GitHub reviewer can inspect algorithms and aggregate evidence; exact
 private examples and checkpoints are available only in the authorized local
 workspace. Reproducing the protected FYP-safe view requires its private
 boundary/index metadata. Subsequent progress and final results will be pushed
-as separate commits; this checkpoint should not be mistaken for completed
-GLiNER training or a frozen final experiment.
+as separate commits; this checkpoint should not be mistaken for a frozen
+final experiment or a TEST result.
 
 The matched-cohort CPU GLiNER measurement is complete: 1.130 s for the same
 39-word message and 8.583 s for the same 721-word maximum used by the compact
@@ -158,8 +162,10 @@ fragmented actions, wrong-event arguments, duplicate records and plausible
 unannotated facts. Residual event-alignment samples include same-type and
 unrelated pairs, so they are not automatically confirmed classification errors.
 
-The GLiNER batch-4 run has completed two epochs and saved actual fitted
-weights. Extraction quality is still pending full native DEV scoring. Its
-first-epoch weight SHA-256 is
-`e7e45d29c1f1a7161371dd16763ec478fad113e2ba07cecd0e34c8deae5b03d4`;
-this first-epoch intermediate checkpoint is not a frozen TEST finalist.
+The GLiNER batch-4 best epoch-three weights have SHA-256
+`907904ef8c171c9ca9aa61f33856ce2819882bccd5d077c44ce4343b4fe437a4`.
+The supervisor verified the actual file bytes and inspected full DEV sources
+with predictions at both thresholds. The corrected strict zero-shot pass is
+saved separately from the original punctuation-normalized pass. GLiNER Base
+is not justified by the measured DEV gap. The combined synthetic suite now
+passes 31 cases; all TEST-shaped fixtures are temporary synthetic inputs.

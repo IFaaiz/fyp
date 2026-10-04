@@ -25,6 +25,7 @@ ai/scripts/calibrate_mailex_compact.py -text whitespace=cr-at-eol
 ai/scripts/evaluate_mailex_extraction.py -text whitespace=cr-at-eol
 ai/scripts/export_mailex_benchmark_metadata.py -text whitespace=cr-at-eol
 ai/scripts/export_mailex_compact_seed_summary.py -text whitespace=cr-at-eol
+ai/scripts/export_mailex_gliner_dev_metrics.py -text whitespace=cr-at-eol
 ai/scripts/freeze_mailex_extraction_selection.py -text whitespace=cr-at-eol
 ai/scripts/predict_mailex_compact.py -text whitespace=cr-at-eol
 ai/scripts/predict_mailex_gliner.py -text whitespace=cr-at-eol

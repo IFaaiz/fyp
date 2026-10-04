@@ -124,4 +124,14 @@ and `dev` directly. `test` requires `--selection-lock <committed-lock.json>` and
 `tests/test_mailex_extraction_metrics.py` and exercises event association,
 wrong type and role errors, shared mentions, duplicates, invalid offsets,
 overlapping/nested and discontinuous spans, empty predictions, and assignment
-threshold behavior.
+threshold behavior. Predictor lock sequencing and failure cases are covered by
+`tests/test_mailex_gliner_predictor_gates.py`, including mocked locks with wrong
+device, threshold, checkpoint, and incomplete configuration. The combined
+`test_mailex_*.py` unittest discovery run passed 31 tests: 18 evaluator cases,
+9 predictor-gate cases, and 4 native/mapping/deduplication cases. All lock and
+TEST-shaped inputs in these tests are temporary synthetic fixtures; the test
+suite did not open corpus TEST data. Verified with:
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -p 'test_mailex_*.py' -v
+```

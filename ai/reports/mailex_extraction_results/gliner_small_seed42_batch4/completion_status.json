@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "optimization_completed": true,
+  "epochs_completed": 3,
+  "optimizer_updates_completed": 14010,
+  "selected_epoch": 3,
+  "selection_criterion": "minimum trainer DEV loss",
+  "logged_best_trainer_dev_loss_rounded_4dp": 56.1443,
+  "mean_train_epoch_losses_available": false,
+  "returned_train_and_eval_histories_saved": false,
+  "report_failure_after_checkpoint_save": "TrainingConfig has no to_dict; fixed serializer for future runs; no retraining",
+  "weight_sha256": "907904ef8c171c9ca9aa61f33856ce2819882bccd5d077c44ce4343b4fe437a4",
+  "weight_bytes": 295567700,
+  "train_sha256": "9672bcd3c2ee4453cf8919735647616204136e0324c36cc49a399bbabee4f333",
+  "dev_sha256": "fdab07806e641b916975db4324395cde8a30b6942cf775ef38b575f39c9b677d",
+  "selected_record_threshold": 0.2,
+  "test_accessed": false
+}

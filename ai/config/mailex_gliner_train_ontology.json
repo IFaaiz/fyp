@@ -4,6 +4,7 @@
   "train_sha256": "9672bcd3c2ee4453cf8919735647616204136e0324c36cc49a399bbabee4f333",
   "model_id": "fastino/gliner2.5-small-v1",
   "model_revision": "7132dc4561c3f94563c6147e75ffa8ef34c4964a",
+  "gliner2_source_commit": "3c913c7369301133d3b7699252074c4303ada50e",
   "runtime_versions": {
     "accelerate": "1.10.1",
     "gliner2": "2.0.0",

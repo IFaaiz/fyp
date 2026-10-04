@@ -16,6 +16,7 @@ from mailex_extraction.gliner_backend import (
     CHECKPOINT_REVISION,
     DATA_DIR,
     DEV_SHA256,
+    GLINER2_SOURCE_COMMIT,
     TRAIN_SHA256,
     FieldBinding,
     MailExOntology,
@@ -45,6 +46,8 @@ def _load_frozen_ontology(path: Path) -> MailExOntology:
         raise ValueError("GLiNER schema was not built from the authorized TRAIN fingerprint")
     if data.get("model_revision") != CHECKPOINT_REVISION:
         raise ValueError("GLiNER schema checkpoint revision differs from this backend")
+    if data.get("gliner2_source_commit") != GLINER2_SOURCE_COMMIT:
+        raise ValueError("GLiNER schema source commit differs from this backend")
     from mailex_extraction.gliner_backend import VENDOR_ROOT, private_package_versions
     vendor = str(VENDOR_ROOT)
     if vendor not in sys.path:
@@ -220,7 +223,7 @@ def _run(args: argparse.Namespace) -> None:
     combined = [dict() for _ in source_rows]
     diagnostics: dict[str, Any] = {
         "schema_groups": [], "windows": 0, "max_encoder_sequence_subwords": 0,
-        "messages_with_multiple_windows": 0,
+        "schema_group_runs_with_multiple_windows": 0,
     }
     started = time.perf_counter()
     for event_types, schema, schema_subwords in packed:
@@ -236,7 +239,7 @@ def _run(args: argparse.Namespace) -> None:
             diagnostics["max_encoder_sequence_subwords"] = max(
                 diagnostics["max_encoder_sequence_subwords"], max_encoded
             )
-            diagnostics["messages_with_multiple_windows"] += int(window_count > 1)
+            diagnostics["schema_group_runs_with_multiple_windows"] += int(window_count > 1)
         print(f"completed schema group {'|'.join(event_types)}", flush=True)
     if str(args.device).startswith("cuda"):
         torch.cuda.synchronize()

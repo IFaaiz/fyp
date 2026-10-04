@@ -10,19 +10,28 @@ sequence, including prompt and special tokens, stayed at or below the encoder's
 512-position limit. The run used one inference example at a time on the RTX
 5070, four CPU threads, and threshold 0.5.
 
-The first DEV pass produced 28 records and 28 grounded trigger spans, but no
-argument spans. On the independent DEV evaluator, exact event type
-identification F1 was 0.234%; exact argument role F1 was 0%; and exact event
-record F1 was 0%. All 28 predicted triggers were source-grounded; the evaluator
-reported zero non-source prediction segments. This is a poor initial result,
-not evidence of useful extraction quality.
+The initial, pre-adapter DEV pass produced 28 records and 28 grounded trigger
+spans, but no argument spans. On the independent DEV evaluator, exact event
+type identification F1 was 0.234%; exact argument role F1 was 0%; and exact
+event record F1 was 0%. This was provisional because the upstream collator
+appended a period to some inputs.
 
-That pass used the upstream GLiNER2.0 collator, which appends a period to text
-that lacks terminal punctuation. Its original output and metadata remain
-preserved for audit. A strict adapter now keeps the source body byte-exact and
-skips whitespace-only bodies. The corrected zero-shot pass has not been run:
-the shared GPU is allocated to the bounded fine-tune, and the initial metrics
-are retained as provisional. They are not treated as a source-exact result.
+That first pass used the upstream GLiNER2.0 collator, which appends a period to
+text that lacks terminal punctuation. Its original output and metadata remain
+preserved for audit. The corrected pass used a strict adapter that keeps the
+source body byte-exact and skips whitespace-only bodies. It produced 27
+records across 9 messages, all with grounded trigger spans, and no arguments.
+On the independent full-gold DEV evaluator, exact event-type F1 was 0.234%
+(one correct type among 828 gold events), trigger partial F1 was 0.468%,
+argument role F1 was 0%, and primary event-record partial F1 was 0%. This is
+not useful extraction quality; it establishes the source-exact zero-shot
+baseline for the fine-tuned comparison.
+
+The corrected prediction is
+`ai/data/experiments/mailex_extraction_v1/predictions/zero_shot_gliner2_5_small_native_text_dev.jsonl`
+(SHA-256 `ef0a4b25a2ba5a1c88f83642aba6cf712e66d8012665bd74d35c62b307166b9a`).
+Its aggregate metrics are in the matching `.metrics.json` file. The original
+pre-adapter prediction and metadata have not been overwritten.
 
 ## Run identity
 
@@ -32,6 +41,7 @@ are retained as provisional. They are not treated as a source-exact result.
 - Checkpoint weight SHA-256: `4ee982787ace270d4bf15dbcb28ced38e0aa201372347114ceedd6336055de2b`
 - Original prediction SHA-256: `005669c3852e23c57887b8f3dbabfaea23883066c869498b8dd5b43acda2b9ab`
 - Original output: `ai/data/experiments/mailex_extraction_v1/predictions/zero_shot_gliner2_5_small_dev.jsonl`
+- Corrected source-exact prediction SHA-256: `ef0a4b25a2ba5a1c88f83642aba6cf712e66d8012665bd74d35c62b307166b9a`
 - Runtime: `gliner2==2.0.0`, `torch==2.11.0+cu128`, `transformers==4.57.6`
 
 The model is the Apache-2.0 GLiNER2.5-small checkpoint. The extraction

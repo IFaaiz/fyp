@@ -87,3 +87,27 @@ The supervisor also reviewed all 100 full-source cases for the seed 23 candidate
 | Other | 13 |
 
 The 25 event-type cases consist of 22 confirmed residual event-type confusions and three unmatched predictions that were manually judged to have a real type confusion. Residual matching itself is only a diagnostic alignment: its sampled pairs included one same-type event with missed arguments, categorized as `Argument missed`, and two unrelated events, categorized as `Other`. Some other predictions looked plausible from the message but were absent from the native annotation; those were also categorized as `Other`, and the gold labels were retained. The supervisor additionally read the surrounding native events for unmatched predictions and revisited three contexts omitted by output truncation. These manual labels apply only to the reviewed seed 23 sample.
+
+## GLiNER fitted-checkpoint probe
+
+The supervisor personally read eight complete DEV messages with their native
+gold and actual epoch-three GLiNER predictions at record threshold `0.5`.
+This targeted probe selected six messages with predicted arguments and two
+with trigger-only predictions, restricted to bodies below 1,600 characters.
+It is a qualitative check, not an estimate of error prevalence.
+
+The probe showed correct trigger and participant spans alongside missing
+action descriptions, duplicated overlapping trigger variants, and people
+attached to the wrong action instance. None of these eight predictions had
+an `Action Description` argument, even though the reviewed gold included
+clear action descriptions. Some predictions were plausible but unannotated;
+native gold was retained. Exact substring grounding therefore does not
+establish correct event association or a complete extracted record.
+
+The supervisor then read six short, argument-bearing examples at the selected
+threshold `0.2`; some messages overlap the earlier probe. The lower threshold
+recovered a correct simple document record and some action arguments, while
+also producing extra overlapping anchors and incorrect participant links.
+One action description was attached to a different action trigger in the same
+message. These observations agree with the independently scored DEV gap;
+they do not change gold labels or justify tuning on TEST.

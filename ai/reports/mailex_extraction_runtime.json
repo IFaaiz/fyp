@@ -47,7 +47,7 @@
       "schema_pack_count": 7,
       "cpu": {
         "cold_model_load_seconds": 6.7933692,
-        "process_start_to_loaded_seconds": 69.1590027,
+      "process_start_to_result_serialization_seconds": 69.1590027,
         "short_words": 1,
         "short_median_seconds": 0.9249908,
         "median_words": 39,
@@ -66,7 +66,8 @@
         "batch_emails_per_second": 0.4920208,
         "peak_process_ram_bytes": 1467899904,
         "repetitions_per_single_message": 2,
-        "silently_truncated_messages": 0
+      "silently_truncated_messages": 0,
+      "timing_scope": "historical base-checkpoint measurement; includes window building, seven schema passes, extraction, and overlap merge, but not native event/argument mapping or grounding validation"
       },
       "cuda_rtx_5070": {
         "status": "not_measured",
@@ -75,11 +76,13 @@
     }
   },
   "timing_notes": {
-    "gliner_message_timing_includes": "window selection, all seven schema passes, extraction, and overlap-record merge",
+    "gliner_historical_cpu_timing_includes": "window selection, all seven schema passes, extraction, and overlap-record merge; excludes native event/argument mapping and source-offset grounding",
+    "gliner_final_checkpoint_timing_includes": "window selection, all seven schema passes, extraction, overlap-record merge, native event/argument mapping, and source-offset grounding; to be measured after checkpoint selection",
     "gliner_warmup": "one excluded full median inference pass",
     "same_message_indices": true,
     "longest_safe_dev_message_included": true,
     "gliner_inference_windows_include_all_seven_packs": true,
-    "filesystem_cache_flushed": false
+    "filesystem_cache_flushed": false,
+    "historical_process_duration_note": "The prior 69.159-second value was sampled during final result serialization after benchmark inference. It is not model readiness time; readiness was not captured in that run."
   }
 }

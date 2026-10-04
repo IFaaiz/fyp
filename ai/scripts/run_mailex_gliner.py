@@ -43,7 +43,6 @@ from mailex_extraction.gliner_backend import (  # noqa: E402
     load_extractor,
     prediction_row,
     private_package_versions,
-    private_package_versions,
     sha256_file,
     verify_sha256,
 )
@@ -259,7 +258,7 @@ def run_zero_shot(threshold: float) -> Path:
             diagnostics["schema_group_runs"] += 1
             diagnostics["schema_subwords_total"] += schema_subwords
             diagnostics["windows_total"] += chunk_count
-            diagnostics["messages_with_multiple_windows"] += int(chunk_count > 1)
+            diagnostics["schema_group_runs_with_multiple_windows"] += int(chunk_count > 1)
             diagnostics["max_encoder_sequence_subwords"] = max(
                 diagnostics["max_encoder_sequence_subwords"], max_encoded
             )
@@ -342,6 +341,21 @@ def _cuda_available() -> bool:
         return False
 
 
+def _training_config_dict(config: Any) -> dict[str, Any]:
+    """Serialize GLiNER TrainingConfig across its dataclass/utility APIs."""
+    from dataclasses import asdict, is_dataclass
+
+    if is_dataclass(config):
+        return asdict(config)
+    to_dict = getattr(config, "to_dict", None)
+    if callable(to_dict):
+        return to_dict()
+    raw = getattr(config, "__dict__", None)
+    if isinstance(raw, dict):
+        return dict(raw)
+    raise TypeError(f"cannot serialize GLiNER training config type {type(config).__name__}")
+
+
 def run_preflight() -> dict[str, Any]:
     verify_sha256(CHECKPOINT_DIR / "model.safetensors", "4ee982787ace270d4bf15dbcb28ced38e0aa201372347114ceedd6336055de2b")
     model = load_extractor(device="cpu")
@@ -410,6 +424,7 @@ def write_frozen_train_ontology() -> Path:
         "train_sha256": TRAIN_SHA256,
         "model_id": "fastino/gliner2.5-small-v1",
         "model_revision": CHECKPOINT_REVISION,
+        "gliner2_source_commit": GLINER2_SOURCE_COMMIT,
         "runtime_versions": private_package_versions(),
         "event_types": list(ontology.event_types),
         "fields_by_event": {
@@ -533,7 +548,7 @@ def run_train() -> None:
             "train_sha256": TRAIN_SHA256,
             "dev_sha256": DEV_SHA256,
             "seed": 42,
-            "config": config.to_dict(),
+            "config": _training_config_dict(config),
             "history": history,
             "train_rows": len(train_data),
             "dev_rows": len(eval_data),
