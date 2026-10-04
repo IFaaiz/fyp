@@ -12,14 +12,16 @@ import torch
 from mailex_extraction.compact import (AutoTokenizer, CompactExtractor, canonical_rows,
     encode_features, predict, read_rows, sha256, write_jsonl)
 from mailex_extraction.metrics import reserve_test_run, score_rows, validate_committed_test_lock
+from mailex_extraction.paths import resolve_local_encoder
 
 
 def load_checkpoint(path, device):
     path = Path(path)
     config = json.loads((path / "config.json").read_text(encoding="utf-8"))
     torch.set_num_threads(config.get("torch_cpu_threads", 4))
-    tokenizer = AutoTokenizer.from_pretrained(config["encoder"], local_files_only=True, use_fast=True)
-    model = CompactExtractor(config["encoder"], config["event_types"], config["role_keys"],
+    encoder = resolve_local_encoder(config["encoder"])
+    tokenizer = AutoTokenizer.from_pretrained(encoder, local_files_only=True, use_fast=True)
+    model = CompactExtractor(encoder, config["event_types"], config["role_keys"],
                              loss_family=config.get("loss_family", "weighted_multilabel_bce"), pretrained=False).to(device)
     model.load_state_dict(torch.load(path / "model.pt", map_location=device, weights_only=True))
     model.eval()

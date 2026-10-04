@@ -113,6 +113,9 @@ def _gliner_imports():
 
 
 def load_extractor(*, device: str = "cuda", checkpoint: Path = CHECKPOINT_DIR):
+    checkpoint = Path(checkpoint).resolve()
+    if not (checkpoint / "config.json").is_file():
+        raise ValueError(f"Local GLiNER checkpoint needs config.json: {checkpoint}")
     AutoExtractor = _gliner_imports()
     import torch
     from gliner2.processor import SchemaTransformer

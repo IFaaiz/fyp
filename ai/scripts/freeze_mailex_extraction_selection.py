@@ -10,6 +10,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/'ai'/'src'))
 from mailex_extraction.metrics import validate_test_authorization
+from mailex_extraction.paths import resolve_local_encoder
 
 
 def digest(path):
@@ -45,13 +46,14 @@ def main():
     if not 0<a.compact_threshold<=1: raise ValueError('BIO threshold must be in (0,1]')
     checkpoint=(ROOT/a.compact_checkpoint).resolve()
     config=json.loads((checkpoint/'config.json').read_text(encoding='utf-8'))
-    encoder=(ROOT/config['encoder']).resolve()
+    encoder=resolve_local_encoder(config['encoder'])
     schema=ROOT/'ai/config/mailex_native_extraction_schema.json'
     evaluator=artifact_map(['ai/src/mailex_extraction/metrics.py','ai/scripts/evaluate_mailex_extraction.py'])
     token_names=['config.json','tokenizer.json','tokenizer_config.json','vocab.txt',
                  'special_tokens_map.json','added_tokens.json','spm.model','sentencepiece.bpe.model']
     token_files=[encoder/name for name in token_names if (encoder/name).is_file()]
     code=['ai/src/mailex_extraction/__init__.py','ai/src/mailex_extraction/compact.py',
+          'ai/src/mailex_extraction/paths.py',
           'ai/scripts/predict_mailex_compact.py','ai/scripts/run_mailex_compact.py']
     preprocessing=['ai/src/datasets/mailex_native.py','ai/scripts/build_mailex_fyp_safe_views.py',
                    'ai/scripts/prepare_mailex_native.py','ai/config/mailex_extraction_environment.json',

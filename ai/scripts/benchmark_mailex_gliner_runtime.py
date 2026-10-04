@@ -131,6 +131,7 @@ def main() -> None:
         raise ValueError("Use at least one repetition and batch size 8")
     if args.device == "cuda" and not torch.cuda.is_available():
         raise RuntimeError("CUDA was requested but is unavailable")
+    checkpoint = args.checkpoint.resolve(strict=True)
 
     train_path = DATA_DIR / "train_fyp_safe.jsonl"
     dev_path = DATA_DIR / "dev_fyp_safe.jsonl"
@@ -150,7 +151,7 @@ def main() -> None:
     batch_selected = [ordered[int((len(ordered) - 1) * index / 7)] for index in range(args.batch_size)]
 
     load_started = time.perf_counter()
-    model = load_extractor(device=args.device, checkpoint=args.checkpoint)
+    model = load_extractor(device=args.device, checkpoint=checkpoint)
     load_seconds = time.perf_counter() - load_started
     model_loaded_seconds = time.perf_counter() - PROCESS_STARTED
     if args.device == "cuda":
@@ -212,13 +213,13 @@ def main() -> None:
         batch_windows.append(windows)
         batch_conversion_diagnostics = conversion_diagnostics
     batch_median = statistics.median(batch_seconds_samples)
-    weights_path = args.checkpoint / "model.safetensors"
+    weights_path = checkpoint / "model.safetensors"
     if not weights_path.is_file():
-        raise FileNotFoundError(f"checkpoint has no model.safetensors: {args.checkpoint}")
+        raise FileNotFoundError(f"checkpoint has no model.safetensors: {checkpoint}")
     result = {
         "schema_version": 2,
         "model": "fastino/gliner2.5-small-v1",
-        "model_label": args.model_label or args.checkpoint.name,
+        "model_label": args.model_label or checkpoint.name,
         "revision": "7132dc4561c3f94563c6147e75ffa8ef34c4964a",
         "device": args.device,
         "platform": platform.platform(),

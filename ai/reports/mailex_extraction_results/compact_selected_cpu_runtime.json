@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "device": "cpu",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+  "torch_cpu_threads": 4,
+  "torch_version": "2.11.0+cu128",
+  "cuda_device": null,
+  "cold_model_load_seconds": 0.8640396999981022,
+  "process_import_plus_ready_seconds": 5.74692949999735,
+  "cold_load_policy": "fresh process; OS filesystem cache not flushed",
+  "weight_bytes": 266443579,
+  "parameter_count": 66601862,
+  "weight_sha256": "e02537b0bb70a45f94d6714a807499ea316661fddf08dc4a7ec4ad9743e2d05c",
+  "dev_sha256": "fdab07806e641b916975db4324395cde8a30b6942cf775ef38b575f39c9b677d",
+  "single_email": [
+    {
+      "length_group": "short",
+      "source_words": 1,
+      "windows": 1,
+      "latency_seconds": [
+        0.01151380000374047,
+        0.010657300001184922,
+        0.010523400000238325,
+        0.01130869999906281,
+        0.013706099998671561
+      ],
+      "median_seconds": 0.01130869999906281
+    },
+    {
+      "length_group": "median",
+      "source_words": 39,
+      "windows": 1,
+      "latency_seconds": [
+        0.02550169999449281,
+        0.024790600000414997,
+        0.02565889999823412,
+        0.024875800001609605,
+        0.026225200002954807
+      ],
+      "median_seconds": 0.02550169999449281
+    },
+    {
+      "length_group": "long",
+      "source_words": 721,
+      "windows": 2,
+      "latency_seconds": [
+        0.3829584999984945,
+        0.3998917000062647,
+        0.3762139999962528,
+        0.40088770000147633,
+        0.3931481000036001
+      ],
+      "median_seconds": 0.3931481000036001
+    }
+  ],
+  "batch_emails": 8,
+  "batch_seconds": 1.531547300000966,
+  "batch_emails_per_second": 5.223475631470836,
+  "window_wordpiece_limit": 512,
+  "window_stride": 128,
+  "dev_multiple_window_messages": 2,
+  "dev_messages": 361,
+  "dev_max_windows": 2,
+  "dev_max_source_words": 721,
+  "silently_truncated_messages": 0,
+  "coverage_policy": "encode_features asserts every nonempty source word represented",
+  "peak_cuda_allocated_bytes": null,
+  "peak_process_ram_bytes": 1416708096,
+  "current_process_ram_bytes": 1150271488,
+  "peak_process_commit_bytes": 1863020544
+}

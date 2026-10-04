@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "device": "cuda",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+  "torch_cpu_threads": 4,
+  "torch_version": "2.11.0+cu128",
+  "cuda_device": "NVIDIA GeForce RTX 5070",
+  "cold_model_load_seconds": 1.035960300003353,
+  "process_import_plus_ready_seconds": 5.952734800004691,
+  "cold_load_policy": "fresh process; OS filesystem cache not flushed",
+  "weight_bytes": 266443579,
+  "parameter_count": 66601862,
+  "weight_sha256": "e02537b0bb70a45f94d6714a807499ea316661fddf08dc4a7ec4ad9743e2d05c",
+  "dev_sha256": "fdab07806e641b916975db4324395cde8a30b6942cf775ef38b575f39c9b677d",
+  "single_email": [
+    {
+      "length_group": "short",
+      "source_words": 1,
+      "windows": 1,
+      "latency_seconds": [
+        0.02019999999902211,
+        0.0048936000021058135,
+        0.006044300003850367,
+        0.006342600005154964,
+        0.00625650000438327
+      ],
+      "median_seconds": 0.00625650000438327
+    },
+    {
+      "length_group": "median",
+      "source_words": 39,
+      "windows": 1,
+      "latency_seconds": [
+        0.013595800002804026,
+        0.01336069999524625,
+        0.0222178999974858,
+        0.028783000001567416,
+        0.01408639999863226
+      ],
+      "median_seconds": 0.01408639999863226
+    },
+    {
+      "length_group": "long",
+      "source_words": 721,
+      "windows": 2,
+      "latency_seconds": [
+        0.0631613000005018,
+        0.07009129999642028,
+        0.07301410000218311,
+        0.07220550000056392,
+        0.073583299999882
+      ],
+      "median_seconds": 0.07220550000056392
+    }
+  ],
+  "batch_emails": 8,
+  "batch_seconds": 0.11150349999661557,
+  "batch_emails_per_second": 71.74662678967765,
+  "window_wordpiece_limit": 512,
+  "window_stride": 128,
+  "dev_multiple_window_messages": 2,
+  "dev_messages": 361,
+  "dev_max_windows": 2,
+  "dev_max_source_words": 721,
+  "silently_truncated_messages": 0,
+  "coverage_policy": "encode_features asserts every nonempty source word represented",
+  "peak_cuda_allocated_bytes": 427107328,
+  "peak_process_ram_bytes": 1889927168,
+  "current_process_ram_bytes": 1623769088,
+  "peak_process_commit_bytes": 3297288192
+}

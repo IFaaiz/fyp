@@ -1,6 +1,6 @@
 # Native MailEx compact model seed robustness
 
-**Status: seed 17 and fresh resumed seed 23 are complete; seed 41 is pending after a first-step OOM during overlapping GPU use. No TEST inference or selection lock is included in this report.**
+**Status: full-safe seeds 17, 23, and 41 are complete. The first seed41 attempt OOMed before optimization; a fresh run completed after exclusive GPU release. No TEST inference or selection lock is included in this report.**
 
 ## Data and protocol
 
@@ -14,11 +14,21 @@ The recipe is the shared DistilBERT categorical BIO extractor with encoder learn
 |---:|---:|---:|---:|---:|---:|---|---|
 | 17 | 6 | 0.7 | 0.338717 | 0.487985 | 0.179377 | `ac17ba4dbf09a45d9311ef186487b9c9dbc40ecb3bb69d1b3900588313e2c698` | Complete |
 | 23 | 8 | 0.7 | 0.345117 | 0.500899 | 0.189087 | `e02537b0bb70a45f94d6714a807499ea316661fddf08dc4a7ec4ad9743e2d05c` | Complete; fresh resumed run |
-| 41 | — | — | — | — | — | — | Pending; first attempt OOM before optimization |
+| 41 | 6 | 0.7 | 0.339516 | 0.502243 | 0.194005 | `0e638864d56aea403961ad2eec12282b60b4340a94862741daafa08ec091cc60` | Complete; fresh resumed run |
 
-The first seed 23 attempt was interrupted before checkpoint hashing, oracle output, and DEV calibration finished. Its partial local output is preserved and excluded from all three-seed calculations. The fresh completed run uses a separate output directory. The first seed 41 attempt ran out of CUDA memory during its first optimizer step while another GPU fit was active; that incomplete directory is preserved and has no model checkpoint. Seed 41 will be retried separately after the GPU is released, without changing the recipe.
+## Three-seed DEV summary
 
-The seed41 retry output directory is `compact_categorical_lr2e5_seed41_resumed_20261004`. After it finishes, run `scripts/export_mailex_compact_seed_summary.py` from `ai/`; it validates that all seeds used the same TRAIN/DEV hashes and exports per-seed threshold results plus mean and sample standard deviation to `reports/mailex_extraction_results/compact_seed_robustness_2e5.json`. The exporter reads only aggregate run metadata, never JSONL rows.
+Metrics below use each seed's DEV-selected threshold (0.7) and report the sample standard deviation across the three seeds.
+
+| Metric | Mean | Sample SD | Seeds |
+|---|---:|---:|---:|
+| Role-exact F1 | 0.341117 | 0.003487 | 3 |
+| Partial event-record F1 | 0.497042 | 0.007873 | 3 |
+| Exact event-record F1 | 0.187490 | 0.007444 | 3 |
+
+The complete per-seed threshold grids, prediction hashes, checkpoint hashes, shared input hashes, and exact numeric summaries are in [compact_seed_robustness_2e5.json](mailex_extraction_results/compact_seed_robustness_2e5.json). Seed23 has the highest role-exact DEV score under this declared selection rule; final model selection and TEST reservation remain with the parent task.
+
+The first seed23 attempt was interrupted before checkpoint hashing, oracle output, and DEV calibration finished. Its partial local output is preserved and excluded from the three-seed summary. The first seed41 attempt OOMed during the first optimizer step while another GPU fit was active; its config-only output is also preserved and excluded. The fresh completed runs used separate directories. The exporter reads only aggregate run metadata, never JSONL rows.
 
 ## Privacy and scope
 

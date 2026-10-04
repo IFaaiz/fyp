@@ -83,12 +83,32 @@
       "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed23_resumed_20261004/dev_metrics.json": "d6af17456b314ff21192e814dab6a79df8b999944f38682ff93a25cbe46606df",
       "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed23_resumed_20261004/dev_gold_type_metrics.json": "9e2cefe600b0f5de3fa562f8d9fa8d8a53c76fe827e8b225f92e8159561a89e0",
       "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed23_resumed_20261004/dev_gold_type_trigger_metrics.json": "cd78db2b75b565a8d9658a2c8daf150b15f00d5d9a91f8cd002f00b621525dd7",
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed23_resumed_20261004/dev_gold_type_0.7_metrics.json": "cf1d5066674e9c61741152c0b9131a98fdcb162705342f0e42d62c4ec8a57cab",
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed23_resumed_20261004/dev_gold_type_trigger_0.7_metrics.json": "c2ce7863c27677b0175a903cc814752e70a7fe1e24ca10288587266e16df4461",
       "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed23_resumed_20261004/calibration_calibration.json": "8bf47cd9b3a22589d866f5d2da49b4d0d2ac5832264d8e2640ebcb0b57a474bc",
       "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed23_resumed_20261004/calibration_dev_threshold_0.3.metrics.json": "459fd20c249dbd6cfd00f1a592e2cf7443363abbf9ec4a2d0e0f42181db1dd63",
       "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed23_resumed_20261004/calibration_dev_threshold_0.5.metrics.json": "d6af17456b314ff21192e814dab6a79df8b999944f38682ff93a25cbe46606df",
       "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed23_resumed_20261004/calibration_dev_threshold_0.7.metrics.json": "4076fa072f624d9539f1f436333e447ced9c4dc37d0bd3ce97daebbff3311689",
       "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed23_resumed_20261004/calibration_dev_threshold_0.9.metrics.json": "780b55f6d6a74d1266bf4f94c320a2858e5e42da65463df85b70d26624c4bbcc",
       "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed23_resumed_20261004/training_history.json": "0fb9d045dfc05b1223cfb39be89a98f1c230d312685fe212d93de367f66726cd"
+    }
+  },
+  {
+    "run": "compact_categorical_lr2e5_seed41_resumed_20261004",
+    "weight_sha256": "0e638864d56aea403961ad2eec12282b60b4340a94862741daafa08ec091cc60",
+    "weight_bytes": 266443579,
+    "public_metadata": {
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed41_resumed_20261004/config.json": "58ab099252858d7093a905e42073e4f07dbe0873f514c6110f45ad7a5117426a",
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed41_resumed_20261004/selected_epoch.json": "546b14e7bb8f8e549c0c0ee6118e5c5b79e175be4290d4324d8955859c9ab005",
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed41_resumed_20261004/dev_metrics.json": "03a341f4993e4ac756be675e560813d2645342dc0e3c9fe446d64f81df25361d",
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed41_resumed_20261004/dev_gold_type_metrics.json": "69c593ecd8bee02ca2427cfff861034235ec0019b5e671cfc0b104e6fb2b481c",
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed41_resumed_20261004/dev_gold_type_trigger_metrics.json": "ce60942039e5f70c5ca6410827a4b9cbe18f68be66a55d9309f86fb7061f02b1",
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed41_resumed_20261004/calibration_calibration.json": "9916053cab3d08c069d30be300a4f8bb42907a6622fd49842e99010fea51f8ef",
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed41_resumed_20261004/calibration_dev_threshold_0.3.metrics.json": "f1993b7a2dd77726f2b4e5382b63d5e6eab75d53e0671b448fe14f6a8357b808",
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed41_resumed_20261004/calibration_dev_threshold_0.5.metrics.json": "03a341f4993e4ac756be675e560813d2645342dc0e3c9fe446d64f81df25361d",
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed41_resumed_20261004/calibration_dev_threshold_0.7.metrics.json": "9682a88a8b881e02dd7ecf5ec86441a697027aac12e1e549124f30af709febd4",
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed41_resumed_20261004/calibration_dev_threshold_0.9.metrics.json": "b48c27f55b88b2cfa6efc3b18686c2c4f7321c13a39a45a2a503d718b75bbb84",
+      "ai/reports/mailex_extraction_results/compact_categorical_lr2e5_seed41_resumed_20261004/training_history.json": "7fbbee9d6f06cdff2cbdefebf6f7bc2aad5645efaa8b2b2e4b940775df3195dc"
     }
   }
 ]

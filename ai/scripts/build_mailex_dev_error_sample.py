@@ -56,6 +56,33 @@ def event_trigger_summary(gold_event, pred_event) -> tuple[float | None, bool | 
     return span_iou(gold_event.trigger, pred_event.trigger), _span_exact(gold_event.trigger, pred_event.trigger)
 
 
+def brief_event(event: dict[str, Any]) -> dict[str, Any]:
+    """Keep review evidence compact and exclude conversion/source arrays."""
+    trigger = event.get("trigger") or {}
+    arguments = event.get("arguments") or []
+
+    def brief_segments(group: dict[str, Any]) -> list[dict[str, Any]]:
+        return [
+            {key: segment.get(key) for key in ("start", "end", "text")}
+            for segment in group.get("segments", [])
+            if isinstance(segment, dict)
+        ]
+
+    return {
+        "event_type": event.get("event_type"),
+        "trigger": {"segments": brief_segments(trigger)},
+        "arguments": [
+            {
+                "role": argument.get("role"),
+                "qualifier": argument.get("qualifier"),
+                "segments": brief_segments(argument),
+            }
+            for argument in arguments
+            if isinstance(argument, dict)
+        ],
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--predictions", required=True, type=Path)
@@ -145,10 +172,10 @@ def main() -> None:
             "categories": [stratum],
             "gold_event_index": gold_index,
             "prediction_event_index": pred_index,
-            "gold_event": gold_raw["events"][gold_index] if gold_raw is not None and gold_index is not None else None,
-            "predicted_event": pred_raw["events"][pred_index] if pred_raw is not None and pred_index is not None else None,
-            "message_gold_events": gold_raw["events"] if gold_raw is not None else [],
-            "message_predicted_events": pred_raw["events"] if pred_raw is not None else [],
+            "gold_event": brief_event(gold_raw["events"][gold_index]) if gold_raw is not None and gold_index is not None else None,
+            "predicted_event": brief_event(pred_raw["events"][pred_index]) if pred_raw is not None and pred_index is not None else None,
+            "message_gold_events": [brief_event(event) for event in gold_raw["events"]] if gold_raw is not None else [],
+            "message_predicted_events": [brief_event(event) for event in pred_raw["events"]] if pred_raw is not None else [],
             "trigger_iou": trigger_iou,
             "trigger_exact": trigger_exact,
             "phase10_primary_category": None,

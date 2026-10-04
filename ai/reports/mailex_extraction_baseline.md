@@ -40,10 +40,15 @@ The fixed checkpoint then receives the declared DEV grid 0.3/0.5/0.7/0.9.
 |---|---:|---:|---:|---:|---:|---:|
 | 2e-5 | 17 | 6 | 0.7 | 0.338717 | 0.487985 | 0.179377 |
 | 1e-5 | 17 | 6 | 0.7 | 0.289388 | 0.438334 | 0.144867 |
+| 2e-5 | 23 | 8 | 0.7 | 0.345117 | 0.500899 | 0.189087 |
+| 2e-5 | 41 | 6 | 0.7 | 0.339516 | 0.502243 | 0.194005 |
 
-The stronger encoder LR 2e-5 is retained for robustness seeds 23 and 41.
-The final three-seed summary and chosen TEST checkpoint will be added after
-those actual fits finish. No ensemble is planned.
+All three LR-2e-5 robustness seeds are complete. Exact role F1 is
+0.341117 mean and 0.003487 sample SD. The declared highest-DEV-role criterion
+selects seed 23, epoch 8, threshold 0.7; there is no ensemble. Its source-level
+100-case audit is complete. Selection by the highest seed score can make DEV
+optimistic; the seed mean is reported separately and TEST remains the final
+one-time comparison.
 
 The earlier independent-BCE attempt was rejected after prediction inspection
 showed fragmented BIO spans and excessive events. Its checkpoint is preserved
@@ -63,6 +68,24 @@ extraction still has substantial errors. Supplying only a type does not
 identify repeated same-type instances, so that diagnostic produces repeated
 type-conditioned arguments. It is neither a pure type-classification score
 nor an upper bound on argument extraction.
+
+### Selected seed 23, threshold 0.7
+
+| DEV mode | Argument-role exact F1 | Argument overlap F1 | Partial record F1 |
+|---|---:|---:|---:|
+| End to end | 0.345117 | 0.456032 | 0.500899 |
+| Gold type, one slot per gold event, no trigger | 0.234947 | 0.314837 | 0.380747 |
+| Gold type and full native trigger | 0.461000 | 0.624500 | 0.681018 |
+
+These are actual selected-checkpoint DEV inferences. Gold type and trigger
+add 11.59 absolute role-F1 points; argument extraction remains a bottleneck.
+The type-only diagnostic has the same repeated-instance limitation as above.
+
+Historical fit configurations used both repository-relative and ai-relative
+encoder-cache paths. The inference loader now resolves either uniquely to
+the local encoder directory without changing saved configurations or weights.
+A complete selected DEV replay reproduced the original prediction bytes:
+SHA-256 `5226ae5c1714e9faf6a2b424716906413b5f405ae8e9a04ab706f4e6a1886212`.
 
 ## Evidence and reproducibility
 

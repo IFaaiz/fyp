@@ -1,6 +1,6 @@
 # Reviewer handoff: native MailEx extraction bake-off
 
-**Progress checkpoint: 2026-10-04, Asia/Karachi. This is not a final selection or TEST result.**
+**DEV selection frozen: 2026-10-04, Asia/Karachi. TEST inference follows the committed lock.**
 
 ## What changed
 
@@ -40,6 +40,7 @@ individual event records; no flattening into entity bags or FYP labels occurs.
 |---|---:|---:|---:|---|
 | DistilBERT categorical BIO, LR 2e-5, seed 17 | 0.338717 | 0.487985 | 0.179377 | Epoch 6; threshold 0.7 |
 | Same recipe, fresh seed 23 | 0.345117 | 0.500899 | 0.189087 | Epoch 8; threshold 0.7 |
+| Same recipe, fresh seed 41 | 0.339516 | 0.502243 | 0.194005 | Epoch 6; threshold 0.7 |
 | Same model, LR 1e-5, seed 17 | 0.289388 | 0.438334 | 0.144867 | Epoch 6; threshold 0.7 |
 | Paired body-only ablation | 0.3366 | 0.4901 | 0.1840 | Epoch 8; threshold 0.7 |
 | Paired subject+body ablation | 0.3444 | 0.4898 | 0.1851 | Epoch 8; threshold 0.7 |
@@ -99,10 +100,11 @@ to all FYP primitives yet.
 
 ## Completion status before TEST
 
-- Compact robustness seed 41, using the retained LR 2e-5 recipe.
-  Seeds 17 and 23 are complete. Seed 41 ran out of GPU memory during its first
-  optimizer step while GLiNER was active; its incomplete output is preserved.
-  Fits now run one at a time. No three-seed conclusion is claimed yet.
+- Compact robustness seeds 17, 23 and 41 are complete. The first seed-41
+  config-only OOM attempt is preserved separately. Across completed seeds,
+  exact role F1 is 0.341117 mean and 0.003487 sample SD. Seed 23 is selected
+  by the predeclared maximum DEV role-F1 rule; its 100-case source audit is
+  complete. There is no ensemble.
 - GLiNER Small fine-tuning is complete. Its public trainer matches repeated text
   by surface string and appends punctuation. A narrow native processor override
   retains exact occurrences and original text. A repeated-text two-event fixture
@@ -119,11 +121,14 @@ to all FYP primitives yet.
   gold split, including unsupported examples and unseen role/qualifier pairs.
 - Final fitted-checkpoint CPU/GPU runtime and final error
   audit if the selected checkpoint changes.
-- Final architecture choice, source-free selection manifest, committed TEST
-  lock, and one-time TEST inference for each finalist.
+- The source-free selection manifest fixes compact seed 23 / threshold 0.7
+  and GLiNER Small epoch 3 / threshold 0.2, with hashes of weights, code,
+  schemas, preprocessing and evaluator. One-time TEST inference and the final
+  architecture decision follow this commit.
 
-**There is no committed selection lock and no model inference on native TEST
-at this progress checkpoint. No final winner or production-readiness claim.**
+**This commit contains [the selection lock](../config/mailex_extraction_selection_lock.json).
+No model inference on native TEST has occurred before this lock. No final
+TEST result or production-readiness claim is made at this checkpoint.**
 
 GLiNER Base is not trained: Small's measured native DEV quality is clearly
 below the compact baseline, so a larger GLiNER fit is not justified. The
