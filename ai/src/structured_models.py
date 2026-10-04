@@ -243,7 +243,7 @@ def _unbounded_speech_history(row: Mapping[str, Any]) -> bool:
     message = current["current_message"]
     return bool(re.search(
         r"(?im)^\s*(?:>\s*\S|[-_]{2,}\s*(?:original message|forwarded by|forwarded message)|"
-        r"begin forwarded message:|on .+wrote:\s*$|from:\s*\S)", message))
+        r"begin forwarded message:|on .+wrote:\s*$|(?:from|to|cc|sent|subject):\s*\S)", message))
 
 
 def _has_uncertain_primitive_state(annotation: Mapping[str, Any]) -> bool:

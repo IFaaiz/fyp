@@ -505,6 +505,18 @@ class StructuredModelGateTests(unittest.TestCase):
         self.assertEqual(prepared.speech_history_quarantined_rows, 0)
         self.assertNotIn("Original Message", prepared.speech_texts[0])
 
+    def test_retained_outlook_reply_headers_without_forward_marker_are_quarantined(self):
+        text = ("Please send the plan.\n\nPrior Sender\n01/02/2020 10:00 AM\n"
+                "To: old.recipient@example.invalid\nSubject: Earlier discussion\n"
+                "I approve the old request.")
+        prepared = prepare_training_examples([_row(text=text)])
+        self.assertEqual(prepared.scope_targets, ("PROJECT",))
+        self.assertEqual(prepared.speech_texts, ())
+        self.assertEqual(prepared.speech_history_quarantined_rows, 1)
+        bounded = prepare_training_examples([_row(text=text, authored_ranges=[{"start": 0, "end": 21}])])
+        self.assertEqual(bounded.speech_texts, ("Please send the plan.",))
+        self.assertEqual(bounded.speech_targets, (("REQUEST",),))
+
     def test_old_forwarded_subject_does_not_enter_current_speech_features(self):
         row = _row(text="Please send the plan.")
         row["sources"][row["current_source_id"]]["subject"] = "Fwd: Please approve the old request"
