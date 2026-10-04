@@ -113,8 +113,10 @@ def _gliner_imports():
 
 def load_extractor(*, device: str = "cuda", checkpoint: Path = CHECKPOINT_DIR):
     AutoExtractor = _gliner_imports()
+    import torch
     from gliner2.processor import SchemaTransformer
 
+    torch.set_num_threads(4)
     model = AutoExtractor.from_pretrained(
         str(checkpoint), local_files_only=True
     )

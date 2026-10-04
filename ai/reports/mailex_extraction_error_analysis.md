@@ -8,6 +8,8 @@ I independently scored the frozen rows with the final evaluator. Numeric metrics
 
 The full, source-bearing review sample is kept in the ignored private experiment directory at `ai/data/experiments/mailex_extraction_v1/private_dev_audit/selected_100_threshold_0.7_phase10_review.jsonl`. It contains 100 deterministic cases from 84 messages, with full message text, gold and predicted event records, and phase-10 labels for private review. Sampling used seed `20261004`, with 25 cases from each of four strata: same-type record errors, residual wrong-type diagnostics, missed gold events, and unmatched predicted events.
 
+A supervisor independently reviewed all 100 full-text cases. That review confirmed the main patterns below: fragmented long action arguments, participants copied from nearby clauses, missed imperative and deadline events, phone-call and promise event-type confusions, discontinuous trigger limitations, and occasional event predictions on social or fictional content. The sample remains a stratified diagnostic set, not a prevalence estimate.
+
 ## DEV metrics
 
 | Measure | Result |

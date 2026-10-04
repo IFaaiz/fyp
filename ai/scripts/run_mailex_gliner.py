@@ -105,6 +105,8 @@ def _text_chunks(model: Any, text: str, schema: Any):
     Returned windows use original body character boundaries; overlapping
     windows are later deduplicated by exact source offsets.
     """
+    if not text.strip():
+        return [], []
     if _input_length(model, text, schema) <= MAX_ENCODER_POSITIONS:
         return ([(0, len(text))] if text else []), [_input_length(model, text, schema)]
     words = list(model.processor.word_splitter(text, lower=True))
@@ -271,7 +273,9 @@ def run_zero_shot(threshold: float) -> Path:
 
     output_dir = DATA_DIR / "predictions"
     output_dir.mkdir(parents=True, exist_ok=True)
-    output_path = output_dir / "zero_shot_gliner2_5_small_dev.jsonl"
+    # Preserve the first run, which used upstream's synthetic-period collator.
+    # This is the corrected source-byte-exact no-append pass.
+    output_path = output_dir / "zero_shot_gliner2_5_small_native_text_dev.jsonl"
     counts = Counter()
     with output_path.open("w", encoding="utf-8", newline="\n") as handle:
         for source, prediction in zip(dev_rows, combined_outputs):
@@ -291,6 +295,8 @@ def run_zero_shot(threshold: float) -> Path:
         "threshold": threshold,
         "inference_device": "cuda" if _cuda_available() else "cpu",
         "batch_size": 1,
+        "cpu_threads": 4,
+        "text_collator": "source_bytes_exact_no_append",
         "encoder_max_positions": MAX_ENCODER_POSITIONS,
         "schema_prompt_budget_subwords": MAX_SCHEMA_SUBWORDS,
         "schema_groups": [
@@ -398,6 +404,7 @@ def run_train() -> None:
     verify_sha256(train_path, TRAIN_SHA256)
     verify_sha256(dev_path, DEV_SHA256)
     ontology = derive_ontology(train_path, verify_fingerprint=False)
+    torch.set_num_threads(4)
     model = AutoExtractor.from_pretrained(str(CHECKPOINT_DIR), local_files_only=True)
     base_processor = model.processor
     offset_cls = OffsetSchemaTransformer.make(SchemaTransformer)
@@ -415,13 +422,13 @@ def run_train() -> None:
     eval_data, dev_audit = _build_training_examples(
         dev_rows, model, ontology, packed_schemas, allow_unseen_train_labels=True
     )
-    output_dir = PRIVATE_ROOT / "checkpoints" / "mailex_gliner2_5_small_finetuned_seed42"
+    output_dir = PRIVATE_ROOT / "checkpoints" / "mailex_gliner2_5_small_finetuned_seed42_batch4"
     config = TrainingConfig(
         output_dir=str(output_dir),
-        experiment_name="mailex_gliner2_5_small_seed42",
+        experiment_name="mailex_gliner2_5_small_seed42_batch4",
         num_epochs=3,
-        batch_size=2,
-        eval_batch_size=2,
+        batch_size=4,
+        eval_batch_size=4,
         encoder_lr=1e-5,
         task_lr=2e-5,
         eval_strategy="epoch",

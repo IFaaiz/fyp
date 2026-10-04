@@ -19,6 +19,10 @@ Read these first:
 4. [Actual compact fitting and oracle results](mailex_extraction_baseline.md).
 5. [Paired subject ablation](mailex_subject_ablation.md).
 6. [Source-level DEV error analysis](mailex_extraction_error_analysis.md).
+7. [Compact seed robustness](mailex_extraction_compact_seeds.md).
+8. [GLiNER zero-shot evidence](mailex_extraction_zero_shot.md) and
+   [fine-tuning status](mailex_extraction_training.md).
+9. [Measured runtime](mailex_extraction_runtime.md).
 
 Machine-readable aggregate compact configs, metrics, calibration results and
 weight hashes are in [mailex_extraction_results](mailex_extraction_results/).
@@ -34,6 +38,7 @@ individual event records; no flattening into entity bags or FYP labels occurs.
 | Completed candidate | DEV role exact F1 | Partial record F1 | Exact record F1 | Selection |
 |---|---:|---:|---:|---|
 | DistilBERT categorical BIO, LR 2e-5, seed 17 | 0.338717 | 0.487985 | 0.179377 | Epoch 6; threshold 0.7 |
+| Same recipe, fresh seed 23 | 0.345117 | 0.500899 | 0.189087 | Epoch 8; threshold 0.7 |
 | Same model, LR 1e-5, seed 17 | 0.289388 | 0.438334 | 0.144867 | Epoch 6; threshold 0.7 |
 | Paired body-only ablation | 0.3366 | 0.4901 | 0.1840 | Epoch 8; threshold 0.7 |
 | Paired subject+body ablation | 0.3444 | 0.4898 | 0.1851 | Epoch 8; threshold 0.7 |
@@ -92,8 +97,10 @@ to all FYP primitives yet.
 
 ## Still running / not completed
 
-- Compact robustness seeds 23 and 41, using the retained LR 2e-5 recipe.
-  Seed 17 is complete. No three-seed conclusion is claimed yet.
+- Compact robustness seed 41, using the retained LR 2e-5 recipe.
+  Seeds 17 and 23 are complete. Seed 41 ran out of GPU memory during its first
+  optimizer step while GLiNER was active; its incomplete output is preserved.
+  Fits now run one at a time. No three-seed conclusion is claimed yet.
 - Correct GLiNER Small fine-tuning. Its public trainer matches repeated text
   by surface string and appends punctuation. A narrow native processor override
   retains exact occurrences and original text. A repeated-text two-event fixture
@@ -104,7 +111,7 @@ to all FYP primitives yet.
   segments. Missing triggers and records that cannot fit intact in any bounded
   window are explicitly counted. Final DEV evaluation uses the entire native
   gold split, including unsupported examples and unseen role/qualifier pairs.
-- GLiNER CPU/GPU runtime, calibrated fine-tuned DEV quality, and final error
+- GLiNER GPU runtime, calibrated fine-tuned DEV quality, and final error
   audit if the selected checkpoint changes.
 - Final architecture choice, source-free selection manifest, committed TEST
   lock, and one-time TEST inference for each finalist.
@@ -135,3 +142,9 @@ workspace. Reproducing the protected FYP-safe view requires its private
 boundary/index metadata. Subsequent progress and final results will be pushed
 as separate commits; this checkpoint should not be mistaken for completed
 GLiNER training or a frozen final experiment.
+
+The additional CPU GLiNER measurement is complete: 1.094 s for a 39-word
+message through all seven schema packs, with a 1.471 GB peak working set.
+Its current long-message sample is the 144-word DEV p90, so it is not directly
+comparable to the compact model's 721-word maximum. A shared-cohort runtime
+comparison and final-checkpoint measurements are pending.

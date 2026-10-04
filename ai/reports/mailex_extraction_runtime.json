@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "split": "fyp_safe_dev",
+  "safe_dev_sha256": "fdab07806e641b916975db4324395cde8a30b6942cf775ef38b575f39c9b677d",
+  "test_rows_read": false,
+  "source_text_or_message_ids_included": false,
+  "models": {
+    "compact_categorical_seed17": {
+      "parameter_count": 66601862,
+      "weight_bytes": 266443579,
+      "cpu": {
+        "cold_model_load_seconds": 1.0879718,
+        "short_words": 1,
+        "short_median_seconds": 0.0158776,
+        "median_words": 39,
+        "median_median_seconds": 0.0362609,
+        "long_words": 721,
+        "long_windows": 2,
+        "long_median_seconds": 0.6075234,
+        "batch_size": 8,
+        "batch_seconds": 2.0466415,
+        "batch_emails_per_second": 3.9088429,
+        "peak_process_ram_bytes": 1412337664
+      },
+      "cuda_rtx_5070": {
+        "cold_model_load_seconds": 1.3402332,
+        "short_words": 1,
+        "short_median_seconds": 0.0079504,
+        "median_words": 39,
+        "median_median_seconds": 0.0129814,
+        "long_words": 721,
+        "long_windows": 2,
+        "long_median_seconds": 0.0785509,
+        "batch_size": 8,
+        "batch_seconds": 0.1481371,
+        "batch_emails_per_second": 54.0040274,
+        "peak_process_ram_bytes": 1900933120,
+        "peak_cuda_allocated_bytes": 427107328
+      }
+    },
+    "gliner2_5_small_zero_shot": {
+      "revision": "7132dc4561c3f94563c6147e75ffa8ef34c4964a",
+      "weight_sha256": "4ee982787ace270d4bf15dbcb28ced38e0aa201372347114ceedd6336055de2b",
+      "parameter_count": 73881879,
+      "weight_bytes": 295567700,
+      "schema_pack_count": 7,
+      "cpu": {
+        "cold_model_load_seconds": 11.770725,
+        "process_start_to_loaded_seconds": 41.825323,
+        "short_percentile": "p10",
+        "short_words": 6,
+        "short_median_seconds": 0.9269276,
+        "median_percentile": "p50",
+        "median_words": 39,
+        "median_median_seconds": 1.0940456,
+        "long_percentile": "p90",
+        "long_words": 144,
+        "long_median_seconds": 1.6069519,
+        "batch_size": 8,
+        "batch_order": "sequential",
+        "batch_word_count_min": 6,
+        "batch_word_count_max": 144,
+        "batch_median_seconds": 9.5048551,
+        "batch_emails_per_second": 0.8416751,
+        "peak_process_ram_bytes": 1471385600,
+        "repetitions_per_single_message": 2,
+        "silently_truncated_messages": 0
+      },
+      "cuda_rtx_5070": {
+        "status": "not_measured",
+        "reason": "Awaiting availability of shared GPU for an isolated timing run."
+      }
+    }
+  },
+  "timing_notes": {
+    "gliner_message_timing_includes": "window selection, all seven schema passes, extraction, and overlap-record merge",
+    "gliner_warmup": "one excluded full p50 inference pass",
+    "filesystem_cache_flushed": false,
+    "runtime_report": "mailex_extraction_runtime.md"
+  }
+}

@@ -38,6 +38,16 @@ def main():
                 target=dest/name.replace('/','_')
                 target.write_text(json.dumps(data,indent=2)+'\n',encoding='utf-8',newline='\n')
                 files[target.relative_to(ROOT).as_posix()]=hashlib.sha256(target.read_bytes()).hexdigest()
+        history_path=run/'history.json'
+        if history_path.is_file():
+            history=json.loads(history_path.read_text(encoding='utf-8'))
+            # Explicit numeric learning curves let a reviewer inspect fitting
+            # without copying the larger per-epoch evaluator payloads.
+            curve=[{key:epoch[key] for key in ('epoch','loss','seconds','selection_score')}
+                   for epoch in history]
+            target=dest/'training_history.json'
+            target.write_text(json.dumps(curve,indent=2)+'\n',encoding='utf-8',newline='\n')
+            files[target.relative_to(ROOT).as_posix()]=hashlib.sha256(target.read_bytes()).hexdigest()
         index.append({'run':run.name,'weight_sha256':hashlib.sha256((run/'model.pt').read_bytes()).hexdigest(),
                       'weight_bytes':(run/'model.pt').stat().st_size,'public_metadata':files})
     (output/'compact_runs.json').write_text(json.dumps(index,indent=2)+'\n',encoding='utf-8',newline='\n')

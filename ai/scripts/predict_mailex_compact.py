@@ -56,6 +56,10 @@ def main():
             parser.error("TEST threshold differs from the frozen threshold")
         if (Path(args.checkpoint) / "model.pt").resolve() not in {(root / path).resolve() for path in finalist["model_weights"]}:
             parser.error("TEST checkpoint is not a frozen finalist weight file")
+        if (Path(args.checkpoint) / "config.json").resolve() not in {(root / path).resolve() for path in finalist["preprocessing"]}:
+            parser.error("TEST checkpoint configuration is not a frozen artifact")
+        if args.device != finalist.get("inference_device"):
+            parser.error("TEST inference device differs from the frozen device")
         reserve_test_run(args.selection_lock, args.finalist_id)
     else:
         threshold = args.threshold
