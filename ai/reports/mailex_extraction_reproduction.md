@@ -68,13 +68,23 @@ smaller representable trainer-validation view.
 
 ## TEST protocol
 
-Do not run TEST while selection is pending. The supervisor must first commit
-the source-free selection lock with weight, schema, code, preprocessing,
+**The actual two-finalist TEST is complete and closed.** The source-free lock
+was committed and pushed as `f6b4bde` before inference. Aggregate metrics and
+receipts are linked in [the final report](mailex_extraction_final.md).
+
+The enforced protocol first commits the source-free selection lock with
+weight, schema, code, preprocessing,
 evaluator and threshold hashes. Both inference CLIs then require that lock
 and its exact finalist identifier, input and output paths. An exclusive
 private reservation is created before TEST rows are parsed. The evaluator
 creates a separate one-time receipt with the saved prediction hash.
 
-After final scoring, review the committed lock and aggregate receipts. Do not
+The completed result exporter `ai/scripts/export_mailex_extraction_test_results.py`
+checks saved receipt/metric equality, gold/prediction byte hashes and the
+pre-TEST committed lock. It republishes numerical aggregates without decoding
+source rows, inference or rescoring. Re-exporting these receipts is safe;
+re-evaluating TEST is not part of reproduction.
+
+Review the committed lock and aggregate receipts. Do not
 rerun TEST to reproduce a number, recalibrate thresholds from it, or use the
 closed V1 TEST/protected V2 sources for this benchmark.

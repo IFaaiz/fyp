@@ -57,4 +57,6 @@ The model card and primary API guides are [GLiNER2.5-small](https://huggingface.
 [training data](https://github.com/fastino-ai/GLiNER2/blob/main/tutorial/8-train_data.md),
 and [training](https://github.com/fastino-ai/GLiNER2/blob/main/tutorial/9-training.md).
 
-TEST remains sealed pending the committed selection lock.
+Neither zero-shot variant was run on TEST. The two fitted finalists were
+locked in commit `f6b4bde` and evaluated once; see
+[the final comparison](mailex_extraction_final.md).

@@ -1,38 +1,395 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "split": "fyp_safe_dev",
   "safe_dev_sha256": "fdab07806e641b916975db4324395cde8a30b6942cf775ef38b575f39c9b677d",
+  "messages": 361,
   "test_rows_read": false,
   "source_text_or_message_ids_included": false,
-  "models": {
+  "absolute_checkpoint_paths_included": false,
+  "final_runtime_candidates": {
+    "compact_categorical_seed23_threshold_0.7": {
+      "selection_status": "selected compact checkpoint",
+      "weight_sha256": "e02537b0bb70a45f94d6714a807499ea316661fddf08dc4a7ec4ad9743e2d05c",
+      "weight_bytes": 266443579,
+      "parameter_count": 66601862,
+      "sample_selection": "same canonical safe DEV minimum, median, maximum, and batch-eight messages as GLiNER",
+      "cpu": {
+        "device": "cpu",
+        "cuda_device": null,
+        "cold_model_load_seconds": 0.8640396999981022,
+        "process_import_plus_ready_seconds": 5.74692949999735,
+        "cold_load_policy": "fresh process; OS filesystem cache not flushed",
+        "warmup_policy": "one median-message predict call before timing; verified from benchmark_mailex_compact_runtime.py",
+        "batch_execution": "encoder windows batched; event decoding runs per message; verified from compact.py",
+        "runtime_grounding_counter_recorded": false,
+        "weight_sha256": "e02537b0bb70a45f94d6714a807499ea316661fddf08dc4a7ec4ad9743e2d05c",
+        "weight_bytes": 266443579,
+        "parameter_count": 66601862,
+        "single_email": [
+          {
+            "length_group": "short",
+            "source_words": 1,
+            "windows": 1,
+            "repetitions_seconds": [
+              0.01151380000374047,
+              0.010657300001184922,
+              0.010523400000238325,
+              0.01130869999906281,
+              0.013706099998671561
+            ],
+            "median_seconds": 0.01130869999906281
+          },
+          {
+            "length_group": "median",
+            "source_words": 39,
+            "windows": 1,
+            "repetitions_seconds": [
+              0.02550169999449281,
+              0.024790600000414997,
+              0.02565889999823412,
+              0.024875800001609605,
+              0.026225200002954807
+            ],
+            "median_seconds": 0.02550169999449281
+          },
+          {
+            "length_group": "long",
+            "source_words": 721,
+            "windows": 2,
+            "repetitions_seconds": [
+              0.3829584999984945,
+              0.3998917000062647,
+              0.3762139999962528,
+              0.40088770000147633,
+              0.3931481000036001
+            ],
+            "median_seconds": 0.3931481000036001
+          }
+        ],
+        "batch_size": 8,
+        "batch_seconds": 1.531547300000966,
+        "batch_emails_per_second": 5.223475631470836,
+        "dev_messages": 361,
+        "dev_max_source_words": 721,
+        "silently_truncated_messages": 0,
+        "peak_cuda_allocated_bytes": null,
+        "peak_process_ram_bytes": 1416708096,
+        "peak_process_commit_bytes": 1863020544
+      },
+      "cuda_rtx_5070": {
+        "device": "cuda",
+        "cuda_device": "NVIDIA GeForce RTX 5070",
+        "cold_model_load_seconds": 1.035960300003353,
+        "process_import_plus_ready_seconds": 5.952734800004691,
+        "cold_load_policy": "fresh process; OS filesystem cache not flushed",
+        "warmup_policy": "one median-message predict call before timing; verified from benchmark_mailex_compact_runtime.py",
+        "batch_execution": "encoder windows batched; event decoding runs per message; verified from compact.py",
+        "runtime_grounding_counter_recorded": false,
+        "weight_sha256": "e02537b0bb70a45f94d6714a807499ea316661fddf08dc4a7ec4ad9743e2d05c",
+        "weight_bytes": 266443579,
+        "parameter_count": 66601862,
+        "single_email": [
+          {
+            "length_group": "short",
+            "source_words": 1,
+            "windows": 1,
+            "repetitions_seconds": [
+              0.02019999999902211,
+              0.0048936000021058135,
+              0.006044300003850367,
+              0.006342600005154964,
+              0.00625650000438327
+            ],
+            "median_seconds": 0.00625650000438327
+          },
+          {
+            "length_group": "median",
+            "source_words": 39,
+            "windows": 1,
+            "repetitions_seconds": [
+              0.013595800002804026,
+              0.01336069999524625,
+              0.0222178999974858,
+              0.028783000001567416,
+              0.01408639999863226
+            ],
+            "median_seconds": 0.01408639999863226
+          },
+          {
+            "length_group": "long",
+            "source_words": 721,
+            "windows": 2,
+            "repetitions_seconds": [
+              0.0631613000005018,
+              0.07009129999642028,
+              0.07301410000218311,
+              0.07220550000056392,
+              0.073583299999882
+            ],
+            "median_seconds": 0.07220550000056392
+          }
+        ],
+        "batch_size": 8,
+        "batch_seconds": 0.11150349999661557,
+        "batch_emails_per_second": 71.74662678967765,
+        "dev_messages": 361,
+        "dev_max_source_words": 721,
+        "silently_truncated_messages": 0,
+        "peak_cuda_allocated_bytes": 427107328,
+        "peak_process_ram_bytes": 1889927168,
+        "peak_process_commit_bytes": 3297288192
+      }
+    },
+    "gliner2_5_small_seed42_best_threshold_0.2": {
+      "selection_status": "fine-tuned GLiNER runtime candidate",
+      "weight_sha256": "907904ef8c171c9ca9aa61f33856ce2819882bccd5d077c44ce4343b4fe437a4",
+      "weight_bytes": 295567700,
+      "parameter_count": 73881879,
+      "threshold": 0.2,
+      "schema_pack_count": 7,
+      "sample_selection": "same min/median/max and evenly spaced batch-eight indices as the compact benchmark over canonical safe DEV rows",
+      "cpu": {
+        "model": "fastino/gliner2.5-small-v1",
+        "model_label": "gliner_ft_seed42_best",
+        "revision": "7132dc4561c3f94563c6147e75ffa8ef34c4964a",
+        "device": "cpu",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+        "torch_version": "2.11.0+cu128",
+        "torch_cpu_threads": 4,
+        "cuda_device": null,
+        "safe_dev_sha256": "fdab07806e641b916975db4324395cde8a30b6942cf775ef38b575f39c9b677d",
+        "safe_train_sha256": "9672bcd3c2ee4453cf8919735647616204136e0324c36cc49a399bbabee4f333",
+        "weight_sha256": "907904ef8c171c9ca9aa61f33856ce2819882bccd5d077c44ce4343b4fe437a4",
+        "weight_bytes": 295567700,
+        "parameter_count": 73881879,
+        "cold_model_load_seconds": 4.486400299996603,
+        "process_start_to_model_loaded_seconds": 9.417712700000266,
+        "process_start_to_schemas_ready_seconds": 9.606755600005272,
+        "schema_prepare_seconds": 0.014980600004491862,
+        "schema_pack_count": 7,
+        "native_prediction_row_conversion_included": true,
+        "prediction_rows_retained": false,
+        "timing_includes": "per-message schema-specific window building, all 7 schema passes, model extraction, overlap record merge, native event/argument mapping, and strict source-offset grounding checks",
+        "warmup_policy": "one excluded full median inference pass; filesystem cache not flushed",
+        "threshold": 0.2,
+        "single_email": [
+          {
+            "length_group": "short",
+            "source_word_count": 1,
+            "repetitions_seconds": [
+              0.6809841000067536,
+              0.6896284999966156
+            ],
+            "median_seconds": 0.6853063000016846,
+            "schema_packs": 7,
+            "windows_across_schema_packs": 7,
+            "max_encoder_subwords": 313,
+            "native_conversion_diagnostics": {
+              "records": 0,
+              "grounded_trigger_segments": 0,
+              "grounded_argument_segments": 0,
+              "ungrounded_segments": 0,
+              "events_without_grounded_trigger": 0
+            }
+          },
+          {
+            "length_group": "median",
+            "source_word_count": 39,
+            "repetitions_seconds": [
+              0.8406178000004729,
+              0.8162714000063716
+            ],
+            "median_seconds": 0.8284446000034222,
+            "schema_packs": 7,
+            "windows_across_schema_packs": 7,
+            "max_encoder_subwords": 354,
+            "native_conversion_diagnostics": {
+              "records": 9,
+              "grounded_trigger_segments": 9,
+              "grounded_argument_segments": 2,
+              "ungrounded_segments": 0,
+              "events_without_grounded_trigger": 0
+            }
+          },
+          {
+            "length_group": "long",
+            "source_word_count": 721,
+            "repetitions_seconds": [
+              5.877453699999023,
+              5.956391599997005
+            ],
+            "median_seconds": 5.916922649998014,
+            "schema_packs": 7,
+            "windows_across_schema_packs": 31,
+            "max_encoder_subwords": 511,
+            "native_conversion_diagnostics": {
+              "records": 5,
+              "grounded_trigger_segments": 5,
+              "grounded_argument_segments": 0,
+              "ungrounded_segments": 0,
+              "events_without_grounded_trigger": 0
+            }
+          }
+        ],
+        "batch_size": 8,
+        "batch_seconds_samples": [
+          11.73636009999609,
+          11.929886300000362
+        ],
+        "batch_median_seconds": 11.833123199998226,
+        "batch_emails_per_second": 0.6760683434785162,
+        "batch_window_counts": [
+          80,
+          80
+        ],
+        "batch_native_conversion_diagnostics": {
+          "records": 30,
+          "grounded_trigger_segments": 30,
+          "grounded_argument_segments": 10,
+          "ungrounded_segments": 0,
+          "events_without_grounded_trigger": 0
+        },
+        "batch_word_count_min": 1,
+        "batch_word_count_max": 721,
+        "sample_selection": "same min/median/max and evenly spaced batch-eight indices as the compact benchmark over canonical safe DEV rows",
+        "encoder_position_limit": 512,
+        "silently_truncated_messages": 0,
+        "peak_cuda_allocated_bytes": null,
+        "peak_process_ram_bytes": 1412247552,
+        "current_process_ram_bytes": 1212194816
+      },
+      "cuda_rtx_5070": {
+        "model": "fastino/gliner2.5-small-v1",
+        "model_label": "gliner_ft_seed42_best",
+        "revision": "7132dc4561c3f94563c6147e75ffa8ef34c4964a",
+        "device": "cuda",
+        "platform": "Windows-11-10.0.26300-SP0",
+        "processor": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+        "torch_version": "2.11.0+cu128",
+        "torch_cpu_threads": 4,
+        "cuda_device": "NVIDIA GeForce RTX 5070",
+        "safe_dev_sha256": "fdab07806e641b916975db4324395cde8a30b6942cf775ef38b575f39c9b677d",
+        "safe_train_sha256": "9672bcd3c2ee4453cf8919735647616204136e0324c36cc49a399bbabee4f333",
+        "weight_sha256": "907904ef8c171c9ca9aa61f33856ce2819882bccd5d077c44ce4343b4fe437a4",
+        "weight_bytes": 295567700,
+        "parameter_count": 73881879,
+        "cold_model_load_seconds": 4.907946400002402,
+        "process_start_to_model_loaded_seconds": 9.969239500002004,
+        "process_start_to_schemas_ready_seconds": 10.146997199997713,
+        "schema_prepare_seconds": 0.012975199999345932,
+        "schema_pack_count": 7,
+        "native_prediction_row_conversion_included": true,
+        "prediction_rows_retained": false,
+        "timing_includes": "per-message schema-specific window building, all 7 schema passes, model extraction, overlap record merge, native event/argument mapping, and strict source-offset grounding checks",
+        "warmup_policy": "one excluded full median inference pass; filesystem cache not flushed",
+        "threshold": 0.2,
+        "single_email": [
+          {
+            "length_group": "short",
+            "source_word_count": 1,
+            "repetitions_seconds": [
+              0.2981874000033713,
+              0.28924869999900693
+            ],
+            "median_seconds": 0.2937180500011891,
+            "schema_packs": 7,
+            "windows_across_schema_packs": 7,
+            "max_encoder_subwords": 313,
+            "native_conversion_diagnostics": {
+              "records": 0,
+              "grounded_trigger_segments": 0,
+              "grounded_argument_segments": 0,
+              "ungrounded_segments": 0,
+              "events_without_grounded_trigger": 0
+            }
+          },
+          {
+            "length_group": "median",
+            "source_word_count": 39,
+            "repetitions_seconds": [
+              0.8587423999997554,
+              0.8900591999990866
+            ],
+            "median_seconds": 0.874400799999421,
+            "schema_packs": 7,
+            "windows_across_schema_packs": 7,
+            "max_encoder_subwords": 354,
+            "native_conversion_diagnostics": {
+              "records": 9,
+              "grounded_trigger_segments": 9,
+              "grounded_argument_segments": 2,
+              "ungrounded_segments": 0,
+              "events_without_grounded_trigger": 0
+            }
+          },
+          {
+            "length_group": "long",
+            "source_word_count": 721,
+            "repetitions_seconds": [
+              2.5857652999984566,
+              2.7000202999988687
+            ],
+            "median_seconds": 2.6428927999986627,
+            "schema_packs": 7,
+            "windows_across_schema_packs": 31,
+            "max_encoder_subwords": 511,
+            "native_conversion_diagnostics": {
+              "records": 5,
+              "grounded_trigger_segments": 5,
+              "grounded_argument_segments": 0,
+              "ungrounded_segments": 0,
+              "events_without_grounded_trigger": 0
+            }
+          }
+        ],
+        "batch_size": 8,
+        "batch_seconds_samples": [
+          7.213650300000154,
+          7.268439500003296
+        ],
+        "batch_median_seconds": 7.241044900001725,
+        "batch_emails_per_second": 1.1048129255486447,
+        "batch_window_counts": [
+          80,
+          80
+        ],
+        "batch_native_conversion_diagnostics": {
+          "records": 30,
+          "grounded_trigger_segments": 30,
+          "grounded_argument_segments": 10,
+          "ungrounded_segments": 0,
+          "events_without_grounded_trigger": 0
+        },
+        "batch_word_count_min": 1,
+        "batch_word_count_max": 721,
+        "sample_selection": "same min/median/max and evenly spaced batch-eight indices as the compact benchmark over canonical safe DEV rows",
+        "encoder_position_limit": 512,
+        "silently_truncated_messages": 0,
+        "peak_cuda_allocated_bytes": 361869824,
+        "peak_process_ram_bytes": 1970532352,
+        "current_process_ram_bytes": 1968435200
+      }
+    }
+  },
+  "historical_measurements": {
     "compact_categorical_seed17": {
       "parameter_count": 66601862,
       "weight_bytes": 266443579,
-      "sample_selection": "same canonical safe DEV min/median/max row indices and batch-eight cohort as GLiNER",
       "cpu": {
         "cold_model_load_seconds": 1.0879718,
-        "short_words": 1,
         "short_median_seconds": 0.0158776,
-        "median_words": 39,
         "median_median_seconds": 0.0362609,
-        "long_words": 721,
-        "long_windows": 2,
         "long_median_seconds": 0.6075234,
-        "batch_size": 8,
         "batch_seconds": 2.0466415,
         "batch_emails_per_second": 3.9088429,
         "peak_process_ram_bytes": 1412337664
       },
       "cuda_rtx_5070": {
         "cold_model_load_seconds": 1.3402332,
-        "short_words": 1,
         "short_median_seconds": 0.0079504,
-        "median_words": 39,
         "median_median_seconds": 0.0129814,
-        "long_words": 721,
-        "long_windows": 2,
         "long_median_seconds": 0.0785509,
-        "batch_size": 8,
         "batch_seconds": 0.1481371,
         "batch_emails_per_second": 54.0040274,
         "peak_process_ram_bytes": 1900933120,
@@ -44,45 +401,33 @@
       "weight_sha256": "4ee982787ace270d4bf15dbcb28ced38e0aa201372347114ceedd6336055de2b",
       "parameter_count": 73881879,
       "weight_bytes": 295567700,
-      "schema_pack_count": 7,
       "cpu": {
         "cold_model_load_seconds": 6.7933692,
-      "process_start_to_result_serialization_seconds": 69.1590027,
-        "short_words": 1,
+        "process_start_to_result_serialization_seconds": 69.1590027,
         "short_median_seconds": 0.9249908,
-        "median_words": 39,
         "median_median_seconds": 1.1301228,
-        "long_words": 721,
-        "long_windows_across_schema_packs": 31,
-        "long_max_encoder_subwords": 511,
         "long_median_seconds": 8.58315755,
-        "batch_size": 8,
-        "batch_order": "sequential",
-        "batch_sample_selection": "same eight canonical safe DEV row indices as the compact benchmark",
-        "batch_word_count_min": 1,
-        "batch_word_count_max": 721,
-        "batch_windows_across_schema_packs": 80,
         "batch_median_seconds": 16.2594756,
         "batch_emails_per_second": 0.4920208,
         "peak_process_ram_bytes": 1467899904,
-        "repetitions_per_single_message": 2,
-      "silently_truncated_messages": 0,
-      "timing_scope": "historical base-checkpoint measurement; includes window building, seven schema passes, extraction, and overlap merge, but not native event/argument mapping or grounding validation"
+        "timing_scope": "historical; excludes native prediction-row conversion and grounding"
       },
       "cuda_rtx_5070": {
         "status": "not_measured",
-        "reason": "The isolated GPU timing slot is reserved for the final selected checkpoint; no zero-shot GPU latency was inferred."
+        "reason": "GPU time was reserved for the final selected checkpoint."
       }
     }
   },
-  "timing_notes": {
-    "gliner_historical_cpu_timing_includes": "window selection, all seven schema passes, extraction, and overlap-record merge; excludes native event/argument mapping and source-offset grounding",
-    "gliner_final_checkpoint_timing_includes": "window selection, all seven schema passes, extraction, overlap-record merge, native event/argument mapping, and source-offset grounding; to be measured after checkpoint selection",
-    "gliner_warmup": "one excluded full median inference pass",
-    "same_message_indices": true,
-    "longest_safe_dev_message_included": true,
-    "gliner_inference_windows_include_all_seven_packs": true,
-    "filesystem_cache_flushed": false,
-    "historical_process_duration_note": "The prior 69.159-second value was sampled during final result serialization after benchmark inference. It is not model readiness time; readiness was not captured in that run."
+  "measurement_notes": {
+    "final_compact_device_outputs_share_selected_weight_hash": true,
+    "final_gliner_device_outputs_share_selected_weight_hash": true,
+    "all_four_final_measurements_use_same_safe_dev_split": true,
+    "gliner_timing_includes_native_record_conversion_and_source_offset_validation": true,
+    "gliner_prediction_rows_retained": false,
+    "batch8_execution": {
+      "compact": "encoder windows batched; event decoding per message",
+      "gliner": "sequential message inference through the seven-schema path"
+    },
+    "filesystem_cache_flushed": false
   }
 }

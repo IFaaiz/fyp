@@ -121,6 +121,6 @@ The official training and natural-record interfaces are documented in
 [tutorial 8](https://github.com/fastino-ai/GLiNER2/blob/main/tutorial/8-train_data.md),
 and [tutorial 9](https://github.com/fastino-ai/GLiNER2/blob/main/tutorial/9-training.md).
 
-No TEST rows or TEST predictions have been read or generated at this stage.
-The full native DEV evaluator selects threshold `0.2` for the best epoch-three
-checkpoint. The committed finalist lock and one-time TEST comparison follow.
+The full native DEV evaluator selected threshold `0.2` for the best epoch-three
+checkpoint. Commit `f6b4bde` froze the finalist before one-time TEST inference
+and evaluation. TEST is now closed; see [the final comparison](mailex_extraction_final.md).

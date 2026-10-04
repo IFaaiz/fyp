@@ -1,24 +1,53 @@
 # MailEx extractor runtime measurements
 
-## Scope
+## Final runtime candidates
 
-These are measured local inference times on the FYP-safe DEV split only. The safe DEV fingerprint is `fdab07806e641b916975db4324395cde8a30b6942cf775ef38b575f39c9b677d`. No TEST rows were read. Timing output contains aggregate measurements only; it does not contain message IDs, text, or predictions.
+These are measured fresh-process inference timings on the FYP-safe DEV split only.
+Both models use the same 1-, 39-, and 721-word messages and same evenly spaced
+eight-message cohort. The compact model uses its selected seed23 checkpoint at
+threshold 0.7. GLiNER uses its best seed42 fine-tuned checkpoint at threshold 0.2.
+No TEST rows were read. Public results contain aggregate timings and source-grounding
+diagnostic counts only; no text, IDs, predictions, or checkpoint paths are included.
 
-Both models use the same three messages and same eight-message cohort: the minimum, median, and maximum length safe DEV messages, plus eight evenly spaced entries from the canonical length-sorted split. The historical GLiNER2.5 Small CPU run used two repetitions at each individual size, one excluded warmup pass, and processed the shared cohort sequentially through the production inference path. Each GLiNER message ran all seven TRAIN-derived schema packs. Its timer covers per-schema window selection, extraction, and overlap-record merging; it does not include native event/argument mapping or source-offset grounding. A corrected benchmark now includes those production steps and accepts an explicit checkpoint path. Final-checkpoint timings are pending until model selection and the GPU training window ends.
+| Model and device | Cold model load | 1-word message | 39-word message | 721-word message | Batch 8 | Emails/s |
+|---|---:|---:|---:|---:|---:|---:|
+| Compact categorical seed23, CPU | 0.864 s | 11.3 ms | 25.5 ms | 0.393 s | 1.532 s | 5.22 |
+| Compact categorical seed23, NVIDIA GeForce RTX 5070 | 1.036 s | 6.3 ms | 14.1 ms | 0.072 s | 0.112 s | 71.75 |
+| GLiNER fine-tuned seed42 best, CPU | 4.486 s | 685.3 ms | 828.4 ms | 5.917 s | 11.833 s | 0.68 |
+| GLiNER fine-tuned seed42 best, NVIDIA GeForce RTX 5070 | 4.908 s | 293.7 ms | 874.4 ms | 2.643 s | 7.241 s | 1.10 |
 
-## Measurements
+GLiNER timing includes all seven TRAIN-derived schema passes, per-message window
+selection, extraction, overlap merge, native event/argument mapping, and strict
+source-offset grounding diagnostics. Its longest message spans 31 windows across
+the seven packs; the batch-eight run spans 80 windows. The measured sample had zero
+ungrounded prediction segments and zero messages silently truncated. Batch-eight
+inference is sequential through the current production API, not parallel batching.
+Compact batches encoder windows, then decodes events per message. Its benchmark
+excludes one warm-up call; these scope details are verified from the benchmark
+and compact encoder code. Its runtime runner does not record a grounding counter.
 
-| Model and device | Cold model load | Short message | Median message | Long message | Eight-message cohort |
-|---|---:|---:|---:|---:|---:|
-| Compact categorical seed 17, CPU | 1.088 s | 15.9 ms (1 word) | 36.3 ms (39 words) | 607.5 ms (721 words, 2 windows) | 2.047 s; 3.91 messages/s |
-| Compact categorical seed 17, RTX 5070 | 1.340 s | 8.0 ms (1 word) | 13.0 ms (39 words) | 78.6 ms (721 words, 2 windows) | 148.1 ms; 54.00 messages/s |
-| GLiNER2.5 Small, CPU | 6.793 s | 925.0 ms (1 word, 7 passes) | 1.130 s (39 words, 7 passes) | 8.583 s (721 words, 31 windows across 7 packs) | 16.259 s; 0.492 messages/s |
-| GLiNER2.5 Small, RTX 5070 | Not measured | — | — | — | — |
+The selected compact checkpoint has 66,601,862 parameters and 266,443,579 weight
+bytes. The fine-tuned GLiNER checkpoint has 73,881,879 parameters and 295,567,700
+weight bytes. The machine-readable JSON includes per-device repeated timings,
+startup/readiness boundaries, window counts, memory peaks, and aggregate grounding
+diagnostics. It contains no absolute checkpoint path.
 
-The compact figures cover the seed 17 candidate checkpoint while final checkpoint selection is pending. That checkpoint has 66,601,862 parameters and 266,443,579 weight bytes. GLiNER2.5 Small has 73,881,879 parameters and 295,567,700 weight bytes. GLiNER CPU peak process working set was 1.468 GB. The historical GLiNER process-duration value of 69.159 s was sampled while serializing results after inference, so it is not readiness time; that run did not capture model readiness. The corrected benchmark records both model-loaded and seven-schema-packs-ready timestamps. Compact peak working set was 1.412 GB on CPU and 1.901 GB on GPU; compact GPU peak allocated device memory was 427 MB.
+## Historical baseline measurements
 
-The GLiNER eight-message result is a sequential cohort, not parallel model batching: the current production path calls `extract` for each message and schema pack. GLiNER GPU timing is not included; the isolated GPU timing is reserved for the final selected checkpoint. The earlier GLiNER CPU numbers are retained as historical measurements with their narrower timing scope. Final checkpoint CPU and GPU results will use the same 1-, 39-, and 721-word messages and batch-eight cohort, with prediction-row grounding included.
+The earlier seed17 compact and zero-shot GLiNER CPU results are retained below as
+historical measurements. Their GLiNER timer predates the native event/argument
+mapping and grounding addition, so it is not directly equivalent to the final
+fine-tuned GLiNER timings above. Its old 69.159-second process duration was sampled
+after inference while serializing the report; it was not model readiness time.
 
-All timings are from fresh benchmark processes, but the operating system file cache was not flushed. The compact and GLiNER short, median, and long measurements use the same message indices. The longest message exercises the full windowing path for both models. Windowing did not silently truncate any measured message.
+| Historical model and device | Cold model load | Short | Median | Long | Batch 8 | Emails/s |
+|---|---:|---:|---:|---:|---:|---:|
+| Compact categorical seed17, CPU | 1.088 s | 15.9 ms | 36.3 ms | 0.608 s | 2.047 s | 3.91 |
+| Compact categorical seed17, RTX 5070 | 1.340 s | 8.0 ms | 13.0 ms | 0.079 s | 0.148 s | 54.00 |
+| GLiNER2.5 Small zero-shot, CPU | 6.793 s | 925.0 ms | 1130.1 ms | 8.583 s | 16.259 s | 0.49 |
 
-The machine-readable aggregate table is in [mailex_extraction_runtime.json](mailex_extraction_runtime.json).
+The earlier pretrained GLiNER Small GPU timing remains not measured. Historical measurements
+also use the same message lengths, but the pretrained Small CPU record excludes native
+conversion and must be treated as a narrower timing scope.
+
+Machine-readable aggregates: [`mailex_extraction_runtime.json`](mailex_extraction_runtime.json).

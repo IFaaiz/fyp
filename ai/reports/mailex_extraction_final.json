@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "completed_local_date": "2026-10-05",
+  "timezone": "Asia/Karachi",
+  "decision": "D",
+  "best_measured_candidate": "compact_selected",
+  "production_ready": false,
+  "next_architecture": "shared DistilBERT encoder + explicit argument span candidates + event-conditioned multi-label role/link scoring",
+  "next_architecture_trained": false,
+  "pre_test_lock_commit": "f6b4bde",
+  "selection_lock_sha256": "e54c69b0192670a10fd90ece92138fd3d1cf58fbfed55808d36043f0cfe34de9",
+  "test_closed": true,
+  "test_inference_runs_per_finalist": 1,
+  "test_scoring_runs_per_finalist": 1,
+  "models": {
+    "compact_selected": {
+      "test_metrics": "mailex_extraction_results/compact_selected_test.metrics.json",
+      "test_receipt": "mailex_extraction_results/compact_selected_test.receipt.json",
+      "prediction_sha256": "4c530ccffd1c4797ff5174668523538712dedb54316eeda2e0ae515a60d0eed2",
+      "event_type_micro_f1": 0.648363252375924,
+      "argument_span_exact_f1": 0.3417501088376143,
+      "argument_span_overlap_f1": 0.4392686112320417,
+      "argument_role_exact_micro_f1": 0.33913800609490646,
+      "record_partial_f1": 0.47223168811283,
+      "record_exact_f1": 0.1995776135163675,
+      "non_source_prediction_segments": 0
+    },
+    "gliner_small_selected": {
+      "test_metrics": "mailex_extraction_results/gliner_small_selected_test.metrics.json",
+      "test_receipt": "mailex_extraction_results/gliner_small_selected_test.receipt.json",
+      "prediction_sha256": "4526b49cd092b673b91d9624d415073b1e78cd498b1ddeccb135f460dd5d352e",
+      "event_type_micro_f1": 0.43412797992471763,
+      "argument_span_exact_f1": 0.23461407684461066,
+      "argument_span_overlap_f1": 0.2563753825229514,
+      "argument_role_exact_micro_f1": 0.2318939136348181,
+      "record_partial_f1": 0.18696608648805071,
+      "record_exact_f1": 0.03513174404015056,
+      "non_source_prediction_segments": 0
+    }
+  },
+  "preservation": {
+    "closed_v1_files_checked": 77,
+    "v2_files_checked": 231,
+    "changed_files": 0,
+    "missing_files": 0,
+    "verification_used_inference": false
+  },
+  "synthetic_tests_passed": 31,
+  "test_source_audit_performed": false,
+  "report": "mailex_extraction_final.md",
+  "private_source_text_or_message_ids_included": false
+}

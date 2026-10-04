@@ -47,8 +47,8 @@ All three LR-2e-5 robustness seeds are complete. Exact role F1 is
 0.341117 mean and 0.003487 sample SD. The declared highest-DEV-role criterion
 selects seed 23, epoch 8, threshold 0.7; there is no ensemble. Its source-level
 100-case audit is complete. Selection by the highest seed score can make DEV
-optimistic; the seed mean is reported separately and TEST remains the final
-one-time comparison.
+optimistic; the seed mean is reported separately. The one-time locked TEST
+comparison is complete in [the final report](mailex_extraction_final.md).
 
 The earlier independent-BCE attempt was rejected after prediction inspection
 showed fragmented BIO spans and excessive events. Its checkpoint is preserved

@@ -97,7 +97,7 @@ record F1 by at least two absolute points, with CPU median latency and peak
 working set no more than twice Small's on the same cohort. No Base result
 will be estimated if that experiment is not justified.
 
-## Measured initial results (DEV only)
+## Historical initial results (DEV only)
 
 The first independent-BCE trial was rejected after actual predictions showed
 severe B/I fragmentation. Exclusive decoding helped, but exact role F1 remained
@@ -107,8 +107,10 @@ The corrected categorical model was fitted for eight epochs on all 2,762 safe
 TRAIN messages, seed 17, encoder LR 2e-5 and head LR 1e-3, batch 8. Epoch 6
 was selected by DEV argument-role exact F1: 30.490% at threshold 0.5. A declared
 four-value DEV grid (0.3, 0.5, 0.7, 0.9) selected 0.7: role F1 33.872%, partial
-record F1 48.798%, exact record F1 17.938%. These are provisional until the
-lower-learning-rate comparison and subject ablation finish.
+record F1 48.798%, exact record F1 17.938%. The subsequent learning-rate
+comparison, subject ablation, robustness seeds and locked one-time TEST are
+complete in [the final report](mailex_extraction_final.md). This section retains
+the original seed-17 result as historical evidence.
 
 The selected weights have SHA-256
 `ac17ba4dbf09a45d9311ef186487b9c9dbc40ecb3bb69d1b3900588313e2c698`;
