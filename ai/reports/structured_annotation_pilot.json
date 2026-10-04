@@ -94,11 +94,22 @@
     "old_TEST_inference_performed": false
   },
   "pending_seed": {
-    "run_id": "v2_train_seed078_20261003",
+    "run_id": "v2_train_seed078_resumed_20261004",
     "sources": 78,
     "selected_policy": "32 source-random TRAIN rows plus 46 lexical-recall candidates from TRAIN only; keywords generate no labels",
     "model": "gpt-6-luna",
     "reasoning": "xhigh",
-    "accepted_claimed": 0
+    "accepted_claimed": 0,
+    "resumed_on": "2026-10-04",
+    "prior_interrupted_run": "v2_train_seed078_20261003",
+    "prior_interrupted_run_completed_envelopes": 0,
+    "sources_unchanged_on_resume": true
+  },
+  "semantic_train_screening": {
+    "sources_computationally_screened": 4285,
+    "views_encoded": 5923,
+    "source_read_annotations_claimed": 0,
+    "evaluation_consumed": false,
+    "report": "structured_semantic_screening.json"
   }
 }

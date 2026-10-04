@@ -1,6 +1,6 @@
 # New AI annotation progress
 
-Date: 2026-10-03
+Updated: 2026-10-04
 Scope: structured V2 review workflow and source-bound candidate preparation. This report contains aggregate counts and synthetic contract-test results only; it contains no corpus text or annotations.
 
 ## Source boundary
@@ -38,7 +38,15 @@ Human-gold labels: **0**. Accepted EVAL annotations and new evaluation predictio
 
 Root excluded four additional rows after C: two insufficient scope judgments, one omitted current delivery act, and one forwarded-header-only current view. Original proposals remain private and preserved. A new 78-source TRAIN-only seed assignment combines the first 32 random candidates and 46 lexical-recall candidates with fresh independent reviewers. Recall words generate no labels. Its acceptance remains pending; it is not counted in the 16 accepted rows.
 
+The 78-source review was interrupted before any complete A/B/C preview envelope was saved. On 2026-10-04, root prepared `v2_train_seed078_resumed_20261004` with the actual new reviewer identities and verified identical source order, hashes and bundle. Prior drafts remain preserved; the resumed reviewers must independently read the full assigned sources. Incomplete drafts and read-progress notes cannot be ingested or counted as acceptance.
+
 Details and hashes: `structured_annotation_pilot.json`.
+
+## Semantic TRAIN retrieval
+
+The cached, unmodified `all-MiniLM-L6-v2` encoder screened all **4,285 isolated TRAIN candidates** across nine fixed synthetic primitive/negative queries on 2026-10-03. Head, middle and tail retrieval windows produced 5,923 encoded views. Each query ranks sources by its maximum window similarity; round-robin selection produces a unique diverse review order. This supplies semantic retrieval alongside the initial lexical recall. It is computational screening, not 4,285 source-read AI annotations or accepted labels.
+
+Root verified source, boundary, global-index, score and encoder hashes and all ranking permutations after execution. Supplying the frozen evaluation file failed at the TRAIN-file hash check before text decoding or encoder inference. No old experiment model, evaluation source text, human label or accepted annotation informed retrieval. The encoder was loaded from existing local bytes with network loading disabled. Partial windows can emphasize quoted history; reviewers must read complete assigned messages and determine current scope/functions independently. Private scores and rankings remain under `ai/data`; `structured_semantic_screening.json` contains only aggregate methods and hashes.
 
 ## Root verification update
 
