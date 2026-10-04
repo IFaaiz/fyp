@@ -195,7 +195,7 @@ def _check_authorization(auth: Any, manifest: Any) -> None:
         raise TrainingGateError("frozen evaluation boundary is not the same bytes as the partition manifest")
 
 
-def _source_message_text(row: Mapping[str, Any]) -> str:
+def _source_message_text(row: Mapping[str, Any], *, include_subject: bool = True) -> str:
     sources = row.get("sources")
     source_id = row.get("current_source_id")
     current = sources.get(source_id) if isinstance(sources, Mapping) and isinstance(source_id, str) else None
@@ -228,7 +228,7 @@ def _source_message_text(row: Mapping[str, Any]) -> str:
             parts.append(message[start:end])
             previous_end = end
         authored = " ".join(parts)
-    return f"{subject}\n{authored}".strip()
+    return (f"{subject}\n{authored}" if include_subject else authored).strip()
 
 
 def _unbounded_speech_history(row: Mapping[str, Any]) -> bool:
@@ -442,6 +442,7 @@ def prepare_training_examples(rows: Sequence[Mapping[str, Any]]) -> PreparedExam
     speech_targets: list[tuple[str, ...]] = []
     speech_history_quarantined_rows = 0
     seen_inputs: dict[str, tuple[str, tuple[str, ...]]] = {}
+    seen_speech_inputs: dict[str, tuple[str, ...]] = {}
     for index, row in enumerate(rows):
         if not isinstance(row, Mapping):
             raise TrainingGateError(f"row {index} must be an object")
@@ -474,7 +475,17 @@ def prepare_training_examples(rows: Sequence[Mapping[str, Any]]) -> PreparedExam
             if _unbounded_speech_history(row):
                 speech_history_quarantined_rows += 1
             else:
-                speech_texts.append(text)
+                # Thread subjects can retain an earlier request. Current-act
+                # features use authored body text only, counted independently
+                # of subjects so subject variants cannot inflate head support.
+                speech_text = _source_message_text(row, include_subject=False)
+                speech_key = " ".join(speech_text.split())
+                if speech_key in seen_speech_inputs:
+                    if seen_speech_inputs[speech_key] != target[1]:
+                        raise TrainingGateError("identical normalized speech inputs have conflicting primitive targets")
+                    continue
+                seen_speech_inputs[speech_key] = target[1]
+                speech_texts.append(speech_text)
                 speech_targets.append(target[1])
     return PreparedExamples(tuple(scope_texts), tuple(scope_targets), tuple(speech_texts), tuple(speech_targets),
                             speech_history_quarantined_rows)
@@ -604,9 +615,9 @@ def fit_and_save_baselines(
         "minimum_per_class": preflight.minimum_per_class,
         "training_rows": len(preflight.prepared.scope_texts),
         "authorized_export_rows": len(authorized_export.rows),
-        "duplicate_input_policy": "count whitespace-normalized subject/authored-message input once; conflicting targets fail closed",
+        "duplicate_input_policy": "scope: unique normalized subject/body; speech: unique normalized authored body; conflicting targets fail closed",
         "speech_act_rows": len(preflight.prepared.speech_texts),
-        "speech_history_policy": "exclude known retained-history markers without explicit authored_ranges; heuristic is not exhaustive",
+        "speech_history_policy": "body-only features; exclude known retained-history markers without explicit authored_ranges; heuristic is not exhaustive",
         "trained_speech_acts": list(preflight.supported_speech_acts),
         "untrained_speech_acts": dict(preflight.unsupported_speech_acts),
         "class_counts": dict(preflight.counts),

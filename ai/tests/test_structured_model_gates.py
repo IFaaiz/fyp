@@ -505,6 +505,29 @@ class StructuredModelGateTests(unittest.TestCase):
         self.assertEqual(prepared.speech_history_quarantined_rows, 0)
         self.assertNotIn("Original Message", prepared.speech_texts[0])
 
+    def test_old_forwarded_subject_does_not_enter_current_speech_features(self):
+        row = _row(text="Please send the plan.")
+        row["sources"][row["current_source_id"]]["subject"] = "Fwd: Please approve the old request"
+        row["subject"] = "Fwd: Please approve the old request"
+        prepared = prepare_training_examples([row])
+        self.assertIn("old request", prepared.scope_texts[0])
+        self.assertEqual(prepared.speech_texts, ("Please send the plan.",))
+        self.assertEqual(prepared.speech_targets, (("REQUEST",),))
+
+    def test_subject_variants_cannot_inflate_body_only_speech_support(self):
+        first = _row("first")
+        second = _row("second")
+        second["sources"]["second"]["subject"] = "Project alternate subject"
+        second["subject"] = "Project alternate subject"
+        prepared = prepare_training_examples([first, second])
+        self.assertEqual(len(prepared.scope_texts), 2)
+        self.assertEqual(len(prepared.speech_texts), 1)
+        conflict = _row("conflict", speech_act="INFORM")
+        conflict["sources"]["conflict"]["subject"] = "Project third subject"
+        conflict["subject"] = "Project third subject"
+        with self.assertRaisesRegex(TrainingGateError, "identical normalized speech inputs"):
+            prepare_training_examples([first, conflict])
+
     def test_duplicate_model_inputs_cannot_inflate_support_or_hide_conflicting_targets(self):
         rows = [_row(f"copy-{index}") for index in range(25)]
         prepared = prepare_training_examples(rows)

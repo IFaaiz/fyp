@@ -52,7 +52,7 @@ Root verified source, boundary, global-index, score and encoder hashes and all r
 
 All **137 focused tests** passed, including 53 mapper, 11 workflow, 21 model-gate and 12 preserved Enron parser tests. The 77-file closed-V1 integrity check passed with no changed or missing files, and no old TEST inference or training was performed.
 
-The subsequent 2026-10-04 model-input safeguard passed all 23 model-gate tests, including two new retained-history regressions. Both earlier real exports passed the updated provenance loader/preflight with unchanged class shortages. No model fit followed these checks.
+The subsequent 2026-10-04 model-input safeguards passed all 25 model-gate tests. Known unbounded body history is quarantined from speech fitting; speech features exclude subjects and count repeated authored bodies once even across different subjects. Scope retains subject context. Regressions cover history markers, exact authored offsets, forwarded subjects and conflicting body targets. Both earlier real exports passed the updated provenance loader/preflight with unchanged class shortages. No model fit followed these checks.
 
 Actual source review exposed two defects. DEADLINE previously needed a redundant speech act targeting the due relation; the mapper now derives it from a validated current date/target relation. Status previously called incremental finalization and wrote a provisional decision before C was complete; status is now read-only and finalization requires the complete batch. Thirteen partial artifacts from the affected second run were preserved in a private recovery directory; no training export existed at that recovery point. The repaired run subsequently finalized and exported successfully.
 
