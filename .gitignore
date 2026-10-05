@@ -19,3 +19,7 @@ ai/data/raw/bc3/
 ai/data/raw/cerec/
 ai/data/raw/cspace/
 ai/data/raw/avocado/
+
+# Sites source checkout and platform/runtime caches; sanitized app source is
+# mirrored separately under apps/annotation-review for GitHub review.
+site-workspaces/

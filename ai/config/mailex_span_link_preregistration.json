@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "experiment_id": "mailex_native_span_link_oracle_v1",
+  "status": "preregistered_pending_commit",
+  "purpose": "One bounded architecture diagnostic: test whether explicit predicted argument spans with gold-event-conditioned role/link scoring improves native MailEx argument structure over the compact BIO model.",
+  "scope": {
+    "split_access": ["train", "dev"],
+    "test_access": "prohibited",
+    "protected_or_private_test_access": "prohibited",
+    "diagnostic_type": "gold-type-and-gold-trigger-conditioned oracle structural diagnostic; not an end-to-end event detector and not the final FYP model",
+    "training_data": {
+      "path": "ai/data/experiments/mailex_extraction_v1/train_fyp_safe.jsonl",
+      "sha256": "9672bcd3c2ee4453cf8919735647616204136e0324c36cc49a399bbabee4f333",
+      "messages": 2762,
+      "events": 5729,
+      "arguments": 12482
+    },
+    "development_data": {
+      "path": "ai/data/experiments/mailex_extraction_v1/dev_fyp_safe.jsonl",
+      "sha256": "fdab07806e641b916975db4324395cde8a30b6942cf775ef38b575f39c9b677d",
+      "messages": 361,
+      "events": 828,
+      "arguments": 1758
+    },
+    "span_preflight": {
+      "train_argument_groups_single_segment_and_exact_token_aligned": 12482,
+      "train_argument_groups_total": 12482,
+      "dev_argument_groups_single_segment_and_exact_token_aligned": 1758,
+      "dev_argument_groups_total": 1758,
+      "fixed_span_width_limit": null,
+      "evaluation_policy": "score all native gold argument records; candidate misses remain false negatives"
+    }
+  },
+  "architecture": {
+    "family": "one fine-tuned shared DistilBERT encoder with explicit contiguous-span proposal and shared event-conditioned multi-label argument-link scoring",
+    "encoder": "distilbert-base-uncased",
+    "encoder_revision": "12040accade4e8a0f71eabdb258fecc2e7e948be",
+    "heads": [
+      "independent token start and end boundary logits",
+      "span representation from start, end, and mean token vectors with a learned span-presence score",
+      "event-conditioned multi-label link scorer over the TRAIN-derived native (role, exact-case qualifier) inventory"
+    ],
+    "conditioning": "At DEV, supply each native gold event type and trigger embedding to isolate argument span and event-link quality. Event IDs are carried only as output alignment keys and are not model features.",
+    "candidate_generation": {
+      "top_boundary_positions_per_side": 32,
+      "maximum_contiguous_candidates_per_message": 96,
+      "maximum_span_width_tokens": null,
+      "inference_gold_argument_candidates": false,
+      "shared_argument_links": true
+    },
+    "native_contract": "Retain case-sensitive native event types, role labels, qualifiers, event IDs, and half-open character offsets. A predicted span may link to more than one gold event. No source-text repair or offset relocation."
+  },
+  "preprocessing": {
+    "tokenizer": "local tokenizer matching the pinned DistilBERT revision",
+    "max_wordpieces_per_window": 512,
+    "overlap_stride_wordpieces": 128,
+    "coverage": "overlapping windows must represent every nonempty source token; fail closed on any unrepresented token",
+    "zero_width_tokens": "exclude only from model view; keep source text and native offsets unchanged",
+    "span_offsets": "map predicted token boundaries directly to original half-open character offsets",
+    "role_inventory": "all exact (role, qualifier-or-empty-string) keys observed in TRAIN; no case folding or qualifier normalization beyond null to empty string",
+    "source_annotations": "Do not change native source flags, labels, or BIO conversion."
+  },
+  "training": {
+    "seeds": [17, 23, 41],
+    "optimizer": "AdamW",
+    "encoder_learning_rate": 0.00002,
+    "head_learning_rate": 0.001,
+    "weight_decay": 0.01,
+    "batch_size_messages": 4,
+    "max_epochs_per_seed": 6,
+    "early_stopping_patience_epochs": 2,
+    "gradient_clipping_norm": 1.0,
+    "autocast": "bfloat16",
+    "encoder_gradient_checkpointing": true,
+    "negative_sampling": "gold argument spans plus deterministic seed-and-epoch sampled non-gold contiguous spans; all native gold events in the message participate in link supervision; no DEV gold spans are injected at inference",
+    "checkpoint_selection": "highest DEV gold-type-and-gold-trigger argument role exact micro F1 at the fixed 0.5 link threshold; earliest epoch wins ties",
+    "link_threshold": 0.5,
+    "message_order": "shuffle TRAIN rows with Python random seed = run seed + epoch index; no sampler tuning",
+    "allowed_ablations": 0,
+    "allowed_error_analysis_passes": 1
+  },
+  "metrics": {
+    "primary": "score_rows.argument_records.role_exact.micro.f1",
+    "secondary_linked_record": "score_rows.events.record_partial.f1",
+    "baseline_dev_gold_type_trigger_role_exact_f1": 0.461,
+    "baseline_dev_gold_type_trigger_partial_record_f1": 0.681,
+    "success_rule": "mean primary F1 >= 0.50 across all three completed seeds AND mean secondary linked partial-record F1 >= 0.711 across the same three seeds",
+    "summary": "Report all seed scores, mean, and sample standard deviation. No seed omission or post-hoc threshold selection. Use the existing native evaluator with the complete DEV gold rows so unproposed spans count as missed arguments."
+  },
+  "runtime_guard": {
+    "device": "CPU",
+    "cpu_threads": 4,
+    "timing_includes": "tokenization, overlapping-window creation, encoder inference, candidate generation, and event-conditioned role scoring for one message",
+    "fixed_dev_examples": "first DEV row in file order with 39 native tokens; first DEV row at the maximum native-token length (721)",
+    "latency_repetitions": "For each example, perform 3 warmups; measure the 39-token case 25 times and report its median; measure the 721-token case 5 times and report its median.",
+    "median_39_token_dev_message_max_ms": 150,
+    "longest_721_token_dev_message_max_ms": 2000,
+    "checkpoint_weights_max_bytes_decimal": 350000000,
+    "pretraining_gate": "Measure the initialized architecture on the fixed DEV messages before the first optimizer step. Abort all training if any runtime or weight-size guard fails.",
+    "per_seed_gate": "Apply the same CPU latency and actual saved-weight-size limits to each selected checkpoint before starting the next seed. A failure terminates the diagnostic."
+  },
+  "compute_budget": {
+    "device": "one exclusive CUDA GPU",
+    "max_cuda_reserved_bytes": 10737418240,
+    "max_total_gpu_wall_seconds": 3600,
+    "training_deadline_seconds": 3300,
+    "guard_policy": "Check the deadline and CUDA reserved memory during training batches and before each epoch. If all three seeds are not completed within the fixed budget, report INCOMPLETE; do not reduce the seed count or epoch limit and do not launch a variant."
+  },
+  "decision_and_audit": {
+    "miss_rule": "If the preregistered success rule is missed, stop this architecture cycle.",
+    "error_analysis": "One source-bearing DEV review pass after the frozen three-seed run, with only source-free aggregate findings in the public report.",
+    "private_outputs": "Store checkpoints, prediction JSONL, histories with case IDs, and source-bearing error samples under a fresh ignored run directory. Never add email text or message IDs to tracked files.",
+    "comparison_limit": "This oracle diagnostic evaluates argument representation and event linking under gold type/trigger conditioning. It does not establish end-to-end extraction quality or FYP-domain effectiveness."
+  }
+}
