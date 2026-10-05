@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "experiment_id": "mailex_native_span_link_oracle_v1",
+  "audit_status": "incomplete_interrupted",
+  "audit_time_utc": "2026-10-05T21:34:13Z",
+  "preregistration": {
+    "commit": "bce517aed6b216fca6bbf209cd8d32f565551b20",
+    "git_blob": "8cbf8a44eb333aa6584bc0fb3838ea470921e7ea",
+    "sha256": "c7b9fd18c447cd5883f0969416426cdc847903e586c6337c0cfcc2b118a84988",
+    "matches_committed_head": true
+  },
+  "safe_data_hashes_match": {
+    "train": true,
+    "dev": true,
+    "test_or_protected_split_read": false
+  },
+  "attempts": [
+    {
+      "run_id": "20261005T183144Z_33d70a3a",
+      "status": "failed_before_training",
+      "saved_run_seconds": 2.859,
+      "seeds_completed": [],
+      "failure": "native span maps over a discontinuity in source token offsets",
+      "initialized_cpu_guard": {
+        "passed": true,
+        "median_39_token_ms": 82.9668,
+        "median_721_token_ms": 385.9512,
+        "initialized_parameter_bytes": 267073748
+      },
+      "checkpoint_saved": false
+    },
+    {
+      "run_id": "20261005T183312Z_140529c7",
+      "status": "incomplete_with_nan_losses",
+      "seeds_completed": [],
+      "seed_histories": {
+        "17": {
+          "epochs_saved": 1,
+          "epoch_seconds": [106.078],
+          "role_exact_f1": [0.18089430894308942],
+          "linked_partial_record_f1": [0.1366200238637596],
+          "candidate_span_recall": [0.7195676905574516],
+          "mean_boundary_loss_nonfinite": true,
+          "mean_span_proposal_loss_nonfinite": true,
+          "mean_event_link_loss": [0.04729035918571859]
+        }
+      },
+      "metadata_terminal_status": "training",
+      "checkpoint_saved": false
+    },
+    {
+      "run_id": "20261005T185355Z_1aa450e8",
+      "status": "interrupted_after_seed_17_epoch_3",
+      "seeds_completed": [],
+      "seeds_not_started": [23, 41],
+      "initialized_cpu_guard": {
+        "passed": true,
+        "median_39_token_ms": 82.5523,
+        "median_721_token_ms": 378.0741,
+        "initialized_parameter_bytes": 267073748,
+        "parameter_size_limit_bytes": 350000000
+      },
+      "initial_loss_preflight": {
+        "status": "all_initial_train_losses_finite",
+        "effective_train_rows_checked": 2501,
+        "batches_checked": 691,
+        "zero_token_unsupervised_train_rows_skipped": 261,
+        "optimizer_steps": 0,
+        "max_cuda_memory_reserved_bytes": 471859200
+      },
+      "train_rows": 2762,
+      "seed_17": {
+        "epochs_saved": 3,
+        "epoch_seconds": [129.844, 125.484, 130.094],
+        "role_exact_f1": [0.18595250126326426, 0.27325472580947036, 0.20967555709502367],
+        "linked_partial_record_f1": [0.14050021113352018, 0.41826516675491104, 0.38913922843618015],
+        "candidate_span_recall": [0.7320819112627986, 0.7639362912400455, 0.773037542662116],
+        "selected_epoch_so_far": 2
+      },
+      "last_saved_history_utc": "2026-10-05T19:01:01.733Z",
+      "last_saved_run_status": "training",
+      "checkpoint_saved": false,
+      "trained_checkpoint_size_gate_run": false,
+      "per_seed_cpu_runtime_gate_run": false
+    }
+  ],
+  "aggregate": {
+    "completed_seed_count": 0,
+    "required_seed_count": 3,
+    "three_seed_mean_available": false,
+    "sample_standard_deviation_available": false,
+    "preregistered_success_rule_evaluable": false,
+    "production_or_end_to_end_accuracy_established": false
+  },
+  "budget": {
+    "first_attempt_started_utc": "2026-10-05T18:30:44Z",
+    "wall_deadline_utc": "2026-10-05T19:30:44Z",
+    "wall_deadline_expired": true,
+    "audit_time_after_deadline_seconds": 7409,
+    "persisted_budget_ledger": false,
+    "saved_prior_attempt_seconds": 108.937,
+    "corrected_run_completed_epoch_seconds": 385.422,
+    "corrected_run_started_utc": "2026-10-05T18:54:02.821Z",
+    "corrected_run_last_history_write_utc": "2026-10-05T19:01:01.733Z",
+    "minimum_cumulative_saved_run_seconds": 527.848,
+    "exact_cumulative_seconds_available": false,
+    "note": "Minimum includes the saved run interval of the interrupted corrected attempt; the final monotonic duration was not persisted."
+  },
+  "error_analysis_performed": false,
+  "inference_launched_during_audit": false,
+  "test_split_read_during_audit": false,
+  "source_text_or_message_ids_in_report": false
+}

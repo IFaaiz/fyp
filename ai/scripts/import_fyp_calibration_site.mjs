@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+const [url,filename]=process.argv.slice(2);
+if(!url||!filename)throw new Error('Use exact deployed Site URL and frozen local source JSONL path.');
+const site=new URL(url);if(site.protocol!=='https:'||!site.hostname.endsWith('.chatgpt.site')||site.username||site.password||site.search||site.hash||site.pathname!=='/')throw new Error('Expected a registered HTTPS ChatGPT Site origin.');
+const credentials=await new Promise((resolve,reject)=>{let text='';const tty=process.stdin.isTTY;const finish=(err)=>{process.stdin.removeAllListeners('data');process.stdin.removeAllListeners('end');if(tty)process.stdin.setRawMode(false);process.stdin.pause();if(err)reject(err);else{try{resolve(JSON.parse(text));}catch{reject(new Error('Invalid import credential JSON.'));}}};if(tty)process.stdin.setRawMode(true);process.stdin.setEncoding('utf8');process.stderr.write('Ready for private import credentials on stdin (input is hidden).\n');process.stdin.on('data',chunk=>{text+=chunk;if(text.includes('\u0003')||text.length>65536)finish(new Error('Cancelled or oversized input.'));else if(/[\r\n]/.test(text))finish();});process.stdin.once('end',()=>finish());process.stdin.resume();});
+if(credentials.site_origin!==site.origin||!credentials.platform_bearer||!credentials.import_key)throw new Error('Credential is not bound to the exact registered Site origin.');
+const bytes=fs.readFileSync(filename),rows=bytes.toString('utf8').split(/\r?\n/).filter(Boolean).map(x=>JSON.parse(x));
+if(credentials.source_sha256!==crypto.createHash('sha256').update(bytes).digest('hex'))throw new Error('Frozen source import hash mismatch.');
+let accepted=0,inserted=0;
+for(let i=0;i<rows.length;i+=25){const response=await fetch(new URL('/api/admin/import',site),{method:'POST',redirect:'error',headers:{'Content-Type':'application/json','OAI-Sites-Authorization':'Bearer '+credentials.platform_bearer,'x-fyp-import-key':credentials.import_key},body:JSON.stringify(rows.slice(i,i+25))});if(!response.ok)throw new Error('Private source import failed at batch '+(i/25+1)+' (HTTP '+response.status+'). No raw response printed.');const v=await response.json();accepted+=v.accepted;inserted+=v.inserted;console.log(JSON.stringify({accepted,inserted,total:rows.length}));}
+console.log(JSON.stringify({completed:true,accepted,inserted,source_sha256:credentials.source_sha256,real_email_text_printed:false}));

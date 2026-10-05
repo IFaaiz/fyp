@@ -1,0 +1,1135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fyp:structured:v1",
+  "title": "FYP Structured Annotation V1",
+  "description": "Minimal source-grounded annotation contract for FYP email events. Final FYP labels are derived by the mapper and are not annotation fields.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "current_source_id",
+    "scope",
+    "spans",
+    "events",
+    "event_span_links",
+    "event_relations",
+    "needs_review",
+    "review_reasons",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "fyp-structured-v1"
+    },
+    "record_id": {
+      "$ref": "#/$defs/id"
+    },
+    "current_source_id": {
+      "$ref": "#/$defs/id"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "evidence_span_ids",
+        "reason"
+      ],
+      "properties": {
+        "value": {
+          "enum": [
+            "PROJECT",
+            "NON_PROJECT",
+            "UNCERTAIN"
+          ]
+        },
+        "evidence_span_ids": {
+          "$ref": "#/$defs/ids",
+          "minItems": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "spans": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/span"
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "event_span_links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/eventSpanLink"
+      }
+    },
+    "event_relations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/eventRelation"
+      }
+    },
+    "needs_review": {
+      "type": "boolean"
+    },
+    "review_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ids": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "uniqueItems": true
+    },
+    "span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_id",
+        "field",
+        "type",
+        "text",
+        "start",
+        "end"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_id": {
+          "$ref": "#/$defs/id"
+        },
+        "field": {
+          "enum": [
+            "subject",
+            "current_message"
+          ]
+        },
+        "type": {
+          "enum": [
+            "EVENT_TRIGGER",
+            "ACTION",
+            "DOCUMENT",
+            "ACTOR",
+            "MEETING",
+            "LOCATION",
+            "DATE",
+            "TIME",
+            "APPROVAL_TARGET",
+            "STATUS",
+            "AGENDA",
+            "PROJECT",
+            "OTHER"
+          ]
+        },
+        "actor_kind": {
+          "enum": [
+            "PERSON",
+            "GROUP",
+            "DEPARTMENT",
+            "ROLE"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "ACTOR"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "actor_kind"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "actor_kind"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "event": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "kind",
+            "state",
+            "certainty"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "state": {
+              "enum": [
+                "proposed",
+                "scheduled",
+                "rescheduled",
+                "cancelled",
+                "completed"
+              ]
+            },
+            "certainty": {
+              "enum": [
+                "SUPPORTED",
+                "UNCERTAIN"
+              ]
+            },
+            "kind": {
+              "const": "MEETING"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "kind",
+            "state",
+            "certainty",
+            "action_class"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "state": {
+              "enum": [
+                "requested",
+                "assigned",
+                "committed",
+                "completed",
+                "cancelled"
+              ]
+            },
+            "certainty": {
+              "enum": [
+                "SUPPORTED",
+                "UNCERTAIN"
+              ]
+            },
+            "kind": {
+              "const": "ACTION"
+            },
+            "action_class": {
+              "enum": [
+                "OPERATIONAL",
+                "DOCUMENT_TRANSFER",
+                "DEPARTMENTAL_CONTRIBUTION",
+                "APPROVAL_TRANSACTION",
+                "OTHER",
+                "UNCERTAIN"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "kind",
+            "state",
+            "certainty",
+            "document_class"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "state": {
+              "enum": [
+                "requested",
+                "expected",
+                "submitted",
+                "delivered",
+                "missing",
+                "reviewed"
+              ]
+            },
+            "certainty": {
+              "enum": [
+                "SUPPORTED",
+                "UNCERTAIN"
+              ]
+            },
+            "kind": {
+              "const": "DOCUMENT"
+            },
+            "document_class": {
+              "enum": [
+                "PROJECT_DELIVERABLE",
+                "OTHER",
+                "UNCERTAIN"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "kind",
+            "state",
+            "certainty"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "state": {
+              "enum": [
+                "requested",
+                "granted",
+                "rejected",
+                "withheld",
+                "conditional"
+              ]
+            },
+            "certainty": {
+              "enum": [
+                "SUPPORTED",
+                "UNCERTAIN"
+              ]
+            },
+            "kind": {
+              "const": "APPROVAL"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "kind",
+            "state",
+            "certainty"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/id"
+            },
+            "state": {
+              "enum": [
+                "progress",
+                "completed",
+                "blocker",
+                "decision",
+                "work_state_change"
+              ]
+            },
+            "certainty": {
+              "enum": [
+                "SUPPORTED",
+                "UNCERTAIN"
+              ]
+            },
+            "kind": {
+              "const": "STATUS"
+            }
+          }
+        }
+      ]
+    },
+    "eventSpanLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_id",
+        "span_id",
+        "role",
+        "certainty"
+      ],
+      "properties": {
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "span_id": {
+          "$ref": "#/$defs/id"
+        },
+        "role": {
+          "enum": [
+            "EVENT_ANCHOR",
+            "ACTION",
+            "DOCUMENT",
+            "RESPONSIBLE_PARTY",
+            "CONTRIBUTOR",
+            "RECIPIENT",
+            "MENTION_ONLY",
+            "PARTICIPANT",
+            "MEETING_NAME",
+            "LOCATION",
+            "MEETING_DATE",
+            "MEETING_TIME",
+            "DUE_DATE",
+            "DUE_TIME",
+            "OCCURRENCE_DATE",
+            "OCCURRENCE_TIME",
+            "APPROVAL_TARGET",
+            "APPROVER",
+            "STATUS",
+            "AGENDA",
+            "PROJECT"
+          ]
+        },
+        "certainty": {
+          "enum": [
+            "SUPPORTED",
+            "UNCERTAIN"
+          ]
+        }
+      }
+    },
+    "eventRelation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source_event_id",
+        "kind",
+        "target",
+        "certainty",
+        "evidence_span_ids"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "source_event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "FOLLOW_UP_OF",
+            "SUPERSEDES"
+          ]
+        },
+        "target": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "source_id",
+                "event_id"
+              ],
+              "properties": {
+                "source_id": {
+                  "$ref": "#/$defs/id"
+                },
+                "event_id": {
+                  "$ref": "#/$defs/id"
+                }
+              }
+            }
+          ]
+        },
+        "certainty": {
+          "enum": [
+            "SUPPORTED",
+            "UNCERTAIN"
+          ]
+        },
+        "evidence_span_ids": {
+          "$ref": "#/$defs/ids",
+          "minItems": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "SUPERSEDES"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "target": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "data_origin",
+        "source_reference",
+        "synthetic_case_id",
+        "annotation_tier",
+        "annotation_mode",
+        "annotator_id",
+        "annotated_at",
+        "blind_prelabels_shown",
+        "human_review",
+        "ai_assistance"
+      ],
+      "properties": {
+        "data_origin": {
+          "enum": [
+            "REAL_EMAIL",
+            "PUBLIC_CORPUS",
+            "SYNTHETIC",
+            "UNKNOWN"
+          ]
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "synthetic_case_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "annotation_tier": {
+          "enum": [
+            "UNSET",
+            "GOLD",
+            "SILVER",
+            "SYNTHETIC"
+          ]
+        },
+        "annotation_mode": {
+          "enum": [
+            "UNANNOTATED",
+            "BLIND_HUMAN",
+            "AI_ASSISTED_HUMAN",
+            "AI_ONLY",
+            "RULE_BASED",
+            "SYNTHETIC_GENERATION"
+          ]
+        },
+        "annotator_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "annotated_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blind_prelabels_shown": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "human_review": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "reviewer_id",
+                "reviewed_at",
+                "decision"
+              ],
+              "properties": {
+                "reviewer_id": {
+                  "$ref": "#/$defs/id"
+                },
+                "reviewed_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "decision": {
+                  "enum": [
+                    "accepted",
+                    "modified",
+                    "rejected",
+                    "adjudicated"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "ai_assistance": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "provider",
+                "model",
+                "checkpoint",
+                "protocol_version",
+                "run_id",
+                "timestamp",
+                "human_disposition"
+              ],
+              "properties": {
+                "provider": {
+                  "$ref": "#/$defs/id"
+                },
+                "model": {
+                  "$ref": "#/$defs/id"
+                },
+                "checkpoint": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/id"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "protocol_version": {
+                  "$ref": "#/$defs/id"
+                },
+                "run_id": {
+                  "$ref": "#/$defs/id"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "human_disposition": {
+                  "enum": [
+                    "accepted",
+                    "modified",
+                    "rejected",
+                    null
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "annotation_tier": {
+                "const": "GOLD"
+              }
+            },
+            "required": [
+              "annotation_tier"
+            ]
+          },
+          "then": {
+            "properties": {
+              "annotation_mode": {
+                "enum": [
+                  "BLIND_HUMAN",
+                  "AI_ASSISTED_HUMAN"
+                ]
+              },
+              "annotator_id": {
+                "$ref": "#/$defs/id"
+              },
+              "annotated_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "human_review": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "annotation_mode": {
+                "const": "BLIND_HUMAN"
+              }
+            },
+            "required": [
+              "annotation_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "annotator_id": {
+                "$ref": "#/$defs/id"
+              },
+              "annotated_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "blind_prelabels_shown": {
+                "const": false
+              },
+              "ai_assistance": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "annotation_mode": {
+                "const": "AI_ASSISTED_HUMAN"
+              }
+            },
+            "required": [
+              "annotation_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "annotator_id": {
+                "$ref": "#/$defs/id"
+              },
+              "annotated_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "blind_prelabels_shown": {
+                "const": true
+              },
+              "ai_assistance": {
+                "type": "object",
+                "properties": {
+                  "human_disposition": {
+                    "enum": [
+                      "accepted",
+                      "modified",
+                      "rejected"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "annotation_mode": {
+                "const": "AI_ONLY"
+              }
+            },
+            "required": [
+              "annotation_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "annotation_tier": {
+                "enum": [
+                  "SILVER",
+                  "SYNTHETIC"
+                ]
+              },
+              "annotator_id": {
+                "type": "null"
+              },
+              "annotated_at": {
+                "type": "null"
+              },
+              "blind_prelabels_shown": {
+                "type": "null"
+              },
+              "ai_assistance": {
+                "type": "object"
+              },
+              "human_review": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "annotation_mode": {
+                "const": "UNANNOTATED"
+              }
+            },
+            "required": [
+              "annotation_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "annotation_tier": {
+                "const": "UNSET"
+              },
+              "annotator_id": {
+                "type": "null"
+              },
+              "annotated_at": {
+                "type": "null"
+              },
+              "blind_prelabels_shown": {
+                "type": "null"
+              },
+              "human_review": {
+                "type": "null"
+              },
+              "ai_assistance": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "annotation_mode": {
+                "const": "SYNTHETIC_GENERATION"
+              }
+            },
+            "required": [
+              "annotation_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "data_origin": {
+                "const": "SYNTHETIC"
+              },
+              "annotation_tier": {
+                "const": "SYNTHETIC"
+              },
+              "synthetic_case_id": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "data_origin": {
+                "const": "SYNTHETIC"
+              }
+            },
+            "required": [
+              "data_origin"
+            ]
+          },
+          "then": {
+            "properties": {
+              "annotation_tier": {
+                "const": "SYNTHETIC"
+              },
+              "synthetic_case_id": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "synthetic_case_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "data_origin": {
+                "enum": [
+                  "REAL_EMAIL",
+                  "PUBLIC_CORPUS"
+                ]
+              }
+            },
+            "required": [
+              "data_origin"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_reference": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scope": {
+            "properties": {
+              "value": {
+                "const": "NON_PROJECT"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "scope"
+        ]
+      },
+      "then": {
+        "properties": {
+          "events": {
+            "maxItems": 0
+          },
+          "event_span_links": {
+            "maxItems": 0
+          },
+          "event_relations": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "scope": {
+            "properties": {
+              "value": {
+                "const": "UNCERTAIN"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "scope"
+        ]
+      },
+      "then": {
+        "properties": {
+          "needs_review": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "needs_review": {
+            "const": false
+          }
+        },
+        "required": [
+          "needs_review"
+        ]
+      },
+      "then": {
+        "properties": {
+          "review_reasons": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "needs_review": {
+            "const": true
+          }
+        },
+        "required": [
+          "needs_review"
+        ]
+      },
+      "then": {
+        "properties": {
+          "review_reasons": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ],
+  "x-runtime-validation": [
+    "Offsets are zero-based Python Unicode code points; end is exclusive, and span.text must exactly equal the named source slice.",
+    "Every span.source_id and scope evidence span must equal current_source_id; prior context is referenced only by actual source_id/event_id relations, never by copying prior spans. Current-message spans must lie wholly inside a caller-supplied authored range. Authored ranges are mandatory whenever current_message may contain quoted or forwarded text; do not infer quote boundaries.",
+    "Each event ID is unique. Every current event has at least one EVENT_ANCHOR link to an EVENT_TRIGGER span from current_source_id/current_message within an authored range. Subject spans may support scope or arguments but never anchor an event.",
+    "Each scope/event/link/relation span reference, event reference, role/type pairing and kind/state pairing resolves and is valid. Duplicate IDs, duplicate identical span coordinates, duplicate event-span-role links, and duplicate event relations are invalid.",
+    "Event-span role links are explicit and event-specific. A shared argument span may link to multiple events; never duplicate its text span just to express sharing.",
+    "Event relation evidence is current authored text. A non-null relation target must resolve to an actual earlier context event by both source_id and event_id. FOLLOW_UP_OF may have a null target only for an explicit current reminder/request; this requires needs_review and a review reason. SUPERSEDES always requires a resolved target.",
+    "NON_PROJECT is exclusive: it has no events, event-span links or event relations. A supported NON_PROJECT decision does not by itself require review.",
+    "needs_review is required for UNCERTAIN scope, uncertain events/links/relations, unresolved FOLLOW_UP_OF target, and action/document class OTHER or UNCERTAIN.",
+    "Final nine FYP labels are derived by deterministic mapping. They are not included as annotator-supplied fields.",
+    "GOLD requires a named annotator and time plus explicit human review and provenance consistent with blind or AI-assisted mode. Blind work must record prelabels_shown=false and no AI assistance; AI-assisted work must keep AI protocol/run/time and human disposition. GOLD does not imply human records already exist."
+  ],
+  "x-semantics": {
+    "role_types": {
+      "EVENT_ANCHOR": ["EVENT_TRIGGER"],
+      "ACTION": ["ACTION"],
+      "DOCUMENT": ["DOCUMENT"],
+      "RESPONSIBLE_PARTY": ["ACTOR"],
+      "CONTRIBUTOR": ["ACTOR"],
+      "RECIPIENT": ["ACTOR"],
+      "MENTION_ONLY": ["ACTOR"],
+      "PARTICIPANT": ["ACTOR"],
+      "MEETING_NAME": ["MEETING"],
+      "LOCATION": ["LOCATION"],
+      "MEETING_DATE": ["DATE"],
+      "MEETING_TIME": ["TIME"],
+      "DUE_DATE": ["DATE"],
+      "DUE_TIME": ["TIME"],
+      "OCCURRENCE_DATE": ["DATE"],
+      "OCCURRENCE_TIME": ["TIME"],
+      "APPROVAL_TARGET": ["APPROVAL_TARGET"],
+      "APPROVER": ["ACTOR"],
+      "STATUS": ["STATUS"],
+      "AGENDA": ["AGENDA"],
+      "PROJECT": ["PROJECT"]
+    },
+    "role_actor_kind": {
+      "CONTRIBUTOR": ["DEPARTMENT"]
+    },
+    "role_event_kinds": {
+      "EVENT_ANCHOR": ["MEETING", "ACTION", "DOCUMENT", "APPROVAL", "STATUS"],
+      "ACTION": ["ACTION", "STATUS"],
+      "DOCUMENT": ["ACTION", "DOCUMENT", "STATUS"],
+      "RESPONSIBLE_PARTY": ["ACTION", "DOCUMENT", "APPROVAL", "STATUS"],
+      "CONTRIBUTOR": ["ACTION", "DOCUMENT", "STATUS"],
+      "RECIPIENT": ["MEETING", "ACTION", "DOCUMENT", "APPROVAL", "STATUS"],
+      "MENTION_ONLY": ["MEETING", "ACTION", "DOCUMENT", "APPROVAL", "STATUS"],
+      "PARTICIPANT": ["MEETING"],
+      "MEETING_NAME": ["MEETING"],
+      "LOCATION": ["MEETING"],
+      "MEETING_DATE": ["MEETING"],
+      "MEETING_TIME": ["MEETING"],
+      "DUE_DATE": ["ACTION", "DOCUMENT"],
+      "DUE_TIME": ["ACTION", "DOCUMENT"],
+      "OCCURRENCE_DATE": ["ACTION", "DOCUMENT", "APPROVAL", "STATUS"],
+      "OCCURRENCE_TIME": ["ACTION", "DOCUMENT", "APPROVAL", "STATUS"],
+      "APPROVAL_TARGET": ["APPROVAL"],
+      "APPROVER": ["APPROVAL"],
+      "STATUS": ["STATUS"],
+      "AGENDA": ["MEETING"],
+      "PROJECT": ["MEETING", "ACTION", "DOCUMENT", "APPROVAL", "STATUS"]
+    },
+    "required_event_roles": {
+      "MEETING": ["EVENT_ANCHOR"],
+      "ACTION": ["EVENT_ANCHOR", "ACTION"],
+      "DOCUMENT": ["EVENT_ANCHOR"],
+      "APPROVAL": ["EVENT_ANCHOR"],
+      "STATUS": ["EVENT_ANCHOR", "STATUS"]
+    },
+    "review_classes": {
+      "action_class": ["OTHER", "UNCERTAIN"],
+      "document_class": ["OTHER", "UNCERTAIN"]
+    },
+    "derived_label_rules": {
+      "MEETING": "A supported current MEETING event.",
+      "DEADLINE": "A supported ACTION or DOCUMENT event with a supported DUE_DATE or DUE_TIME role link.",
+      "REPORT_REQUEST": "A supported DOCUMENT event in requested state with document_class PROJECT_DELIVERABLE; event relation or delivery alone does not qualify.",
+      "DEPARTMENTAL_INPUT": "A supported ACTION event with action_class DEPARTMENTAL_CONTRIBUTION and a supported CONTRIBUTOR actor link whose actor_kind is DEPARTMENT.",
+      "ACTION_REQUEST": "A supported ACTION event in requested or assigned state with action_class OPERATIONAL.",
+      "FOLLOW_UP": "A supported current event with a supported FOLLOW_UP_OF relation and current-authored reminder/request evidence. A null target requires review; derive_labels suppresses all automatic labels while needs_review is true.",
+      "APPROVAL": "A supported APPROVAL event in any V1 state; ordinary review is not an APPROVAL event.",
+      "GENERAL_UPDATE": "A supported STATUS event in any V1 state.",
+      "NON_PROJECT": "A supported NON_PROJECT scope decision; it is exclusive and carries no events or relations."
+    }
+  }
+}

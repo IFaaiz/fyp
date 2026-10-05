@@ -1,0 +1,3 @@
+# Optional standards-compliant validation of fyp_structured_v1_schema.json.
+# The Python core also includes a dependency-free fallback for offline desktop use.
+jsonschema>=4.23,<5

@@ -1,6 +1,35 @@
 # AI email dataset foundation
 
-## Active workstream — completed 5 October 2026
+## Active workstream — V1 human calibration, 6 October 2026
+
+Read [the current reviewer handoff](reports/fyp_calibration_v1_reviewer_handoff.md).
+The private research review app is mirrored at [apps/annotation-review](../apps/annotation-review/README.md).
+It supports three independent human reviewers, autosaved exact-evidence annotations,
+blind submission and later aggregate agreement scoring. The relevant public-corpus
+queue is source-audited separately from labels; no AI prelabels appear in the app.
+
+V1's executable contract lives in [the schema](config/fyp_structured_v1_schema.json),
+[guide](annotation/fyp_structured_v1_annotation_guide.md) and `src/fyp_structured_v1`.
+Individual submissions stay UNSET until explicit human adjudication; there is no
+measured human agreement, gold count or FYP-domain model performance yet.
+
+The [one-hour span-link diagnostic](reports/mailex_span_link_diagnostic.md) is
+incomplete with zero completed seeds and no saved trained checkpoint. Its deadline
+has expired; continue the human/data/product gates instead of relaunching it.
+
+Focused synthetic checks from the repository root:
+
+```powershell
+$env:PYTHONPATH = (Resolve-Path ai).Path
+ai/.venv/Scripts/python.exe -m unittest tests.test_fyp_structured_v1 tests.test_fyp_calibration_v1_agreement -v
+```
+
+After all three finish the shared blind round, the owner's private Site export can
+be scored locally. Keep that export under ignored `ai/data/`, and publish only the
+aggregate report emitted by `scripts/score_fyp_calibration_v1.py`. The holdout is
+excluded from agreement and must stay out of later labeler prompt construction.
+
+## Historical workstream — completed 5 October 2026
 
 [Native MailEx extraction reviewer handoff](reports/mailex_extraction_reviewer_status.md)
 is the entry point for the completed benchmark. The
