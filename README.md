@@ -8,6 +8,8 @@ private three-person review app. See the [iteration 3 aggregate curation report]
 for the allocations and limits. See the [calibration reviewer handoff](ai/reports/fyp_calibration_v1_reviewer_handoff.md)
 for the research review workflow and next gates.
 
+- [Guided interface update](ai/reports/fyp_annotation_ui_usability.md): three steps,
+  plain-language rules, exact evidence help and next-email navigation.
 - [Review app source](apps/annotation-review/README.md): independent account-based
   queues, exact evidence, autosaved drafts, blind submissions and labeling rules.
 - [Offline desktop prototype](desktop/README.md): local single-packet review using

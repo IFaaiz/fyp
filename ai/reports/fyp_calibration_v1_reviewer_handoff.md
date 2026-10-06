@@ -17,7 +17,10 @@ the historical native MailEx benchmark remains closed.
    No human agreement or model accuracy is claimed at this checkpoint.
 3. Publish a private research annotation website with account identity, separate
    assignments, current-message evidence, labeling rules, autosaved drafts,
-   optimistic revision checks and frozen blind submissions. The owner can see
+   optimistic revision checks and frozen blind submissions. A guided three-step
+   interface now adds plain-language examples, required-evidence checklists,
+   explicit typed phrase reuse and Submit & next email. See the
+   [usability update](fyp_annotation_ui_usability.md). The owner can see
    aggregate progress; peer answers export only after all three complete the
    common blind subset. Real emails are runtime data, absent from GitHub.
 4. Stop the bounded native span-link diagnostic as incomplete. Zero of three
@@ -31,8 +34,8 @@ the historical native MailEx benchmark remains closed.
 
 - Site: [FYP Review Room](https://fyp-email-calibration.faaiznoman713.chatgpt.site).
 - Project ID: `appgprj_6ac3e8e078408191904e6dbfdcc76eb4`.
-- Pushed Site source: `c7a9e41d1880d6e8989dd926371e6af7682fa611`.
-- Deployment: `appgdep_6ac4fb7498ec8191bceeae0046757861`; native status succeeded,
+- Pushed Site source: `6185d80a407478005e0d8ceab688f4282f6a9157`.
+- Deployment: `appgdep_6ac503ca09688191b3eabba13ed62f2b`; native status succeeded,
   with runtime environment revision 3.
 - GitHub source mirror: [apps/annotation-review](../../apps/annotation-review/README.md).
   It copies the committed Site application source, excludes generated compiler
@@ -83,6 +86,8 @@ from the protected human holdout before constructing future labeler prompts.
   synthetic fixtures. The agreement suite includes an unmocked complete path
   with the exact Site export fields, canonical provenance and Unicode offsets.
 - Browser/server validator: 16 synthetic fixtures and 29 checks passed.
+- Guided evidence helpers: nine synthetic checks passed, including Unicode
+  offsets, filtering excluded occurrences and kind/state/required-role coverage.
 - Site TypeScript check and Cloudflare-compatible production build passed.
 - Import guards passed six localhost synthetic checks: initial insert, idempotent
   re-import, changed-range conflict, bad digest, inconsistent assignment, overlapping
@@ -93,9 +98,12 @@ from the protected human holdout before constructing future labeler prompts.
   three identities, personal/common assignments and separate review answers.
 - Preservation checks: 77 closed-experiment files and 231 checkpoint-manifest
   files remained intact; the checks performed no training or inference.
-- Interactive browser selection and WebMCP runtime QA could not run: the Windows
-  computer-use process failed to initialize. The UI includes a paste-exact-text
-  fallback; do not describe its browser interactions as verified.
+- In-app browser automation and WebMCP runtime QA could not run: its Windows
+  process failed to initialize. A separate local headless Playwright/Chrome
+  workflow did verify DOM selection, exact evidence, phrase reuse, draft saving,
+  modal Escape, phone and enlarged-text layouts, submit-next and frozen review
+  rendering with synthetic intercepted API data. No production reviews were
+  created by these checks; production sign-in remains a human-access check.
 - Initial packets do not contain verified prior events. Unresolved follow-ups
   can be recorded with review notes; resolved supersession awaits verified
   context packets. No prior event identities are invented.

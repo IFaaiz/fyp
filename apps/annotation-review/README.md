@@ -58,3 +58,9 @@ The queue starts empty without the authorized private corpus import packet.
 The current public-corpus source packet has no verified prior thread events. Follow-ups can be captured with unresolved targets and review notes; full resolved SUPERSEDES relations require a later adjudicated context packet. This app does not invent thread identities. Human agreement and training readiness remain pending actual submissions.
 
 The read-only WebMCP guide tool never writes annotations or claims to be a human reviewer. Browser/WebMCP runtime verification was unavailable in the current Windows sandbox; contract tests, HTTP authentication/save checks and the production build were run.
+
+## Guided labeling interface
+
+The app uses three steps: **Relevance → Label message → Check & submit**. Five plain-language choices (Meeting, Task, Document, Approval, Project update) include local examples. Required evidence is shown separately from optional names and dates. Highlighted evidence stays visible in the email; faded reference lines cannot become current evidence. Copy-and-paste finds only exact allowed occurrences. Tasks and updates can explicitly reuse the same phrase for their two required typed evidence fields.
+
+**Help & examples** opens a keyboard-accessible guide. **Submit & next email** opens the next unfinished source. Drafts, independent account access, frozen submissions and existing assignments are preserved.
