@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>FYP Local Review</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">F</div>
+    <div class="brand-copy">
+      <strong>FYP Local Review</strong>
+      <span>Structured annotation · V1</span>
+    </div>
+    <div class="offline-chip"><span></span> Offline · loopback only</div>
+  </header>
+
+  <main class="shell">
+    <aside class="rail">
+      <div class="rail-title">Workspace</div>
+      <div class="rail-item active"><span class="rail-icon">▦</span> Review packet</div>
+
+      <section class="rail-section">
+        <label for="demoSelect">Synthetic examples</label>
+        <select id="demoSelect" aria-label="Choose synthetic example">
+          <option>Loading examples…</option>
+        </select>
+        <button id="loadDemo" class="button button-secondary full-width">Load example</button>
+      </section>
+
+      <section class="rail-section">
+        <label for="packetFile">Open V1 packet file</label>
+        <input id="packetFile" type="file" accept="application/json,.json">
+        <p class="hint">Choose a UTF-8 JSON object with <code>source</code> and <code>annotation</code>.</p>
+      </section>
+
+      <section class="rail-section">
+        <label for="savedSelect">Saved local reviews</label>
+        <select id="savedSelect" aria-label="Choose saved review">
+          <option value="">No saved reviews loaded</option>
+        </select>
+        <button id="openSaved" class="button button-secondary full-width">Reload saved review</button>
+      </section>
+
+      <div class="rail-footnote">
+        <span class="shield" aria-hidden="true">◈</span>
+        <span>Source and edits stay in this checkout on this computer.</span>
+      </div>
+    </aside>
+
+    <section class="content">
+      <div class="page-heading">
+        <div>
+          <div class="eyebrow">ANNOTATION REVIEW</div>
+          <h1>Review packet</h1>
+        </div>
+        <div id="originBadge" class="origin-badge hidden"></div>
+      </div>
+
+      <div id="notice" class="notice" role="status" aria-live="polite">
+        Loading a synthetic example…
+      </div>
+
+      <section id="packetWorkspace" class="workspace hidden">
+        <div class="summary-grid">
+          <article class="summary-card source-identity">
+            <div class="card-kicker">SOURCE IDENTITY</div>
+            <div id="sourceId" class="source-id">—</div>
+            <div id="sourceSubject" class="source-subject">—</div>
+          </article>
+          <article class="summary-card scope-card">
+            <div class="card-kicker">SCOPE</div>
+            <div id="scopeValue" class="scope-value">—</div>
+            <div id="scopeReason" class="muted">—</div>
+            <div id="scopeEvidence" class="chip-row"></div>
+          </article>
+          <article class="summary-card review-card">
+            <div class="card-kicker">REVIEW STATE</div>
+            <div id="reviewState" class="review-state">—</div>
+            <div id="reviewReasons" class="muted">—</div>
+          </article>
+        </div>
+
+        <section class="panel source-panel">
+          <div class="panel-heading">
+            <div>
+              <div class="card-kicker">CURRENT SOURCE</div>
+              <h2>Message and cited evidence</h2>
+            </div>
+            <span class="readonly-tag">Read only</span>
+          </div>
+          <div class="source-columns">
+            <div>
+              <div class="field-label">Subject</div>
+              <div id="sourceSubjectFull" class="subject-box">—</div>
+              <div class="field-label body-label">Current message</div>
+              <pre id="sourceMessage" class="source-message"></pre>
+            </div>
+            <aside class="evidence-column">
+              <div class="field-label">Evidence spans</div>
+              <div id="evidenceRows" class="evidence-list"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="panel events-panel">
+          <div class="panel-heading">
+            <div>
+              <div class="card-kicker">CURRENT EVENTS</div>
+              <h2>Event cards</h2>
+            </div>
+            <span id="eventCount" class="count-tag">0 events</span>
+          </div>
+          <div id="eventCards" class="event-grid"></div>
+        </section>
+
+        <section class="panel labels-panel">
+          <div class="panel-heading">
+            <div>
+              <div class="card-kicker">DETERMINISTIC MAPPER</div>
+              <h2>Derived labels</h2>
+            </div>
+            <span id="mapperStatus" class="mapper-state pending">Validate to derive</span>
+          </div>
+          <div id="derivedLabels" class="label-row"><span class="muted">Labels appear after server-side V1 validation.</span></div>
+          <p class="small-note">Labels are derived from a valid V1 annotation. Records marked for review do not produce labels here.</p>
+        </section>
+
+        <section class="panel editor-panel">
+          <div class="panel-heading editor-heading">
+            <div>
+              <div class="card-kicker">ANNOTATION EDITOR</div>
+              <h2>Correct structured fields</h2>
+              <p class="panel-description">Edit scope, event states, review reasons, spans, and event evidence links. Exact source slices and authored ranges are checked by the V1 validator.</p>
+            </div>
+            <button id="formatJson" class="button button-secondary">Format JSON</button>
+          </div>
+          <textarea id="annotationEditor" class="json-editor" spellcheck="false" aria-label="Structured annotation JSON" disabled></textarea>
+          <div class="editor-locked-note">Original source and provenance are locked. Tier and human-review claims cannot be promoted here; imported GOLD packets are read only.</div>
+          <label class="field-label notes-label" for="reviewNote">Local review note</label>
+          <textarea id="reviewNote" class="note-editor" maxlength="4000" placeholder="Record a concise reviewer note for the local audit…" disabled></textarea>
+          <div class="action-row">
+            <button id="validateButton" class="button button-secondary" disabled>Validate annotation</button>
+            <button id="saveButton" class="button button-primary" disabled>Save local review</button>
+            <span id="saveStatus" class="save-status"></span>
+          </div>
+          <div id="validationDetails" class="validation-details hidden"></div>
+        </section>
+      </section>
+
+      <footer class="page-foot">
+        <span>Local prototype · No model inference · No external network calls</span>
+        <span id="serverVersion">Source-grounded V1 validation</span>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>

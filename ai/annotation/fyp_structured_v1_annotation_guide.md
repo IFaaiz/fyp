@@ -27,7 +27,7 @@ Use a separate event ID for each distinct event. A message may contain several e
 
 Every span records the current source ID, field (subject or current_message), exact text, zero-based end-exclusive Python Unicode code-point offsets, and a type.
 
-All spans and scope evidence refer to current_source_id. Prior records are represented by actual source_id/event_id relation targets; do not copy their spans into the current annotation. The caller must supply authored body ranges whenever a current-message span is used. Put each range in sources[current_source_id].authored_ranges. A span must fit wholly inside one range. Do not guess quote boundaries. Exclude quoted or forwarded history and boilerplate signatures from current-message evidence.
+All spans and scope evidence refer to current_source_id. Prior records are represented by actual source_id/event_id relation targets; do not copy their spans into the current annotation. The caller must supply authored body ranges whenever a current-message span is used. Put each range in sources[current_source_id].authored_ranges. A span must fit wholly inside one range. Do not guess quote boundaries. Exclude quoted or forwarded history and boilerplate signatures from current-message evidence. Embedded draft/example/hypothetical scripts are reference content: annotate the current author’s request, delivery or comment without treating a proposed script as an actual project status.
 
 An event’s EVENT_ANCHOR must link to an EVENT_TRIGGER span in the current authored message. A subject span may support project scope or an argument, but it cannot anchor a current event.
 

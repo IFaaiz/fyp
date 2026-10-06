@@ -2,13 +2,16 @@
 
 ## Current AI/NLP workstream
 
-**6 October 2026:** The data-first V1 calibration workstream now has an executable
-annotation contract and a private three-person review website. Start with the
-[calibration reviewer handoff](ai/reports/fyp_calibration_v1_reviewer_handoff.md)
-for the deployed source commit, curation decision, checks and next gates.
+**6 October 2026:** The data-first V1 calibration pilot has root approval as a
+47-source unlabelled historical public-corpus fallback, imported into the
+private three-person review app. See the [iteration 3 aggregate curation report](ai/reports/fyp_calibration_v1_curation.md)
+for the allocations and limits. See the [calibration reviewer handoff](ai/reports/fyp_calibration_v1_reviewer_handoff.md)
+for the research review workflow and next gates.
 
 - [Review app source](apps/annotation-review/README.md): independent account-based
   queues, exact evidence, autosaved drafts, blind submissions and labeling rules.
+- [Offline desktop prototype](desktop/README.md): local single-packet review using
+  the V1 validator and mapper.
 - [V1 annotation guide](ai/annotation/fyp_structured_v1_annotation_guide.md) and
   [schema](ai/config/fyp_structured_v1_schema.json): current authored events and
   exact evidence; uncertainty requires review.

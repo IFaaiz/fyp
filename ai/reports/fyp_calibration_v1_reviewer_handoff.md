@@ -31,20 +31,33 @@ the historical native MailEx benchmark remains closed.
 
 - Site: [FYP Review Room](https://fyp-email-calibration.faaiznoman713.chatgpt.site).
 - Project ID: `appgprj_6ac3e8e078408191904e6dbfdcc76eb4`.
-- Pushed Site source: `252de4cfeba1aeafd976f8dd719ae11398291451`.
-- Deployment: `appgdep_6ac41c45bcc081919f00b9c571cea545`; native status succeeded,
-  with runtime environment revision 2.
+- Pushed Site source: `c7a9e41d1880d6e8989dd926371e6af7682fa611`.
+- Deployment: `appgdep_6ac4fb7498ec8191bceeae0046757861`; native status succeeded,
+  with runtime environment revision 3.
 - GitHub source mirror: [apps/annotation-review](../../apps/annotation-review/README.md).
   It copies the committed Site application source, excludes generated compiler
   state, and adds fresh-clone local setup notes in its README.
 - Access is owner-private. The two teammates' ChatGPT account email addresses
   are still required to configure the private allowlist; no invitations have
   been sent and no public access was enabled.
-- Corpus curation and source import are being finalized separately. A deployment
-  success is not evidence that reviewers have begun annotating.
+- All 47 curated emails were imported: 24 common blind, 12 personal calibration
+  TRAIN and 11 human holdout. Root audited all 38 proposed TRAIN/common sources,
+  rejected two weak inclusions and corrected 36 evidence ranges. One overlapping
+  holdout was conservatively removed without disclosing its content. Three
+  boundary controls remain. See the [curation report](fyp_calibration_v1_curation.md).
+  Historical enriched Enron is a fallback; no human labels or accuracy are claimed.
+  The heldout prefix ranges still require independent human verification.
 
 The website is a research data collection tool. The final Outlook 2016 Windows
 product still requires local inference, ingestion, archive and dashboard work.
+
+## Offline product progress
+
+A loopback-only, dependency-free [desktop review prototype](../../desktop/README.md)
+loads exact V1 packets, validates corrections and saves local records with hash-only
+audit metadata. Imported GOLD is read-only; stale tabs receive HTTP 409. Synthetic
+HTTP smoke checks passed. This prototype has no inference, Outlook ingestion, Excel
+export, reminders or production audit recovery. Its editor is still structured JSON.
 
 ## Agreement and data handling
 
@@ -69,6 +82,9 @@ from the protected human holdout before constructing future labeler prompts.
   with the exact Site export fields, canonical provenance and Unicode offsets.
 - Browser/server validator: 16 synthetic fixtures and 29 checks passed.
 - Site TypeScript check and Cloudflare-compatible production build passed.
+- Import guards passed six localhost synthetic checks: initial insert, idempotent
+  re-import, changed-range conflict, bad digest, inconsistent assignment, overlapping
+  ranges. Production corpus import inserted 47; its SHA matches the frozen packet.
 - Local HTTP checks exercised unauthenticated rejection, save/recovery,
   stale-revision and frozen-submit rejection, server-assigned UNSET provenance,
   invalid offsets and authored/quoted boundaries. Local SQLite checks covered
@@ -98,3 +114,5 @@ adjudicated human holdout, and scale SILVER only if that evaluation supports it.
 Do not train on the synthetic contract fixtures or treat individual reviews as
 gold. Follow the [relative product/calibration schedule](fyp_calibration_v1_schedule.md);
 the actual submission/defense date is still unknown.
+
+Re-import verification accepted all 47 frozen sources and inserted zero additional rows; immutable source text, authored ranges and assignments matched.
