@@ -91,6 +91,11 @@
     },
     "provenance": {
       "$ref": "#/$defs/provenance"
+    },
+    "derived_label_version": {
+      "type": "string",
+      "enum": ["fyp-derived-labels-1.0", "fyp-derived-labels-1.1"],
+      "description": "Mapper version used for deterministic FYP labels. If absent, interpret as fyp-derived-labels-1.0 to preserve older annotations."
     }
   },
   "$defs": {
@@ -1120,6 +1125,7 @@
       "action_class": ["OTHER", "UNCERTAIN"],
       "document_class": ["OTHER", "UNCERTAIN"]
     },
+    "derived_label_version": "fyp-derived-labels-1.1",
     "derived_label_rules": {
       "MEETING": "A supported current MEETING event.",
       "DEADLINE": "A supported ACTION or DOCUMENT event with a supported DUE_DATE or DUE_TIME role link.",
@@ -1128,7 +1134,7 @@
       "ACTION_REQUEST": "A supported ACTION event in requested or assigned state with action_class OPERATIONAL.",
       "FOLLOW_UP": "A supported current event with a supported FOLLOW_UP_OF relation and current-authored reminder/request evidence. A null target requires review; derive_labels suppresses all automatic labels while needs_review is true.",
       "APPROVAL": "A supported APPROVAL event in any V1 state; ordinary review is not an APPROVAL event.",
-      "GENERAL_UPDATE": "A supported STATUS event in any V1 state.",
+      "GENERAL_UPDATE": "A supported STATUS event, a completed or cancelled ACTION, or a submitted, delivered, missing, or reviewed DOCUMENT.",
       "NON_PROJECT": "A supported NON_PROJECT scope decision; it is exclusive and carries no events or relations."
     }
   }

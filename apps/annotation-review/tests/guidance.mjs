@@ -10,7 +10,7 @@ function load(filename,annotation){
  return mod.exports;
 }
 const annotation=load(path.resolve('lib/annotation.ts'));
-const {authored,exactMatches,missingRoles,kinds,roleLabels,stateLabels}=load(path.resolve('lib/guidance.ts'),annotation);
+const {authored,exactMatches,missingRoles,kinds,roleLabels,stateLabels,guide}=load(path.resolve('lib/guidance.ts'),annotation);
 const prefix=String.fromCodePoint(0x1d4ab)+' Please test.';
 const source={current_message:prefix+'\nSignature\nPlease test.',subject:'Please test.',authored_ranges:[{start:0,end:Array.from(prefix).length}]};
 const matches=exactMatches(source,'current_message','Please test.');
@@ -22,4 +22,5 @@ assert.equal(authored(source,2,14),true);assert.equal(authored(source,2,15),fals
 assert.deepEqual(missingRoles({event_span_links:[{event_id:'e',role:'EVENT_ANCHOR'}]},{id:'e',kind:'ACTION'}),['ACTION']);
 assert.deepEqual(missingRoles({event_span_links:[{event_id:'e',role:'EVENT_ANCHOR'},{event_id:'e',role:'STATUS'}]},{id:'e',kind:'STATUS'}),[]);
 for(const [kind,states] of Object.entries(annotation.eventStates)){assert.ok(kinds[kind]);for(const state of states)assert.ok(stateLabels[state]);for(const role of annotation.rules.required_event_roles[kind])assert.ok(roleLabels[role]);}
-console.log(JSON.stringify({guidance_checks:9,unicode_offsets:true,excluded_matches_filtered:true,required_roles_preserved:true,real_emails_read:0}));
+const guideText=guide.map(([title,text])=>title+' '+text).join('\n').toLowerCase();assert.match(guideText,/defined initiative/);assert.match(guideText,/raw data/);assert.match(guideText,/formal permission/);
+console.log(JSON.stringify({guidance_checks:12,unicode_offsets:true,excluded_matches_filtered:true,required_roles_preserved:true,scope_document_approval_contrasts:true,real_emails_read:0}));

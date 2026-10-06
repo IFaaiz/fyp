@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./derived-labels.css";
 
 export const metadata: Metadata = {
   title: "FYP Review Room",

@@ -12,6 +12,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from src.fyp_structured_v1 import LABELS, derive_labels, validate_annotation
+from src.fyp_structured_v1 import mapper as mapper_module
 from src.fyp_structured_v1 import validation as validation_module
 
 
@@ -53,6 +54,11 @@ class StructuredV1ContractTests(unittest.TestCase):
         schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
         self.assertEqual(schema["$schema"], "https://json-schema.org/draft/2020-12/schema")
         self.assertEqual(schema["properties"]["schema_version"]["const"], "fyp-structured-v1")
+        self.assertEqual(schema["x-semantics"]["derived_label_version"], mapper_module.DERIVATION_VERSION)
+        self.assertEqual(
+            set(schema["properties"]["derived_label_version"]["enum"]),
+            {mapper_module.LEGACY_DERIVATION_VERSION, mapper_module.DERIVATION_VERSION},
+        )
         self.assertEqual(
             LABELS,
             ("MEETING", "DEADLINE", "REPORT_REQUEST", "DEPARTMENTAL_INPUT",
@@ -63,6 +69,36 @@ class StructuredV1ContractTests(unittest.TestCase):
                 result = self.validate(row)
                 self.assertTrue(result.valid, result.errors)
                 self.assertEqual(derive_labels(row["annotation"]), row["expected_derived_labels"])
+
+    def test_completed_work_and_delivered_documents_are_project_updates(self):
+        completed = copy.deepcopy(self.fixtures["completed_action_is_status"])
+        event = completed["annotation"]["events"][0]
+        event.update(kind="ACTION", state="completed", action_class="OPERATIONAL")
+        status_link = next(link for link in completed["annotation"]["event_span_links"] if link["role"] == "STATUS")
+        next(span for span in completed["annotation"]["spans"] if span["id"] == status_link["span_id"])["type"] = "ACTION"
+        status_link["role"] = "ACTION"
+        result = self.validate(completed)
+        self.assertTrue(result.valid, result.errors)
+        self.assertEqual(derive_labels(completed["annotation"]), [])
+        completed["annotation"]["derived_label_version"] = mapper_module.DERIVATION_VERSION
+        self.assertEqual(derive_labels(completed["annotation"]), ["GENERAL_UPDATE"])
+
+        delivery = copy.deepcopy(self.fixtures["document_delivery_not_request"])
+        delivery["annotation"]["events"][0].update(kind="DOCUMENT", state="delivered", document_class="PROJECT_DELIVERABLE")
+        delivery["annotation"]["event_span_links"] = [
+            link for link in delivery["annotation"]["event_span_links"] if link["role"] != "STATUS"
+        ]
+        result = self.validate(delivery)
+        self.assertTrue(result.valid, result.errors)
+        self.assertEqual(derive_labels(delivery["annotation"]), [])
+        delivery["annotation"]["derived_label_version"] = mapper_module.DERIVATION_VERSION
+        self.assertEqual(derive_labels(delivery["annotation"]), ["GENERAL_UPDATE"])
+
+    def test_unknown_derivation_version_fails_closed_without_reinterpreting_record(self):
+        row = copy.deepcopy(self.fixtures["document_delivery_not_request"])
+        row["annotation"]["derived_label_version"] = "fyp-derived-labels-9.9"
+        self.assertFalse(self.validate(row).valid)
+        self.assertEqual(derive_labels(row["annotation"]), [])
 
     def test_stdlib_fallback_applies_ref_sibling_min_items_constraints(self):
         scope_row = copy.deepcopy(self.fixtures["routine_corporate_operations"])

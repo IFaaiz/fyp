@@ -135,10 +135,44 @@ Annotate the facts; the deterministic mapper derives these labels. derive_labels
 | ACTION_REQUEST | ACTION event with class OPERATIONAL and state requested or assigned | Pure document transfer, departmental input, approval transaction, or completed work |
 | FOLLOW_UP | Supported current event and resolved FOLLOW_UP_OF relation with current reminder/request evidence | A first request, future instruction to follow up, or unresolved prior reference |
 | APPROVAL | Supported APPROVAL event in any V1 approval state | Ordinary review/comment request, receipt, silence, or positive sentiment |
-| GENERAL_UPDATE | Supported STATUS event | A task request used as a generic update or an unsupported/fallback label |
+| GENERAL_UPDATE | Supported STATUS event; a completed/cancelled ACTION; or a submitted/delivered/missing/reviewed DOCUMENT | A plain request, planned meeting, expected document, or unsupported/fallback label |
 | NON_PROJECT | Supported scope.value NON_PROJECT and no project events or relations | Ambiguous scope; use UNCERTAIN and review |
 
-Co-occurrence is allowed. For example, an operational task and a separate report request can yield both ACTION_REQUEST and REPORT_REQUEST; the same due date may yield DEADLINE for both linked events. Do not duplicate an event to obtain extra labels.
+Co-occurrence is allowed. For example, an operational task and a separate report request can yield both ACTION_REQUEST and REPORT_REQUEST; the same due date may yield DEADLINE for both linked events. A completed task or delivered document also yields GENERAL_UPDATE. Do not duplicate an event to obtain extra labels.
+
+### Quick worked examples
+
+These short examples are invented for training. Highlight only the words that appear in the current message; connect each date, person, and document to the event it belongs to.
+
+| Current message says… | Annotate… | Derived result |
+|---|---|---|
+| “Please test the Orion login.” | Task → requested; ACTION words “test the Orion login” | ACTION_REQUEST |
+| “Please test the Orion login by Friday.” | Task → requested; link Friday as its DUE_DATE | ACTION_REQUEST, DEADLINE |
+| “Please send the Orion progress report.” | Document → requested; identify it as a project deliverable | REPORT_REQUEST |
+| “The Orion progress report was delivered.” | Document → delivered | GENERAL_UPDATE, not REPORT_REQUEST |
+| “Please approve the Orion budget.” | Approval → requested | APPROVAL |
+| “The Orion change is approved.” / “The Orion change is rejected.” | Approval → granted / rejected | APPROVAL |
+| “Let’s review the Orion launch on Friday.” | Meeting → proposed; Friday is its MEETING_DATE | MEETING, not DEADLINE |
+| “Move the Orion review to Monday instead.” | Meeting → rescheduled; use SUPERSEDES only if the earlier meeting is available and confirmed | MEETING |
+| “Orion testing is blocked by the missing access key.” | Project update → blocker | GENERAL_UPDATE |
+| “Finance, provide the Orion cost estimate by Friday.” | Task → requested; Finance is a department CONTRIBUTOR; link Friday as its DUE_DATE | DEPARTMENTAL_INPUT, DEADLINE |
+| First: “Please send the Orion report.” Later: “Following up on that request—please send it today.” | A Document event in each message; add FOLLOW_UP_OF only when the first event is verified | REPORT_REQUEST; later also FOLLOW_UP |
+| Current: “Done, the Orion report was sent today.” Quoted: “Please send the report by Friday.” | Label the current delivery only. The quoted request is context, not a new current task. | GENERAL_UPDATE |
+| “Maya, test the interface by Friday; Leo, review the budget by Monday.” | Create two Task events; attach each person and deadline to the matching task | ACTION_REQUEST, DEADLINE |
+| “Meet Friday; the report is due Monday.” | Create a Meeting with Friday as MEETING_DATE and a separate Document with Monday as DUE_DATE | MEETING, REPORT_REQUEST, DEADLINE |
+| “Please book the routine weekly office room.” | If no initiative or deliverable connects it to project work, choose NON_PROJECT; do not label the meeting | NON_PROJECT |
+| “Please arrange a call Friday.” | If project relevance cannot be established from the available context, choose UNCERTAIN and explain | No automatic labels until reviewed |
+
+Do not derive departmental input from a department name alone. Do not derive a deadline from a meeting date. A request for review/comments is not automatically an approval.
+
+#### Tricky scope and document boundaries
+
+| Situation | Decision | Why |
+|---|---|---|
+| “Please confirm this month’s contract price and update the recurring invoice.” | NON_PROJECT if it is routine contract administration with no bounded initiative. | Contract or pricing words alone do not establish a project. |
+| “Review the new capacity principles and send comments before the working-group meeting.” | PROJECT when the message establishes a defined workstream, deliverable and milestone. | Coordinated work can be project-related without using the word “project.” |
+| “Send the raw receivables data by Thursday.” | Use DOCUMENT only if the source shows it is project work; raw data is not automatically a project report. If the project connection or document class is unclear, choose UNCERTAIN / NEEDS_REVIEW. | A file or dataset is not automatically a requested report deliverable. |
+| “Please review the draft and send comments.” / “Please approve the draft.” | The first is a Task/input request; the second is Approval. | Review or comments alone do not ask for formal authorization. |
 
 ## 9. Difficult contrastive decisions
 
@@ -147,7 +181,7 @@ Use the synthetic fixture IDs in fyp_structured_v1_synthetic_examples.jsonl as e
 - **Deadline vs ordinary date:** meeting_date_not_deadline links Friday as MEETING_DATE; completed_action_is_status links Friday as OCCURRENCE_DATE. Neither derives DEADLINE. operational_action_request links Friday as DUE_DATE and does.
 - **Current request vs quoted historical request:** follow_up_with_quoted_history anchors only “Could you send” in the caller-supplied authored range. The quoted request has no current span; the prior event is referenced by IDs.
 - **First request vs follow-up:** first_report_request has no relation. follow_up_with_quoted_history references the earlier document event. follow_up_unresolved_prior records explicit reminder wording with a null prior reference and requires review.
-- **Report request vs delivery:** document_request_with_deadline is a requested deliverable. document_delivery_not_request is a completed status; it derives GENERAL_UPDATE, not REPORT_REQUEST.
+- **Report request vs delivery:** document_request_with_deadline is a requested deliverable. document_delivery_not_request is a delivered document; it derives GENERAL_UPDATE, not REPORT_REQUEST.
 - **Report vs ordinary action:** two_events_shared_owner_and_deadline models an operational task and a distinct launch-deck request. A document transfer by itself is not an operational action.
 - **Approval vs review:** formal_approval records granted authorization. ordinary_review_not_approval is a progress/status report with comments, not approval.
 - **Department contribution vs mention/recipient:** department_contribution_request gives Finance a CONTRIBUTOR role. department_recipient_only gives Finance RECIPIENT; it does not derive DEPARTMENTAL_INPUT.
@@ -187,6 +221,8 @@ Provenance describes both source origin and how the facts were produced:
 A blind annotator must be identifiable and timed; blind_prelabels_shown is false and ai_assistance is null. Each independent blind submission remains UNSET until adjudication. Do not show AI or another annotator’s answers in the blind subset.
 
 AI-assisted annotation records the AI provenance and whether the human accepted, modified, or rejected its output. GOLD requires explicit human review and a named/timed annotator; a tier dropdown by itself is insufficient. An AI-only prediction remains SILVER. A synthetic source always remains SYNTHETIC and cannot be GOLD or evaluation data.
+
+Derived labels use a separate rule version recorded on each new annotation. Records without `derived_label_version` retain the original `fyp-derived-labels-1.0` interpretation; new review records use `fyp-derived-labels-1.1`. Changing mapper rules must not silently change labels derived from older saved annotations.
 
 For evaluation, validation requires blind, human-reviewed GOLD from a real email or public corpus. Evaluation must not contain synthetic, unknown-origin, AI-only, or AI-assisted examples. Current repository guidance reports no human gold yet; this guide does not claim a human calibration set exists.
 

@@ -8,6 +8,8 @@ LABELS = (
     "MEETING", "DEADLINE", "REPORT_REQUEST", "DEPARTMENTAL_INPUT",
     "ACTION_REQUEST", "FOLLOW_UP", "APPROVAL", "GENERAL_UPDATE", "NON_PROJECT",
 )
+DERIVATION_VERSION = "fyp-derived-labels-1.1"
+LEGACY_DERIVATION_VERSION = "fyp-derived-labels-1.0"
 
 
 def _supported(value: Mapping[str, Any]) -> bool:
@@ -25,6 +27,9 @@ def derive_labels(annotation: Any) -> list[str]:
     if not isinstance(annotation, dict) or annotation.get("schema_version") != "fyp-structured-v1":
         return []
     if annotation.get("needs_review") is not False or annotation.get("review_reasons") not in ([], ()):
+        return []
+    derivation_version = annotation.get("derived_label_version", LEGACY_DERIVATION_VERSION)
+    if derivation_version not in {LEGACY_DERIVATION_VERSION, DERIVATION_VERSION}:
         return []
     scope = annotation.get("scope")
     if not isinstance(scope, dict):
@@ -62,9 +67,13 @@ def derive_labels(annotation: Any) -> list[str]:
             emitted.add("DEADLINE")
         if kind == "DOCUMENT" and state == "requested" and event.get("document_class") == "PROJECT_DELIVERABLE":
             emitted.add("REPORT_REQUEST")
+        if derivation_version == DERIVATION_VERSION and kind == "DOCUMENT" and state in {"submitted", "delivered", "missing", "reviewed"}:
+            emitted.add("GENERAL_UPDATE")
         if kind == "ACTION":
             if event.get("action_class") == "OPERATIONAL" and state in {"requested", "assigned"}:
                 emitted.add("ACTION_REQUEST")
+            if derivation_version == DERIVATION_VERSION and state in {"completed", "cancelled"}:
+                emitted.add("GENERAL_UPDATE")
             if event.get("action_class") == "DEPARTMENTAL_CONTRIBUTION":
                 if any(
                     link.get("role") == "CONTRIBUTOR"
