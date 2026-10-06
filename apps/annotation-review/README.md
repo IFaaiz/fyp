@@ -6,13 +6,15 @@ Private research annotation app for three students. The deployed Outlook product
 
 1. Sign in using your own allowed ChatGPT account.
 2. Open your unfinished email. Read the current authored message; quoted history is reference only.
-3. Choose project relevance, give a short reason and add exact relevance evidence.
-4. Add one event per distinct current act. Select its state, highlight its event words and connect the relevant people, dates, actions and documents.
-5. Use the built-in guide and worked example. If highlighting fails, expand **Paste exact text**, copy the words and choose their occurrence.
+3. Choose project relevance and give a short reason. Relevance highlights are optional.
+4. Directly choose all applicable FYP labels: MEETING, DEADLINE, REPORT_REQUEST, DEPARTMENTAL_INPUT, ACTION_REQUEST, FOLLOW_UP, APPROVAL, GENERAL_UPDATE. NON_PROJECT comes exclusively from relevance.
+5. Highlight current words under every selected label, then add required/optional extraction fields. Use **Rules & examples** or the exact copy/paste fallback when needed. A separate action label requires a distinct operational task.
 6. Mark uncertainty for review. Drafts save every ten seconds and can resume on another device after saving.
 7. Confirm independent human review and submit. Submitted blind answers are frozen.
 
-All three students review the common blind subset; the other sources have personal assignments. Peers cannot read each other's answers. The owner sees aggregate progress; full export unlocks only when all three complete the shared subset. Individual submissions remain UNSET until adjudication, never automatically GOLD.
+The first round shares 30 existing real emails: the original 24 blind sources plus six eligible TRAIN sources in an additive hash-bound assignment overlay. It initializes on the first authenticated queue read; Study controls offers an idempotent preparation button. The first two registered reviewers must complete this round before private export unlocks. A third complete reviewer can be included. The remaining sources keep personal assignments. Peer answers are hidden. Holdout sources are excluded from this round and its export. Individual submissions remain UNSET until adjudication, never automatically GOLD.
+
+New annotations use **fyp-direct-label-v1** in separate direct-review tables. Older Structured V1 drafts/submissions retain their original schema/mapper and storage. A reviewer can start a direct review of the same source without changing an old record, and open an old review through the explicit legacy link. Submitted records remain frozen in both formats.
 
 ## Storage and access
 
@@ -27,10 +29,12 @@ Use Node 22.13 or later. Dependencies are locked in package-lock.json. The origi
 - `npm run dev` starts the local preview; its mock account is seedy@sites.test, restricted to loopback.
 - `node node_modules/typescript/bin/tsc --noEmit` checks types.
 - `node tests/validation.mjs` checks all 16 synthetic schema fixtures and source/reference mutations.
+- `node tests/direct-validation.mjs` checks direct-label evidence/provenance constraints.
+- `node tests/direct-api.mjs` checks format, independent-save and export boundaries.
 - `npm run db:generate` appends Drizzle schema migrations.
 - Use the Sites build and publication helpers for deployment.
 
-The public source mirror is `apps/annotation-review` in IFaaiz/fyp. It excludes node_modules, local test databases, credentials and real emails. Python's matching validator and mapper are in ai/src/fyp_structured_v1.
+The public source mirror is `apps/annotation-review` in IFaaiz/fyp. It excludes node_modules, local test databases, credentials and real emails. Matching direct schema/validation is in ai/src/fyp_direct_label_v1. The legacy validator/mapper remains in ai/src/fyp_structured_v1. The direct guide and implementation report are in ai/annotation/fyp_direct_label_v1_annotation_guide.md and ai/reports/fyp_direct_label_redesign_2026-10-06.md.
 
 ## Fresh local checkout
 
@@ -42,6 +46,8 @@ From this directory with Node 22.13+ and npm installed:
 npm ci
 npm run build
 node node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_crazy_caretaker.sql
+node node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0001_curvy_shadowcat.sql
+node node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0002_harsh_nightshade.sql
 npm run dev -- --host 127.0.0.1 --port 3000
 ```
 
@@ -55,12 +61,12 @@ The queue starts empty without the authorized private corpus import packet.
 
 ## Current limits
 
-The current public-corpus source packet has no verified prior thread events. Follow-ups can be captured with unresolved targets and review notes; full resolved SUPERSEDES relations require a later adjudicated context packet. This app does not invent thread identities. Human agreement and training readiness remain pending actual submissions.
+Direct FOLLOW_UP uses current reminder evidence and a simple prior-expectation category, without an event graph. Unclear targets require review. Legacy event-relation research remains available separately. Human agreement and adjudicated training readiness remain pending actual submissions.
 
 The read-only WebMCP guide tool never writes annotations or claims to be a human reviewer. Browser/WebMCP runtime verification was unavailable in the current Windows sandbox; contract tests, HTTP authentication/save checks and the production build were run.
 
 ## Guided labeling interface
 
-The app uses three steps: **Relevance → Label message → Check & submit**. Five plain-language choices (Meeting, Task, Document, Approval, Project update) include local examples. Required evidence is shown separately from optional names and dates. Highlighted evidence stays visible in the email; faded reference lines cannot become current evidence. Copy-and-paste finds only exact allowed occurrences. Tasks and updates can explicitly reuse the same phrase for their two required typed evidence fields.
+The app uses four steps: **Relevance → FYP labels → Evidence → Submit**. All eight final categories have plain-language definitions and examples. Required evidence is shown separately from optional fields. Highlighted evidence stays visible in the email; faded reference lines cannot become current evidence. Copy/paste finds only exact allowed occurrences, and phrases can be reused for extraction fields.
 
-**Help & examples** opens a keyboard-accessible guide. **Submit & next email** opens the next unfinished source. Drafts, independent account access, frozen submissions and existing assignments are preserved.
+**Rules & examples** opens a keyboard-accessible guide. **Submit & next** opens the next unfinished source. Drafts autosave, accounts stay independent and original source assignments remain intact.
