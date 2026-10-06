@@ -1,10 +1,12 @@
 {
+  "access_policy_revision": 2,
   "ai_prelabels_present": false,
   "allocation_counts": {
     "blind_agreement": 24,
     "calibration_training": 12,
     "labeler_human_holdout": 11
   },
+  "allowed_account_count": 2,
   "created_from": {
     "boundary_path": "ai/data/experiments/structured_v2_candidates_20261002_v2/isolated_v2/boundary_manifest.json",
     "boundary_sha256": "a338bc2e884d05f645273f8d3ffcd703b8757cd867b3fcdf0fba4032ebfdfce3",
@@ -13,6 +15,7 @@
     "source_path": "ai/data/experiments/structured_v2_candidates_20261002_v2/isolated_v2/train_screen_candidates.jsonl",
     "source_sha256": "2daf0fbc6dd9bb4fcad6b5fbc04120c4bbe12cbdbc87021f48a5076704b02524"
   },
+  "external_visitor_count": 1,
   "gold_annotations": 0,
   "groups_split_across_allocations": 0,
   "holdout_policy": "No heldout source text shown to root; existing prefix ranges require independent human verification/adjudication before evaluation.",
@@ -29,7 +32,7 @@
   "sealed_named_topic_overlap_drops": 1,
   "selected_scope_boundary_control_count": 3,
   "selected_source_count": 47,
-  "site_audience": "owner_private",
+  "site_audience": "custom_private_allowlist",
   "site_deployment_id": "appgdep_6ac4fb7498ec8191bceeae0046757861",
   "site_import_accepted": 47,
   "site_import_completed": true,

@@ -37,9 +37,11 @@ the historical native MailEx benchmark remains closed.
 - GitHub source mirror: [apps/annotation-review](../../apps/annotation-review/README.md).
   It copies the committed Site application source, excludes generated compiler
   state, and adds fresh-clone local setup notes in its README.
-- Access is owner-private. The two teammates' ChatGPT account email addresses
-  are still required to configure the private allowlist; no invitations have
-  been sent and no public access was enabled.
+- Access remains private (`custom`): the owner and one authorized external
+  reviewer are allowed, policy revision 2. The last teammate’s ChatGPT account
+  address is still pending. Account addresses are omitted from this report.
+  Three-person agreement/export remains gated until the third reviewer joins
+  and all three complete the common blind subset.
 - All 47 curated emails were imported: 24 common blind, 12 personal calibration
   TRAIN and 11 human holdout. Root audited all 38 proposed TRAIN/common sources,
   rejected two weak inclusions and corrected 36 evidence ranges. One overlapping

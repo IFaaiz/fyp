@@ -1,7 +1,7 @@
 # FYP calibration V1 source curation — iteration 3
 
 Date: 2026-10-06
-Status: root-approved unlabelled pilot; all 47 sources imported into the owner-private review app.
+Status: root-approved unlabelled pilot; all 47 sources imported into the private review app.
 
 ## Final aggregate
 
@@ -24,7 +24,7 @@ Authored-prefix ranges come from a heuristic. Every heldout prefix range needs i
 
 ## Site and desktop status
 
-Curation is root-approved. The native private deployment succeeded for pushed Site source `c7a9e41d1880d6e8989dd926371e6af7682fa611`, environment revision 3. Import accepted and inserted all 47 sources in two batches. No human submission or agreement is claimed. The two teammates still need private access configured. Use the [offline desktop prototype](../../desktop/README.md) to review individual V1 packets locally.
+Curation is root-approved. The native private deployment succeeded for pushed Site source `c7a9e41d1880d6e8989dd926371e6af7682fa611`, environment revision 3. Import accepted and inserted all 47 sources in two batches. No human submission or agreement is claimed. Private access is configured for the owner and one external reviewer; the third reviewer’s account is still pending. Use the [offline desktop prototype](../../desktop/README.md) to review individual V1 packets locally.
 
 ## Reproduction note
 
