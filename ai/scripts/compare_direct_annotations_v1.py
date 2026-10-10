@@ -1,4 +1,4 @@
-"""Compare two fyp-direct-label-v1.1 annotations without treating either as gold.
+"""Compare two fyp-direct-label-v1 annotations without treating either as gold.
 
 Accepts one JSONL or JSON/app-export file for each annotator. App exports are
 read in memory and filtered to the requested reviewer before annotation JSON is
@@ -15,8 +15,8 @@ from pathlib import Path
 from typing import Any, Iterable
 
 
-SCHEMA_VERSION = "fyp-direct-label-v1.1"
-REPORT_VERSION = "fyp-direct-agreement-report-v1.1"
+SCHEMA_VERSION = "fyp-direct-label-v1"
+REPORT_VERSION = "fyp-direct-agreement-report-v1"
 PROJECT_LABELS = (
     "MEETING", "DEADLINE", "REPORT_REQUEST", "DEPARTMENTAL_INPUT",
     "ACTION_REQUEST", "FOLLOW_UP", "APPROVAL", "GENERAL_UPDATE",
@@ -24,13 +24,6 @@ PROJECT_LABELS = (
 LABELS = (*PROJECT_LABELS, "NON_PROJECT")
 SCOPES = ("PROJECT", "NON_PROJECT", "UNCERTAIN")
 HOLDOUT_ALLOCATIONS = {"labeler_human_holdout", "holdout", "test"}
-EXTRACTION_SPAN_TYPES = (
-    "MEETING_DATE", "MEETING_TIME", "DEADLINE_DATE", "DEADLINE_TIME",
-    "ACTION_ITEM", "RESPONSIBLE_PARTY", "DEPARTMENT", "REQUESTED_DOCUMENT",
-    "PARTICIPANT", "AGENDA", "PROJECT",
-)
-SUPPORT_SPAN_TYPES = ("EVIDENCE",)
-ALLOWED_SPAN_TYPES = frozenset((*EXTRACTION_SPAN_TYPES, *SUPPORT_SPAN_TYPES))
 
 
 @dataclass
@@ -227,7 +220,11 @@ def _normalise_direct_record(
             raise _fail(f"span IDs must be unique nonempty strings for {record_source_id}")
         if span["field"] not in {"subject", "current_message"}:
             raise _fail(f"span field must be subject or current_message for {record_source_id}")
-        if span["type"] not in ALLOWED_SPAN_TYPES:
+        if span["type"] not in {
+            "EVIDENCE", "MEETING_DATE", "MEETING_TIME", "DEADLINE_DATE", "DEADLINE_TIME",
+            "ACTION_ITEM", "RESPONSIBLE_PARTY", "DEPARTMENT", "REQUESTED_DOCUMENT",
+            "PARTICIPANT", "AGENDA", "PROJECT", "INPUT", "APPROVAL_TARGET",
+        }:
             raise _fail(f"unknown span type for {record_source_id}: {span['type']!r}")
         if (not isinstance(span["start"], int) or isinstance(span["start"], bool)
                 or not isinstance(span["end"], int) or isinstance(span["end"], bool)
@@ -636,10 +633,7 @@ def _maximum_overlap_pairs(
     return [(i, j, score) for j, (i, score) in sorted(owners.items())]
 
 
-def _span_metrics(
-    pairs: list[tuple[dict[str, Any], dict[str, Any]]],
-    span_types: frozenset[str],
-) -> dict[str, Any]:
+def _span_metrics(pairs: list[tuple[dict[str, Any], dict[str, Any]]]) -> dict[str, Any]:
     exact_tp = exact_fp = exact_fn = overlap_tp = overlap_fp = overlap_fn = 0
     overlap_ious: list[float] = []
     by_type: dict[str, dict[str, int | list[float]]] = defaultdict(
@@ -648,8 +642,7 @@ def _span_metrics(
     )
     total_a = total_b = 0
     for a, b in pairs:
-        spans_a = [span for span in a["spans"] if span["type"] in span_types]
-        spans_b = [span for span in b["spans"] if span["type"] in span_types]
+        spans_a, spans_b = a["spans"], b["spans"]
         total_a += len(spans_a)
         total_b += len(spans_b)
         types = {span["type"] for span in spans_a + spans_b}
@@ -701,7 +694,6 @@ def _span_metrics(
         }
     return {
         "eligible_records": len(pairs),
-        "span_types": sorted(span_types),
         "span_counts": {"A": total_a, "B": total_b},
         "exact_micro": _prf(exact_tp, exact_fp, exact_fn),
         "overlap_micro": {
@@ -831,11 +823,8 @@ def compare_direct_records(
             "labels_spans_relations": "eligible only when both scope choices are definite and neither record needs review",
             "label_micro_f1": "pooled positive-label counts across all nine FYP labels",
             "label_macro_f1": "mean positive-class F1 over labels selected by either annotator at least once",
-            "extraction_span_types": list(EXTRACTION_SPAN_TYPES),
-            "support_span_types": list(SUPPORT_SPAN_TYPES),
             "exact_span": "same source field, type, half-open start/end offsets, and text",
             "overlap_span": "positive character overlap with maximum-cardinality one-to-one matching per source field and span type",
-            "evidence_handling": "EVIDENCE is auxiliary support only; it is excluded from extraction-span counts and exact/overlap F1 denominators and is reported separately",
         },
         "paired_records": len(pairs),
         "source_alignment": {"id_sets_match": True, "source_hashes_checked": checked_hashes},
@@ -850,8 +839,7 @@ def compare_direct_records(
         },
         "scope": _scope_metrics(pairs),
         "labels": _label_metrics(eligible),
-        "spans": _span_metrics(eligible, frozenset(EXTRACTION_SPAN_TYPES)),
-        "support_evidence": _span_metrics(eligible, frozenset(SUPPORT_SPAN_TYPES)),
+        "spans": _span_metrics(eligible),
         "relations": {
             "label_support_links": supports,
             "explicit_relations": explicit_relations,

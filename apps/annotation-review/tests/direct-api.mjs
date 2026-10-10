@@ -147,8 +147,8 @@ assert.deepEqual(userNote.review_reasons, ['Attachment identity needs adjudicati
 assert.equal(userNote.needs_review, true);
 checks += 13;
 
-function reviewDatabase({ row = null, legacyRow = null, concurrentReads = false } = {}) {
-  const state = { row: row && structuredClone(row), legacyRow: legacyRow && structuredClone(legacyRow), reads: 0, writeSql: [] };
+function reviewDatabase({ row = null, legacyRow = null, oldDirectRow = null, concurrentReads = false } = {}) {
+  const state = { row: row && structuredClone(row), legacyRow: legacyRow && structuredClone(legacyRow), oldDirectRow: oldDirectRow && structuredClone(oldDirectRow), reads: 0, writeSql: [] };
   let releaseReads;
   const barrier = new Promise((resolve) => { releaseReads = resolve; });
   const db = {
@@ -159,7 +159,7 @@ function reviewDatabase({ row = null, legacyRow = null, concurrentReads = false 
         bind(...values) { this.values = values; return this; },
         async first() {
           if (this.sql.includes('SELECT s.* FROM sources')) return this.values[0] === source.id ? { ...source } : null;
-          if (this.sql.startsWith('SELECT revision,status,annotation_json FROM direct_reviews')) {
+          if (this.sql.startsWith('SELECT revision,status,annotation_json FROM direct_label_reviews')) {
             const snapshot = state.row && structuredClone(state.row);
             if (concurrentReads) {
               state.reads++;
@@ -168,6 +168,7 @@ function reviewDatabase({ row = null, legacyRow = null, concurrentReads = false 
             }
             return snapshot;
           }
+          if (this.sql.startsWith('SELECT revision,status,annotation_json FROM direct_reviews')) return state.oldDirectRow && structuredClone(state.oldDirectRow);
           if (this.sql.startsWith('SELECT revision,status,annotation_json FROM reviews')) return state.legacyRow && structuredClone(state.legacyRow);
           throw new Error(`Unexpected first query: ${this.sql}`);
         },
@@ -177,13 +178,13 @@ function reviewDatabase({ row = null, legacyRow = null, concurrentReads = false 
       const write = statements[0];
       state.writeSql.push(write.sql);
       let changes = 0;
-      if (write.sql.startsWith('UPDATE direct_reviews')) {
+      if (write.sql.startsWith('UPDATE direct_label_reviews')) {
         const [annotationJson, status, revision, activeMs, updatedAt, submittedAt, sourceId, userId, oldRevision] = write.values;
         if (state.row?.source_id === sourceId && state.row?.user_id === userId && state.row.revision === oldRevision && state.row.status === 'draft') {
           Object.assign(state.row, { annotation_json: annotationJson, status, revision, active_ms: state.row.active_ms + activeMs, updated_at: updatedAt, submitted_at: submittedAt });
           changes = 1;
         }
-      } else if (write.sql.startsWith('INSERT OR IGNORE INTO direct_reviews')) {
+      } else if (write.sql.startsWith('INSERT OR IGNORE INTO direct_label_reviews')) {
         const [sourceId, userId, annotationJson, status, revision, activeMs, createdAt, updatedAt, submittedAt] = write.values;
         if (!state.row) {
           state.row = { source_id: sourceId, user_id: userId, annotation_json: annotationJson, status, revision, active_ms: activeMs, created_at: createdAt, updated_at: updatedAt, submitted_at: submittedAt };
@@ -210,6 +211,7 @@ function loadReviewRoute(mockDb) {
     },
     '../../../lib/review-format': reviewFormat,
     '../../../lib/round': { assignedSQL: 's.owner_slot=?' },
+    '../../../lib/direct-annotation': direct,
   });
 }
 function postBody(record, revision, status = 'submitted') {
@@ -222,6 +224,7 @@ function postBody(record, revision, status = 'submitted') {
 
 const submittedStore = reviewDatabase({
   legacyRow: { source_id: source.id, user_id: reviewer.userId, annotation_json: JSON.stringify(preserve), status: 'draft', revision: 5, active_ms: 90 },
+  oldDirectRow: { source_id: source.id, user_id: reviewer.userId, annotation_json: JSON.stringify({ schema_version: 'fyp-direct-label-v1', marker: 'preserve-v1-draft' }), status: 'draft', revision: 7, active_ms: 35 },
 });
 const reviewRoute = loadReviewRoute(submittedStore.db);
 const firstSubmit = await reviewRoute.POST(postBody(annotation(), 0));
@@ -230,11 +233,68 @@ assert.equal(submittedStore.state.row.status, 'submitted');
 assert.equal(JSON.parse(submittedStore.state.row.annotation_json).schema_version, direct.directVersion);
 assert.equal(submittedStore.state.legacyRow.revision, 5);
 assert.equal(submittedStore.state.legacyRow.status, 'draft');
+assert.equal(JSON.parse(submittedStore.state.oldDirectRow.annotation_json).marker, 'preserve-v1-draft');
+assert.equal(submittedStore.state.oldDirectRow.revision, 7);
 const frozenAttempt = await reviewRoute.POST(postBody(annotation(), 1));
 assert.equal(frozenAttempt.status, 409);
 assert.equal(submittedStore.state.row.revision, 1);
 assert.equal(submittedStore.state.legacyRow.revision, 5);
-checks += 7;
+checks += 9;
+
+const staleV1Store = reviewDatabase({
+  oldDirectRow: { source_id: source.id, user_id: reviewer.userId, annotation_json: JSON.stringify({ schema_version: 'fyp-direct-label-v1', marker: 'preserve-v1-draft' }), status: 'draft', revision: 7, active_ms: 35 },
+});
+const staleV1 = structuredClone(annotation());
+staleV1.schema_version = 'fyp-direct-label-v1';
+const staleV1Response = await loadReviewRoute(staleV1Store.db).POST(postBody(staleV1, 7, 'draft'));
+assert.equal(staleV1Response.status, 409);
+assert.equal(staleV1Store.state.row, null);
+assert.equal(staleV1Store.state.oldDirectRow.revision, 7);
+assert.equal(staleV1Store.state.writeSql.length, 0);
+checks += 4;
+
+const archivedV1Row = {
+  source_id: source.id,
+  user_id: reviewer.userId,
+  annotation_json: JSON.stringify({ schema_version: 'fyp-direct-label-v1', marker: 'archived-v1' }),
+  status: 'draft',
+  revision: 7,
+};
+const emailQueries = [];
+const emailDb = {
+  prepare(sql) {
+    return {
+      sql,
+      values: [],
+      bind(...values) { this.values = values; return this; },
+      async first() {
+        emailQueries.push(this.sql);
+        if (this.sql.includes('SELECT s.* FROM sources')) return { ...source };
+        if (this.sql.includes('FROM direct_reviews')) return { ...archivedV1Row };
+        if (this.sql.includes('FROM reviews')) return { status: 'draft' };
+        throw new Error(`Unexpected email query: ${this.sql}`);
+      },
+    };
+  },
+};
+const emailRoute = loadTs('app/api/email/route.ts', {
+  '../../../lib/database': {
+    db: () => emailDb,
+    reviewer: async () => reviewer,
+    result: (body, status = 200) => Response.json(body, { status }),
+    failed: (error) => Response.json({ error: error?.message || 'failed' }, { status: error?.status || 503 }),
+  },
+  '../../../lib/round': { assignedSQL: 's.owner_slot=?' },
+});
+const archivedResponse = await emailRoute.GET(new Request(`https://review.test/api/email?id=${source.id}&format=direct-v1`));
+assert.equal(archivedResponse.status, 200);
+const archivedPayload = await archivedResponse.json();
+assert.equal(archivedPayload.annotation.schema_version, 'fyp-direct-label-v1');
+assert.equal(archivedPayload.annotation.marker, 'archived-v1');
+assert.equal(archivedPayload.read_only, true);
+assert.ok(emailQueries.some((query) => query.includes('FROM direct_reviews')));
+assert.equal(emailQueries.some((query) => /\b(INSERT|UPDATE|DELETE)\b/i.test(query)), false);
+checks += 6;
 
 const concurrentStore = reviewDatabase({
   row: { source_id: source.id, user_id: reviewer.userId, annotation_json: JSON.stringify(direct.stampDirectDraft(annotation(), publicSource)), status: 'draft', revision: 0, active_ms: 0 },
@@ -249,6 +309,36 @@ assert.deepEqual(concurrent.map((response) => response.status).sort(), [200, 409
 assert.equal(concurrentStore.state.row.revision, 1);
 assert.equal(concurrentStore.state.writeSql.length, 2);
 checks += 3;
+
+const queueQueries = [];
+const queueDb = {
+  prepare(sql) {
+    return {
+      sql,
+      values: [],
+      bind(...values) { this.values = values; return this; },
+      async all() {
+        queueQueries.push(this.sql);
+        return { results: [{ id: 'shared-first', round_member: 1 }, { id: 'assigned-later', round_member: 0 }] };
+      },
+    };
+  },
+};
+const queueRoute = loadTs('app/api/queue/route.ts', {
+  '../../../lib/database': {
+    db: () => queueDb,
+    reviewer: async () => reviewer,
+    result: (body, status = 200) => Response.json(body, { status }),
+    failed: (error) => Response.json({ error: error?.message || 'failed' }, { status: error?.status || 503 }),
+  },
+  '../../../lib/round': { assignedSQL: 's.owner_slot=?', roundAssignedSQL: 'EXISTS(SELECT 1 FROM calibration_round_sources cr WHERE cr.source_id=s.id)', prepareRound: async () => 30 },
+});
+const queueResponse = await queueRoute.GET(new Request('https://review.test/api/queue'));
+assert.equal(queueResponse.status, 200);
+assert.ok(queueQueries[0].includes('LEFT JOIN direct_label_reviews'));
+assert.match(queueQueries[0], /ORDER BY round_member DESC,s\.position/);
+assert.ok(!queueQueries[0].includes('LEFT JOIN direct_reviews'));
+checks += 4;
 
 const roundModule = loadTs('lib/round.ts');
 let roundRows = 0;
@@ -301,7 +391,7 @@ const exportDb = {
       },
       async all() {
         exportQueries.push(this.sql);
-        if (this.sql.includes('LEFT JOIN direct_reviews')) return { results: exportMode === 'incomplete'
+        if (this.sql.includes('LEFT JOIN direct_label_reviews')) return { results: exportMode === 'incomplete'
           ? [{ user_id: 'u0', display_name: 'R0', slot: 0, submitted: 25 }, { user_id: 'u1', display_name: 'R1', slot: 1, submitted: 24 }, { user_id: 'u2', display_name: 'R2', slot: 2, submitted: 25 }]
           : [{ user_id: 'u0', display_name: 'R0', slot: 0, submitted: 25 }, { user_id: 'u1', display_name: 'R1', slot: 1, submitted: 25 }, { user_id: 'u2', display_name: 'R2', slot: 2, submitted: 24 }] };
         if (this.sql.includes('JOIN calibration_round_sources cr')) return { results: Array.from({ length: 25 }, (_, i) => ({
@@ -309,7 +399,7 @@ const exportDb = {
           source_json: '{"authored_ranges":[]}', allocation: i < 24 ? 'blind_agreement' : 'calibration_training',
           source_sha256: `hash-${i + 1}`, position: i + 1,
         })) };
-        if (this.sql.includes('FROM direct_reviews WHERE status')) return { results: this.values.slice(1).flatMap((userId) => Array.from({ length: 25 }, (_, i) => ({ source_id: `round-${i + 1}`, user_id: userId, status: 'submitted', annotation_json: JSON.stringify({ schema_version: direct.directVersion }) }))) };
+        if (this.sql.includes('FROM direct_label_reviews WHERE status')) return { results: this.values.slice(1).flatMap((userId) => Array.from({ length: 25 }, (_, i) => ({ source_id: `round-${i + 1}`, user_id: userId, status: 'submitted', annotation_json: JSON.stringify({ schema_version: direct.directVersion }) }))) };
         throw new Error(`Unexpected export all query: ${this.sql}`);
       },
     };
@@ -327,8 +417,8 @@ const exportRoute = loadTs('app/api/admin/export/route.ts', {
 });
 let exported = await exportRoute.GET();
 assert.equal(exported.status, 409);
-assert.ok(exportQueries.some((query) => query.includes('LEFT JOIN direct_reviews')));
-assert.ok(!exportQueries.some((query) => query.includes('FROM direct_reviews WHERE status')));
+assert.ok(exportQueries.some((query) => query.includes('LEFT JOIN direct_label_reviews')));
+assert.ok(!exportQueries.some((query) => query.includes('FROM direct_label_reviews WHERE status')));
 exportMode = 'complete-first-two';
 exportQueries = [];
 exported = await exportRoute.GET();
@@ -340,7 +430,7 @@ assert.deepEqual(exportPayload.reviewers.map((person) => person.slot), [0, 1]);
 assert.equal(exportPayload.reviews.length, 50);
 assert.ok(exportPayload.sources.every((item) => item.allocation !== 'labeler_human_holdout'));
 assert.ok(exportQueries.some((query) => query.includes('cr.source_sha256=s.sha256')));
-assert.ok(exportQueries.some((query) => query.includes('FROM direct_reviews WHERE status')));
+assert.ok(exportQueries.some((query) => query.includes('FROM direct_label_reviews WHERE status')));
 checks += 10;
 
 console.log(JSON.stringify({ suite: 'direct-api', checks, legacy_rows_read: 0, stored_human_responses_read: 0 }));

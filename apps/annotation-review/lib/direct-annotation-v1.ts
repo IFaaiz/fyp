@@ -1,26 +1,40 @@
-import schemaFile from './direct-schema.json';
+import schemaFile from './direct-schema-v1.json';
 import { stampBlindHumanSubmission, stampUnannotatedDraft } from './annotation';
 
 export const directSchema: any = schemaFile;
-export const directVersion = 'fyp-direct-label-v1.1';
+export const directVersion = 'fyp-direct-label-v1';
 export const directLabels: string[] = [
   'MEETING', 'DEADLINE', 'REPORT_REQUEST', 'DEPARTMENTAL_INPUT',
   'ACTION_REQUEST', 'FOLLOW_UP', 'APPROVAL', 'GENERAL_UPDATE', 'NON_PROJECT',
 ];
 export const projectLabels: string[] = directLabels.filter((label) => label !== 'NON_PROJECT');
-export const extractionSpanTypes: string[] = [
-  'MEETING_DATE', 'MEETING_TIME', 'DEADLINE_DATE', 'DEADLINE_TIME',
+export const spanTypes: string[] = [
+  'EVIDENCE', 'MEETING_DATE', 'MEETING_TIME', 'DEADLINE_DATE', 'DEADLINE_TIME',
   'ACTION_ITEM', 'RESPONSIBLE_PARTY', 'DEPARTMENT', 'REQUESTED_DOCUMENT',
-  'PARTICIPANT', 'AGENDA', 'PROJECT',
+  'PARTICIPANT', 'AGENDA', 'PROJECT', 'INPUT', 'APPROVAL_TARGET',
 ];
-export const supportSpanTypes: string[] = ['EVIDENCE'];
-export const spanTypes: string[] = [...supportSpanTypes, ...extractionSpanTypes];
 
-// Extraction is a separate optional layer. Any of the approved 11 fields may
-// be attached to a directly selected label when the source explicitly states it.
-const allowedFieldTypes: Record<string, string[]> = Object.fromEntries(
-  projectLabels.map((label): [string, string[]] => [label, extractionSpanTypes]),
-);
+const requiredFieldTypes: Record<string, string[]> = {
+  MEETING: [],
+  DEADLINE: ['DEADLINE_DATE|DEADLINE_TIME'],
+  REPORT_REQUEST: ['REQUESTED_DOCUMENT'],
+  DEPARTMENTAL_INPUT: ['DEPARTMENT', 'INPUT'],
+  ACTION_REQUEST: ['ACTION_ITEM'],
+  FOLLOW_UP: [],
+  APPROVAL: ['APPROVAL_TARGET'],
+  GENERAL_UPDATE: [],
+};
+
+const allowedFieldTypes: Record<string, string[]> = {
+  MEETING: ['MEETING_DATE', 'MEETING_TIME', 'PARTICIPANT', 'AGENDA', 'PROJECT'],
+  DEADLINE: ['DEADLINE_DATE', 'DEADLINE_TIME', 'ACTION_ITEM', 'REQUESTED_DOCUMENT', 'RESPONSIBLE_PARTY', 'PROJECT'],
+  REPORT_REQUEST: ['REQUESTED_DOCUMENT', 'RESPONSIBLE_PARTY', 'PROJECT'],
+  DEPARTMENTAL_INPUT: ['DEPARTMENT', 'INPUT', 'RESPONSIBLE_PARTY', 'PROJECT'],
+  ACTION_REQUEST: ['ACTION_ITEM', 'RESPONSIBLE_PARTY', 'PROJECT'],
+  FOLLOW_UP: spanTypes.filter((type) => type !== 'EVIDENCE'),
+  APPROVAL: ['APPROVAL_TARGET', 'RESPONSIBLE_PARTY', 'PROJECT'],
+  GENERAL_UPDATE: ['ACTION_ITEM', 'RESPONSIBLE_PARTY', 'DEPARTMENT', 'REQUESTED_DOCUMENT', 'INPUT', 'APPROVAL_TARGET', 'PROJECT'],
+};
 
 const followUpTargets = ['TASK', 'DOCUMENT_REQUEST', 'APPROVAL', 'DEPARTMENT_INPUT', 'MEETING_ACTION', 'UNCLEAR'];
 
@@ -226,11 +240,17 @@ export function validateDirect(annotation: any, source: any): string[] {
       return span?.type === 'EVIDENCE' && span.field === 'current_message';
     })) fail(`${support.label} needs a current_message EVIDENCE trigger.`);
     if (support.label !== 'FOLLOW_UP' && support.follow_up_target !== null) fail('Only FOLLOW_UP may set follow_up_target.');
-    if (support.label === 'FOLLOW_UP' && support.follow_up_target !== null
-      && !followUpTargets.includes(support.follow_up_target)) fail('FOLLOW_UP needs a valid follow-up target.');
-    if (support.label === 'FOLLOW_UP' && support.follow_up_target === 'UNCLEAR') {
-      if (!support.review_reason.trim()) fail('UNCLEAR follow-up needs a review reason.');
-      if (!annotation.needs_review || !annotation.review_reasons.length) fail('UNCLEAR follow-up needs global review.');
+    if (support.label === 'FOLLOW_UP' && !followUpTargets.includes(support.follow_up_target)) fail('FOLLOW_UP needs a valid follow-up target.');
+    if (support.label === 'FOLLOW_UP' && support.follow_up_target === 'UNCLEAR' && !support.review_reason.trim()) fail('UNCLEAR follow-up needs a review reason.');
+    const required = requiredFieldTypes[support.label] || [];
+    const actualTypes = new Set(support.field_span_ids.map((id: string) => spans.get(id)?.type).filter(Boolean));
+    const missing = required.filter((group) => group.includes('|')
+      ? !group.split('|').some((type) => actualTypes.has(type))
+      : !actualTypes.has(group));
+    if (support.label === 'DEADLINE' && !support.applies_to.trim()) missing.push('applies_to');
+    if (missing.length && !support.review_reason.trim()) fail(`${support.label} is missing ${missing.join(', ')}; explain the waiver in review_reason.`);
+    if (missing.length && support.review_reason.trim() && (!annotation.needs_review || !annotation.review_reasons.length)) {
+      fail(`${support.label} field waiver needs needs_review and a global review reason.`);
     }
     if (support.review_reason.trim() && (!annotation.needs_review || !annotation.review_reasons.length)) fail(`${support.label} review_reason needs global review.`);
   }

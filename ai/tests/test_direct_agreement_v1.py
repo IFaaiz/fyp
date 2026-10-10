@@ -9,8 +9,7 @@ from pathlib import Path
 
 AI_DIR = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(AI_DIR))
-from scripts.compare_direct_annotations import (  # noqa: E402
-    EXTRACTION_SPAN_TYPES,
+from scripts.compare_direct_annotations_v1 import (  # noqa: E402
     _maximum_overlap_pairs,
     compare_direct_records,
     load_annotations,
@@ -44,7 +43,7 @@ def _record(
         for label in labels
     ]
     return {
-        "schema_version": "fyp-direct-label-v1.1",
+        "schema_version": "fyp-direct-label-v1",
         "record_id": source_id,
         "current_source_id": source_id,
         "scope": {"value": scope, "reason": "Specific project deliverable.",
@@ -106,58 +105,10 @@ class DirectAgreementTests(unittest.TestCase):
         self.assertEqual(report["labels"]["exact_multilabel_set"]["eligible_records"], 2)
         self.assertEqual(report["labels"]["per_label"]["ACTION_REQUEST"]["a_only"], 1)
         self.assertEqual(report["labels"]["micro_f1"]["f1"], 0.8)
-        self.assertEqual(report["spans"]["exact_micro"]["f1"], 0.5)
+        self.assertEqual(report["spans"]["exact_micro"]["f1"], 0.75)
         self.assertEqual(report["spans"]["overlap_micro"]["f1"], 1.0)
-        self.assertEqual(report["spans"]["overlap_micro"]["tp"], 2)
+        self.assertEqual(report["spans"]["overlap_micro"]["tp"], 4)
         self.assertEqual(report["gold_annotations_scored"], 0)
-
-    def test_evidence_is_reported_separately_from_extraction_spans(self):
-        a = _record("case-1", "human-a", message="Please send revised report by Friday.")
-        b = _record("case-1", "human-b", message="Please send revised report by Friday.")
-        b["spans"][0].update({"start": 7, "end": 11, "text": "send"})
-
-        report = compare_direct_records([a], [b])
-
-        self.assertEqual(report["annotation_schema_version"], "fyp-direct-label-v1.1")
-        self.assertEqual(report["spans"]["span_types"], sorted(EXTRACTION_SPAN_TYPES))
-        self.assertEqual(report["spans"]["span_counts"], {"A": 0, "B": 0})
-        self.assertEqual(report["spans"]["exact_micro"]["tp"], 0)
-        self.assertEqual(report["spans"]["exact_micro"]["fp"], 0)
-        self.assertEqual(report["spans"]["exact_micro"]["fn"], 0)
-        self.assertEqual(report["support_evidence"]["span_types"], ["EVIDENCE"])
-        self.assertEqual(report["support_evidence"]["span_counts"], {"A": 1, "B": 1})
-        self.assertEqual(report["support_evidence"]["exact_micro"]["fp"], 1)
-        self.assertEqual(report["support_evidence"]["exact_micro"]["fn"], 1)
-
-    def test_new_schema_accepts_exactly_the_eleven_extraction_types(self):
-        message = " ".join(EXTRACTION_SPAN_TYPES)
-        spans = []
-        for index, span_type in enumerate(EXTRACTION_SPAN_TYPES):
-            start = message.index(span_type)
-            spans.append({
-                "id": f"target-{index}", "field": "current_message", "start": start,
-                "end": start + len(span_type), "text": span_type, "type": span_type,
-            })
-        a = _record("case-1", "human-a", message=message, spans=spans)
-        b = _record("case-1", "human-b", message=message, spans=spans)
-
-        report = compare_direct_records([a], [b])
-
-        self.assertEqual(report["spans"]["span_counts"], {"A": 11, "B": 11})
-        self.assertEqual(report["spans"]["exact_micro"]["tp"], 11)
-
-    def test_input_and_approval_target_are_rejected_in_new_schema(self):
-        message = "Please send revised report by Friday. INPUT APPROVAL_TARGET"
-        for span_type in ("INPUT", "APPROVAL_TARGET"):
-            with self.subTest(span_type=span_type):
-                start = message.index(span_type)
-                invalid = _record("case-1", "human-a", message=message)
-                invalid["spans"].append({
-                    "id": "unsupported", "field": "current_message", "start": start,
-                    "end": start + len(span_type), "text": span_type, "type": span_type,
-                })
-                with self.assertRaisesRegex(ValueError, "unknown span type"):
-                    compare_direct_records([invalid], [_record("case-1", "human-b", message=message)])
 
     def test_review_flag_and_support_review_reason_are_excluded(self):
         a = _record("case-1", "human-a", labels=["FOLLOW_UP"], needs_review=True)

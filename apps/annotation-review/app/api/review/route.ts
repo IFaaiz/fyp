@@ -1,12 +1,15 @@
 import {db,reviewer,result,failed,requireSameOrigin} from '../../../lib/database';
 import {prepareReview} from '../../../lib/review-format';
 import {assignedSQL} from '../../../lib/round';
+import {directVersion} from '../../../lib/direct-annotation';
 export const dynamic='force-dynamic';
 export async function POST(request:Request){try{
  requireSameOrigin(request);const u=await reviewer();const b:any=await request.json();if(!['draft','submitted'].includes(b.status))return result({error:'Invalid review state.'},400);
  const s:any=await db().prepare(`SELECT s.* FROM sources s WHERE s.id=? AND ${assignedSQL}`).bind(b.source_id,u.slot).first();if(!s)return result({error:'Email is not assigned to you.'},403);
  const source={...JSON.parse(s.source_json),source_id:s.id,subject:s.subject,current_message:s.body};let a=b.annotation;if(!a||a.current_source_id!==s.id)return result({error:'Review belongs to another email.'},400);
- const table=a.schema_version==='fyp-structured-v1'?'reviews':'direct_reviews',logTable=table==='reviews'?'review_revisions':'direct_review_revisions';
+ if(a.schema_version==='fyp-direct-label-v1')return result({error:'The saved v1 draft is preserved. Reload to start a separate v1.1 review; old direct records cannot be changed by this build.'},409);
+ if(!['fyp-structured-v1',directVersion].includes(a.schema_version))return result({error:'Unsupported annotation schema. Reload the current form.'},409);
+ const table=a.schema_version==='fyp-structured-v1'?'reviews':'direct_label_reviews',logTable=table==='reviews'?'review_revisions':'direct_label_review_revisions';
  const old:any=await db().prepare(`SELECT revision,status,annotation_json FROM ${table} WHERE source_id=? AND user_id=?`).bind(s.id,u.userId).first();if(old?.status==='submitted')return result({error:'Submitted blind reviews are frozen. Contact the owner for corrections.'},409);
  if(Number(b.revision)!==Number(old?.revision||0))return result({error:'Another tab saved a newer draft. Reload before editing.'},409);
  const prior=old?.annotation_json?JSON.parse(old.annotation_json):null;

@@ -1,0 +1,909 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fyp:direct-label:v1.1",
+  "title": "FYP Direct Label Annotation V1.1",
+  "description": "Human annotations directly select FYP labels and attach current-message evidence plus optional source-grounded extraction spans.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "current_source_id",
+    "scope",
+    "labels",
+    "spans",
+    "label_support",
+    "needs_review",
+    "review_reasons",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "fyp-direct-label-v1.1"
+    },
+    "record_id": {
+      "$ref": "#/$defs/id"
+    },
+    "current_source_id": {
+      "$ref": "#/$defs/id"
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "reason",
+        "evidence_span_ids"
+      ],
+      "properties": {
+        "value": {
+          "enum": [
+            "PROJECT",
+            "NON_PROJECT",
+            "UNCERTAIN"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "evidence_span_ids": {
+          "$ref": "#/$defs/ids"
+        }
+      }
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "MEETING",
+          "DEADLINE",
+          "REPORT_REQUEST",
+          "DEPARTMENTAL_INPUT",
+          "ACTION_REQUEST",
+          "FOLLOW_UP",
+          "APPROVAL",
+          "GENERAL_UPDATE",
+          "NON_PROJECT"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "spans": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/span"
+      }
+    },
+    "label_support": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/labelSupport"
+      }
+    },
+    "needs_review": {
+      "type": "boolean"
+    },
+    "review_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ids": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id"
+      },
+      "uniqueItems": true
+    },
+    "span": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "field",
+        "start",
+        "end",
+        "text",
+        "type"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "field": {
+          "enum": [
+            "subject",
+            "current_message"
+          ]
+        },
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "enum": [
+            "EVIDENCE",
+            "MEETING_DATE",
+            "MEETING_TIME",
+            "DEADLINE_DATE",
+            "DEADLINE_TIME",
+            "ACTION_ITEM",
+            "RESPONSIBLE_PARTY",
+            "DEPARTMENT",
+            "REQUESTED_DOCUMENT",
+            "PARTICIPANT",
+            "AGENDA",
+            "PROJECT"
+          ]
+        }
+      }
+    },
+    "labelSupport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "evidence_span_ids",
+        "field_span_ids",
+        "applies_to",
+        "follow_up_target",
+        "review_reason"
+      ],
+      "properties": {
+        "label": {
+          "enum": [
+            "MEETING",
+            "DEADLINE",
+            "REPORT_REQUEST",
+            "DEPARTMENTAL_INPUT",
+            "ACTION_REQUEST",
+            "FOLLOW_UP",
+            "APPROVAL",
+            "GENERAL_UPDATE"
+          ]
+        },
+        "evidence_span_ids": {
+          "$ref": "#/$defs/ids",
+          "minItems": 1
+        },
+        "field_span_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "applies_to": {
+          "type": "string"
+        },
+        "follow_up_target": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "enum": [
+                "TASK",
+                "DOCUMENT_REQUEST",
+                "APPROVAL",
+                "DEPARTMENT_INPUT",
+                "MEETING_ACTION",
+                "UNCLEAR"
+              ]
+            }
+          ]
+        },
+        "review_reason": {
+          "type": "string"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "data_origin",
+        "source_reference",
+        "synthetic_case_id",
+        "annotation_tier",
+        "annotation_mode",
+        "annotator_id",
+        "annotated_at",
+        "blind_prelabels_shown",
+        "human_review",
+        "ai_assistance"
+      ],
+      "properties": {
+        "data_origin": {
+          "enum": [
+            "REAL_EMAIL",
+            "PUBLIC_CORPUS",
+            "SYNTHETIC",
+            "UNKNOWN"
+          ]
+        },
+        "source_reference": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "synthetic_case_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "annotation_tier": {
+          "enum": [
+            "UNSET",
+            "GOLD",
+            "SILVER",
+            "SYNTHETIC"
+          ]
+        },
+        "annotation_mode": {
+          "enum": [
+            "UNANNOTATED",
+            "BLIND_HUMAN",
+            "AI_ASSISTED_HUMAN",
+            "AI_ONLY",
+            "RULE_BASED",
+            "SYNTHETIC_GENERATION"
+          ]
+        },
+        "annotator_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "annotated_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blind_prelabels_shown": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "human_review": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "reviewer_id",
+                "reviewed_at",
+                "decision"
+              ],
+              "properties": {
+                "reviewer_id": {
+                  "$ref": "#/$defs/id"
+                },
+                "reviewed_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "decision": {
+                  "enum": [
+                    "accepted",
+                    "modified",
+                    "rejected",
+                    "adjudicated"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "ai_assistance": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "provider",
+                "model",
+                "checkpoint",
+                "protocol_version",
+                "run_id",
+                "timestamp",
+                "human_disposition"
+              ],
+              "properties": {
+                "provider": {
+                  "$ref": "#/$defs/id"
+                },
+                "model": {
+                  "$ref": "#/$defs/id"
+                },
+                "checkpoint": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/id"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "protocol_version": {
+                  "$ref": "#/$defs/id"
+                },
+                "run_id": {
+                  "$ref": "#/$defs/id"
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "human_disposition": {
+                  "enum": [
+                    "accepted",
+                    "modified",
+                    "rejected",
+                    null
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "annotation_tier": {
+                "const": "GOLD"
+              }
+            },
+            "required": [
+              "annotation_tier"
+            ]
+          },
+          "then": {
+            "properties": {
+              "annotation_mode": {
+                "enum": [
+                  "BLIND_HUMAN",
+                  "AI_ASSISTED_HUMAN"
+                ]
+              },
+              "annotator_id": {
+                "$ref": "#/$defs/id"
+              },
+              "annotated_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "human_review": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "annotation_mode": {
+                "const": "BLIND_HUMAN"
+              }
+            },
+            "required": [
+              "annotation_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "annotator_id": {
+                "$ref": "#/$defs/id"
+              },
+              "annotated_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "blind_prelabels_shown": {
+                "const": false
+              },
+              "ai_assistance": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "annotation_mode": {
+                "const": "AI_ASSISTED_HUMAN"
+              }
+            },
+            "required": [
+              "annotation_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "annotator_id": {
+                "$ref": "#/$defs/id"
+              },
+              "annotated_at": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "blind_prelabels_shown": {
+                "const": true
+              },
+              "ai_assistance": {
+                "type": "object",
+                "properties": {
+                  "human_disposition": {
+                    "enum": [
+                      "accepted",
+                      "modified",
+                      "rejected"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "annotation_mode": {
+                "const": "AI_ONLY"
+              }
+            },
+            "required": [
+              "annotation_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "annotation_tier": {
+                "enum": [
+                  "SILVER",
+                  "SYNTHETIC"
+                ]
+              },
+              "annotator_id": {
+                "type": "null"
+              },
+              "annotated_at": {
+                "type": "null"
+              },
+              "blind_prelabels_shown": {
+                "type": "null"
+              },
+              "ai_assistance": {
+                "type": "object"
+              },
+              "human_review": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "annotation_mode": {
+                "const": "UNANNOTATED"
+              }
+            },
+            "required": [
+              "annotation_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "annotation_tier": {
+                "const": "UNSET"
+              },
+              "annotator_id": {
+                "type": "null"
+              },
+              "annotated_at": {
+                "type": "null"
+              },
+              "blind_prelabels_shown": {
+                "type": "null"
+              },
+              "human_review": {
+                "type": "null"
+              },
+              "ai_assistance": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "annotation_mode": {
+                "const": "SYNTHETIC_GENERATION"
+              }
+            },
+            "required": [
+              "annotation_mode"
+            ]
+          },
+          "then": {
+            "properties": {
+              "data_origin": {
+                "const": "SYNTHETIC"
+              },
+              "annotation_tier": {
+                "const": "SYNTHETIC"
+              },
+              "synthetic_case_id": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "data_origin": {
+                "const": "SYNTHETIC"
+              }
+            },
+            "required": [
+              "data_origin"
+            ]
+          },
+          "then": {
+            "properties": {
+              "annotation_tier": {
+                "const": "SYNTHETIC"
+              },
+              "synthetic_case_id": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "synthetic_case_id": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "data_origin": {
+                "enum": [
+                  "REAL_EMAIL",
+                  "PUBLIC_CORPUS"
+                ]
+              }
+            },
+            "required": [
+              "data_origin"
+            ]
+          },
+          "then": {
+            "properties": {
+              "source_reference": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "x-semantics": {
+    "labels": [
+      "MEETING",
+      "DEADLINE",
+      "REPORT_REQUEST",
+      "DEPARTMENTAL_INPUT",
+      "ACTION_REQUEST",
+      "FOLLOW_UP",
+      "APPROVAL",
+      "GENERAL_UPDATE",
+      "NON_PROJECT"
+    ],
+    "project_labels": [
+      "MEETING",
+      "DEADLINE",
+      "REPORT_REQUEST",
+      "DEPARTMENTAL_INPUT",
+      "ACTION_REQUEST",
+      "FOLLOW_UP",
+      "APPROVAL",
+      "GENERAL_UPDATE"
+    ],
+    "span_types": [
+      "EVIDENCE",
+      "MEETING_DATE",
+      "MEETING_TIME",
+      "DEADLINE_DATE",
+      "DEADLINE_TIME",
+      "ACTION_ITEM",
+      "RESPONSIBLE_PARTY",
+      "DEPARTMENT",
+      "REQUESTED_DOCUMENT",
+      "PARTICIPANT",
+      "AGENDA",
+      "PROJECT"
+    ],
+    "required_fields": {
+      "MEETING": [],
+      "DEADLINE": [],
+      "REPORT_REQUEST": [],
+      "DEPARTMENTAL_INPUT": [],
+      "ACTION_REQUEST": [],
+      "FOLLOW_UP": [],
+      "APPROVAL": [],
+      "GENERAL_UPDATE": []
+    },
+    "allowed_field_types": {
+      "MEETING": [
+        "MEETING_DATE",
+        "MEETING_TIME",
+        "DEADLINE_DATE",
+        "DEADLINE_TIME",
+        "ACTION_ITEM",
+        "RESPONSIBLE_PARTY",
+        "DEPARTMENT",
+        "REQUESTED_DOCUMENT",
+        "PARTICIPANT",
+        "AGENDA",
+        "PROJECT"
+      ],
+      "DEADLINE": [
+        "MEETING_DATE",
+        "MEETING_TIME",
+        "DEADLINE_DATE",
+        "DEADLINE_TIME",
+        "ACTION_ITEM",
+        "RESPONSIBLE_PARTY",
+        "DEPARTMENT",
+        "REQUESTED_DOCUMENT",
+        "PARTICIPANT",
+        "AGENDA",
+        "PROJECT"
+      ],
+      "REPORT_REQUEST": [
+        "MEETING_DATE",
+        "MEETING_TIME",
+        "DEADLINE_DATE",
+        "DEADLINE_TIME",
+        "ACTION_ITEM",
+        "RESPONSIBLE_PARTY",
+        "DEPARTMENT",
+        "REQUESTED_DOCUMENT",
+        "PARTICIPANT",
+        "AGENDA",
+        "PROJECT"
+      ],
+      "DEPARTMENTAL_INPUT": [
+        "MEETING_DATE",
+        "MEETING_TIME",
+        "DEADLINE_DATE",
+        "DEADLINE_TIME",
+        "ACTION_ITEM",
+        "RESPONSIBLE_PARTY",
+        "DEPARTMENT",
+        "REQUESTED_DOCUMENT",
+        "PARTICIPANT",
+        "AGENDA",
+        "PROJECT"
+      ],
+      "ACTION_REQUEST": [
+        "MEETING_DATE",
+        "MEETING_TIME",
+        "DEADLINE_DATE",
+        "DEADLINE_TIME",
+        "ACTION_ITEM",
+        "RESPONSIBLE_PARTY",
+        "DEPARTMENT",
+        "REQUESTED_DOCUMENT",
+        "PARTICIPANT",
+        "AGENDA",
+        "PROJECT"
+      ],
+      "FOLLOW_UP": [
+        "MEETING_DATE",
+        "MEETING_TIME",
+        "DEADLINE_DATE",
+        "DEADLINE_TIME",
+        "ACTION_ITEM",
+        "RESPONSIBLE_PARTY",
+        "DEPARTMENT",
+        "REQUESTED_DOCUMENT",
+        "PARTICIPANT",
+        "AGENDA",
+        "PROJECT"
+      ],
+      "APPROVAL": [
+        "MEETING_DATE",
+        "MEETING_TIME",
+        "DEADLINE_DATE",
+        "DEADLINE_TIME",
+        "ACTION_ITEM",
+        "RESPONSIBLE_PARTY",
+        "DEPARTMENT",
+        "REQUESTED_DOCUMENT",
+        "PARTICIPANT",
+        "AGENDA",
+        "PROJECT"
+      ],
+      "GENERAL_UPDATE": [
+        "MEETING_DATE",
+        "MEETING_TIME",
+        "DEADLINE_DATE",
+        "DEADLINE_TIME",
+        "ACTION_ITEM",
+        "RESPONSIBLE_PARTY",
+        "DEPARTMENT",
+        "REQUESTED_DOCUMENT",
+        "PARTICIPANT",
+        "AGENDA",
+        "PROJECT"
+      ]
+    },
+    "follow_up_targets": [
+      "TASK",
+      "DOCUMENT_REQUEST",
+      "APPROVAL",
+      "DEPARTMENT_INPUT",
+      "MEETING_ACTION",
+      "UNCLEAR"
+    ],
+    "evidence_policy": "Each selected project label has one support row with at least one current_message EVIDENCE span. EVIDENCE is auxiliary support only and excluded from extraction/evaluation span types.",
+    "scope_policy": "NON_PROJECT is exclusive. UNCERTAIN requires review and permits only scope EVIDENCE spans.",
+    "offset_policy": "Offsets are Unicode code-point indices into subject/current_message.",
+    "provenance_policy": "The server stamps provenance using the legacy provenance contract; AI-only and synthetic records cannot be GOLD.",
+    "extraction_span_types": [
+      "MEETING_DATE",
+      "MEETING_TIME",
+      "DEADLINE_DATE",
+      "DEADLINE_TIME",
+      "ACTION_ITEM",
+      "RESPONSIBLE_PARTY",
+      "DEPARTMENT",
+      "REQUESTED_DOCUMENT",
+      "PARTICIPANT",
+      "AGENDA",
+      "PROJECT"
+    ],
+    "evaluation_span_types": [
+      "MEETING_DATE",
+      "MEETING_TIME",
+      "DEADLINE_DATE",
+      "DEADLINE_TIME",
+      "ACTION_ITEM",
+      "RESPONSIBLE_PARTY",
+      "DEPARTMENT",
+      "REQUESTED_DOCUMENT",
+      "PARTICIPANT",
+      "AGENDA",
+      "PROJECT"
+    ],
+    "support_span_types": [
+      "EVIDENCE"
+    ],
+    "encouraged_fields": {
+      "MEETING": [
+        "MEETING_DATE",
+        "MEETING_TIME",
+        "PARTICIPANT",
+        "AGENDA",
+        "PROJECT"
+      ],
+      "DEADLINE": [
+        "DEADLINE_DATE",
+        "DEADLINE_TIME",
+        "ACTION_ITEM",
+        "REQUESTED_DOCUMENT",
+        "RESPONSIBLE_PARTY",
+        "PROJECT"
+      ],
+      "REPORT_REQUEST": [
+        "REQUESTED_DOCUMENT",
+        "RESPONSIBLE_PARTY",
+        "PROJECT"
+      ],
+      "DEPARTMENTAL_INPUT": [
+        "DEPARTMENT",
+        "ACTION_ITEM",
+        "REQUESTED_DOCUMENT",
+        "RESPONSIBLE_PARTY",
+        "PROJECT"
+      ],
+      "ACTION_REQUEST": [
+        "ACTION_ITEM",
+        "RESPONSIBLE_PARTY",
+        "PROJECT"
+      ],
+      "FOLLOW_UP": [
+        "MEETING_DATE",
+        "MEETING_TIME",
+        "DEADLINE_DATE",
+        "DEADLINE_TIME",
+        "ACTION_ITEM",
+        "RESPONSIBLE_PARTY",
+        "DEPARTMENT",
+        "REQUESTED_DOCUMENT",
+        "PARTICIPANT",
+        "AGENDA",
+        "PROJECT"
+      ],
+      "APPROVAL": [
+        "RESPONSIBLE_PARTY",
+        "PROJECT"
+      ],
+      "GENERAL_UPDATE": [
+        "ACTION_ITEM",
+        "RESPONSIBLE_PARTY",
+        "DEPARTMENT",
+        "REQUESTED_DOCUMENT",
+        "PARTICIPANT",
+        "AGENDA",
+        "PROJECT"
+      ]
+    },
+    "extraction_policy": "All 11 extraction fields are optional and source-grounded. Annotate a field when explicitly stated and relevant; missing fields never waive or invalidate a directly selected label.",
+    "follow_up_target_policy": "FOLLOW_UP target may be null when the current reminder is clear but the target is unstated. UNCLEAR marks genuine target uncertainty and requires review."
+  }
+}

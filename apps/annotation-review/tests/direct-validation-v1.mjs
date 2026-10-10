@@ -14,7 +14,7 @@ legacyModule.filename = legacyPath;
 legacyModule.paths = Module._nodeModulePaths(path.dirname(legacyPath));
 legacyModule._compile(legacyJs, legacyPath);
 
-const filename = path.join(root, 'lib/direct-annotation.ts');
+const filename = path.join(root, 'lib/direct-annotation-v1.ts');
 const js = ts.transpileModule(fs.readFileSync(filename, 'utf8'), {
   compilerOptions: { module: ts.ModuleKind.CommonJS, esModuleInterop: true, resolveJsonModule: true, target: ts.ScriptTarget.ES2022 },
 }).outputText;
@@ -24,7 +24,7 @@ mod.paths = Module._nodeModulePaths(path.dirname(filename));
 const originalRequire = mod.require.bind(mod);
 mod.require = (request) => request === './annotation' ? legacyModule.exports : originalRequire(request);
 mod._compile(js, filename);
-const { blankDirect, cp, stampDirectDraft, stampDirectSubmission, validateDirect, directVersion, directLabels, spanTypes, extractionSpanTypes, supportSpanTypes } = mod.exports;
+const { blankDirect, cp, stampDirectDraft, stampDirectSubmission, validateDirect, directVersion, directLabels, spanTypes } = mod.exports;
 
 const source = {
   source_id: 'real-email-1', subject: 'Project report due Friday',
@@ -110,18 +110,13 @@ function oneLabelRecord(label, message, triggerText, fieldSpans = [], { appliesT
 }
 
 const labelCases = [
-  oneLabelRecord('MEETING', "Let's meet on Monday.", 'meet on Monday', [['date', 'Monday', 'MEETING_DATE']]),
+  oneLabelRecord('MEETING', "Let's meet on Monday.", 'meet'),
   oneLabelRecord('DEADLINE', 'Please send the draft by Friday.', 'by Friday', [['due', 'Friday', 'DEADLINE_DATE']], { appliesTo: 'send the draft' }),
-  oneLabelRecord('DEADLINE', 'The submission is overdue.', 'overdue'),
   oneLabelRecord('REPORT_REQUEST', 'Please send the revised report by Friday.', 'send the revised report', [['doc', 'revised report', 'REQUESTED_DOCUMENT']]),
-  oneLabelRecord('REPORT_REQUEST', 'Please send the file.', 'send the file'),
-  oneLabelRecord('GENERAL_UPDATE', 'Attached is the report we completed.', 'report we completed', [['doc', 'report', 'REQUESTED_DOCUMENT']]),
-  oneLabelRecord('DEPARTMENTAL_INPUT', 'Finance should send the figures.', 'Finance should send the figures', [['department', 'Finance', 'DEPARTMENT'], ['action', 'send the figures', 'ACTION_ITEM']]),
-  oneLabelRecord('GENERAL_UPDATE', 'Testing is complete. Finance is copied.', 'Testing is complete', [['department', 'Finance', 'DEPARTMENT']]),
+  oneLabelRecord('DEPARTMENTAL_INPUT', 'Finance should send the figures.', 'Finance should send the figures', [['department', 'Finance', 'DEPARTMENT'], ['input', 'figures', 'INPUT']]),
   oneLabelRecord('ACTION_REQUEST', 'Please test the system.', 'test the system', [['action', 'test the system', 'ACTION_ITEM']]),
-  oneLabelRecord('FOLLOW_UP', 'Reminder: I am still waiting on Finance.', 'Reminder: I am still waiting on Finance'),
-  oneLabelRecord('APPROVAL', 'Please approve the revised project plan.', 'approve'),
-  oneLabelRecord('ACTION_REQUEST', 'Please review the project report.', 'review the project report', [['action', 'review the project report', 'ACTION_ITEM']]),
+  oneLabelRecord('FOLLOW_UP', 'Reminder: please send the report.', 'Reminder', [], { followUpTarget: 'DOCUMENT_REQUEST' }),
+  oneLabelRecord('APPROVAL', 'Please approve the revised project plan.', 'approve', [['target', 'revised project plan', 'APPROVAL_TARGET']]),
   oneLabelRecord('GENERAL_UPDATE', 'Testing is now complete.', 'Testing is now complete'),
 ];
 for (const { source: labelSource, annotation } of labelCases) {
@@ -129,20 +124,36 @@ for (const { source: labelSource, annotation } of labelCases) {
   assert.deepEqual(annotation.labels, [annotation.label_support[0].label], 'validation preserves direct labels without adding co-occurrences');
   checks += 2;
 }
-const implicitDeadline = labelCases.find((item) => item.annotation.labels[0] === 'DEADLINE' && item.source.current_message.includes('overdue'));
-assert.equal(implicitDeadline.annotation.needs_review, false, 'missing explicit deadline date does not force review');
-assert.deepEqual(implicitDeadline.annotation.label_support[0].field_span_ids, []);
-const noTargetApproval = labelCases.find((item) => item.annotation.labels[0] === 'APPROVAL');
-assert.equal(noTargetApproval.annotation.label_support[0].field_span_ids.length, 0, 'approval target extraction is optional');
-assert.equal(labelCases.find((item) => item.source.current_message.includes('Monday')).annotation.labels.includes('DEADLINE'), false, 'meeting date does not add DEADLINE');
-assert.equal(labelCases.find((item) => item.source.current_message.includes('report we completed')).annotation.labels.includes('REPORT_REQUEST'), false, 'document delivery does not add REPORT_REQUEST');
-assert.equal(labelCases.find((item) => item.source.current_message.includes('Finance is copied')).annotation.labels.includes('DEPARTMENTAL_INPUT'), false, 'department mention does not add DEPARTMENTAL_INPUT');
-checks += 5;
+const requiredFieldCases = [
+  ['DEADLINE', 'due'], ['REPORT_REQUEST', 'doc'],
+  ['DEPARTMENTAL_INPUT', 'department'], ['DEPARTMENTAL_INPUT', 'input'],
+  ['ACTION_REQUEST', 'action'], ['APPROVAL', 'target'],
+];
+for (const [label, fieldId] of requiredFieldCases) {
+  const { source: labelSource, annotation } = structuredClone(labelCases.find((item) => item.annotation.labels[0] === label));
+  annotation.label_support[0].field_span_ids = annotation.label_support[0].field_span_ids.filter((id) => id !== fieldId);
+  annotation.spans = annotation.spans.filter((span) => span.id !== fieldId);
+  assert.ok(validateDirect(annotation, labelSource).length > 0, `${label} missing ${fieldId} must be explained`);
+  annotation.label_support[0].review_reason = `The ${fieldId} is unavailable.`;
+  annotation.needs_review = true;
+  annotation.review_reasons = [`${label} needs adjudication.`];
+  assert.deepEqual(validateDirect(annotation, labelSource), [], `${label} waiver with review should validate`);
+  checks += 2;
+}
+const deadlineWithoutTarget = structuredClone(labelCases.find((item) => item.annotation.labels[0] === 'DEADLINE'));
+deadlineWithoutTarget.annotation.label_support[0].applies_to = '';
+assert.ok(validateDirect(deadlineWithoutTarget.annotation, deadlineWithoutTarget.source).length > 0);
+deadlineWithoutTarget.annotation.label_support[0].review_reason = 'What is due is unclear.';
+deadlineWithoutTarget.annotation.needs_review = true;
+deadlineWithoutTarget.annotation.review_reasons = ['Deadline target needs adjudication.'];
+assert.deepEqual(validateDirect(deadlineWithoutTarget.annotation, deadlineWithoutTarget.source), []);
+checks += 2;
 
 const rejects = (change) => { const record = base(); change(record); valid(record, false); };
 rejects((record) => { record.scope.value = 'NON_PROJECT'; record.labels = ['NON_PROJECT']; });
 rejects((record) => { record.labels = ['DEADLINE']; });
-rejects((record) => { record.label_support[0].field_span_ids = ['scope']; });
+rejects((record) => { record.label_support[1].applies_to = '  '; });
+rejects((record) => { record.label_support[0].field_span_ids = ['date']; });
 rejects((record) => { record.label_support[1].evidence_span_ids = ['scope']; });
 rejects((record) => { record.spans[0].start += 1; });
 rejects((record) => { record.spans.push({ ...record.spans[0], id: 'orphan' }); });
@@ -181,7 +192,10 @@ valid(uncertain);
 
 const waived = base();
 waived.label_support[0].field_span_ids = [];
+waived.label_support[0].review_reason = 'The referenced attachment is missing from this message.';
 waived.spans = waived.spans.filter((span) => span.id !== 'doc');
+waived.needs_review = true;
+waived.review_reasons = ['Requested document cannot be identified from available text.'];
 valid(waived);
 
 const unclearFollowUp = base();
@@ -233,32 +247,8 @@ shiftedSource.authored_ranges = [{ start: 0, end: 2 }];
 assert.ok(validateDirect(quotedOnly, shiftedSource).length > 0);
 checks += 2;
 
-const allExtractionMessage = 'Meet Monday at 3 PM. Deadline Friday at 5 PM. Send the draft to Alex in Finance with the budget report. Attendees Alex. Agenda budget review for Orion.';
-const allExtraction = oneLabelRecord('GENERAL_UPDATE', allExtractionMessage, 'Meet Monday', [
-  ['meeting-date', 'Monday', 'MEETING_DATE'], ['meeting-time', '3 PM', 'MEETING_TIME'],
-  ['deadline-date', 'Friday', 'DEADLINE_DATE'], ['deadline-time', '5 PM', 'DEADLINE_TIME'],
-  ['action', 'Send the draft', 'ACTION_ITEM'], ['responsible', 'Alex', 'RESPONSIBLE_PARTY'],
-  ['department', 'Finance', 'DEPARTMENT'], ['document', 'budget report', 'REQUESTED_DOCUMENT'],
-  ['participant', 'Alex', 'PARTICIPANT'], ['agenda', 'budget review', 'AGENDA'], ['project', 'Orion', 'PROJECT'],
-]);
-assert.deepEqual(validateDirect(allExtraction.annotation, allExtraction.source), []);
-assert.equal(new Set(allExtraction.annotation.spans.filter((span) => span.type !== 'EVIDENCE').map((span) => span.type)).size, 11);
-
-for (const removedType of ['INPUT', 'APPROVAL_TARGET']) {
-  const invalid = base();
-  const text = 'revised report';
-  const start = cpIndexOf(source.current_message, text);
-  invalid.spans.push({ id: `removed-${removedType}`, field: 'current_message', start, end: start + cp(text).length, text, type: removedType });
-  invalid.label_support[0].field_span_ids.push(`removed-${removedType}`);
-  assert.ok(validateDirect(invalid, source).length > 0, `${removedType} is outside the v1.1 type set`);
-}
-
 assert.equal(directLabels.length, 9);
-assert.equal(directVersion, 'fyp-direct-label-v1.1');
-assert.equal(extractionSpanTypes.length, 11);
-assert.deepEqual(supportSpanTypes, ['EVIDENCE']);
-assert.equal(spanTypes.length, 12);
-assert.ok(!extractionSpanTypes.includes('EVIDENCE'));
+assert.equal(spanTypes.length, 14);
 assert.equal(blankDirect(source).schema_version, directVersion);
-checks += 10;
+checks += 3;
 console.log(JSON.stringify({ schema_version: directVersion, labels: directLabels, checks }));

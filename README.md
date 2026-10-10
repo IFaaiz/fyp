@@ -2,21 +2,28 @@
 
 ## Current AI/NLP workstream
 
-**6 October 2026:** The data-first V1 calibration pilot has root approval as a
-47-source unlabelled historical public-corpus fallback, imported into the
-private three-person review app. See the [iteration 3 aggregate curation report](ai/reports/fyp_calibration_v1_curation.md)
-for the allocations and limits. See the [calibration reviewer handoff](ai/reports/fyp_calibration_v1_reviewer_handoff.md)
-for the research review workflow and next gates.
+**10 October 2026:** The active human annotation contract is
+**fyp-direct-label-v1.1**: direct relevance, eight FYP labels, exactly 11 optional
+extraction targets, and auxiliary EVIDENCE. Each selected project label requires
+current-message evidence. Missing extraction details alone do not require review.
+See the [final pre-labeling audit](ai/reports/fyp_prelabeling_final_audit_2026-10-10.md)
+and [current annotation guide](ai/annotation/fyp_direct_label_v1_1_annotation_guide.md).
 
-- [Guided interface update](ai/reports/fyp_annotation_ui_usability.md): three steps,
-  plain-language rules, exact evidence help and next-email navigation.
+The first human calibration round contains **30 existing real public-corpus
+emails** (24 shared sources and six TRAIN sources), shown independently to the
+first two reviewers before personal assignments. These are actual calibration
+data, not a disposable pilot or final TEST. The 11 sealed holdout sources remain
+excluded. The private app contains 47 sources in total; source hashes and
+historical allocations are preserved.
+
 - [Review app source](apps/annotation-review/README.md): independent account-based
-  queues, exact evidence, autosaved drafts, blind submissions and labeling rules.
+  queues, four annotation steps, exact evidence, autosaved drafts, blind frozen
+  submissions and labeling rules.
 - [Offline desktop prototype](desktop/README.md): local single-packet review using
   the V1 validator and mapper.
-- [V1 annotation guide](ai/annotation/fyp_structured_v1_annotation_guide.md) and
-  [schema](ai/config/fyp_structured_v1_schema.json): current authored events and
-  exact evidence; uncertainty requires review.
+- [Historical Structured V1 guide](ai/annotation/fyp_structured_v1_annotation_guide.md)
+  and [schema](ai/config/fyp_structured_v1_schema.json) remain available for
+  unchanged legacy records. Earlier direct v1 records also retain their version.
 - [Bounded span-link diagnostic](ai/reports/mailex_span_link_diagnostic.md):
   interrupted, zero completed seeds, no checkpoint; its one-hour deadline expired.
 - [Product/calibration schedule](ai/reports/fyp_calibration_v1_schedule.md): relative

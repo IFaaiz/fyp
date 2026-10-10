@@ -22,6 +22,13 @@
       "when": 1791306225176,
       "tag": "0002_harsh_nightshade",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1791633494180,
+      "tag": "0003_thin_blacklash",
+      "breakpoints": true
     }
   ]
 }

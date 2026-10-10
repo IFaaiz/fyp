@@ -72,6 +72,19 @@ class DirectRoundMigrationTests(unittest.TestCase):
         for migration in ("0001_curvy_shadowcat.sql", "0002_harsh_nightshade.sql"):
             self.db.executescript((APP / "drizzle" / migration).read_text(encoding="utf-8"))
 
+        # A v1 direct draft already exists when the additive v1.1 tables arrive.
+        self.db.execute(
+            "INSERT INTO direct_reviews VALUES(?,?,?,?,?,?,?,?,?)",
+            ("blind-01", "reviewer-0", json.dumps({"schema_version": "fyp-direct-label-v1", "marker": "v1-draft"}),
+             "draft", 5, 15, "t1", "t2", None),
+        )
+        self.db.execute(
+            "INSERT INTO direct_review_revisions VALUES(?,?,?,?,?,?,?)",
+            ("old-rev-5", "blind-01", "reviewer-0", 5,
+             json.dumps({"schema_version": "fyp-direct-label-v1", "marker": "v1-draft"}), "draft", "t2"),
+        )
+        self.db.executescript((APP / "drizzle" / "0003_thin_blacklash.sql").read_text(encoding="utf-8"))
+
     def tearDown(self):
         self.db.close()
 
@@ -107,18 +120,52 @@ class DirectRoundMigrationTests(unittest.TestCase):
             "SELECT id,position,sha256,allocation,common_blind,owner_slot FROM sources ORDER BY position"
         ).fetchall())
 
-    def test_legacy_and_direct_records_can_coexist_for_same_reviewer_and_source(self):
+    def test_structured_v1_and_direct_v1_records_survive_additive_v1_1_tables(self):
+        legacy_before = self.db.execute(
+            "SELECT annotation_json,status,revision,active_ms,created_at,updated_at,submitted_at FROM reviews WHERE source_id=? AND user_id=?",
+            ("blind-01", "reviewer-0"),
+        ).fetchone()
+        old_direct_before = self.db.execute(
+            "SELECT annotation_json,status,revision,active_ms,created_at,updated_at,submitted_at FROM direct_reviews WHERE source_id=? AND user_id=?",
+            ("blind-01", "reviewer-0"),
+        ).fetchone()
+        self.assertIsNotNone(old_direct_before)
+        self.assertEqual(json.loads(old_direct_before[0]), {"schema_version": "fyp-direct-label-v1", "marker": "v1-draft"})
+        self.assertEqual(self.db.execute("SELECT COUNT(*) FROM direct_label_reviews").fetchone()[0], 0)
+
         self.db.execute(
-            "INSERT INTO direct_reviews VALUES(?,?,?,?,?,?,?,?,?)",
-            ("blind-01", "reviewer-0", json.dumps({"schema_version": "fyp-direct-label-v1", "marker": "direct"}),
-             "submitted", 1, 20, "t2", "t3", "t3"),
+            "INSERT INTO direct_label_reviews VALUES(?,?,?,?,?,?,?,?,?)",
+            ("blind-01", "reviewer-0", json.dumps({"schema_version": "fyp-direct-label-v1.1", "marker": "v1.1"}),
+             "draft", 1, 20, "t3", "t4", None),
         )
-        legacy = self.db.execute("SELECT annotation_json,revision FROM reviews WHERE source_id=? AND user_id=?", ("blind-01", "reviewer-0")).fetchone()
-        direct = self.db.execute("SELECT annotation_json,revision FROM direct_reviews WHERE source_id=? AND user_id=?", ("blind-01", "reviewer-0")).fetchone()
-        self.assertEqual(json.loads(legacy[0]), {"schema_version": "fyp-structured-v1", "marker": "legacy"})
-        self.assertEqual(legacy[1], 4)
-        self.assertEqual(json.loads(direct[0]), {"schema_version": "fyp-direct-label-v1", "marker": "direct"})
-        self.assertEqual(direct[1], 1)
+        self.db.execute(
+            "INSERT INTO direct_label_review_revisions VALUES(?,?,?,?,?,?,?)",
+            ("new-rev-1", "blind-01", "reviewer-0", 1,
+             json.dumps({"schema_version": "fyp-direct-label-v1.1", "marker": "v1.1"}), "draft", "t4"),
+        )
+
+        legacy_after = self.db.execute(
+            "SELECT annotation_json,status,revision,active_ms,created_at,updated_at,submitted_at FROM reviews WHERE source_id=? AND user_id=?",
+            ("blind-01", "reviewer-0"),
+        ).fetchone()
+        old_direct_after = self.db.execute(
+            "SELECT annotation_json,status,revision,active_ms,created_at,updated_at,submitted_at FROM direct_reviews WHERE source_id=? AND user_id=?",
+            ("blind-01", "reviewer-0"),
+        ).fetchone()
+        new_direct = self.db.execute(
+            "SELECT annotation_json,status,revision FROM direct_label_reviews WHERE source_id=? AND user_id=?",
+            ("blind-01", "reviewer-0"),
+        ).fetchone()
+        self.assertEqual(legacy_after, legacy_before)
+        self.assertEqual(old_direct_after, old_direct_before)
+        self.assertEqual(json.loads(legacy_after[0]), {"schema_version": "fyp-structured-v1", "marker": "legacy"})
+        self.assertEqual(legacy_after[2], 4)
+        self.assertEqual(json.loads(old_direct_after[0]), {"schema_version": "fyp-direct-label-v1", "marker": "v1-draft"})
+        self.assertEqual(old_direct_after[2], 5)
+        self.assertEqual(json.loads(new_direct[0]), {"schema_version": "fyp-direct-label-v1.1", "marker": "v1.1"})
+        self.assertEqual(new_direct[2], 1)
+        self.assertEqual(self.db.execute("SELECT COUNT(*) FROM direct_review_revisions").fetchone()[0], 1)
+        self.assertEqual(self.db.execute("SELECT COUNT(*) FROM direct_label_review_revisions").fetchone()[0], 1)
 
 
 if __name__ == "__main__":

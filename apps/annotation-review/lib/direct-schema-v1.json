@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:fyp:direct-label:v1.1",
-  "title": "FYP Direct Label Annotation V1.1",
-  "description": "Human annotations directly select FYP labels and attach current-message evidence plus optional source-grounded extraction spans.",
+  "$id": "urn:fyp:direct-label:v1",
+  "title": "FYP Direct Label Annotation V1",
+  "description": "Human annotations directly select FYP labels and attach source-grounded evidence and extraction spans.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -19,7 +19,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "fyp-direct-label-v1.1"
+      "const": "fyp-direct-label-v1"
     },
     "record_id": {
       "$ref": "#/$defs/id"
@@ -153,7 +153,9 @@
             "REQUESTED_DOCUMENT",
             "PARTICIPANT",
             "AGENDA",
-            "PROJECT"
+            "PROJECT",
+            "INPUT",
+            "APPROVAL_TARGET"
           ]
         }
       }
@@ -684,82 +686,67 @@
       "REQUESTED_DOCUMENT",
       "PARTICIPANT",
       "AGENDA",
-      "PROJECT"
+      "PROJECT",
+      "INPUT",
+      "APPROVAL_TARGET"
     ],
     "required_fields": {
       "MEETING": [],
-      "DEADLINE": [],
-      "REPORT_REQUEST": [],
-      "DEPARTMENTAL_INPUT": [],
-      "ACTION_REQUEST": [],
-      "FOLLOW_UP": [],
-      "APPROVAL": [],
+      "DEADLINE": [
+        [
+          "DEADLINE_DATE",
+          "DEADLINE_TIME"
+        ],
+        "applies_to"
+      ],
+      "REPORT_REQUEST": [
+        "REQUESTED_DOCUMENT"
+      ],
+      "DEPARTMENTAL_INPUT": [
+        "DEPARTMENT",
+        "INPUT"
+      ],
+      "ACTION_REQUEST": [
+        "ACTION_ITEM"
+      ],
+      "FOLLOW_UP": [
+        "follow_up_target"
+      ],
+      "APPROVAL": [
+        "APPROVAL_TARGET"
+      ],
       "GENERAL_UPDATE": []
     },
     "allowed_field_types": {
       "MEETING": [
         "MEETING_DATE",
         "MEETING_TIME",
-        "DEADLINE_DATE",
-        "DEADLINE_TIME",
-        "ACTION_ITEM",
-        "RESPONSIBLE_PARTY",
-        "DEPARTMENT",
-        "REQUESTED_DOCUMENT",
         "PARTICIPANT",
         "AGENDA",
         "PROJECT"
       ],
       "DEADLINE": [
-        "MEETING_DATE",
-        "MEETING_TIME",
         "DEADLINE_DATE",
         "DEADLINE_TIME",
         "ACTION_ITEM",
-        "RESPONSIBLE_PARTY",
-        "DEPARTMENT",
         "REQUESTED_DOCUMENT",
-        "PARTICIPANT",
-        "AGENDA",
+        "RESPONSIBLE_PARTY",
         "PROJECT"
       ],
       "REPORT_REQUEST": [
-        "MEETING_DATE",
-        "MEETING_TIME",
-        "DEADLINE_DATE",
-        "DEADLINE_TIME",
-        "ACTION_ITEM",
-        "RESPONSIBLE_PARTY",
-        "DEPARTMENT",
         "REQUESTED_DOCUMENT",
-        "PARTICIPANT",
-        "AGENDA",
+        "RESPONSIBLE_PARTY",
         "PROJECT"
       ],
       "DEPARTMENTAL_INPUT": [
-        "MEETING_DATE",
-        "MEETING_TIME",
-        "DEADLINE_DATE",
-        "DEADLINE_TIME",
-        "ACTION_ITEM",
-        "RESPONSIBLE_PARTY",
         "DEPARTMENT",
-        "REQUESTED_DOCUMENT",
-        "PARTICIPANT",
-        "AGENDA",
+        "INPUT",
+        "RESPONSIBLE_PARTY",
         "PROJECT"
       ],
       "ACTION_REQUEST": [
-        "MEETING_DATE",
-        "MEETING_TIME",
-        "DEADLINE_DATE",
-        "DEADLINE_TIME",
         "ACTION_ITEM",
         "RESPONSIBLE_PARTY",
-        "DEPARTMENT",
-        "REQUESTED_DOCUMENT",
-        "PARTICIPANT",
-        "AGENDA",
         "PROJECT"
       ],
       "FOLLOW_UP": [
@@ -773,32 +760,22 @@
         "REQUESTED_DOCUMENT",
         "PARTICIPANT",
         "AGENDA",
-        "PROJECT"
+        "PROJECT",
+        "INPUT",
+        "APPROVAL_TARGET"
       ],
       "APPROVAL": [
-        "MEETING_DATE",
-        "MEETING_TIME",
-        "DEADLINE_DATE",
-        "DEADLINE_TIME",
-        "ACTION_ITEM",
+        "APPROVAL_TARGET",
         "RESPONSIBLE_PARTY",
-        "DEPARTMENT",
-        "REQUESTED_DOCUMENT",
-        "PARTICIPANT",
-        "AGENDA",
         "PROJECT"
       ],
       "GENERAL_UPDATE": [
-        "MEETING_DATE",
-        "MEETING_TIME",
-        "DEADLINE_DATE",
-        "DEADLINE_TIME",
         "ACTION_ITEM",
         "RESPONSIBLE_PARTY",
         "DEPARTMENT",
         "REQUESTED_DOCUMENT",
-        "PARTICIPANT",
-        "AGENDA",
+        "INPUT",
+        "APPROVAL_TARGET",
         "PROJECT"
       ]
     },
@@ -810,100 +787,9 @@
       "MEETING_ACTION",
       "UNCLEAR"
     ],
-    "evidence_policy": "Each selected project label has one support row with at least one current_message EVIDENCE span. EVIDENCE is auxiliary support only and excluded from extraction/evaluation span types.",
+    "evidence_policy": "Each selected project label has one support row with at least one current_message EVIDENCE span. Subject spans may support extraction fields and scope, not label triggers.",
     "scope_policy": "NON_PROJECT is exclusive. UNCERTAIN requires review and permits only scope EVIDENCE spans.",
     "offset_policy": "Offsets are Unicode code-point indices into subject/current_message.",
-    "provenance_policy": "The server stamps provenance using the legacy provenance contract; AI-only and synthetic records cannot be GOLD.",
-    "extraction_span_types": [
-      "MEETING_DATE",
-      "MEETING_TIME",
-      "DEADLINE_DATE",
-      "DEADLINE_TIME",
-      "ACTION_ITEM",
-      "RESPONSIBLE_PARTY",
-      "DEPARTMENT",
-      "REQUESTED_DOCUMENT",
-      "PARTICIPANT",
-      "AGENDA",
-      "PROJECT"
-    ],
-    "evaluation_span_types": [
-      "MEETING_DATE",
-      "MEETING_TIME",
-      "DEADLINE_DATE",
-      "DEADLINE_TIME",
-      "ACTION_ITEM",
-      "RESPONSIBLE_PARTY",
-      "DEPARTMENT",
-      "REQUESTED_DOCUMENT",
-      "PARTICIPANT",
-      "AGENDA",
-      "PROJECT"
-    ],
-    "support_span_types": [
-      "EVIDENCE"
-    ],
-    "encouraged_fields": {
-      "MEETING": [
-        "MEETING_DATE",
-        "MEETING_TIME",
-        "PARTICIPANT",
-        "AGENDA",
-        "PROJECT"
-      ],
-      "DEADLINE": [
-        "DEADLINE_DATE",
-        "DEADLINE_TIME",
-        "ACTION_ITEM",
-        "REQUESTED_DOCUMENT",
-        "RESPONSIBLE_PARTY",
-        "PROJECT"
-      ],
-      "REPORT_REQUEST": [
-        "REQUESTED_DOCUMENT",
-        "RESPONSIBLE_PARTY",
-        "PROJECT"
-      ],
-      "DEPARTMENTAL_INPUT": [
-        "DEPARTMENT",
-        "ACTION_ITEM",
-        "REQUESTED_DOCUMENT",
-        "RESPONSIBLE_PARTY",
-        "PROJECT"
-      ],
-      "ACTION_REQUEST": [
-        "ACTION_ITEM",
-        "RESPONSIBLE_PARTY",
-        "PROJECT"
-      ],
-      "FOLLOW_UP": [
-        "MEETING_DATE",
-        "MEETING_TIME",
-        "DEADLINE_DATE",
-        "DEADLINE_TIME",
-        "ACTION_ITEM",
-        "RESPONSIBLE_PARTY",
-        "DEPARTMENT",
-        "REQUESTED_DOCUMENT",
-        "PARTICIPANT",
-        "AGENDA",
-        "PROJECT"
-      ],
-      "APPROVAL": [
-        "RESPONSIBLE_PARTY",
-        "PROJECT"
-      ],
-      "GENERAL_UPDATE": [
-        "ACTION_ITEM",
-        "RESPONSIBLE_PARTY",
-        "DEPARTMENT",
-        "REQUESTED_DOCUMENT",
-        "PARTICIPANT",
-        "AGENDA",
-        "PROJECT"
-      ]
-    },
-    "extraction_policy": "All 11 extraction fields are optional and source-grounded. Annotate a field when explicitly stated and relevant; missing fields never waive or invalidate a directly selected label.",
-    "follow_up_target_policy": "FOLLOW_UP target may be null when the current reminder is clear but the target is unstated. UNCLEAR marks genuine target uncertainty and requires review."
+    "provenance_policy": "The server stamps provenance using the legacy provenance contract; AI-only and synthetic records cannot be GOLD."
   }
 }

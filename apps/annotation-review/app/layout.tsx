@@ -6,9 +6,6 @@ import "./direct-labels.css";
 export const metadata: Metadata = {
   title: "FYP Review Room",
   description: "Private independent email annotation for FYP calibration.",
-  other: {
-    "codex-preview": "development",
-  },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
