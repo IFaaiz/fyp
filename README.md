@@ -19,8 +19,17 @@ historical allocations are preserved.
 - [Review app source](apps/annotation-review/README.md): independent account-based
   queues, four annotation steps, exact evidence, autosaved drafts, blind frozen
   submissions and labeling rules.
-- [Offline desktop prototype](desktop/README.md): local single-packet review using
-  the V1 validator and mapper.
+- [Local desktop foundation](desktop/README.md#local-email-archive-foundation):
+  .eml/.msg/classic Outlook adapters, authored text, provisional rule suggestions,
+  SQLite archive, Excel export and a PySide viewer. The legacy single-packet
+  Structured V1 review prototype remains available separately.
+- [October source inventory](ai/reports/fyp_source_inventory_2026-10.md): ranked
+  public project-mail sources, rights/access boundaries and reproducible blank
+  candidate acquisition. The first bounded batch has 44 unlabelled candidates
+  from 93 messages; it is not a new human queue or a training-approved dataset.
+- [Local foundation verification and handoff](ai/reports/fyp_local_foundation_2026-10-10.md):
+  real .eml/JSONL → SQLite → Excel → PySide checks, 126 focused passing tests,
+  corrected defects, current limitations and exact run commands.
 - [Historical Structured V1 guide](ai/annotation/fyp_structured_v1_annotation_guide.md)
   and [schema](ai/config/fyp_structured_v1_schema.json) remain available for
   unchanged legacy records. Earlier direct v1 records also retain their version.

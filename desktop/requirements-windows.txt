@@ -1,0 +1,4 @@
+-r requirements.txt
+-r requirements-msg.txt
+# Classic Outlook COM integration; install only on Windows.
+pywin32==312

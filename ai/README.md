@@ -1,6 +1,36 @@
 # AI email dataset foundation
 
-## Active workstream — V1 human calibration, 6 October 2026
+## Active workstream — direct v1.1 calibration and local product, 10 October 2026
+
+The current human contract is **fyp-direct-label-v1.1**: three relevance states,
+eight direct project labels, 11 optional extraction targets and auxiliary EVIDENCE.
+Read the [current guide](annotation/fyp_direct_label_v1_1_annotation_guide.md) and
+[final pre-labeling audit](reports/fyp_prelabeling_final_audit_2026-10-10.md).
+The private Site is version 7; the existing 30-email blind round is frozen.
+Historical Structured V1/direct-v1 records and scoring remain versioned separately.
+No new human agreement, gold or FYP-domain accuracy has been measured.
+
+New work follows the October master prompt: [source inventory](reports/fyp_source_inventory_2026-10.md)
+and [local Windows foundation](../desktop/README.md#local-email-archive-foundation).
+The bounded new public-mail batch has 93 parsed messages and 44 blank candidates.
+Source rights are tracked independently of readability; candidates stay UNASSIGNED
+and do not change the human round or closed evaluation data.
+
+Acquire approved public sample routes, or replay an existing verified cache:
+
+```powershell
+python ai/scripts/acquire_project_mail.py --limit 120
+python ai/scripts/acquire_project_mail.py --offline --limit 120
+# Synthetic parser/mining checks; run from ai/:
+python -m unittest tests.test_project_mail_candidates -v
+```
+
+Bodies, headers, local candidate manifests and acquisition receipts remain under
+ignored `ai/data/project_mail/`. Weak cues are sampling hints, never human labels.
+The existing AI-silver classifier is optional diagnostic inference in the local
+product. Rule extraction is provisional exact text; neither becomes GOLD.
+
+## Historical workstream — Structured V1 calibration, 6 October 2026
 
 Read [the current reviewer handoff](reports/fyp_calibration_v1_reviewer_handoff.md).
 The private research review app is mirrored at [apps/annotation-review](../apps/annotation-review/README.md).
@@ -42,7 +72,7 @@ This sprint preserves the historical classifier and V2 artifacts below.
 
 This directory prepares English Outlook-style project emails for a future multi-label classifier and information extractor. V1 uses subject, body, thread context, Outlook metadata, and attachment filenames. It does not read attachment contents. The 22-page *FYP Proposal Report* controls this V1 scope; the 10-page revised proposal describes later attachment extraction.
 
-## Current measured prototype — 2 October 2026
+## Historical measured AI-silver prototype — 2 October 2026
 
 [Completed model optimization and measured results](reports/ai_silver_model_optimization.md): **668 AI-silver records**, frozen TRAIN/DEV/TEST **462/104/102**, 293 recorded development configurations/calibration stages, five locked candidates evaluated once, and all 46 primary-model errors source-read. On the same TEST, the DEV-selected ensemble scores **0.652 micro / 0.412 macro F1**, versus the freshly trained original TF-IDF reference **0.698 / 0.403**. The requested large improvement was not achieved. There are **zero human classification labels**; these are AI-silver diagnostic results. Model selection, thresholds and TEST labels remain frozen.
 

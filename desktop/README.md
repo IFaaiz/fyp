@@ -49,3 +49,81 @@ The app never raises an annotation tier or adds human-review provenance. Incomin
 ## Limits
 
 This is a single-user prototype. It has no account system, access control between local Windows users, encrypted storage, multi-message context browser, email ingestion, workbook export, reminders, collaborative adjudication, or deployment path. The current packet format supplies one current source; cross-message relations that need prior context remain invalid unless a future packet/context workflow is added. The two synthetic fixtures that require prior-message context are therefore omitted from the standalone demo picker. Do not treat this prototype’s local audit files as a production audit system.
+
+## Local email archive foundation
+
+`run_local_product.py` is a separate local product foundation. It does not
+replace or alter `offline_dashboard.py`. It imports `.eml`, `.msg`, normalized
+JSONL, or the classic Outlook Inbox into a canonical SQLite archive, keeps
+quoted history separate from current authored text, adds review-only rule cues,
+stores sparse exact-text extraction suggestions in a separate provisional field,
+exports `Emails`, `Threads`, and `Extraction Suggestions` workbook sheets, and
+provides a small PySide6 archive browser.
+
+The rule baseline only suggests possible labels. A cue gets `REVIEW`; no cue
+gets `ABSTAIN`. It never writes those suggestions into the source `labels`,
+scope, span, or annotation-method fields. A separate sparse extractor may
+suggest exact-text spans; those stay provisional in their own SQLite field and
+Excel sheet with `human_gold=false`, and never change source spans. Both systems
+abstain on unsupported details and require review. The saved FYP label set is the eight approved project labels
+plus exclusive `NON_PROJECT`; `PROJECT`/`UNCERTAIN` are scope values. The 11
+approved extraction types are retained, with auxiliary `EVIDENCE` accepted as
+evidence rather than an extraction target.
+
+Install the core Windows dependencies and optional adapters in an ignored
+workspace-local environment:
+
+```powershell
+py -3.12 -m venv desktop/.venv
+desktop/.venv/Scripts/python.exe -m pip install -r desktop/requirements-windows.txt
+```
+
+`requirements-windows.txt` installs the PySide6 Essentials viewer, openpyxl, `extract-msg`
+for standalone `.msg` files, and pywin32 for classic Outlook COM. The
+`extract-msg` dependency is GPL-licensed; see `requirements-msg.txt` and review
+its terms before distributing an application that includes it. `.eml` and
+JSONL import plus SQLite do not depend on `extract-msg` or Outlook. No package
+is needed to run the tests with Python's standard-library `unittest`, except
+openpyxl for the Excel checks and PySide6 for the UI smoke.
+
+Import the supplied normalized corpus (or a folder containing `.eml`, `.msg`,
+and/or `.jsonl` files):
+
+```powershell
+desktop/.venv/Scripts/python.exe desktop/run_local_product.py import E:/path/to/corpus --db E:/path/to/archive.sqlite3
+desktop/.venv/Scripts/python.exe desktop/run_local_product.py import-outlook --limit 200 --db E:/path/to/archive.sqlite3
+desktop/.venv/Scripts/python.exe desktop/run_local_product.py export --db E:/path/to/archive.sqlite3 --xlsx E:/path/to/archive.xlsx
+desktop/.venv/Scripts/python.exe desktop/run_local_product.py gui --db E:/path/to/archive.sqlite3
+```
+
+The default archive lives under the current user's local application-data
+directory. The Excel writer stores email text as literal strings, marks cells
+over the Excel 32,767-character limit, and leaves the full text in SQLite.
+Attachment contents are never extracted or saved; only attachment filenames
+are kept. The current Outlook adapter sorts the default Inbox by received time
+and reads at most 200 newest messages by default (CLI limit range 1–5000) when
+the user starts an import. It does not modify Outlook items. Tests use a fake
+COM object, not a live mailbox.
+
+The JSONL adapter accepts `source_id`, `source_name`, `project_or_list`,
+`message_id`, `in_reply_to`, `references`, `thread_id`, `subject`, `sender`,
+`recipients`, `timestamp`, `body_raw`, `current_message`, `quoted_history`,
+`attachment_names`, `provenance`, `license_or_terms_note`, `labels`, `scope`,
+`spans`, and `annotation_method`. It also accepts the repository's `email_id`,
+`source_dataset`, `raw_body`, `body`, `sent_at`, and `project` aliases. Imported
+annotations require an explicit `annotation_method`; duplicate source IDs
+update unannotated message text and source provenance while preserving
+already-owned annotations. If an annotated source reimport changes its subject
+or current authored text, the transaction fails closed so span offsets and
+annotations stay tied to their original text.
+Additional source fields such as source URLs, checksums, split, leakage group,
+and metadata quality are retained under `provenance.source_metadata`.
+
+Run the focused product tests with:
+
+```powershell
+desktop/.venv/Scripts/python.exe -m unittest discover -s desktop/tests -t . -v
+```
+
+The UI is an archive browser skeleton. It does not yet provide annotation
+editing, thread-state reasoning, reminders, or missing-document detection.

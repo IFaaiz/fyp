@@ -1,0 +1,4 @@
+# Core offline archive, Excel export, and PySide6 QtCore/QtGui/QtWidgets viewer.
+# The Essentials wheel avoids unrelated Qt add-ons and WebEngine.
+PySide6_Essentials==6.12.0
+openpyxl==3.1.5

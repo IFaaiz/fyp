@@ -1,0 +1,3 @@
+# Optional standalone Outlook .msg file reader.
+# extract-msg is GPL-licensed; review its licensing terms before distributing it.
+extract-msg==0.56.1

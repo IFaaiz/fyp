@@ -1,0 +1,169 @@
+{
+  "purpose": "Bounded blank candidate acquisition; no existing human round, holdout or TEST changes",
+  "sources": [
+    {
+      "name": "apache_subversion_dev_2024_01",
+      "project_or_list": "dev@subversion.apache.org",
+      "format": "mbox",
+      "url": "https://lists.apache.org/api/mbox.lua?list=dev&domain=subversion.apache.org&d=2024-01",
+      "terms_reviewed": true,
+      "terms_url": "https://www.apache.org/foundation/public-archives.html",
+      "terms_note": "ASF treats public-forum contributions as publicly published without conditions. Official Subversion docs provide this public mbox route. Retain a bounded internal research sample with provenance; no blanket Apache-2.0 grant for authored email is asserted; no raw redistribution or report excerpts by default.",
+      "sampling_frame": "FIXED_PUBLIC_MONTH"
+    },
+    {
+      "name": "apache_httpd_dev_2024_01",
+      "project_or_list": "dev@httpd.apache.org",
+      "format": "mbox",
+      "url": "https://lists.apache.org/api/mbox.lua?list=dev&domain=httpd.apache.org&d=2024-01",
+      "terms_reviewed": true,
+      "terms_url": "https://www.apache.org/foundation/public-archives.html",
+      "terms_note": "Same ASF public-forum policy and documented Pony Mail mbox route, public dev list only. Keep text and addresses local, preserve author rights and source references, and obtain separate review before redistribution or publication of transformed excerpts. No private/security/PMC lists.",
+      "sampling_frame": "FIXED_PUBLIC_MONTH"
+    },
+    {
+      "name": "w3c_wcag_2026q3_0093",
+      "source_name": "w3c_wcag_wg",
+      "project_or_list": "w3c-wai-gl@w3.org",
+      "format": "w3c_html",
+      "url": "https://lists.w3.org/Archives/Public/w3c-wai-gl/2026JulSep/0093.html",
+      "terms_reviewed": true,
+      "terms_url": "https://www.w3.org/Mail/",
+      "training_rights_status": "NOT_CLEARED",
+      "terms_note": "Public HTML archive, bounded local candidate inspection only. Archive publication permission is not a blanket email-content reuse or model-training grant; author copyright may remain. No redistribution, no training until separate rights review. No authenticated mailbox download, member/private lists, attachments, or credential bypass.",
+      "sampling_frame": "PURPOSIVE_HTML"
+    },
+    {
+      "name": "w3c_wcag_2026q3_0094",
+      "source_name": "w3c_wcag_wg",
+      "project_or_list": "w3c-wai-gl@w3.org",
+      "format": "w3c_html",
+      "url": "https://lists.w3.org/Archives/Public/w3c-wai-gl/2026JulSep/0094.html",
+      "terms_reviewed": true,
+      "terms_url": "https://www.w3.org/Mail/",
+      "training_rights_status": "NOT_CLEARED",
+      "terms_note": "Public HTML archive, bounded local candidate inspection only. Archive publication permission is not a blanket email-content reuse or model-training grant; author copyright may remain. No redistribution, no training until separate rights review. No authenticated mailbox download, member/private lists, attachments, or credential bypass.",
+      "sampling_frame": "PURPOSIVE_HTML"
+    },
+    {
+      "name": "w3c_wcag_2026q3_0096",
+      "source_name": "w3c_wcag_wg",
+      "project_or_list": "w3c-wai-gl@w3.org",
+      "format": "w3c_html",
+      "url": "https://lists.w3.org/Archives/Public/w3c-wai-gl/2026JulSep/0096.html",
+      "terms_reviewed": true,
+      "terms_url": "https://www.w3.org/Mail/",
+      "training_rights_status": "NOT_CLEARED",
+      "terms_note": "Public HTML archive, bounded local candidate inspection only. Archive publication permission is not a blanket email-content reuse or model-training grant; author copyright may remain. No redistribution, no training until separate rights review. No authenticated mailbox download, member/private lists, attachments, or credential bypass.",
+      "sampling_frame": "PURPOSIVE_HTML"
+    },
+    {
+      "name": "w3c_wcag_2026q3_0123",
+      "source_name": "w3c_wcag_wg",
+      "project_or_list": "w3c-wai-gl@w3.org",
+      "format": "w3c_html",
+      "url": "https://lists.w3.org/Archives/Public/w3c-wai-gl/2026JulSep/0123.html",
+      "terms_reviewed": true,
+      "terms_url": "https://www.w3.org/Mail/",
+      "training_rights_status": "NOT_CLEARED",
+      "terms_note": "Public HTML archive, bounded local candidate inspection only. Archive publication permission is not a blanket email-content reuse or model-training grant; author copyright may remain. No redistribution, no training until separate rights review. No authenticated mailbox download, member/private lists, attachments, or credential bypass.",
+      "sampling_frame": "PURPOSIVE_HTML"
+    },
+    {
+      "name": "w3c_wcag_2026q3_0124",
+      "source_name": "w3c_wcag_wg",
+      "project_or_list": "w3c-wai-gl@w3.org",
+      "format": "w3c_html",
+      "url": "https://lists.w3.org/Archives/Public/w3c-wai-gl/2026JulSep/0124.html",
+      "terms_reviewed": true,
+      "terms_url": "https://www.w3.org/Mail/",
+      "training_rights_status": "NOT_CLEARED",
+      "terms_note": "Public HTML archive, bounded local candidate inspection only. Archive publication permission is not a blanket email-content reuse or model-training grant; author copyright may remain. No redistribution, no training until separate rights review. No authenticated mailbox download, member/private lists, attachments, or credential bypass.",
+      "sampling_frame": "PURPOSIVE_HTML"
+    },
+    {
+      "name": "w3c_wcag_2026q3_0178",
+      "source_name": "w3c_wcag_wg",
+      "project_or_list": "w3c-wai-gl@w3.org",
+      "format": "w3c_html",
+      "url": "https://lists.w3.org/Archives/Public/w3c-wai-gl/2026JulSep/0178.html",
+      "terms_reviewed": true,
+      "terms_url": "https://www.w3.org/Mail/",
+      "training_rights_status": "NOT_CLEARED",
+      "terms_note": "Public HTML archive, bounded local candidate inspection only. Archive publication permission is not a blanket email-content reuse or model-training grant; author copyright may remain. No redistribution, no training until separate rights review. No authenticated mailbox download, member/private lists, attachments, or credential bypass.",
+      "sampling_frame": "PURPOSIVE_HTML"
+    },
+    {
+      "name": "w3c_wcag_2026q3_0191",
+      "source_name": "w3c_wcag_wg",
+      "project_or_list": "w3c-wai-gl@w3.org",
+      "format": "w3c_html",
+      "url": "https://lists.w3.org/Archives/Public/w3c-wai-gl/2026JulSep/0191.html",
+      "terms_reviewed": true,
+      "terms_url": "https://www.w3.org/Mail/",
+      "training_rights_status": "NOT_CLEARED",
+      "terms_note": "Public HTML archive, bounded local candidate inspection only. Archive publication permission is not a blanket email-content reuse or model-training grant; author copyright may remain. No redistribution, no training until separate rights review. No authenticated mailbox download, member/private lists, attachments, or credential bypass.",
+      "sampling_frame": "PURPOSIVE_HTML"
+    },
+    {
+      "name": "w3c_wcag_2026q3_0190",
+      "source_name": "w3c_wcag_wg",
+      "project_or_list": "w3c-wai-gl@w3.org",
+      "format": "w3c_html",
+      "url": "https://lists.w3.org/Archives/Public/w3c-wai-gl/2026JulSep/0190.html",
+      "terms_reviewed": true,
+      "terms_url": "https://www.w3.org/Mail/",
+      "training_rights_status": "NOT_CLEARED",
+      "terms_note": "Public HTML archive, bounded local candidate inspection only. Archive publication permission is not a blanket email-content reuse or model-training grant; author copyright may remain. No redistribution, no training until separate rights review. No authenticated mailbox download, member/private lists, attachments, or credential bypass.",
+      "sampling_frame": "PURPOSIVE_HTML"
+    },
+    {
+      "name": "w3c_wcag_2026q3_0189",
+      "source_name": "w3c_wcag_wg",
+      "project_or_list": "w3c-wai-gl@w3.org",
+      "format": "w3c_html",
+      "url": "https://lists.w3.org/Archives/Public/w3c-wai-gl/2026JulSep/0189.html",
+      "terms_reviewed": true,
+      "terms_url": "https://www.w3.org/Mail/",
+      "training_rights_status": "NOT_CLEARED",
+      "terms_note": "Public HTML archive, bounded local candidate inspection only. Archive publication permission is not a blanket email-content reuse or model-training grant; author copyright may remain. No redistribution, no training until separate rights review. No authenticated mailbox download, member/private lists, attachments, or credential bypass.",
+      "sampling_frame": "PURPOSIVE_HTML"
+    },
+    {
+      "name": "w3c_wcag_2026q3_0188",
+      "source_name": "w3c_wcag_wg",
+      "project_or_list": "w3c-wai-gl@w3.org",
+      "format": "w3c_html",
+      "url": "https://lists.w3.org/Archives/Public/w3c-wai-gl/2026JulSep/0188.html",
+      "terms_reviewed": true,
+      "terms_url": "https://www.w3.org/Mail/",
+      "training_rights_status": "NOT_CLEARED",
+      "terms_note": "Public HTML archive, bounded local candidate inspection only. Archive publication permission is not a blanket email-content reuse or model-training grant; author copyright may remain. No redistribution, no training until separate rights review. No authenticated mailbox download, member/private lists, attachments, or credential bypass.",
+      "sampling_frame": "PURPOSIVE_HTML"
+    },
+    {
+      "name": "w3c_wcag_2026q3_0187",
+      "source_name": "w3c_wcag_wg",
+      "project_or_list": "w3c-wai-gl@w3.org",
+      "format": "w3c_html",
+      "url": "https://lists.w3.org/Archives/Public/w3c-wai-gl/2026JulSep/0187.html",
+      "terms_reviewed": true,
+      "terms_url": "https://www.w3.org/Mail/",
+      "training_rights_status": "NOT_CLEARED",
+      "terms_note": "Public HTML archive, bounded local candidate inspection only. Archive publication permission is not a blanket email-content reuse or model-training grant; author copyright may remain. No redistribution, no training until separate rights review. No authenticated mailbox download, member/private lists, attachments, or credential bypass.",
+      "sampling_frame": "PURPOSIVE_HTML"
+    },
+    {
+      "name": "w3c_wcag_2026q3_0186",
+      "source_name": "w3c_wcag_wg",
+      "project_or_list": "w3c-wai-gl@w3.org",
+      "format": "w3c_html",
+      "url": "https://lists.w3.org/Archives/Public/w3c-wai-gl/2026JulSep/0186.html",
+      "terms_reviewed": true,
+      "terms_url": "https://www.w3.org/Mail/",
+      "training_rights_status": "NOT_CLEARED",
+      "terms_note": "Public HTML archive, bounded local candidate inspection only. Archive publication permission is not a blanket email-content reuse or model-training grant; author copyright may remain. No redistribution, no training until separate rights review. No authenticated mailbox download, member/private lists, attachments, or credential bypass.",
+      "sampling_frame": "PURPOSIVE_HTML"
+    }
+  ]
+}

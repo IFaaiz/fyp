@@ -1,0 +1,8 @@
+.venv/
+.local/
+*.db
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+*.xlsx
+*.tmp.xlsx
