@@ -18,6 +18,15 @@ Current mandatory requirements and remaining gates are tracked in the
 checked without opening a mailbox using `doctor-outlook`; live Outlook tests
 still require a dedicated authorized test setup.
 
+**Implementation packets:** [Ingestion integrity](ai/reports/fyp_ingestion_integrity_2026-10-11.md)
+fixes MIME boundaries, canonical observations, UTC ordering, conversation graphs,
+source revisions and inline evidence. The [persistent desktop workflow](desktop/README.md#persistent-reviewed-project-dashboard-11-october-2026)
+adds review candidates, approved item identities, explicit updates, correction
+history, undo and project Excel export through an authenticated localhost service.
+Launch with `desktop/.venv/Scripts/python.exe desktop/run_local_product.py dashboard --demo`
+for explicitly synthetic examples. Final attachment-content, LAN roles, reminders
+and installable-release gates remain open; no new model accuracy is claimed.
+
 **10 October 2026:** The active human annotation contract is
 **fyp-direct-label-v1.1**: direct relevance, eight FYP labels, exactly 11 optional
 extraction targets, and auxiliary EVIDENCE. Each selected project label requires

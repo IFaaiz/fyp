@@ -56,3 +56,26 @@ The synthetic backup test restores into a separate archive and checks integrity
 and message content. It is a functional restore drill, not a real organizational
 disaster-recovery certification. A clean-machine/operator restore drill remains
 part of the December release gates in `ACCEPTANCE.md`.
+
+## Reviewed item ledger
+
+Starting the project dashboard or approved-item export adds `product_meta`,
+`item_candidates`, `items`, and `item_history` transactionally. This product
+contract is `fyp-project-item-v1`, with its own schema version 1; archive
+`PRAGMA user_version` remains 3. No historical research annotation is changed.
+Explicit canonical IDs bind product evidence; ambiguous adapter alias lookup
+remains fail-closed through the archive compatibility API.
+
+History rows preserve before/after facts, field differences, exact candidate
+evidence, source fingerprint/revision and the review note. SQLite triggers reject
+history updates/deletes. Undo appends a new event; undoing creation retains a
+cancelled item. A source reimport never rewrites approved facts. A changed source
+in any applied history produces a conservative conflict warning, even if a later
+update has linked another source. Re-review is required to resolve those warnings;
+automatic reconciliation is not implemented.
+
+The consistent backup includes all ledger tables and immutable history. The
+HTTP integration fixture restores it to a new database and verifies the same
+item identities, versions and history. An old archive viewer does not provide
+the new reviewed workflow; rollback to a pre-ledger backup also excludes reviews
+made after that backup. Preserve the current database and backup before rollback.

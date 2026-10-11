@@ -1,5 +1,56 @@
 # Offline FYP review dashboard
 
+## Persistent reviewed project dashboard (11 October 2026)
+
+The Windows PySide6 application now has a separate project workflow. Start a
+clearly synthetic demonstration from the repository root:
+
+```powershell
+desktop/.venv/Scripts/python.exe desktop/run_local_product.py dashboard --demo
+```
+
+For your own explicitly imported files, use `import` below with a private database
+path, then `dashboard --db E:/private/project.sqlite3`. No dashboard launch reads
+Outlook. The demo uses a separate `synthetic_workflow.sqlite3` archive by default.
+Install dependencies using the Windows requirements command below if needed.
+
+Inbox → Suggest creates provisional candidates. Review the exact evidence and
+unresolved owner/date flags; approve unchanged suggestions, correct fields with
+a reason, or reject. Approved items have their own identities, current fields,
+versions and immutable history. A thread can contain several items. To apply a
+later email, select that source and explicitly choose its target item, then
+propose only the changed fields. Dates require an ISO date or an aware ISO
+timestamp; relative phrases remain unresolved until reviewed. Delivery/completion
+is a reviewer decision; a filename does not automatically establish delivery.
+Undo appends a reversal and preserves the original decision. Reimported source
+changes surface conflicts while retaining approved facts. Version conflicts
+require refreshing and reviewing again.
+
+The desktop uses an authenticated, randomly bound localhost API. Its owner token
+exists only in process memory. All database and ledger access stays in the service;
+the client saves only explicitly requested Excel output. There is one local owner
+in this packet. LAN listening and role/project/mailbox authorization are pending.
+Do not place the writable SQLite database or Excel workbook on a network share.
+Network requests run off the GUI thread. Search/status filters apply to items.
+Export writes `Items`, `History`, and `Metadata`, with literal strings and exact
+review evidence; full text remains in SQLite if an Excel cell is truncated.
+
+Host-side recordkeeping and backup commands:
+
+```powershell
+desktop/.venv/Scripts/python.exe desktop/run_local_product.py export-items --db E:/private/project.sqlite3 --xlsx E:/private/items.xlsx
+desktop/.venv/Scripts/python.exe desktop/run_local_product.py backup --db E:/private/project.sqlite3 --to E:/private/project-backup.sqlite3
+desktop/.venv/Scripts/python.exe desktop/run_local_product.py doctor-outlook
+```
+
+The ingestion milestone and this review workflow use synthetic functional
+fixtures. They establish no human-validated model accuracy. Word/PDF/OCR content,
+background Outlook folder sync, roles/LAN authorization, reminders/settings and
+clean-machine installation remain delivery gates in [ACCEPTANCE.md](ACCEPTANCE.md).
+See [MIGRATIONS.md](MIGRATIONS.md) before opening an existing archive. Installation
+preflight found classic Outlook registration; a live authorized profile test is
+still pending. Older prototypes below remain separate research/archive tools.
+
 This is a small Windows-friendly review prototype for FYP Structured Annotation V1. It uses only Python’s standard library plus the repository’s V1 validation and mapper modules. The selected interpreter is `ai/.venv/Scripts/python.exe`; no packages need to be installed.
 
 ## Start
@@ -119,11 +170,13 @@ annotations stay tied to their original text.
 Additional source fields such as source URLs, checksums, split, leakage group,
 and metadata quality are retained under `provenance.source_metadata`.
 
-Run the focused product tests with:
+Run the focused product tests with (the opt-in enables the actual localhost
+desktop flow; a sandbox may need narrow loopback permission):
 
 ```powershell
+$env:FYP_TEST_LOCALHOST_API='1'
 desktop/.venv/Scripts/python.exe -m unittest discover -s desktop/tests -t . -v
 ```
 
-The UI is an archive browser skeleton. It does not yet provide annotation
+The `gui` command remains an archive browser skeleton. It does not provide annotation
 editing, thread-state reasoning, reminders, or missing-document detection.

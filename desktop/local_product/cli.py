@@ -44,6 +44,12 @@ def _parser() -> argparse.ArgumentParser:
     commands.add_parser("gui", help="open the PySide6 local archive browser").add_argument(
         "--db", type=Path, default=default_database_path()
     )
+    dashboard_cmd = commands.add_parser("dashboard", help="open the persistent reviewed-item desktop application")
+    dashboard_cmd.add_argument("--db", type=Path, default=None)
+    dashboard_cmd.add_argument("--demo", action="store_true", help="seed clearly synthetic emails in a separate demo archive")
+    project_export = commands.add_parser("export-items", help="export approved project items and immutable history")
+    project_export.add_argument("--db", type=Path, default=default_database_path())
+    project_export.add_argument("--xlsx", type=Path, required=True)
     return parser
 
 
@@ -58,6 +64,18 @@ def main(argv: Sequence[str] | None = None) -> int:
         written = backup_database(args.db, args.to)
         print(json.dumps({"backup": str(written), "integrity_check": "ok"}))
         return 0
+    if args.command == "dashboard":
+        import secrets
+        from .dashboard import run_dashboard
+        from .service import start_local_service
+        db_path = args.db or (default_database_path().with_name("synthetic_workflow.sqlite3") if args.demo else default_database_path())
+        store = EmailStore(db_path)
+        if args.demo:
+            from .demo import seed_demo
+            seed_demo(store)
+        token = secrets.token_urlsafe(32)
+        with start_local_service(store, token) as service:
+            return run_dashboard(service.base_url, token)
     if args.command is None or args.command == "gui":
         db_path = getattr(args, "db", default_database_path())
         try:
@@ -84,5 +102,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.command == "export":
         path = export_excel(store, args.xlsx)
         print(json.dumps({"database": str(store.path), "xlsx": str(path), "messages": store.count()}, ensure_ascii=False))
+        return 0
+    if args.command == "export-items":
+        from .items import ItemLedger
+        from .project_export import export_project_excel
+        path = export_project_excel(ItemLedger(store), args.xlsx)
+        print(json.dumps({"xlsx": str(path), "meaning": "approved project facts and history"}))
         return 0
     raise SystemExit("Unknown command")

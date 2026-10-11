@@ -1351,6 +1351,20 @@ class EmailStore:
         result["source_observations"] = self._observations_for(result["source_id"])
         return result
 
+    def get_canonical_email(self, canonical_source_id: str) -> dict[str, Any] | None:
+        """Lookup an explicit canonical ID from list_emails, never an adapter alias.
+
+        get_email remains fail-closed for ambiguous adapter aliases. Product
+        records bind to this separate canonical namespace.
+        """
+        with closing(self._connect()) as connection:
+            row = connection.execute("SELECT * FROM emails WHERE source_id=?", (canonical_source_id,)).fetchone()
+        if row is None:
+            return None
+        result = self._decode_email(row)
+        result["source_observations"] = self._observations_for(canonical_source_id)
+        return result
+
     def list_threads(self) -> list[dict[str, Any]]:
         with closing(self._connect()) as connection:
             rows = connection.execute("SELECT * FROM threads ORDER BY latest_timestamp DESC, thread_id").fetchall()
