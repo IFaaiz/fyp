@@ -1,7 +1,7 @@
 """Read-only adapters for RFC822, Outlook MSG, classic Outlook, and JSONL."""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import replace
 from email import policy
 from email.message import Message
 from email.parser import BytesParser
@@ -55,31 +55,83 @@ def _message_headers(message: Message, name: str) -> list[str]:
     return [str(value) for value in message.get_all(name, []) if str(value).strip()]
 
 
+def _raw_header_first(message: Message | None, name: str) -> str | None:
+    if message is None:
+        return None
+    raw_items = getattr(message, "raw_items", None)
+    if callable(raw_items):
+        for header_name, value in raw_items():
+            if str(header_name).casefold() == name.casefold() and str(value).strip():
+                return str(value)
+    return _header_first(message, (name,))
+
+
 def _body_from_mime(message: Message) -> tuple[str, tuple[str, ...]]:
     plain: list[str] = []
     html: list[str] = []
     names: list[str] = []
-    for part in message.walk():
-        if part.is_multipart():
-            continue
+
+    def add_name(value: str) -> None:
+        if value and value not in names:
+            names.append(value)
+
+    def unnamed_message_name() -> str:
+        # RFC822 attachments without a filename still need to be represented
+        # in attachment metadata. Keep multiple such messages distinguishable.
+        base = "attached-message.eml"
+        if base not in names:
+            return base
+        suffix = 2
+        while f"attached-message-{suffix}.eml" in names:
+            suffix += 1
+        return f"attached-message-{suffix}.eml"
+
+    def unnamed_attachment_name() -> str:
+        base = "unnamed-attachment"
+        if base not in names:
+            return base
+        suffix = 2
+        while f"{base}-{suffix}" in names:
+            suffix += 1
+        return f"{base}-{suffix}"
+
+    def visit(part: Message) -> None:
         filename = part.get_filename()
+        filename = str(filename).strip() if filename else ""
         disposition = part.get_content_disposition()
+        content_type = part.get_content_type()
+        is_attached_message = content_type == "message/rfc822"
+
         if filename:
-            filename = str(filename).strip()
-            if filename and filename not in names:
-                names.append(filename)
-        # Do not decode or read attachment payloads. Only message-body parts
-        # without an attachment filename/disposition are considered here.
-        if disposition == "attachment" or filename:
-            continue
-        if part.get_content_type() == "text/plain":
+            add_name(filename)
+        elif is_attached_message:
+            add_name(unnamed_message_name())
+        elif disposition == "attachment":
+            add_name(unnamed_attachment_name())
+
+        # A filename/disposition marks a boundary even when the attachment is
+        # itself multipart. message/rfc822 is also a boundary without a
+        # filename or disposition: walking into it would turn the attached
+        # email's headers and body into this message's text.
+        if disposition == "attachment" or filename or is_attached_message:
+            return
+
+        if part.is_multipart():
+            payload = part.get_payload()
+            if isinstance(payload, list):
+                for child in payload:
+                    if isinstance(child, Message):
+                        visit(child)
+            return
+
+        if content_type == "text/plain":
             try:
                 value = part.get_content()
             except (LookupError, UnicodeDecodeError, KeyError):
                 value = ""
             if isinstance(value, str) and value:
                 plain.append(value)
-        elif part.get_content_type() == "text/html":
+        elif content_type == "text/html":
             try:
                 value = part.get_content()
             except (LookupError, UnicodeDecodeError, KeyError):
@@ -89,6 +141,8 @@ def _body_from_mime(message: Message) -> tuple[str, tuple[str, ...]]:
                 parser.feed(value)
                 parser.close()
                 html.append("".join(parser.parts))
+
+    visit(message)
     parts = plain or html
     return "\n".join(parts), tuple(names)
 
@@ -125,7 +179,10 @@ class EmlAdapter:
         self.source_name = source_name
 
     def iter_records(self) -> Iterator[EmailRecord]:
-        yield self.parse_bytes(self.path.read_bytes(), path_name=self.path.name, source_name=self.source_name)
+        record = self.parse_bytes(self.path.read_bytes(), path_name=self.path.name, source_name=self.source_name)
+        provenance = dict(record.provenance)
+        provenance["source_location"] = self.path.resolve().as_posix()
+        yield replace(record, provenance=provenance)
 
     @staticmethod
     def parse_bytes(content: bytes, *, path_name: str = "message.eml", source_name: str = "eml") -> EmailRecord:
@@ -138,6 +195,7 @@ class EmlAdapter:
         message_id = normalize_message_id(str(message.get("Message-ID") or ""))
         in_reply_to = normalize_message_id(" ".join(_message_headers(message, "In-Reply-To")))
         references = parse_message_ids(_message_headers(message, "References"))
+        thread_index = _header_first(message, ("Thread-Index",))
         thread_id = _header_first(message, ("Thread-Index", "X-Thread-ID"))
         if not thread_id:
             thread_id = f"message-thread:{references[0]}" if references else (
@@ -148,7 +206,16 @@ class EmlAdapter:
             "file_name": path_name,
             "list_id": _header_first(message, ("List-Id",)),
         }
-        source_identity = f"message-id:{message_id}" if message_id else "content:" + hashlib.sha256(content).hexdigest()
+        if thread_index:
+            provenance["thread_index"] = thread_index
+        sender = str(message.get("From") or "")
+        subject = str(message.get("Subject") or "")
+        sent_at = _raw_header_first(message, "Date")
+        source_identity = (
+            "message-envelope:" + "\0".join((message_id, sender, subject, sent_at or ""))
+            if message_id
+            else "content:" + hashlib.sha256(content).hexdigest()
+        )
         return EmailRecord(
             source_id=_stable_source_id("eml", source_identity),
             source_name=source_name,
@@ -157,10 +224,12 @@ class EmlAdapter:
             in_reply_to=in_reply_to,
             references=references,
             thread_id=thread_id,
-            subject=str(message.get("Subject") or ""),
-            sender=str(message.get("From") or ""),
+            subject=subject,
+            sender=sender,
             recipients=_addresses(_message_headers(message, "To") + _message_headers(message, "Cc")),
-            timestamp=_parse_date(str(message.get("Date") or "")),
+            timestamp=_parse_date(sent_at),
+            sent_at=sent_at,
+            timestamp_kind="sent" if sent_at else "unspecified",
             body_raw=body,
             current_message=current,
             quoted_history=quoted,
@@ -190,6 +259,11 @@ def _safe_attr(obj: Any, name: str, default: Any = None) -> Any:
 
 def _as_text(value: Any) -> str:
     return value.strip() if isinstance(value, str) else (str(value).strip() if value is not None else "")
+
+
+def _raw_body_text(value: Any) -> str:
+    """Preserve body whitespace and line endings at the adapter boundary."""
+    return value if isinstance(value, str) else (str(value) if value is not None else "")
 
 
 def _date_text(value: Any) -> str | None:
@@ -237,7 +311,7 @@ class MsgAdapter:
         # load payloads. Delay them and read only filename property streams.
         msg = opener(str(self.path), delayAttachments=True)
         try:
-            body = _as_text(_safe_attr(msg, "body", ""))
+            body = _raw_body_text(_safe_attr(msg, "body", ""))
             header = _header_obj(msg)
             header_values = lambda key: [str(value) for value in header.get_all(key, [])] if header else []
             message_id = normalize_message_id(_as_text(_safe_attr(msg, "messageId")))
@@ -267,15 +341,19 @@ class MsgAdapter:
             thread_id = f"message-thread:{references[0]}" if references else (
                 f"message-thread:{in_reply_to}" if in_reply_to else ""
             )
+            subject = _as_text(_safe_attr(msg, "subject"))
+            sender = _as_text(_safe_attr(msg, "sender"))
+            timestamp = _date_text(_safe_attr(msg, "date"))
+            transport_date = _raw_header_first(header, "Date")
+            sent_at = transport_date or timestamp
             # Do not hash the whole MSG container: it may include attachment
             # payloads. Fall back to the local file path when no message ID exists.
             identity = (
-                f"message-id:{message_id}"
+                "message-envelope:" + "\0".join((message_id, sender, subject, sent_at or ""))
                 if message_id
                 else f"file:{self.path.resolve().as_posix()}"
             )
             recipients = _addresses([_as_text(_safe_attr(msg, "to")), _as_text(_safe_attr(msg, "cc"))])
-            timestamp = _date_text(_safe_attr(msg, "date"))
             yield EmailRecord(
                 source_id=_stable_source_id("msg", identity),
                 source_name=self.source_name,
@@ -284,15 +362,21 @@ class MsgAdapter:
                 in_reply_to=in_reply_to,
                 references=references,
                 thread_id=thread_id,
-                subject=_as_text(_safe_attr(msg, "subject")),
-                sender=_as_text(_safe_attr(msg, "sender")),
+                subject=subject,
+                sender=sender,
                 recipients=recipients,
                 timestamp=timestamp,
+                sent_at=sent_at,
+                timestamp_kind="sent" if sent_at else "unspecified",
                 body_raw=body,
                 current_message=current,
                 quoted_history=quoted,
                 attachment_names=tuple(names),
-                provenance={"adapter": "extract-msg", "file_name": self.path.name},
+                provenance={
+                    "adapter": "extract-msg",
+                    "file_name": self.path.name,
+                    "source_location": self.path.resolve().as_posix(),
+                },
                 labels=(),
                 annotation_method="UNANNOTATED",
             )
@@ -381,7 +465,7 @@ class OutlookAdapter:
         if not is_note:
             return None
         subject = _com_text(item, "Subject")
-        body = _com_text(item, "Body")
+        body = _raw_body_text(_safe_attr(item, "Body"))
         sender = _com_text(item, "SenderEmailAddress", "SenderName")
         entry_id = _com_text(item, "EntryID")
         parent = _safe_attr(item, "Parent")
@@ -424,7 +508,8 @@ class OutlookAdapter:
         identity = f"{store_id}\0{entry_id}" if entry_id else "\0".join((internet_id or "", sender, subject, body))
         source_id = _stable_source_id("outlook", identity)
         thread_id = f"outlook-conversation:{hashlib.sha256(conversation_id.encode()).hexdigest()[:24]}" if conversation_id else ""
-        received = _safe_attr(item, "ReceivedTime") or _safe_attr(item, "SentOn")
+        sent_at = _date_text(_safe_attr(item, "SentOn"))
+        received_at = _date_text(_safe_attr(item, "ReceivedTime"))
         return EmailRecord(
             source_id=source_id,
             source_name=self.source_name,
@@ -435,7 +520,10 @@ class OutlookAdapter:
             subject=subject,
             sender=sender,
             recipients=tuple(recipients),
-            timestamp=_date_text(received),
+            timestamp=received_at or sent_at,
+            sent_at=sent_at,
+            received_at=received_at,
+            timestamp_kind="received" if received_at else ("sent" if sent_at else "unspecified"),
             body_raw=body,
             current_message=current,
             quoted_history=quoted,

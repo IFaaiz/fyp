@@ -195,6 +195,10 @@ class ExistingAISilverClassifier:
         selected = tuple(label for label in labels if label in allowed)
         return {
             "method": self.name,
+            "schema_version": "fyp-direct-label-v1.1",
+            "model_id": self._spec.get("run_id"),
+            "settings": {"thresholds": self._spec["thresholds"], "mode": self._spec["mode"],
+                         "fallback": self._spec.get("fallback", False)},
             "status": "REVIEW",
             "labels": selected,
             "scores": scores,

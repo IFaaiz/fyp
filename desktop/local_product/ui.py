@@ -62,8 +62,10 @@ class EmailTableModel(QAbstractTableModel):
         return 0 if parent.isValid() else len(self.HEADERS)
 
     def data(self, index: QModelIndex, role: int = Qt.ItemDataRole.DisplayRole) -> Any:
-        if not index.isValid() or role != Qt.ItemDataRole.DisplayRole:
+        if not index.isValid() or role not in (Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.UserRole):
             return None
+        if role == Qt.ItemDataRole.UserRole and index.column() == 0:
+            return self.rows[index.row()].get("timestamp_utc") or ""
         value = self.rows[index.row()].get(self.FIELDS[index.column()])
         if isinstance(value, list):
             return ", ".join(str(item) for item in value)
@@ -122,6 +124,7 @@ class MainWindow(QMainWindow):
         self.model = EmailTableModel()
         self.proxy = QSortFilterProxyModel(self)
         self.proxy.setSourceModel(self.model)
+        self.proxy.setSortRole(Qt.ItemDataRole.UserRole)
         self.proxy.setFilterCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
         self.proxy.setFilterKeyColumn(-1)
         self.table.setModel(self.proxy)
@@ -232,6 +235,9 @@ class MainWindow(QMainWindow):
             f"{row.get('subject') or '(no subject)'} · {row.get('sender') or '(unknown sender)'} · "
             f"{row.get('rule_status')} / {', '.join(row.get('rule_labels', [])) or 'no cue'}"
         )
+        segmentation = row.get("provenance", {}).get("segmentation", {})
+        if segmentation.get("uncertain") or segmentation.get("current_projection_matches") is False:
+            self.subject_label.setText(self.subject_label.text() + " · Authorship boundaries uncertain; inspect retained history and raw evidence")
         self.message_text.setPlainText(row.get("current_message") or "")
         self.quote_text.setPlainText(row.get("quoted_history") or "")
         suggestions = row.get("extraction_suggestions", {})

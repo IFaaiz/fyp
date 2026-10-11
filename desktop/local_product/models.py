@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import base64
 from datetime import date, datetime
 import hashlib
 import json
@@ -107,7 +108,16 @@ def effective_thread_id(
     references: Iterable[str],
 ) -> str:
     if thread_id and thread_id.strip():
-        return thread_id.strip()
+        value = thread_id.strip()
+        # Outlook conversation indexes share the first 22 decoded bytes;
+        # reply indexes append five-byte blocks. Retain the raw alias elsewhere.
+        try:
+            decoded = base64.b64decode(value, validate=True)
+            if len(decoded) >= 22 and (len(decoded) - 22) % 5 == 0 and decoded[0] == 1:
+                return "outlook-thread-index:" + base64.b64encode(decoded[:22]).decode("ascii")
+        except (ValueError, TypeError):
+            pass
+        return value
     references = tuple(references)
     if references:
         return f"message-thread:{references[0]}"
@@ -189,6 +199,9 @@ class EmailRecord:
     labels: tuple[str, ...] = ()
     spans: tuple[dict[str, Any], ...] = ()
     annotation_method: str = "UNANNOTATED"
+    sent_at: str | None = None
+    received_at: str | None = None
+    timestamp_kind: str = "unspecified"
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "source_id", _string(self.source_id, "source_id", required=True))
@@ -205,7 +218,7 @@ class EmailRecord:
         ):
             object.__setattr__(self, name, _string(getattr(self, name), name))
         object.__setattr__(self, "annotation_method", _string(self.annotation_method, "annotation_method", required=True))
-        for name in ("message_id", "in_reply_to", "timestamp"):
+        for name in ("message_id", "in_reply_to", "timestamp", "sent_at", "received_at"):
             value = getattr(self, name)
             if value is not None:
                 object.__setattr__(self, name, _string(value, name))
@@ -217,6 +230,15 @@ class EmailRecord:
         object.__setattr__(self, "labels", _normalize_labels(self.labels))
         object.__setattr__(self, "spans", _normalize_spans(self.spans))
         _json_value(self.provenance, "provenance")
+        if self.timestamp_kind not in {"sent", "received", "unspecified"}:
+            raise ValueError("timestamp_kind must be sent, received, or unspecified")
+        from .preprocessing import segment_authored_text_v1, split_authored_text
+        provenance = dict(self.provenance) if isinstance(self.provenance, dict) else {"source_provenance": self.provenance}
+        # Recompute, never trust caller-provided segmentation coordinates.
+        provenance["segmentation"] = segment_authored_text_v1(self.body_raw)
+        derived_current, _ = split_authored_text(self.body_raw)
+        provenance["segmentation"]["current_projection_matches"] = derived_current == self.current_message
+        object.__setattr__(self, "provenance", provenance)
         for span in self.spans:
             span_text = span["text"]
             if not span_text:
@@ -246,6 +268,22 @@ class EmailRecord:
     def body_sha256(self) -> str:
         return hashlib.sha256(self.body_raw.encode("utf-8", errors="replace")).hexdigest()
 
+    @property
+    def timestamp_info(self) -> dict[str, Any]:
+        from .temporal import timestamp_info
+        return timestamp_info(self.timestamp)
+
+    @property
+    def input_fingerprint(self) -> str:
+        value = {"version": "email-input-v1", "subject": self.subject,
+                 "current_message": self.current_message, "body_raw": self.body_raw,
+                 "attachment_names": list(self.attachment_names), "sender": self.sender,
+                 "recipients": list(self.recipients), "timestamp": self.timestamp,
+                 "sent_at": self.sent_at, "received_at": self.received_at,
+                 "timestamp_kind": self.timestamp_kind,
+                 "segmentation_version": self.provenance["segmentation"]["version"]}
+        return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+
     def to_dict(self) -> dict[str, Any]:
         return {
             "source_id": self.source_id,
@@ -259,6 +297,10 @@ class EmailRecord:
             "sender": self.sender,
             "recipients": list(self.recipients),
             "timestamp": self.timestamp,
+            "timestamp_info": self.timestamp_info,
+            "sent_at": self.sent_at,
+            "received_at": self.received_at,
+            "timestamp_kind": self.timestamp_kind,
             "body_raw": self.body_raw,
             "current_message": self.current_message,
             "quoted_history": self.quoted_history,
@@ -320,7 +362,7 @@ class EmailRecord:
             "source_id", "email_id", "source_name", "source_dataset",
             "project_or_list", "project", "message_id", "in_reply_to",
             "references", "thread_id", "subject", "sender", "recipients",
-            "timestamp", "sent_at", "body_raw", "raw_body", "body",
+            "timestamp", "timestamp_info", "sent_at", "received_at", "timestamp_kind", "body_raw", "raw_body", "body",
             "current_message", "quoted_history", "attachment_names",
             "provenance", "license_or_terms_note", "scope", "labels",
             "spans", "annotation_method",
@@ -348,7 +390,10 @@ class EmailRecord:
             subject=_string(row.get("subject"), "subject"),
             sender=_string(row.get("sender"), "sender"),
             recipients=_string_tuple(row.get("recipients", []), "recipients"),
-            timestamp=_timestamp(row.get("timestamp", row.get("sent_at"))),
+            timestamp=_timestamp(row.get("timestamp") or row.get("sent_at") or row.get("received_at")),
+            sent_at=_timestamp(row.get("sent_at")),
+            received_at=_timestamp(row.get("received_at")),
+            timestamp_kind=row.get("timestamp_kind", "sent" if row.get("sent_at") and not row.get("timestamp") else ("received" if row.get("received_at") and not row.get("timestamp") else "unspecified")),
             body_raw=body_raw,
             current_message=current,
             quoted_history=_string(quoted, "quoted_history"),

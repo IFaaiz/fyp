@@ -18,6 +18,10 @@ def _parser() -> argparse.ArgumentParser:
         description="Import local project email into SQLite and export an Excel archive.",
     )
     commands = parser.add_subparsers(dest="command")
+    commands.add_parser("doctor-outlook", help="check installed classic Outlook prerequisites without opening a mailbox")
+    backup_cmd = commands.add_parser("backup", help="take an integrity-checked SQLite backup before opening/migrating an archive")
+    backup_cmd.add_argument("--db", type=Path, default=default_database_path())
+    backup_cmd.add_argument("--to", type=Path, required=True)
 
     import_cmd = commands.add_parser("import", help="import .eml, .msg, JSONL files, or directories")
     import_cmd.add_argument("sources", nargs="+", type=Path)
@@ -45,6 +49,15 @@ def _parser() -> argparse.ArgumentParser:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = _parser().parse_args(argv)
+    if args.command == "doctor-outlook":
+        from .compatibility import outlook_preflight
+        print(json.dumps(outlook_preflight(), ensure_ascii=False))
+        return 0
+    if args.command == "backup":
+        from .backup import backup_database
+        written = backup_database(args.db, args.to)
+        print(json.dumps({"backup": str(written), "integrity_check": "ok"}))
+        return 0
     if args.command is None or args.command == "gui":
         db_path = getattr(args, "db", default_database_path())
         try:

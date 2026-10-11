@@ -8,7 +8,7 @@ import unittest
 from desktop.local_product.adapters import EmlAdapter
 from desktop.local_product.excel_export import export_excel
 from desktop.local_product.models import EmailRecord
-from desktop.local_product.store import AnnotationConflictError, EmailStore
+from desktop.local_product.store import AnnotationConflictError, EmailStore, SCHEMA_VERSION
 from desktop.tests.support import temporary_directory
 
 
@@ -58,7 +58,7 @@ class StoreTests(unittest.TestCase):
                 columns = {row[1] for row in connection.execute("PRAGMA table_info(emails)")}
                 version = connection.execute("PRAGMA user_version").fetchone()[0]
             self.assertIn("extraction_suggestions_json", columns)
-            self.assertEqual(version, 2)
+            self.assertEqual(version, SCHEMA_VERSION)
 
     def test_duplicate_import_is_idempotent_and_thread_relationships_are_preserved(self):
         with temporary_directory() as temp:

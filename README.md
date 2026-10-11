@@ -8,8 +8,15 @@ extraction (Word/PDF/scans), role-based access and local-network multi-user
 operation are required. These capabilities are planned, not implemented by the
 existing archive foundation. The [project review and January delivery plan](ai/reports/fyp_project_review_and_delivery_plan_2026-10-11.md)
 records concrete defects, the revised architecture, acceptance gates and a
-31 December 2026 release target. Work is to be performed by the primary assistant
-without subagents. The eight-label/eleven-target v1.1 message contract is retained.
+31 December 2026 release target. The owner's subsequent implementation request
+authorizes bounded GPT-6 Luna xhigh workers under primary-agent integration and
+review; it supersedes the earlier no-subagent arrangement in that historical
+report. The eight-label/eleven-target v1.1 message contract is retained.
+
+Current mandatory requirements and remaining gates are tracked in the
+[revised acceptance matrix](desktop/ACCEPTANCE.md). Installation metadata can be
+checked without opening a mailbox using `doctor-outlook`; live Outlook tests
+still require a dedicated authorized test setup.
 
 **10 October 2026:** The active human annotation contract is
 **fyp-direct-label-v1.1**: direct relevance, eight FYP labels, exactly 11 optional

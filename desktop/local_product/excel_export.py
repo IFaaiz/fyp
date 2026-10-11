@@ -23,6 +23,10 @@ EMAIL_COLUMNS = (
     ("in_reply_to", "In Reply To"),
     ("references", "References"),
     ("timestamp", "Timestamp"),
+    ("timestamp_utc", "Timestamp UTC (known zones only)"),
+    ("timestamp_kind", "Timestamp Meaning"),
+    ("sent_at", "Sent Time Original"),
+    ("received_at", "Received Time Original"),
     ("sender", "Sender"),
     ("recipients", "Recipients"),
     ("subject", "Subject"),
@@ -46,6 +50,11 @@ EMAIL_COLUMNS = (
     ("classifier_labels", "Classifier Suggestions"),
     ("classifier_scores", "Classifier Scores"),
     ("body_sha256", "Body SHA-256"),
+    ("input_fingerprint", "Input Fingerprint"),
+    ("source_revision", "Source Revision"),
+    ("classifier_derivation", "Classifier Input / Model / Schema / Settings"),
+    ("timestamp_info", "Time Certainty"),
+    ("source_observations", "Adapter Observations (permissions remain separate)"),
 )
 
 THREAD_COLUMNS = (
